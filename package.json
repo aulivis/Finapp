@@ -1,0 +1,32 @@
+{
+  "name": "finapp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "update-macro-data": "tsx scripts/update-macro-data.ts",
+    "send-quarterly-email": "tsx scripts/send-quarterly-email.ts",
+    "generate-quarterly-ai-content": "tsx scripts/generate-quarterly-ai-content.ts"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@supabase/supabase-js": "^2.38.0",
+    "stripe": "^14.0.0",
+    "@stripe/stripe-js": "^2.1.0",
+    "recharts": "^2.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.2.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "tsx": "^4.7.0"
+  }
+}

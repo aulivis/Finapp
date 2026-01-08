@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/quarterly-email",
+      "schedule": "0 10 1 */3 *"
+    }
+  ]
+}
