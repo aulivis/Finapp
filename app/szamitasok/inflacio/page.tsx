@@ -1,4 +1,4 @@
-import { getHistoricalInflationData, getMacroData } from '@/lib/data/macro-data'
+import { getHistoricalInflationData, getMacroData, getDataSources } from '@/lib/data/macro-data'
 import { hasAccess } from '@/lib/utils/access'
 import { isValidEmail } from '@/lib/utils/email'
 import PersonalInflationCalculatorClient from './client'
@@ -47,10 +47,14 @@ export default async function PersonalInflationCalculator({ searchParams }: Page
     m2Growth: latestYearData.m2_growth && isFinite(Number(latestYearData.m2_growth)) ? Number(latestYearData.m2_growth) : null
   } : null
 
+  // Get data sources
+  const dataSources = await getDataSources('HU')
+
   return <PersonalInflationCalculatorClient 
     initialData={historicalData} 
     m2Data={m2Data}
     latestYear={latestYear}
     email={email}
+    dataSources={dataSources}
   />
 }

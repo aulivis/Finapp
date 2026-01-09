@@ -1,5 +1,5 @@
 import { hasAccess } from '@/lib/utils/access'
-import { getHistoricalInflationData, getProjectedInflationRate, getMacroData } from '@/lib/data/macro-data'
+import { getHistoricalInflationData, getProjectedInflationRate, getMacroData, getDataSources } from '@/lib/data/macro-data'
 import { getLatestQuarterlySummary } from '@/lib/email/quarterly-summary'
 import { isValidEmail } from '@/lib/utils/email'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
@@ -70,6 +70,9 @@ export default async function CalculatorsPage({ searchParams }: PageProps) {
   // Get latest quarterly summary
   const quarterlySummary = await getLatestQuarterlySummary()
 
+  // Get data sources
+  const dataSources = await getDataSources('HU')
+
   return (
     <AccessLayout email={email}>
       {quarterlySummary && (
@@ -86,6 +89,7 @@ export default async function CalculatorsPage({ searchParams }: PageProps) {
         projectedInflation={projectedInflation}
         currentYear={currentYear}
         doNothingM2Data={doNothingM2Data}
+        dataSources={dataSources}
       />
       <FooterDisclaimer />
     </AccessLayout>

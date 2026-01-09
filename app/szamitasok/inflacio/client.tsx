@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { calculatePersonalInflationImpact, HoldingType, historicalInflation as fallbackData } from '@/lib/data/inflation'
-import DataSourceDisclosure from '@/components/DataSourceDisclosure'
+import { HoldingType, historicalInflation as fallbackData } from '@/lib/data/inflation'
+import DataSourceDisclosureClient from '@/components/DataSourceDisclosureClient'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
 import ModernLineChart from '@/components/ModernLineChart'
 
@@ -11,13 +11,15 @@ interface PersonalInflationCalculatorClientProps {
   m2Data: { inflationRate: number; m2Growth: number | null } | null
   latestYear: number
   email: string
+  dataSources: string[]
 }
 
 export default function PersonalInflationCalculatorClient({
   initialData,
   m2Data,
   latestYear,
-  email
+  email,
+  dataSources
 }: PersonalInflationCalculatorClientProps) {
   const [amount, setAmount] = useState(1000000)
   const [startYear, setStartYear] = useState(2014)
@@ -370,7 +372,7 @@ export default function PersonalInflationCalculatorClient({
         </div>
       )}
 
-      <DataSourceDisclosure country="HU" />
+      <DataSourceDisclosureClient sources={dataSources} />
 
       {m2Data && m2Data.m2Growth !== null && (
         <M2ContextualIndicatorClient 

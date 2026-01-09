@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { calculateDoNothingScenario, RETIREMENT_AGE, DEFAULT_PROJECTED_ANNUAL_INFLATION } from '@/lib/data/retirement'
-import DataSourceDisclosure from '@/components/DataSourceDisclosure'
+import DataSourceDisclosureClient from '@/components/DataSourceDisclosureClient'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
 import ModernLineChart from '@/components/ModernLineChart'
 
@@ -11,13 +11,15 @@ interface DoNothingCalculatorClientProps {
   m2Data: { inflationRate: number; m2Growth: number | null } | null
   currentYear: number
   email: string
+  dataSources: string[]
 }
 
 export default function DoNothingCalculatorClient({
   initialProjectedInflation,
   m2Data,
   currentYear,
-  email
+  email,
+  dataSources
 }: DoNothingCalculatorClientProps) {
   const [currentAge, setCurrentAge] = useState(30)
   const [currentSavings, setCurrentSavings] = useState(5000000)
@@ -310,7 +312,7 @@ export default function DoNothingCalculatorClient({
         )}
       </div>
 
-      <DataSourceDisclosure country="HU" />
+      <DataSourceDisclosureClient sources={dataSources} />
 
       {m2Data && m2Data.m2Growth !== null && (
         <M2ContextualIndicatorClient 

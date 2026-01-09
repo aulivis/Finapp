@@ -1,4 +1,4 @@
-import { getProjectedInflationRate, getMacroData } from '@/lib/data/macro-data'
+import { getProjectedInflationRate, getMacroData, getDataSources } from '@/lib/data/macro-data'
 import { hasAccess } from '@/lib/utils/access'
 import { isValidEmail } from '@/lib/utils/email'
 import DoNothingCalculatorClient from './client'
@@ -45,10 +45,14 @@ export default async function DoNothingCalculator({ searchParams }: PageProps) {
     m2Growth: currentYearData.m2_growth ? Number(currentYearData.m2_growth) : null
   } : null
 
+  // Get data sources
+  const dataSources = await getDataSources('HU')
+
   return <DoNothingCalculatorClient 
     initialProjectedInflation={projectedInflation}
     m2Data={m2Data}
     currentYear={currentYear}
     email={email}
+    dataSources={dataSources}
   />
 }

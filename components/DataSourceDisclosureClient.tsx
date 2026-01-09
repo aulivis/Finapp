@@ -1,12 +1,10 @@
-import { getDataSources } from '@/lib/data/macro-data'
+'use client'
 
-interface DataSourceDisclosureProps {
-  country?: string
+interface DataSourceDisclosureClientProps {
+  sources: string[]
 }
 
-export default async function DataSourceDisclosure({ country = 'HU' }: DataSourceDisclosureProps) {
-  const sources = await getDataSources(country)
-
+export default function DataSourceDisclosureClient({ sources }: DataSourceDisclosureClientProps) {
   return (
     <div style={{
       padding: '16px',
@@ -18,7 +16,7 @@ export default async function DataSourceDisclosure({ country = 'HU' }: DataSourc
       color: '#4B5563',
       marginTop: '16px'
     }}>
-      <p style={{ margin: '0 0 8px 0 }}>
+      <p style={{ margin: '0 0 8px 0' }}>
         Felhasznált fő mutatók: fogyasztói árindex (CPI), globális pénzmennyiség (M2).
         Források: jegybanki és nemzetközi statisztikai adatbázisok.
       </p>
