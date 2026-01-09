@@ -1,4 +1,4 @@
-# Finapp
+# Contexta
 
 Minimális web-alapú pénzügyi tudatossági eszköz.
 

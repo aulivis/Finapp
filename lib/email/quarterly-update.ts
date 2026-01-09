@@ -281,7 +281,7 @@ export async function generateQuarterlyUpdateContent(): Promise<{
           üzenetet kapni, kérjük, lépjen velünk kapcsolatba.
         </p>
         <p style="color: #6c757d; font-size: 12px; line-height: 1.6; margin: 8px 0 0 0;">
-          A Finapp kizárólag oktatási és tájékoztatási célokat szolgál. Nem minősül pénzügyi tanácsadásnak.
+          A Contexta kizárólag oktatási és tájékoztatási célokat szolgál. Nem minősül pénzügyi tanácsadásnak.
         </p>
       </div>
     </body>
@@ -335,7 +335,7 @@ Számítási eszközök: ${appUrl}/szamitasok
 Ez egy automatikus, negyedévente egyszer küldött tájékoztató email. Ha nem szeretne több ilyen 
 üzenetet kapni, kérjük, lépjen velünk kapcsolatba.
 
-A Finapp kizárólag oktatási és tájékoztatási célokat szolgál. Nem minősül pénzügyi tanácsadásnak.
+A Contexta kizárólag oktatási és tájékoztatási célokat szolgál. Nem minősül pénzügyi tanácsadásnak.
   `.trim()
 
   return { subject, html, text }

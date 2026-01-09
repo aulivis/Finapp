@@ -98,10 +98,10 @@ export async function POST(request: NextRequest) {
       
       const emailSent = await sendEmail({
         to: email,
-        subject: 'Hozzáférése aktiválva - Finapp',
+        subject: 'Hozzáférése aktiválva - Contexta',
         html: `
           <h2>Hozzáférés aktiválva</h2>
-          <p>Hozzáférése aktiválva lett a Finapp számítási eszközeihez.</p>
+          <p>Hozzáférése aktiválva lett a Contexta számítási eszközeihez.</p>
           <p>Hozzáférési link:</p>
           <p><a href="${accessLink.replace(/[<>&"']/g, (char) => {
             const map: Record<string, string> = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#039;' }
@@ -126,7 +126,7 @@ export async function POST(request: NextRequest) {
         text: `
 Köszönjük a vásárlást!
 
-Hozzáférése sikeresen aktiválva lett a Finapp számítási eszközeihez.
+Hozzáférése sikeresen aktiválva lett a Contexta számítási eszközeihez.
 
 Hozzáférési linkje: ${accessLink}
 

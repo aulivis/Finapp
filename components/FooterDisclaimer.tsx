@@ -39,7 +39,7 @@ export default function FooterDisclaimer() {
               color: '#4B5563',
               margin: 0
             }}>
-              A Finapp kizárólag oktatási és tájékoztatási célokat szolgál. 
+              A Contexta kizárólag oktatási és tájékoztatási célokat szolgál. 
               Az eszköz a pénzügyi folyamatok mechanizmusait mutatja be, 
               de nem nyújt személyre szabott tanácsokat.
             </p>
@@ -96,7 +96,7 @@ export default function FooterDisclaimer() {
           color: '#4B5563'
         }}>
           <p style={{ margin: '0 0 8px 0' }}>
-            © {new Date().getFullYear()} Finapp. Minden jog fenntartva.
+            © {new Date().getFullYear()} Contexta. Minden jog fenntartva.
           </p>
           <p style={{ margin: 0 }}>
             A múltbeli adatok nem garantálják a jövőbeli eredményeket.

@@ -171,6 +171,10 @@ export default function ModernLineChart({
               style: { fill: colors.text, fontSize: 12 }
             }}
             aria-label="Évek"
+            domain={['dataMin', 'dataMax']}
+            type="number"
+            scale="linear"
+            tickCount={data.length > 0 ? Math.min(data.length, 15) : 5}
           />
           <YAxis
             stroke={colors.text}

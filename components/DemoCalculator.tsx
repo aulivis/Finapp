@@ -207,8 +207,9 @@ export default function DemoCalculator({ macroData = [], onValuesChange }: DemoC
         {/* Bar Chart Comparison */}
         <div style={{
           padding: '24px',
-          backgroundColor: '#F9FAFB',
-          borderRadius: '8px'
+          backgroundColor: '#F0FDFA',
+          borderRadius: '8px',
+          border: '1px solid rgba(45, 212, 191, 0.2)'
         }}>
           <div style={{
             fontSize: '14px',
@@ -229,12 +230,24 @@ export default function DemoCalculator({ macroData = [], onValuesChange }: DemoC
         {/* Output Section - Plain Language Result */}
         <div style={{
           padding: '32px',
-          backgroundColor: '#FFFFFF',
+          backgroundColor: '#F0FDFA',
           borderRadius: '12px',
           boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+          border: '2px solid rgba(45, 212, 191, 0.3)',
           textAlign: 'center',
-          marginTop: '24px'
+          marginTop: '24px',
+          position: 'relative',
+          overflow: 'hidden'
         }}>
+          {/* Decorative accent */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '4px',
+            background: 'linear-gradient(90deg, #2DD4BF 0%, #14B8A6 100%)'
+          }} />
           <p style={{
             fontSize: '20px',
             lineHeight: '1.7',
@@ -272,10 +285,34 @@ export default function DemoCalculator({ macroData = [], onValuesChange }: DemoC
 
         {/* M2 Contextual Indicator */}
         {(() => {
+          // Try to find M2 data for the end year first, then fall back to latest available year in the period
+          let m2Growth: number | null = null
+          let m2Year = endYear
+          
           const endYearData = macroData.find(d => d.year === endYear)
-          const m2Growth = endYearData?.m2_growth !== null && endYearData?.m2_growth !== undefined 
-            ? Number(endYearData.m2_growth) 
-            : null
+          if (endYearData?.m2_growth !== null && endYearData?.m2_growth !== undefined) {
+            const growth = Number(endYearData.m2_growth)
+            if (isFinite(growth)) {
+              m2Growth = growth
+              m2Year = endYear
+            }
+          }
+          
+          // If no M2 data for end year, try to find latest available in the period
+          if (m2Growth === null) {
+            const periodData = macroData
+              .filter(d => d.year >= startYear && d.year <= endYear && d.m2_growth !== null && d.m2_growth !== undefined)
+              .sort((a, b) => b.year - a.year)
+            
+            if (periodData.length > 0) {
+              const latestData = periodData[0]
+              const growth = Number(latestData.m2_growth)
+              if (isFinite(growth)) {
+                m2Growth = growth
+                m2Year = latestData.year
+              }
+            }
+          }
           
           if (m2Growth === null) return null
           
@@ -286,7 +323,7 @@ export default function DemoCalculator({ macroData = [], onValuesChange }: DemoC
               borderTop: '1px solid #E5E7EB'
             }}>
               <M2ContextualIndicatorClient 
-                year={endYear}
+                year={m2Year}
                 m2Growth={m2Growth}
                 periodStartYear={startYear}
                 periodEndYear={endYear}
@@ -309,24 +346,18 @@ export default function DemoCalculator({ macroData = [], onValuesChange }: DemoC
             A számítás magyarázata
           </p>
           <p style={{ margin: '0 0 16px 0' }}>
-            A számítás bemutatja, hogyan változott {formatCurrency(amount)} vásárlóereje 
-            {startYear} és {endYear} között. A névleges érték változatlan marad, 
-            azonban az infláció hatására a reál vásárlóerő csökken.
+            Ez az ábra azt mutatja meg, hogyan változott <strong>{formatCurrency(amount)} vásárlóereje {startYear} és {endYear} között</strong> az infláció hatására.
+            A pénz <strong>névleges értéke változatlan</strong>, miközben a <strong>valós vásárlóerő fokozatosan csökken</strong>.
           </p>
           <p style={{ margin: '0 0 16px 0' }}>
-            A fenti számítás egy általános példa. Rögzített értékeket használ 
-            ({formatCurrency(amount)}, {startYear}-{endYear} időszak) és bemutatja, hogyan csökken 
-            a pénz vásárlóereje az infláció hatására.
+            A bemutatott eredmény <strong>egy általános példa</strong>. Fix összeget és időszakot használ, és kizárólag azt szemlélteti, hogyan hat az infláció a pénz értékére hosszabb távon.
           </p>
           <p style={{ margin: '0 0 16px 0' }}>
-            Ez a számítás <strong>nem személyre szabott</strong>. Nem veszi 
-            figyelembe az egyéni körülményeket, a konkrét megtakarításokat, 
-            vagy a befektetési lehetőségeket. Csak egy általános mechanizmust 
-            mutat be.
+            A számítás <strong>nem személyre szabott</strong>. Nem veszi figyelembe az egyéni megtakarításokat, jövedelmet vagy befektetési döntéseket. Célja a mechanizmus bemutatása, nem pénzügyi tanácsadás.
           </p>
           <p style={{ margin: '0 0 20px 0' }}>
-            A számítás a KSH által közzétett éves inflációs adatokon alapul. 
-            A múltbeli adatok nem garantálják a jövőbeli eredményeket.
+            Az adatok forrása a <strong>KSH hivatalos éves inflációs statisztikái</strong>.
+            A múltbeli adatok nem jelentenek garanciát a jövőbeli értékekre.
           </p>
           <p style={{
             margin: '20px 0 0 0',

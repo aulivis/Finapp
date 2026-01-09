@@ -38,7 +38,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
           'X-Postmark-Server-Token': process.env.POSTMARK_API_KEY,
         },
         body: JSON.stringify({
-          From: process.env.POSTMARK_FROM_EMAIL || 'noreply@finapp.hu',
+          From: process.env.POSTMARK_FROM_EMAIL || 'noreply@contexta.hu',
           To: to,
           Subject: subject,
           HtmlBody: html,

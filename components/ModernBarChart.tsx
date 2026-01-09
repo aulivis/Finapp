@@ -97,12 +97,13 @@ export default function ModernBarChart({
     )
   }
 
-  // Modern color scheme with better contrast
+  // Modern color scheme with better contrast and visual appeal
   const colors = {
-    nominal: '#111827', // Dark gray for nominal
-    real: '#6B7280',    // Medium gray for real
+    nominal: '#2DD4BF', // Teal for nominal (brand color)
+    real: '#14B8A6',    // Darker teal for real
     grid: '#E5E7EB',    // Light gray for grid
-    text: '#4B5563'     // Medium gray for text
+    text: '#4B5563',    // Medium gray for text
+    background: '#F0FDFA' // Light teal background
   }
 
   return (
@@ -158,7 +159,8 @@ export default function ModernBarChart({
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
             aria-label="Névleges érték oszlop"
-            radius={[4, 4, 0, 0]}
+            radius={[8, 8, 0, 0]}
+            style={{ filter: 'drop-shadow(0 2px 4px rgba(45, 212, 191, 0.2))' }}
           />
           <Bar
             dataKey="real"
@@ -168,7 +170,8 @@ export default function ModernBarChart({
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
             aria-label="Inflációval korrigált érték oszlop"
-            radius={[4, 4, 0, 0]}
+            radius={[8, 8, 0, 0]}
+            style={{ filter: 'drop-shadow(0 2px 4px rgba(20, 184, 166, 0.2))' }}
           />
         </BarChart>
       </ResponsiveContainer>

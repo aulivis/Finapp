@@ -12,14 +12,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Finapp',
-    template: '%s | Finapp',
+    default: 'Contexta',
+    template: '%s | Contexta',
   },
   description: 'Pénzügyi tudatossági eszköz',
   keywords: ['pénzügy', 'számítás', 'infláció', 'nyugdíj', 'magyarország'],
-  authors: [{ name: 'Finapp' }],
-  creator: 'Finapp',
-  publisher: 'Finapp',
+  authors: [{ name: 'Contexta' }],
+  creator: 'Contexta',
+  publisher: 'Contexta',
   formatDetection: {
     email: false,
     address: false,
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'hu_HU',
     url: '/',
-    siteName: 'Finapp',
-    title: 'Finapp - Pénzügyi tudatossági eszköz',
+    siteName: 'Contexta',
+    title: 'Contexta - Pénzügyi tudatossági eszköz',
     description: 'Pénzügyi tudatossági eszköz',
   },
   twitter: {
     card: 'summary',
-    title: 'Finapp - Pénzügyi tudatossági eszköz',
+    title: 'Contexta - Pénzügyi tudatossági eszköz',
     description: 'Pénzügyi tudatossági eszköz',
   },
   robots: {

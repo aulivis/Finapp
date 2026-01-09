@@ -38,7 +38,7 @@ export default async function Home() {
             color: '#111827',
             lineHeight: '1.3'
           }}>
-            Személyre szabott számítások
+            <strong>Mit jelent ez a számodra</strong>?
           </h3>
           <div style={{
             fontSize: '15px',
@@ -48,28 +48,32 @@ export default async function Home() {
             fontWeight: '400'
           }}>
             <p style={{ marginBottom: '16px' }}>
-              A fizetős hozzáférés személyre szabott számításokat tartalmaz.
+              A fenti számítás egy általános példa.
             </p>
             <p style={{ marginBottom: '16px' }}>
-              A hozzáférés tartalma:
+              A fizetős hozzáféréssel a <strong>saját pénzedre és időtávodra</strong> számolunk.
+            </p>
+            <p style={{ marginBottom: '16px', fontWeight: '600' }}>
+              <strong>Mit kapsz a hozzáféréssel?</strong>
             </p>
             <ul style={{
               margin: '0 0 16px 0',
               paddingLeft: '24px',
               listStyle: 'disc'
             }}>
-              <li style={{ marginBottom: '8px' }}>
-                Személyre szabott inflációs számítás: saját összeg és időszak alapján
+              <li style={{ marginBottom: '12px' }}>
+                <strong>Személyre szabott inflációs számítás</strong><br />
+                Saját összeggel és időszakkal, valós adatok alapján.
               </li>
-              <li style={{ marginBottom: '8px' }}>
-                &quot;Semmit sem csinálok&quot; forgatókönyv: megtakarítások vásárlóerejének 
-                számítása nyugdíjkorhatárig
+              <li style={{ marginBottom: '12px' }}>
+                <strong>&quot;Semmit sem csinálok&quot; forgatókönyv</strong><br />
+                Megmutatja, hogyan alakul a megtakarításod vásárlóereje nyugdíjkorhatárig, ha nem hozol döntést.
+              </li>
+              <li style={{ marginBottom: '12px' }}>
+                <strong>Egyszerű, jelszómentes hozzáférés</strong><br />
+                Fizetés után emailben küldjük a személyes hozzáférési linkedet.
               </li>
             </ul>
-            <p style={{ margin: '0' }}>
-              A hozzáférés email-cím alapján működik, jelszó nélkül. A fizetés 
-              után emailben küldjük a hozzáférési linket.
-            </p>
           </div>
           <div style={{ textAlign: 'center' }}>
             <Link href="/fizetes" style={{
@@ -84,7 +88,7 @@ export default async function Home() {
               fontWeight: '500',
               transition: 'background-color 0.15s ease'
             }}>
-              Hozzáférés vásárlása
+              👉 Személyre szabott számítás megnyitása
             </Link>
           </div>
         </section>
