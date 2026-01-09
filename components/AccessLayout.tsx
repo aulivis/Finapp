@@ -25,18 +25,19 @@ export default function AccessLayout({ children }: AccessLayoutProps) {
             marginBottom: '16px'
           }}>
             <h1 style={{
-              fontSize: '20px',
-              fontWeight: '400',
+              fontSize: '22px',
+              fontWeight: '600',
               margin: '0 0 8px 0',
-              color: '#111827'
+              color: '#111827',
+              lineHeight: '1.3'
             }}>
               Számítási eszközök
             </h1>
             <p style={{
               fontSize: '14px',
-              color: '#4B5563',
+              color: '#6B7280',
               margin: 0,
-              fontStyle: 'italic'
+              fontWeight: '400'
             }}>
               Aktuális gazdasági környezet
             </p>
@@ -50,13 +51,14 @@ export default function AccessLayout({ children }: AccessLayoutProps) {
               href="/"
               style={{
                 padding: '8px 16px',
-                color: '#4B5563',
+                color: '#1F2937',
                 textDecoration: 'none',
                 border: '1px solid #E5E7EB',
-                borderRadius: '2px',
+                borderRadius: '8px',
                 fontSize: '14px',
                 fontWeight: '400',
-                backgroundColor: '#FFFFFF'
+                backgroundColor: '#FFFFFF',
+                transition: 'background-color 0.15s ease'
               }}
             >
               Főoldal

@@ -12,26 +12,28 @@ export default function PaymentPage() {
       <div style={{
         maxWidth: '600px',
         margin: '0 auto',
-        padding: '48px 24px'
+        padding: '64px 24px'
       }}>
         <header style={{
           marginBottom: '48px',
           textAlign: 'center'
         }}>
           <h1 style={{
-            fontSize: '24px',
-            fontWeight: '400',
+            fontSize: '28px',
+            fontWeight: '600',
             marginBottom: '16px',
-            color: '#111827'
+            color: '#111827',
+            lineHeight: '1.3'
           }}>
             Hozzáférés vásárlása
           </h1>
           <p style={{
-            fontSize: '15px',
+            fontSize: '16px',
             lineHeight: '1.7',
-            color: '#4B5563',
+            color: '#1F2937',
             maxWidth: '500px',
-            margin: '0 auto'
+            margin: '0 auto',
+            fontWeight: '400'
           }}>
             A fizetős hozzáférés személyre szabott számításokat tartalmaz. 
             A hozzáférés 1 évig érvényes, email-cím alapján működik, jelszó nélkül.

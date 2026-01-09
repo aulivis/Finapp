@@ -13,79 +13,109 @@ export default async function Home() {
       backgroundColor: '#F9FAFB',
       padding: '0'
     }}>
-      {/* Section 1 - Header */}
+      {/* Section 1 - Above the Fold Hero */}
       <header style={{
         backgroundColor: '#F9FAFB',
-        borderBottom: '1px solid #E5E7EB',
-        padding: '48px 0'
+        padding: '96px 0 112px 0'
       }}>
         <div style={{
           maxWidth: '900px',
           margin: '0 auto',
-          padding: '0 24px'
+          padding: '0 24px',
+          textAlign: 'center'
         }}>
           <h1 style={{
-            fontSize: '28px',
-            fontWeight: '400',
-            margin: '0 0 16px 0',
-            color: '#111827'
+            fontSize: '40px',
+            fontWeight: '600',
+            margin: '0 0 24px 0',
+            color: '#111827',
+            lineHeight: '1.2',
+            letterSpacing: '-0.02em'
           }}>
-            Finapp
+            Az infláció csökkenti a pénzed vásárlóerejét
           </h1>
           <p style={{
-            fontSize: '16px',
+            fontSize: '18px',
             lineHeight: '1.7',
-            color: '#4B5563',
-            margin: '0',
-            maxWidth: '700px'
+            color: '#1F2937',
+            margin: '0 0 48px 0',
+            maxWidth: '600px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            fontWeight: '400'
           }}>
-            Az infláció hatása a pénz vásárlóerejére. Ez egy általános jelenség, 
-            amely mindenkit érint. Az alábbi számítás bemutatja, hogyan változott 
-            egy fix összeg vásárlóereje az elmúlt években.
+            Láthatod, hogyan változott a megtakarításaid értéke az elmúlt években.
           </p>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <Link href="/fizetes" style={{
+              display: 'inline-block',
+              padding: '14px 32px',
+              backgroundColor: '#2DD4BF',
+              color: '#FFFFFF',
+              textDecoration: 'none',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '15px',
+              fontWeight: '500',
+              transition: 'background-color 0.15s ease'
+            }}>
+              Próbáld ki a személyre szabott számítást
+            </Link>
+            <p style={{
+              fontSize: '14px',
+              color: '#6B7280',
+              margin: '0',
+              lineHeight: '1.6',
+              fontWeight: '400'
+            }}>
+              Email-cím alapján, jelszó nélkül
+            </p>
+          </div>
         </div>
       </header>
+
+      {/* Calculator - Directly below hero */}
+      <div style={{
+        backgroundColor: '#F1F5F9',
+        padding: '64px 0'
+      }}>
+        <DemoCalculator macroData={macroData} />
+      </div>
 
       {/* Main Content */}
       <div style={{
         maxWidth: '900px',
         margin: '0 auto',
-        padding: '48px 24px'
+        padding: '64px 24px'
       }}>
-        {/* Section 2 - Public Demo Calculator */}
-        <section style={{ marginBottom: '64px' }}>
-          <h2 style={{
-            fontSize: '20px',
-            fontWeight: '400',
-            marginBottom: '24px',
-            color: '#111827',
-            textAlign: 'center'
-          }}>
-            Általános példa számítás
-          </h2>
-          <DemoCalculator macroData={macroData} />
-        </section>
 
         {/* Section 3 - Explanation */}
         <section style={{
-          marginBottom: '64px',
+          marginBottom: '48px',
           padding: '32px',
           backgroundColor: '#FFFFFF',
-          borderRadius: '2px',
-          border: '1px solid #E5E7EB'
+          borderRadius: '12px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
         }}>
           <h3 style={{
-            fontSize: '18px',
-            fontWeight: '400',
+            fontSize: '20px',
+            fontWeight: '600',
             marginBottom: '16px',
-            color: '#111827'
+            color: '#111827',
+            lineHeight: '1.3'
           }}>
             Mit mutat ez a számítás?
           </h3>
           <div style={{
             fontSize: '15px',
             lineHeight: '1.7',
-            color: '#4B5563'
+            color: '#1F2937',
+            fontWeight: '400'
           }}>
             <p style={{ marginBottom: '16px' }}>
               A fenti számítás egy általános példa. Rögzített értékeket használ 
@@ -110,22 +140,24 @@ export default async function Home() {
           marginBottom: '64px',
           padding: '32px',
           backgroundColor: '#FFFFFF',
-          borderRadius: '2px',
-          border: '1px solid #E5E7EB'
+          borderRadius: '12px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
         }}>
           <h3 style={{
-            fontSize: '18px',
-            fontWeight: '400',
+            fontSize: '20px',
+            fontWeight: '600',
             marginBottom: '16px',
-            color: '#111827'
+            color: '#111827',
+            lineHeight: '1.3'
           }}>
             Személyre szabott számítások
           </h3>
           <div style={{
             fontSize: '15px',
             lineHeight: '1.7',
-            color: '#4B5563',
-            marginBottom: '24px'
+            color: '#1F2937',
+            marginBottom: '24px',
+            fontWeight: '400'
           }}>
             <p style={{ marginBottom: '16px' }}>
               A fizetős hozzáférés személyre szabott számításokat tartalmaz.
@@ -155,13 +187,14 @@ export default async function Home() {
             <Link href="/fizetes" style={{
               display: 'inline-block',
               padding: '12px 24px',
-              backgroundColor: '#111827',
+              backgroundColor: '#2DD4BF',
               color: '#FFFFFF',
               textDecoration: 'none',
               border: 'none',
-              borderRadius: '2px',
+              borderRadius: '8px',
               fontSize: '14px',
-              fontWeight: '400'
+              fontWeight: '500',
+              transition: 'background-color 0.15s ease'
             }}>
               Hozzáférés vásárlása
             </Link>

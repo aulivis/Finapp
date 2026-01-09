@@ -68,37 +68,39 @@ export default function PaymentForm() {
       <form onSubmit={handleSubmit} style={{
       maxWidth: '500px',
       margin: '0 auto',
-      padding: '24px',
+      padding: '32px',
       backgroundColor: '#FFFFFF',
-      borderRadius: '2px',
-      border: '1px solid #E5E7EB'
+      borderRadius: '12px',
+      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
     }}>
       <h3 style={{
-        fontSize: '18px',
-        fontWeight: '400',
+        fontSize: '20px',
+        fontWeight: '600',
         marginBottom: '16px',
-        color: '#111827'
+        color: '#111827',
+        lineHeight: '1.3'
       }}>
         Hozzáférés vásárlása
       </h3>
       <p style={{
-        fontSize: '14px',
-        color: '#4B5563',
+        fontSize: '15px',
+        color: '#1F2937',
         marginBottom: '16px',
-        lineHeight: '1.6'
+        lineHeight: '1.7',
+        fontWeight: '400'
       }}>
         Email cím megadása után a fizetés során hozzáférés jön létre a személyre 
         szabott számítási eszközökhöz. A hozzáférés 1 évig érvényes.
       </p>
       <div style={{
-        padding: '16px',
+        padding: '20px',
         backgroundColor: '#F9FAFB',
-        border: '1px solid #E5E7EB',
-        borderRadius: '2px',
-        fontSize: '13px',
-        lineHeight: '1.6',
-        color: '#4B5563',
-        marginBottom: '24px'
+        borderRadius: '8px',
+        fontSize: '14px',
+        lineHeight: '1.7',
+        color: '#1F2937',
+        marginBottom: '24px',
+        fontWeight: '400'
       }}>
         Ez az eszköz kizárólag oktatási célokat szolgál, nem minősül pénzügyi 
         tanácsadásnak. A számítások feltételezéseken alapulnak.
@@ -107,10 +109,10 @@ export default function PaymentForm() {
       <div style={{ marginBottom: '16px' }}>
         <label htmlFor="email" style={{
           display: 'block',
-          marginBottom: '8px',
+          marginBottom: '10px',
           fontSize: '14px',
-          fontWeight: '400',
-          color: '#111827'
+          fontWeight: '500',
+          color: '#1F2937'
         }}>
           Email cím
         </label>
@@ -123,26 +125,28 @@ export default function PaymentForm() {
           placeholder="pelda@email.hu"
           style={{
             width: '100%',
-            padding: '12px',
+            padding: '12px 16px',
             fontSize: '16px',
             border: '1px solid #E5E7EB',
-            borderRadius: '2px',
+            borderRadius: '8px',
             boxSizing: 'border-box',
             backgroundColor: '#FFFFFF',
-            color: '#111827'
+            color: '#111827',
+            fontFamily: 'inherit',
+            fontWeight: '400'
           }}
         />
       </div>
 
       {error && (
         <div style={{
-          padding: '12px',
+          padding: '16px',
           backgroundColor: '#F9FAFB',
-          border: '1px solid #E5E7EB',
-          borderRadius: '2px',
-          color: '#4B5563',
+          borderRadius: '8px',
+          color: '#1F2937',
           fontSize: '14px',
-          marginBottom: '16px'
+          marginBottom: '16px',
+          fontWeight: '400'
         }}>
           {error}
         </div>
@@ -153,24 +157,26 @@ export default function PaymentForm() {
         disabled={loading}
         style={{
           width: '100%',
-          padding: '12px 24px',
+          padding: '14px 24px',
           fontSize: '15px',
-          fontWeight: '400',
+          fontWeight: '500',
           color: loading ? '#9CA3AF' : '#FFFFFF',
-          backgroundColor: loading ? '#E5E7EB' : '#111827',
+          backgroundColor: loading ? '#E5E7EB' : '#2DD4BF',
           border: 'none',
-          borderRadius: '2px',
-          cursor: loading ? 'not-allowed' : 'pointer'
+          borderRadius: '8px',
+          cursor: loading ? 'not-allowed' : 'pointer',
+          transition: 'background-color 0.15s ease'
         }}
       >
         {loading ? 'Feldolgozás...' : 'Fizetés'}
       </button>
 
       <p style={{
-        fontSize: '12px',
-        color: '#4B5563',
+        fontSize: '14px',
+        color: '#6B7280',
         marginTop: '16px',
-        lineHeight: '1.5'
+        lineHeight: '1.6',
+        fontWeight: '400'
       }}>
         A fizetés után emailben kapja meg a hozzáférési linket. 
         Jelszó nem szükséges, csak az email cím alapján történik az azonosítás.

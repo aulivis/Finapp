@@ -16,36 +16,39 @@ export default function PaymentCancelledPage() {
         maxWidth: '600px',
         padding: '48px',
         backgroundColor: '#FFFFFF',
-        borderRadius: '2px',
-        border: '1px solid #E5E7EB',
+        borderRadius: '12px',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
         textAlign: 'center'
       }}>
         <h1 style={{
           fontSize: '28px',
-          fontWeight: '500',
+          fontWeight: '600',
           marginBottom: '16px',
-          color: '#111827'
+          color: '#111827',
+          lineHeight: '1.3'
         }}>
           Fizetés megszakítva
         </h1>
         <p style={{
           fontSize: '16px',
-          lineHeight: '1.8',
-          color: '#4B5563',
-          marginBottom: '32px'
+          lineHeight: '1.7',
+          color: '#1F2937',
+          marginBottom: '32px',
+          fontWeight: '400'
         }}>
           A fizetési folyamat megszakadt. A vásárlás újraindítható.
         </p>
         <Link href="/" style={{
           display: 'inline-block',
           padding: '12px 24px',
-          backgroundColor: '#111827',
+          backgroundColor: '#2DD4BF',
           color: '#FFFFFF',
           textDecoration: 'none',
           border: 'none',
-          borderRadius: '2px',
+          borderRadius: '8px',
           fontSize: '14px',
-          fontWeight: '400'
+          fontWeight: '500',
+          transition: 'background-color 0.15s ease'
         }}>
           Vissza a főoldalra
         </Link>

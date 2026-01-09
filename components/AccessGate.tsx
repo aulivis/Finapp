@@ -22,23 +22,25 @@ export default function AccessGate({ calculatorName }: AccessGateProps) {
         <div style={{
           padding: '48px',
           backgroundColor: '#FFFFFF',
-          borderRadius: '2px',
-          border: '1px solid #E5E7EB'
+          borderRadius: '12px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
         }}>
           <h1 style={{
-            fontSize: '24px',
-            fontWeight: '400',
+            fontSize: '28px',
+            fontWeight: '600',
             marginBottom: '16px',
-            color: '#111827'
+            color: '#111827',
+            lineHeight: '1.3'
           }}>
             Hozzáférés szükséges
           </h1>
 
           <div style={{
-            fontSize: '15px',
+            fontSize: '16px',
             lineHeight: '1.7',
-            color: '#4B5563',
-            marginBottom: '32px'
+            color: '#1F2937',
+            marginBottom: '32px',
+            fontWeight: '400'
           }}>
             <p style={{ marginBottom: '16px' }}>
               {calculatorName 
@@ -52,13 +54,13 @@ export default function AccessGate({ calculatorName }: AccessGateProps) {
             </p>
             <p style={{
               margin: '0',
-              padding: '12px',
-              backgroundColor: '#ffffff',
-              borderRadius: '2px',
-              border: '1px solid #E5E7EB',
-              fontSize: '14px'
+              padding: '16px',
+              backgroundColor: '#F9FAFB',
+              borderRadius: '8px',
+              fontSize: '14px',
+              fontWeight: '400'
             }}>
-              A hozzáférés <strong>1 évig érvényes</strong> a fizetés után.
+              A hozzáférés <strong style={{ fontWeight: '600' }}>1 évig érvényes</strong> a fizetés után.
             </p>
           </div>
 
@@ -73,15 +75,16 @@ export default function AccessGate({ calculatorName }: AccessGateProps) {
                 flex: '1',
                 minWidth: '200px',
                 padding: '12px 24px',
-                backgroundColor: '#ffffff',
-                color: '#111827',
+                backgroundColor: '#2DD4BF',
+                color: '#FFFFFF',
                 textDecoration: 'none',
-                border: '1px solid #E5E7EB',
-                borderRadius: '2px',
+                border: 'none',
+                borderRadius: '8px',
                 fontSize: '15px',
-                fontWeight: '400',
+                fontWeight: '500',
                 textAlign: 'center',
-                display: 'inline-block'
+                display: 'inline-block',
+                transition: 'background-color 0.15s ease'
               }}
             >
               Hozzáférés
@@ -92,15 +95,16 @@ export default function AccessGate({ calculatorName }: AccessGateProps) {
                 flex: '1',
                 minWidth: '200px',
                 padding: '12px 24px',
-                backgroundColor: '#F9FAFB',
-                color: '#4B5563',
+                backgroundColor: '#FFFFFF',
+                color: '#1F2937',
                 textDecoration: 'none',
                 border: '1px solid #E5E7EB',
-                borderRadius: '2px',
+                borderRadius: '8px',
                 fontSize: '15px',
                 fontWeight: '400',
                 textAlign: 'center',
-                display: 'inline-block'
+                display: 'inline-block',
+                transition: 'background-color 0.15s ease'
               }}
             >
               Vissza a nyilvános oldalra

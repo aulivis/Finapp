@@ -24,28 +24,41 @@ export default async function AccessPage({ searchParams }: PageProps) {
       }}>
         <div style={{
           maxWidth: '600px',
-          padding: '32px',
+          padding: '48px',
           backgroundColor: '#FFFFFF',
-          borderRadius: '2px',
-          border: '1px solid #E5E7EB',
+          borderRadius: '12px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
           textAlign: 'center'
         }}>
-          <h1 style={{ marginBottom: '16px', color: '#212529' }}>
+          <h1 style={{ 
+            marginBottom: '16px', 
+            color: '#111827',
+            fontSize: '24px',
+            fontWeight: '600',
+            lineHeight: '1.3'
+          }}>
             Hozzáférés ellenőrzése
           </h1>
-          <p style={{ color: '#4B5563', marginBottom: '24px' }}>
+          <p style={{ 
+            color: '#1F2937', 
+            marginBottom: '24px',
+            fontSize: '16px',
+            lineHeight: '1.7',
+            fontWeight: '400'
+          }}>
             A hozzáférési link nem található. A hozzáférési linket emailben küldjük.
           </p>
           <Link href="/" style={{
             display: 'inline-block',
             padding: '12px 24px',
-            backgroundColor: '#111827',
+            backgroundColor: '#2DD4BF',
             color: '#FFFFFF',
             textDecoration: 'none',
             border: 'none',
-            borderRadius: '2px',
+            borderRadius: '8px',
             fontSize: '14px',
-            fontWeight: '400'
+            fontWeight: '500',
+            transition: 'background-color 0.15s ease'
           }}>
             Vissza a főoldalra
           </Link>
@@ -67,28 +80,41 @@ export default async function AccessPage({ searchParams }: PageProps) {
       }}>
         <div style={{
           maxWidth: '600px',
-          padding: '32px',
+          padding: '48px',
           backgroundColor: '#FFFFFF',
-          borderRadius: '2px',
-          border: '1px solid #E5E7EB',
+          borderRadius: '12px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
           textAlign: 'center'
         }}>
-          <h1 style={{ marginBottom: '16px', color: '#212529' }}>
+          <h1 style={{ 
+            marginBottom: '16px', 
+            color: '#111827',
+            fontSize: '24px',
+            fontWeight: '600',
+            lineHeight: '1.3'
+          }}>
             Érvénytelen hozzáférési link
           </h1>
-          <p style={{ color: '#4B5563', marginBottom: '24px' }}>
+          <p style={{ 
+            color: '#1F2937', 
+            marginBottom: '24px',
+            fontSize: '16px',
+            lineHeight: '1.7',
+            fontWeight: '400'
+          }}>
             A hozzáférési link formátuma nem megfelelő.
           </p>
           <Link href="/" style={{
             display: 'inline-block',
             padding: '12px 24px',
-            backgroundColor: '#111827',
+            backgroundColor: '#2DD4BF',
             color: '#FFFFFF',
             textDecoration: 'none',
             border: 'none',
-            borderRadius: '2px',
+            borderRadius: '8px',
             fontSize: '14px',
-            fontWeight: '400'
+            fontWeight: '500',
+            transition: 'background-color 0.15s ease'
           }}>
             Vissza a főoldalra
           </Link>
@@ -111,16 +137,28 @@ export default async function AccessPage({ searchParams }: PageProps) {
       }}>
         <div style={{
           maxWidth: '600px',
-          padding: '32px',
+          padding: '48px',
           backgroundColor: '#FFFFFF',
-          border: '1px solid #E5E7EB',
-          borderRadius: '2px',
+          borderRadius: '12px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
           textAlign: 'center'
         }}>
-          <h1 style={{ marginBottom: '16px', color: '#212529', fontWeight: '400' }}>
+          <h1 style={{ 
+            marginBottom: '16px', 
+            color: '#111827', 
+            fontWeight: '600',
+            fontSize: '24px',
+            lineHeight: '1.3'
+          }}>
             Hozzáférés lejárt
           </h1>
-          <p style={{ color: '#4B5563', marginBottom: '24px', lineHeight: '1.7', fontSize: '15px' }}>
+          <p style={{ 
+            color: '#1F2937', 
+            marginBottom: '24px', 
+            lineHeight: '1.7', 
+            fontSize: '16px',
+            fontWeight: '400'
+          }}>
             Az email címhez tartozó hozzáférés lejárt. 
             A hozzáférés 1 évig érvényes a fizetés után. Új hozzáféréshez 
             szükséges a fizetés megismétlése.
@@ -128,14 +166,15 @@ export default async function AccessPage({ searchParams }: PageProps) {
           <Link href="/" style={{
             display: 'inline-block',
             padding: '12px 24px',
-            backgroundColor: '#ffffff',
-            color: '#111827',
+            backgroundColor: '#2DD4BF',
+            color: '#FFFFFF',
             textDecoration: 'none',
-            border: '1px solid #E5E7EB',
-            borderRadius: '2px',
+            border: 'none',
+            borderRadius: '8px',
             fontSize: '14px',
-            fontWeight: '400',
-            marginTop: '16px'
+            fontWeight: '500',
+            marginTop: '16px',
+            transition: 'background-color 0.15s ease'
           }}>
             Vissza a főoldalra
           </Link>

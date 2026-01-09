@@ -139,19 +139,21 @@ export default function CalculatorsClient({
       {/* Inflation Calculator */}
       <div style={{ marginBottom: '64px' }}>
         <h1 style={{
-          fontSize: '24px',
-          fontWeight: '400',
-          marginBottom: '12px',
-          color: '#111827'
+          fontSize: '28px',
+          fontWeight: '600',
+          marginBottom: '16px',
+          color: '#111827',
+          lineHeight: '1.3'
         }}>
           Személyre szabott inflációs számítás
         </h1>
 
         <p style={{
-          fontSize: '15px',
-          lineHeight: '1.6',
-          color: '#4B5563',
-          marginBottom: '32px'
+          fontSize: '16px',
+          lineHeight: '1.7',
+          color: '#1F2937',
+          marginBottom: '32px',
+          fontWeight: '400'
         }}>
           A számítás mutatja, hogyan változott a pénz vásárlóereje a kiválasztott időszakban. 
           Az infláció és az esetleges kamatbevétel hatása látható.
@@ -177,10 +179,10 @@ export default function CalculatorsClient({
           <div style={{ marginBottom: '20px' }}>
             <label style={{
               display: 'block',
-              marginBottom: '8px',
-              fontWeight: '400',
+              marginBottom: '10px',
+              fontWeight: '500',
               fontSize: '14px',
-              color: '#111827'
+              color: '#1F2937'
             }}>
               Kezdeti összeg (HUF)
             </label>
@@ -195,9 +197,11 @@ export default function CalculatorsClient({
                 padding: '12px',
                 fontSize: '16px',
                 border: '1px solid #E5E7EB',
-                borderRadius: '2px',
+                borderRadius: '8px',
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
+                fontFamily: 'inherit',
+                fontWeight: '400'
                 maxWidth: '300px'
               }}
             />
@@ -206,10 +210,10 @@ export default function CalculatorsClient({
           <div style={{ marginBottom: '20px' }}>
             <label style={{
               display: 'block',
-              marginBottom: '8px',
-              fontWeight: '400',
+              marginBottom: '10px',
+              fontWeight: '500',
               fontSize: '14px',
-              color: '#111827'
+              color: '#1F2937'
             }}>
               Kezdő év
             </label>
@@ -221,9 +225,11 @@ export default function CalculatorsClient({
                 padding: '12px',
                 fontSize: '16px',
                 border: '1px solid #E5E7EB',
-                borderRadius: '2px',
+                borderRadius: '8px',
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
+                fontFamily: 'inherit',
+                fontWeight: '400'
                 maxWidth: '200px'
               }}
             >
@@ -236,10 +242,10 @@ export default function CalculatorsClient({
           <div style={{ marginBottom: '0' }}>
             <label style={{
               display: 'block',
-              marginBottom: '8px',
-              fontWeight: '400',
+              marginBottom: '10px',
+              fontWeight: '500',
               fontSize: '14px',
-              color: '#111827'
+              color: '#1F2937'
             }}>
               Tartási forma
             </label>
@@ -251,9 +257,11 @@ export default function CalculatorsClient({
                 padding: '12px',
                 fontSize: '16px',
                 border: '1px solid #E5E7EB',
-                borderRadius: '2px',
+                borderRadius: '8px',
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
+                fontFamily: 'inherit',
+                fontWeight: '400'
                 maxWidth: '400px'
               }}
             >
@@ -262,10 +270,11 @@ export default function CalculatorsClient({
               <option value="no-yield">Nincs hozam</option>
             </select>
             <p style={{
-              fontSize: '13px',
-              color: '#4B5563',
+              fontSize: '14px',
+              color: '#6B7280',
               marginTop: '8px',
-              lineHeight: '1.5'
+              lineHeight: '1.6',
+              fontWeight: '400'
             }}>
               {getHoldingTypeDescription(holdingType)}
             </p>
@@ -291,16 +300,15 @@ export default function CalculatorsClient({
 
           {/* Main Human-Readable Message */}
           <div style={{
-            padding: '20px',
+            padding: '24px',
             backgroundColor: '#F9FAFB',
-            borderRadius: '2px',
-            border: '1px solid #E5E7EB',
+            borderRadius: '8px',
             marginBottom: '24px',
             textAlign: 'center'
           }}>
             <p style={{
-              fontSize: '18px',
-              lineHeight: '1.6',
+              fontSize: '20px',
+              lineHeight: '1.7',
               color: '#111827',
               margin: '0',
               fontWeight: '400'
@@ -317,15 +325,14 @@ export default function CalculatorsClient({
             marginBottom: '24px'
           }}>
             <div style={{
-              padding: '16px',
+              padding: '20px',
               backgroundColor: '#F9FAFB',
-              borderRadius: '2px',
-              border: '1px solid #E5E7EB'
+              borderRadius: '8px'
             }}>
-              <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
+              <div style={{ fontSize: '13px', color: '#6B7280', marginBottom: '8px', fontWeight: '400' }}>
                 Kezdeti összeg ({startYear})
               </div>
-              <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
+              <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
                 {formatCurrency(inflationCalculation.initialAmount)}
               </div>
             </div>
@@ -339,7 +346,7 @@ export default function CalculatorsClient({
               <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
                 Névleges érték ({startYear} → {endYear})
               </div>
-              <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
+              <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
                 {formatCurrency(inflationCalculation.finalNominalValue)}
               </div>
             </div>
@@ -353,7 +360,7 @@ export default function CalculatorsClient({
               <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
                 Reál érték ({startYear} → {endYear})
               </div>
-              <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
+              <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
                 {formatCurrency(inflationCalculation.finalRealValue)}
               </div>
             </div>
@@ -367,7 +374,7 @@ export default function CalculatorsClient({
               <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
                 Vásárlóerő veszteség ({startYear} → {endYear})
               </div>
-              <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
+              <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
                 -{formatCurrency(inflationCalculation.purchasingPowerLoss)}
               </div>
               <div style={{ fontSize: '14px', color: '#4B5563', marginTop: '4px' }}>
@@ -510,10 +517,10 @@ export default function CalculatorsClient({
           <div style={{ marginBottom: '20px' }}>
             <label style={{
               display: 'block',
-              marginBottom: '8px',
-              fontWeight: '400',
+              marginBottom: '10px',
+              fontWeight: '500',
               fontSize: '14px',
-              color: '#111827'
+              color: '#1F2937'
             }}>
               Jelenlegi életkor
             </label>
@@ -528,9 +535,11 @@ export default function CalculatorsClient({
                 padding: '12px',
                 fontSize: '16px',
                 border: '1px solid #E5E7EB',
-                borderRadius: '2px',
+                borderRadius: '8px',
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
+                fontFamily: 'inherit',
+                fontWeight: '400'
                 maxWidth: '200px'
               }}
             />
@@ -546,10 +555,10 @@ export default function CalculatorsClient({
           <div style={{ marginBottom: '20px' }}>
             <label style={{
               display: 'block',
-              marginBottom: '8px',
-              fontWeight: '400',
+              marginBottom: '10px',
+              fontWeight: '500',
               fontSize: '14px',
-              color: '#111827'
+              color: '#1F2937'
             }}>
               Jelenlegi megtakarítás (HUF)
             </label>
@@ -564,9 +573,11 @@ export default function CalculatorsClient({
                 padding: '12px',
                 fontSize: '16px',
                 border: '1px solid #E5E7EB',
-                borderRadius: '2px',
+                borderRadius: '8px',
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
+                fontFamily: 'inherit',
+                fontWeight: '400'
                 maxWidth: '300px'
               }}
             />
@@ -575,10 +586,10 @@ export default function CalculatorsClient({
           <div style={{ marginBottom: '0' }}>
             <label style={{
               display: 'block',
-              marginBottom: '8px',
-              fontWeight: '400',
+              marginBottom: '10px',
+              fontWeight: '500',
               fontSize: '14px',
-              color: '#111827'
+              color: '#1F2937'
             }}>
               Havi megtakarítás (HUF)
             </label>
@@ -593,9 +604,11 @@ export default function CalculatorsClient({
                 padding: '12px',
                 fontSize: '16px',
                 border: '1px solid #E5E7EB',
-                borderRadius: '2px',
+                borderRadius: '8px',
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
+                fontFamily: 'inherit',
+                fontWeight: '400'
                 maxWidth: '300px'
               }}
             />
@@ -644,7 +657,7 @@ export default function CalculatorsClient({
                   <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
                     Hátralévő évek ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                   </div>
-                  <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
+                  <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
                     {doNothingCalculation.yearsToRetirement} év
                   </div>
                 </div>
@@ -658,7 +671,7 @@ export default function CalculatorsClient({
                   <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
                     Névleges érték ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                   </div>
-                  <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
+                  <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
                     {formatCurrency(doNothingCalculation.nominalValueAtRetirement)}
                   </div>
                 </div>
@@ -672,7 +685,7 @@ export default function CalculatorsClient({
                   <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
                     Reál vásárlóerő ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                   </div>
-                  <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
+                  <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
                     {formatCurrency(doNothingCalculation.realValueAtRetirement)}
                   </div>
                 </div>
@@ -686,7 +699,7 @@ export default function CalculatorsClient({
                   <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
                     Vásárlóerő változás ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                   </div>
-                  <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
+                  <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
                     {formatPercentageWithSign(doNothingCalculation.purchasingPowerChangePercentage)}
                   </div>
                   <div style={{ fontSize: '14px', color: '#4B5563', marginTop: '4px' }} className="tabular-nums">

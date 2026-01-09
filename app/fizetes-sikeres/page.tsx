@@ -22,23 +22,25 @@ export default function PaymentSuccessPage({ searchParams }: PageProps) {
         maxWidth: '600px',
         padding: '48px',
         backgroundColor: '#FFFFFF',
-        borderRadius: '2px',
-        border: '1px solid #E5E7EB',
+        borderRadius: '12px',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
         textAlign: 'center'
       }}>
         <h1 style={{
           fontSize: '28px',
-          fontWeight: '500',
+          fontWeight: '600',
           marginBottom: '16px',
-          color: '#111827'
+          color: '#111827',
+          lineHeight: '1.3'
         }}>
           Fizetés sikeres
         </h1>
         <p style={{
           fontSize: '16px',
-          lineHeight: '1.8',
-          color: '#4B5563',
-          marginBottom: '32px'
+          lineHeight: '1.7',
+          color: '#1F2937',
+          marginBottom: '32px',
+          fontWeight: '400'
         }}>
           A fizetés sikeresen megtörtént. A hozzáférési linket emailben küldjük 
           néhány perc múlva. A link a személyre szabott számítási eszközökhöz 
@@ -48,18 +50,18 @@ export default function PaymentSuccessPage({ searchParams }: PageProps) {
         <div style={{
           marginTop: '32px',
           marginBottom: '32px',
-          padding: '16px',
-          backgroundColor: '#FFFFFF',
-          borderRadius: '2px',
-          border: '1px solid #E5E7EB'
+          padding: '20px',
+          backgroundColor: '#F9FAFB',
+          borderRadius: '8px'
         }}>
           <p style={{
-            fontSize: '13px',
-            lineHeight: '1.6',
-            color: '#4B5563',
-            margin: '0'
+            fontSize: '14px',
+            lineHeight: '1.7',
+            color: '#1F2937',
+            margin: '0',
+            fontWeight: '400'
           }}>
-            <strong style={{ color: '#4B5563' }}>Email tájékoztatás:</strong> Negyedévente egyszer 
+            <strong style={{ fontWeight: '600', color: '#111827' }}>Email tájékoztatás:</strong> Negyedévente egyszer 
             automatikus emailt küldünk, amely az aktuális gazdasági változásokat összefoglalja. 
             Nem küldünk marketing emailt.
           </p>
@@ -68,10 +70,11 @@ export default function PaymentSuccessPage({ searchParams }: PageProps) {
         {sessionId && typeof sessionId === 'string' && sessionId.length > 0 && (
           <p style={{
             fontSize: '12px',
-            color: '#4B5563',
+            color: '#6B7280',
             marginBottom: '24px',
             fontFamily: 'monospace',
-            wordBreak: 'break-all'
+            wordBreak: 'break-all',
+            fontWeight: '400'
           }}>
             Munkamenet ID: {sessionId.substring(0, 20)}...
           </p>
@@ -79,13 +82,14 @@ export default function PaymentSuccessPage({ searchParams }: PageProps) {
         <Link href="/" style={{
           display: 'inline-block',
           padding: '12px 24px',
-          backgroundColor: '#111827',
+          backgroundColor: '#2DD4BF',
           color: '#FFFFFF',
           textDecoration: 'none',
           border: 'none',
-          borderRadius: '2px',
+          borderRadius: '8px',
           fontSize: '14px',
-          fontWeight: '400'
+          fontWeight: '500',
+          transition: 'background-color 0.15s ease'
         }}>
           Vissza a főoldalra
         </Link>
