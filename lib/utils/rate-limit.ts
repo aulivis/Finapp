@@ -59,8 +59,7 @@ export function rateLimit(
  * Get rate limit info without incrementing
  */
 export function getRateLimitInfo(
-  identifier: string,
-  windowMs: number
+  identifier: string
 ): { remaining: number; resetTime: number } | null {
   const now = Date.now()
   const entry = store[identifier]
