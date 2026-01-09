@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import ModernLineChart from '@/components/ModernLineChart'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
