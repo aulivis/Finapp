@@ -10,7 +10,6 @@ interface PersonalInflationCalculatorClientProps {
   initialData: Array<{ year: number; inflationRate: number }>
   m2Data: { inflationRate: number; m2Growth: number | null } | null
   latestYear: number
-  email: string
   dataSources: string[]
 }
 
@@ -18,7 +17,6 @@ export default function PersonalInflationCalculatorClient({
   initialData,
   m2Data,
   latestYear,
-  email,
   dataSources
 }: PersonalInflationCalculatorClientProps) {
   const [amount, setAmount] = useState(1000000)

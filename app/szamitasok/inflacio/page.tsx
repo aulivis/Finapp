@@ -55,7 +55,6 @@ export default async function PersonalInflationCalculator({ searchParams }: Page
     initialData={historicalData} 
     m2Data={m2Data}
     latestYear={latestYear}
-    email={email}
     dataSources={dataSources}
   />
 }
