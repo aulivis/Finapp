@@ -27,23 +27,23 @@ async function updateMacroData() {
   // Example data - replace with actual data fetching logic
   // M2 growth data should be added from official sources (MNB - Magyar Nemzeti Bank)
   const dataToInsert: MacroDataInput[] = [
-    { country: 'HU', year: 2014, inflation_rate: -0.2, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
-    { country: 'HU', year: 2015, inflation_rate: 0.1, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
-    { country: 'HU', year: 2016, inflation_rate: 0.4, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
-    { country: 'HU', year: 2017, inflation_rate: 2.4, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
-    { country: 'HU', year: 2018, inflation_rate: 2.8, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
-    { country: 'HU', year: 2019, inflation_rate: 3.4, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
-    { country: 'HU', year: 2020, inflation_rate: 3.3, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
-    { country: 'HU', year: 2021, inflation_rate: 5.1, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
-    { country: 'HU', year: 2022, inflation_rate: 14.5, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
-    { country: 'HU', year: 2023, inflation_rate: 17.6, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
-    { country: 'HU', year: 2024, inflation_rate: 3.7, interest_rate: null, m2_growth: null, source: 'KSH (Központi Statisztikai Hivatal)' },
+    { country: 'HU', year: 2014, inflation_rate: -0.2, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
+    { country: 'HU', year: 2015, inflation_rate: 0.1, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
+    { country: 'HU', year: 2016, inflation_rate: 0.4, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
+    { country: 'HU', year: 2017, inflation_rate: 2.4, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
+    { country: 'HU', year: 2018, inflation_rate: 2.8, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
+    { country: 'HU', year: 2019, inflation_rate: 3.4, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
+    { country: 'HU', year: 2020, inflation_rate: 3.3, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
+    { country: 'HU', year: 2021, inflation_rate: 5.1, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
+    { country: 'HU', year: 2022, inflation_rate: 14.5, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
+    { country: 'HU', year: 2023, inflation_rate: 17.6, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
+    { country: 'HU', year: 2024, inflation_rate: 3.7, interest_rate: null, m2_growth: null, source: 'KSH (K?zponti Statisztikai Hivatal)' },
   ]
 
   console.log(`Updating ${dataToInsert.length} records...`)
 
   for (const record of dataToInsert) {
-    const { data, error } = await supabaseAdmin
+    const { error } = await supabaseAdmin
       .from('macro_data')
       .upsert({
         country: record.country,
@@ -61,7 +61,7 @@ async function updateMacroData() {
     if (error) {
       console.error(`Error updating ${record.country} ${record.year}:`, error)
     } else {
-      console.log(`✓ Updated ${record.country} ${record.year}`)
+      console.log(`? Updated ${record.country} ${record.year}`)
     }
   }
 
