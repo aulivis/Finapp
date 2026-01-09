@@ -88,3 +88,13 @@ a[role="button"]:hover {
     font-size: 48px;
   }
 }
+
+/* Hero Visual Anchor Card */
+.hero-visual-card {
+  transition: all 0.3s ease;
+}
+
+.hero-visual-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.12), 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(45, 212, 191, 0.2) !important;
+}

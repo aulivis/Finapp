@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import ModernLineChart from '@/components/ModernLineChart'
 import ModernBarChart from '@/components/ModernBarChart'
@@ -15,14 +15,22 @@ const MAX_YEAR = 2025
 
 interface DemoCalculatorProps {
   macroData?: MacroData[]
+  onValuesChange?: (amount: number, startYear: number, endYear: number) => void
 }
 
-export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) {
+export default function DemoCalculator({ macroData = [], onValuesChange }: DemoCalculatorProps) {
   const [amount, setAmount] = useState(INITIAL_AMOUNT)
   const [years, setYears] = useState(INITIAL_YEARS)
   
   const startYear = START_YEAR
   const endYear = Math.min(startYear + years - 1, MAX_YEAR)
+
+  // Notify parent of value changes (including on mount)
+  useEffect(() => {
+    if (onValuesChange) {
+      onValuesChange(amount, startYear, endYear)
+    }
+  }, [amount, startYear, endYear, onValuesChange])
 
   const data = useMemo(() => {
     return calculatePurchasingPower(amount, startYear, endYear)
@@ -239,29 +247,6 @@ export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) 
         </div>
       </div>
 
-      {/* M2 Contextual Indicator */}
-      {(() => {
-        const endYearData = macroData.find(d => d.year === endYear)
-        const m2Growth = endYearData?.m2_growth !== null && endYearData?.m2_growth !== undefined 
-          ? Number(endYearData.m2_growth) 
-          : null
-        
-        if (m2Growth === null) return null
-        
-        return (
-          <div style={{
-            marginBottom: '32px'
-          }}>
-            <M2ContextualIndicatorClient 
-              year={endYear}
-              m2Growth={m2Growth}
-              periodStartYear={startYear}
-              periodEndYear={endYear}
-            />
-          </div>
-        )
-      })()}
-
       {/* Chart and Explanation in same card */}
       <div style={{
         marginBottom: '32px',
@@ -284,6 +269,31 @@ export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) 
           formatCurrency={formatCurrency}
           height={400}
         />
+
+        {/* M2 Contextual Indicator */}
+        {(() => {
+          const endYearData = macroData.find(d => d.year === endYear)
+          const m2Growth = endYearData?.m2_growth !== null && endYearData?.m2_growth !== undefined 
+            ? Number(endYearData.m2_growth) 
+            : null
+          
+          if (m2Growth === null) return null
+          
+          return (
+            <div style={{
+              marginTop: '32px',
+              paddingTop: '32px',
+              borderTop: '1px solid #E5E7EB'
+            }}>
+              <M2ContextualIndicatorClient 
+                year={endYear}
+                m2Growth={m2Growth}
+                periodStartYear={startYear}
+                periodEndYear={endYear}
+              />
+            </div>
+          )
+        })()}
 
         {/* Explanation */}
         <div style={{

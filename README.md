@@ -66,7 +66,6 @@ Nyisd meg a [http://localhost:3000](http://localhost:3000) címet a böngészőb
 - `npm run lint` - ESLint futtatása
 - `npm run type-check` - TypeScript típusellenőrzés
 - `npm run validate-env` - Környezeti változók validálása
-- `npm run update-macro-data` - Makro adatok frissítése
 - `npm run send-quarterly-email` - Negyedéves email küldése (manuálisan)
 - `npm run generate-quarterly-ai-content` - AI tartalom generálása
 

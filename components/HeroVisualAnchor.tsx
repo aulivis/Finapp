@@ -33,22 +33,36 @@ export default function HeroVisualAnchor({
   const effectiveStartYear = Math.max(startYear, 2014)
 
   return (
-    <div style={{
+    <div className="hero-visual-card" style={{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       gap: '16px',
-      padding: '32px',
-      backgroundColor: '#FFFFFF',
-      borderRadius: '12px',
-      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+      padding: '40px 32px',
+      background: 'linear-gradient(135deg, #FFFFFF 0%, #F0FDFA 100%)',
+      borderRadius: '16px',
+      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(45, 212, 191, 0.1)',
+      border: '2px solid rgba(45, 212, 191, 0.2)',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
+      {/* Decorative accent */}
       <div style={{
-        fontSize: '14px',
-        color: '#6B7280',
-        fontWeight: '400',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '4px',
+        background: 'linear-gradient(90deg, #2DD4BF 0%, #14B8A6 100%)'
+      }} />
+      <div style={{
+        fontSize: '15px',
+        color: '#059669',
+        fontWeight: '600',
         textAlign: 'center',
-        marginBottom: '8px'
+        marginBottom: '12px',
+        textTransform: 'uppercase',
+        letterSpacing: '0.5px'
       }}>
         Azonos összeg, eltérő vásárlóerő
       </div>
@@ -60,44 +74,47 @@ export default function HeroVisualAnchor({
         width: '100%'
       }}>
         <div style={{
-          fontSize: '24px',
-          fontWeight: '600',
+          fontSize: '28px',
+          fontWeight: '700',
           color: '#111827',
           textAlign: 'center',
-          fontVariantNumeric: 'tabular-nums'
+          fontVariantNumeric: 'tabular-nums',
+          marginBottom: '4px'
         }}>
           {formatCurrency(startValue)}
         </div>
         <div style={{
-          fontSize: '13px',
+          fontSize: '14px',
           color: '#6B7280',
-          fontWeight: '400'
+          fontWeight: '500'
         }}>
-          ({effectiveStartYear})
+          {effectiveStartYear}
         </div>
         <div style={{
-          fontSize: '20px',
-          color: '#6B7280',
-          fontWeight: '400',
-          margin: '4px 0'
+          fontSize: '24px',
+          color: '#EF4444',
+          fontWeight: '600',
+          margin: '8px 0',
+          transform: 'scale(1.2)'
         }}>
           ↓
         </div>
         <div style={{
-          fontSize: '24px',
-          fontWeight: '600',
-          color: '#111827',
+          fontSize: '28px',
+          fontWeight: '700',
+          color: '#EF4444',
           textAlign: 'center',
-          fontVariantNumeric: 'tabular-nums'
+          fontVariantNumeric: 'tabular-nums',
+          marginBottom: '4px'
         }}>
           ≈ {formatCurrency(endValue)}
         </div>
         <div style={{
-          fontSize: '13px',
+          fontSize: '14px',
           color: '#6B7280',
-          fontWeight: '400'
+          fontWeight: '500'
         }}>
-          ({endYear})
+          {endYear}
         </div>
       </div>
     </div>
