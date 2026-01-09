@@ -3,7 +3,7 @@ import FooterDisclaimer from '@/components/FooterDisclaimer'
 import M2ContextualIndicator from '@/components/M2ContextualIndicator'
 import Link from 'next/link'
 
-export default function Home() {
+export default async function Home() {
   return (
     <main style={{
       minHeight: '100vh',

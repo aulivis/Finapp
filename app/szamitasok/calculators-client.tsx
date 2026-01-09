@@ -198,7 +198,7 @@ export default function CalculatorsClient({
                 border: '1px solid #E5E7EB',
                 borderRadius: '2px',
                 backgroundColor: '#FFFFFF',
-                color: '#111827'
+                color: '#111827',
                 maxWidth: '300px'
               }}
             />
@@ -224,9 +224,8 @@ export default function CalculatorsClient({
                 border: '1px solid #E5E7EB',
                 borderRadius: '2px',
                 backgroundColor: '#FFFFFF',
-                color: '#111827'
-                maxWidth: '200px',
-                backgroundColor: '#FFFFFF'
+                color: '#111827',
+                maxWidth: '200px'
               }}
             >
               {availableYears.map(year => (
@@ -255,9 +254,8 @@ export default function CalculatorsClient({
                 border: '1px solid #E5E7EB',
                 borderRadius: '2px',
                 backgroundColor: '#FFFFFF',
-                color: '#111827'
-                maxWidth: '400px',
-                backgroundColor: '#FFFFFF'
+                color: '#111827',
+                maxWidth: '400px'
               }}
             >
               <option value="cash">Készpénz</option>
@@ -533,7 +531,7 @@ export default function CalculatorsClient({
                 border: '1px solid #E5E7EB',
                 borderRadius: '2px',
                 backgroundColor: '#FFFFFF',
-                color: '#111827'
+                color: '#111827',
                 maxWidth: '200px'
               }}
             />
@@ -569,7 +567,7 @@ export default function CalculatorsClient({
                 border: '1px solid #E5E7EB',
                 borderRadius: '2px',
                 backgroundColor: '#FFFFFF',
-                color: '#111827'
+                color: '#111827',
                 maxWidth: '300px'
               }}
             />
@@ -598,7 +596,7 @@ export default function CalculatorsClient({
                 border: '1px solid #E5E7EB',
                 borderRadius: '2px',
                 backgroundColor: '#FFFFFF',
-                color: '#111827'
+                color: '#111827',
                 maxWidth: '300px'
               }}
             />
