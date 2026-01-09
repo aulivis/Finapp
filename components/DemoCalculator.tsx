@@ -1,23 +1,31 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import ModernLineChart from '@/components/ModernLineChart'
+import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
+import { MacroData } from '@/lib/types/database'
 
 const INITIAL_AMOUNT = 1000000 // 1,000,000 HUF
 const START_YEAR = 2014
 const MIN_YEAR = 2014
-const MAX_YEAR = 2024
+const MAX_YEAR = 2025
 
-export default function DemoCalculator() {
+interface DemoCalculatorProps {
+  macroData?: MacroData[]
+}
+
+export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) {
+  const [initialAmount, setInitialAmount] = useState(INITIAL_AMOUNT)
+  const [startYear, setStartYear] = useState(START_YEAR)
   const [selectedEndYear, setSelectedEndYear] = useState(MAX_YEAR)
 
   const data = useMemo(() => {
-    return calculatePurchasingPower(INITIAL_AMOUNT, START_YEAR, selectedEndYear)
-  }, [selectedEndYear])
+    return calculatePurchasingPower(initialAmount, startYear, selectedEndYear)
+  }, [initialAmount, startYear, selectedEndYear])
 
-  const finalNominal = data[data.length - 1]?.nominal || INITIAL_AMOUNT
-  const finalReal = data[data.length - 1]?.real || INITIAL_AMOUNT
+  const finalNominal = data[data.length - 1]?.nominal || initialAmount
+  const finalReal = data[data.length - 1]?.real || initialAmount
   const loss = finalNominal - finalReal
   const lossPercentage = ((loss / finalNominal) * 100).toFixed(1)
 
@@ -32,6 +40,17 @@ export default function DemoCalculator() {
 
   // Generate available years
   const availableYears = Array.from({ length: MAX_YEAR - MIN_YEAR + 1 }, (_, i) => MIN_YEAR + i)
+  const availableStartYears = Array.from({ length: MAX_YEAR - MIN_YEAR + 1 }, (_, i) => MIN_YEAR + i)
+  
+  // Filter end years to be >= start year
+  const availableEndYears = availableYears.filter(year => year >= startYear)
+  
+  // Ensure selectedEndYear is valid
+  React.useEffect(() => {
+    if (selectedEndYear < startYear) {
+      setSelectedEndYear(startYear)
+    }
+  }, [startYear, selectedEndYear])
 
   return (
     <div style={{
@@ -62,7 +81,7 @@ export default function DemoCalculator() {
         Ez egy általános példa, nem személyre szabott számítás.
       </p>
 
-      {/* Fixed Parameters Display */}
+      {/* Parameters Display */}
       <div style={{
         marginBottom: '24px',
         padding: '20px',
@@ -80,17 +99,55 @@ export default function DemoCalculator() {
             <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>
               Kezdeti összeg
             </div>
-            <div style={{ fontSize: '18px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
-              {formatCurrency(INITIAL_AMOUNT)}
-            </div>
+            <input
+              type="number"
+              value={initialAmount}
+              onChange={(e) => setInitialAmount(Number(e.target.value) || 0)}
+              min="0"
+              step="10000"
+              style={{
+                width: '100%',
+                padding: '8px 12px',
+                fontSize: '16px',
+                border: '1px solid #E5E7EB',
+                borderRadius: '2px',
+                backgroundColor: '#FFFFFF',
+                color: '#111827',
+                fontFamily: 'inherit'
+              }}
+              className="tabular-nums"
+            />
           </div>
           <div>
             <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>
               Kezdő év
             </div>
-            <div style={{ fontSize: '18px', fontWeight: '400', color: '#212529' }}>
-              {START_YEAR}
-            </div>
+            <select
+              value={startYear}
+              onChange={(e) => {
+                const newStartYear = Number(e.target.value)
+                setStartYear(newStartYear)
+                if (selectedEndYear < newStartYear) {
+                  setSelectedEndYear(newStartYear)
+                }
+              }}
+              style={{
+                width: '100%',
+                padding: '8px 12px',
+                fontSize: '16px',
+                border: '1px solid #E5E7EB',
+                borderRadius: '2px',
+                backgroundColor: '#FFFFFF',
+                color: '#111827',
+                cursor: 'pointer'
+              }}
+            >
+              {availableStartYears.map(year => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>
@@ -110,7 +167,7 @@ export default function DemoCalculator() {
                 cursor: 'pointer'
               }}
             >
-              {availableYears.map(year => (
+              {availableEndYears.map(year => (
                 <option key={year} value={year}>
                   {year}
                 </option>
@@ -154,7 +211,7 @@ export default function DemoCalculator() {
             fontWeight: '400'
           }}>
             Ugyanaz az összeg <strong>{lossPercentage}%-kal kevesebb</strong> vásárlóerővel rendelkezik 
-            a(z) {START_YEAR} évhez képest ({START_YEAR} → {selectedEndYear}).
+            a(z) {startYear} évhez képest ({startYear} → {selectedEndYear}).
           </p>
         </div>
 
@@ -171,7 +228,7 @@ export default function DemoCalculator() {
             border: '1px solid #dee2e6'
           }}>
             <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
-              Névleges érték ({START_YEAR} → {selectedEndYear})
+              Névleges érték ({startYear} → {selectedEndYear})
             </div>
             <div style={{ fontSize: '24px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
               {formatCurrency(finalNominal)}
@@ -185,7 +242,7 @@ export default function DemoCalculator() {
             border: '1px solid #dee2e6'
           }}>
             <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
-              Inflációval korrigált érték ({START_YEAR} → {selectedEndYear})
+              Inflációval korrigált érték ({startYear} → {selectedEndYear})
             </div>
             <div style={{ fontSize: '24px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
               {formatCurrency(finalReal)}
@@ -199,7 +256,7 @@ export default function DemoCalculator() {
             border: '1px solid #dee2e6'
           }}>
             <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
-              Vásárlóerő veszteség ({START_YEAR} → {selectedEndYear})
+              Vásárlóerő veszteség ({startYear} → {selectedEndYear})
             </div>
             <div style={{ fontSize: '24px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
               -{formatCurrency(loss)}
@@ -267,7 +324,7 @@ export default function DemoCalculator() {
             margin: '0',
             lineHeight: '1.6'
           }}>
-            A névleges érték változatlan marad ({formatCurrency(INITIAL_AMOUNT)}), 
+            A névleges érték változatlan marad ({formatCurrency(initialAmount)}), 
             azonban az inflációval korrigált érték {lossPercentage}%-kal alacsonyabb 
             ({formatCurrency(finalReal)}).
           </p>
@@ -297,6 +354,25 @@ export default function DemoCalculator() {
         />
       </div>
 
+      {/* M2 Contextual Indicator */}
+      {(() => {
+        const endYearData = macroData.find(d => d.year === selectedEndYear)
+        const m2Growth = endYearData?.m2_growth !== null && endYearData?.m2_growth !== undefined 
+          ? Number(endYearData.m2_growth) 
+          : null
+        
+        if (m2Growth === null) return null
+        
+        return (
+          <M2ContextualIndicatorClient 
+            year={selectedEndYear}
+            m2Growth={m2Growth}
+            periodStartYear={startYear}
+            periodEndYear={selectedEndYear}
+          />
+        )
+      })()}
+
       {/* Explanation */}
       <div style={{
         padding: '20px',
@@ -311,8 +387,8 @@ export default function DemoCalculator() {
           A számítás magyarázata
         </p>
         <p style={{ margin: '0 0 12px 0' }}>
-          A számítás bemutatja, hogyan változott {formatCurrency(INITIAL_AMOUNT)} vásárlóereje 
-          {START_YEAR} és {selectedEndYear} között. A névleges érték változatlan marad, 
+          A számítás bemutatja, hogyan változott {formatCurrency(initialAmount)} vásárlóereje 
+          {startYear} és {selectedEndYear} között. A névleges érték változatlan marad, 
           azonban az infláció hatására a reál vásárlóerő csökken.
         </p>
         <p style={{ margin: '0 0 16px 0' }}>

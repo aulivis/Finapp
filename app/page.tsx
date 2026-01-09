@@ -1,10 +1,12 @@
 import React from 'react'
 import DemoCalculator from '@/components/DemoCalculator'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
-import M2ContextualIndicator from '@/components/M2ContextualIndicator'
 import Link from 'next/link'
+import { getMacroData } from '@/lib/data/macro-data'
 
 export default async function Home() {
+  // Fetch M2 data for the calculator
+  const macroData = await getMacroData('HU')
   return (
     <main style={{
       minHeight: '100vh',
@@ -61,8 +63,7 @@ export default async function Home() {
           }}>
             Általános példa számítás
           </h2>
-          <DemoCalculator />
-          <M2ContextualIndicator year={2024} />
+          <DemoCalculator macroData={macroData} />
         </section>
 
         {/* Section 3 - Explanation */}
@@ -164,43 +165,6 @@ export default async function Home() {
             }}>
               Hozzáférés vásárlása
             </Link>
-          </div>
-        </section>
-
-        {/* Section 5 - Disclaimer */}
-        <section style={{
-          padding: '32px',
-          backgroundColor: '#FFFFFF',
-          borderRadius: '2px',
-          border: '1px solid #E5E7EB'
-        }}>
-          <h3 style={{
-            fontSize: '18px',
-            fontWeight: '400',
-            marginBottom: '16px',
-            color: '#111827'
-          }}>
-            Fontos megjegyzések
-          </h3>
-          <div style={{
-            fontSize: '14px',
-            lineHeight: '1.7',
-            color: '#4B5563'
-          }}>
-            <p style={{ marginBottom: '12px' }}>
-              Ez az eszköz kizárólag oktatási célokat szolgál. Nem minősül 
-              pénzügyi tanácsadásnak, befektetési ajánlásnak vagy egyéb szakmai 
-              szolgáltatásnak.
-            </p>
-            <p style={{ marginBottom: '12px' }}>
-              A számítások feltételezéseken alapulnak és közelítő értékek. 
-              Nem veszik figyelembe az egyéni körülményeket, adózási tényezőket 
-              vagy piaci kockázatokat.
-            </p>
-            <p style={{ margin: '0' }}>
-              A múltbeli adatok nem garantálják a jövőbeli eredményeket. 
-              A pénzügyi döntésekhez szakértői konzultáció szükséges lehet.
-            </p>
           </div>
         </section>
       </div>

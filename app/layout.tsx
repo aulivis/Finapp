@@ -2,7 +2,6 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import DisclaimerBanner from '@/components/DisclaimerBanner'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 const inter = Inter({ 
@@ -65,7 +64,6 @@ export default function RootLayout({
     <html lang="hu" className={inter.variable}>
       <body style={{ fontFamily: 'var(--font-inter), Inter, sans-serif' }}>
         <ErrorBoundary>
-          <DisclaimerBanner />
           {children}
         </ErrorBoundary>
       </body>

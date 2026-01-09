@@ -1,7 +1,6 @@
 import React from 'react'
 import PaymentForm from '@/components/PaymentForm'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
-import DisclaimerBanner from '@/components/DisclaimerBanner'
 
 export default function PaymentPage() {
   return (
@@ -10,8 +9,6 @@ export default function PaymentPage() {
       backgroundColor: '#F9FAFB',
       padding: '0'
     }}>
-      <DisclaimerBanner />
-      
       <div style={{
         maxWidth: '600px',
         margin: '0 auto',
