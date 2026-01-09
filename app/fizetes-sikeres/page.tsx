@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
-import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
+import { colors, spacing, typography, shadows } from '@/lib/design-system'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import Alert from '@/components/ui/Alert'
