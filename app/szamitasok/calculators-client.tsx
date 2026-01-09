@@ -132,8 +132,9 @@ export default function CalculatorsClient({
   const doNothingCalculation = useMemo(() => {
     const projected = projectedInflation || DEFAULT_PROJECTED_ANNUAL_INFLATION
     return calculateDoNothingScenario(currentAge, currentSavings, monthlySavings, projected)
-  }, [currentAge, currentSavings, monthlySavings, projectedInflation])
+  }, [currentAge, currentSavings, monthlySavings, projectedInflation]);
 
+  // Render component
   return (
     <div style={{
       maxWidth: '1200px',
