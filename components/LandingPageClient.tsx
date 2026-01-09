@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import DemoCalculator from '@/components/DemoCalculator'
 import HeroVisualAnchor from '@/components/HeroVisualAnchor'
