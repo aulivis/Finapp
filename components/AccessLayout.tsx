@@ -1,5 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
+import { colors, spacing, typography } from '@/lib/design-system'
+import Button from '@/components/ui/Button'
 
 interface AccessLayoutProps {
   children: React.ReactNode
@@ -7,61 +9,54 @@ interface AccessLayoutProps {
 
 export default function AccessLayout({ children }: AccessLayoutProps) {
   return (
-    <div style={{
+    <div id="main-content" style={{
       minHeight: '100vh',
-      backgroundColor: '#F9FAFB'
+      backgroundColor: colors.background.default
     }}>
       <header style={{
-        backgroundColor: '#FFFFFF',
-        borderBottom: '1px solid #E5E7EB',
-        padding: '24px 0'
+        backgroundColor: colors.background.paper,
+        borderBottom: `1px solid ${colors.gray[200]}`,
+        padding: `${spacing.xl} 0`,
+        position: 'sticky',
+        top: 0,
+        zIndex: 10,
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}>
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '0 24px'
+          padding: `0 ${spacing.xl}`
         }}>
           <div style={{
-            marginBottom: '16px'
-          }}>
-            <h1 style={{
-              fontSize: '22px',
-              fontWeight: '600',
-              margin: '0 0 8px 0',
-              color: '#111827',
-              lineHeight: '1.3'
-            }}>
-              Számítási eszközök
-            </h1>
-            <p style={{
-              fontSize: '14px',
-              color: '#6B7280',
-              margin: 0,
-              fontWeight: '400'
-            }}>
-              Aktuális gazdasági környezet
-            </p>
-          </div>
-
-          <div style={{
+            marginBottom: spacing.lg,
             display: 'flex',
-            justifyContent: 'flex-end'
+            justifyContent: 'space-between',
+            alignItems: 'center'
           }}>
-            <Link
-              href="/"
-              style={{
-                padding: '8px 16px',
-                color: '#1F2937',
-                textDecoration: 'none',
-                border: '1px solid #E5E7EB',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontWeight: '400',
-                backgroundColor: '#FFFFFF',
-                transition: 'background-color 0.15s ease'
-              }}
-            >
-              Főoldal
+            <div>
+              <h1 style={{
+                fontSize: typography.fontSize['3xl'],
+                fontWeight: typography.fontWeight.semibold,
+                margin: `0 0 ${spacing.xs} 0`,
+                color: colors.text.primary,
+                lineHeight: typography.lineHeight.tight
+              }}>
+                Számítási eszközök
+              </h1>
+              <p style={{
+                fontSize: typography.fontSize.base,
+                color: colors.text.muted,
+                margin: 0,
+                fontWeight: typography.fontWeight.normal
+              }}>
+                Aktuális gazdasági környezet
+              </p>
+            </div>
+
+            <Link href="/">
+              <Button variant="secondary" size="sm">
+                Főoldal
+              </Button>
             </Link>
           </div>
         </div>
@@ -70,7 +65,7 @@ export default function AccessLayout({ children }: AccessLayoutProps) {
       <main style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '48px 24px'
+        padding: `${spacing['3xl']} ${spacing.xl}`
       }}>
         {children}
       </main>

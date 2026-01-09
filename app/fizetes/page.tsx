@@ -2,39 +2,41 @@ import React from 'react'
 import PaymentForm from '@/components/PaymentForm'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
 import Link from 'next/link'
+import { colors, spacing, typography } from '@/lib/design-system'
+import Button from '@/components/ui/Button'
 
 export default function PaymentPage() {
   return (
-    <main style={{
+    <main id="main-content" style={{
       minHeight: '100vh',
-      backgroundColor: '#F9FAFB',
+      backgroundColor: colors.background.default,
       padding: '0'
     }}>
       <div style={{
         maxWidth: '600px',
         margin: '0 auto',
-        padding: '64px 24px'
+        padding: `${spacing['4xl']} ${spacing.xl}`
       }}>
         <header style={{
-          marginBottom: '48px',
+          marginBottom: spacing['3xl'],
           textAlign: 'center'
         }}>
           <h1 style={{
-            fontSize: '28px',
-            fontWeight: '600',
-            marginBottom: '16px',
-            color: '#111827',
-            lineHeight: '1.3'
+            fontSize: typography.fontSize['4xl'],
+            fontWeight: typography.fontWeight.semibold,
+            marginBottom: spacing.lg,
+            color: colors.text.primary,
+            lineHeight: typography.lineHeight.tight
           }}>
             Hozzáférés vásárlása
           </h1>
           <p style={{
-            fontSize: '16px',
-            lineHeight: '1.7',
-            color: '#1F2937',
+            fontSize: typography.fontSize.lg,
+            lineHeight: typography.lineHeight.relaxed,
+            color: colors.text.secondary,
             maxWidth: '500px',
             margin: '0 auto',
-            fontWeight: '400'
+            fontWeight: typography.fontWeight.normal
           }}>
             A fizetős hozzáférés személyre szabott számításokat tartalmaz. 
             A hozzáférés 1 évig érvényes, email-cím alapján működik, jelszó nélkül.
@@ -43,20 +45,11 @@ export default function PaymentPage() {
 
         <PaymentForm />
 
-        <div style={{ marginTop: '24px', textAlign: 'center' }}>
-          <Link href="/" style={{
-            display: 'inline-block',
-            padding: '12px 24px',
-            backgroundColor: 'transparent',
-            color: '#1F2937',
-            textDecoration: 'none',
-            border: '1px solid #E5E7EB',
-            borderRadius: '8px',
-            fontSize: '14px',
-            fontWeight: '500',
-            transition: 'background-color 0.15s ease'
-          }}>
-            Vissza a kezdőlapra
+        <div style={{ marginTop: spacing.xl, textAlign: 'center' }}>
+          <Link href="/">
+            <Button variant="secondary" size="md">
+              Vissza a kezdőlapra
+            </Button>
           </Link>
         </div>
       </div>

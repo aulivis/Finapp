@@ -45,11 +45,20 @@ p, span, div, li {
   font-feature-settings: 'tnum';
 }
 
-/* Clean, understated input focus states */
+/* Enhanced focus states for accessibility */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+a:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.1);
+}
+
 input:focus,
 select:focus,
 textarea:focus {
-  outline: none;
   border-color: #2DD4BF;
   border-width: 1px;
 }

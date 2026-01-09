@@ -7,7 +7,11 @@ import ModernBarChart from '@/components/ModernBarChart'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
 import { MacroData } from '@/lib/types/database'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
-import { Maximize2, X } from 'lucide-react'
+import { Maximize2 } from 'lucide-react'
+import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
+import Card from '@/components/ui/Card'
+import StatCard from '@/components/ui/StatCard'
+import ChartOverlay from '@/components/ui/ChartOverlay'
 
 const START_YEAR = 2015
 const MAX_YEAR = 2025
@@ -50,116 +54,214 @@ export default function DemoCalculator({
   }
 
   return (
-    <div style={{
-      maxWidth: '900px',
-      margin: '0 auto',
-      padding: isMobile ? '0 16px' : '0 24px'
-    }}>
-      {/* Detailed Breakdown */}
+    <>
       <div style={{
-        marginBottom: isMobile ? '24px' : '32px',
-        padding: isMobile ? '20px' : '32px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '12px',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`
       }}>
-        <h3 style={{
-          fontSize: '18px',
-          fontWeight: '600',
-          marginBottom: '24px',
-          color: '#111827',
-          lineHeight: '1.3'
-        }}>
-          Eredmények
-        </h3>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '20px',
-          marginBottom: '24px'
-        }}>
-          <div style={{
-            padding: '20px',
-            backgroundColor: '#F9FAFB',
-            borderRadius: '8px'
+        {/* Detailed Breakdown */}
+        <Card style={{ marginBottom: isMobile ? spacing.xl : spacing['2xl'] }}>
+          <h3 style={{
+            fontSize: typography.fontSize['3xl'],
+            fontWeight: typography.fontWeight.semibold,
+            marginBottom: spacing.xl,
+            color: colors.text.primary,
+            lineHeight: typography.lineHeight.tight
           }}>
-            <div style={{ fontSize: '13px', color: '#6B7280', marginBottom: '8px', fontWeight: '400' }}>
-              Névleges érték
+            Eredmények
+          </h3>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: spacing.xl,
+            marginBottom: spacing.xl
+          }}>
+            <StatCard
+              label="Névleges érték"
+              value={finalNominal}
+              formatter={formatCurrency}
+            />
+            <StatCard
+              label="Inflációval korrigált érték"
+              value={finalReal}
+              formatter={formatCurrency}
+            />
+            <StatCard
+              label="Vásárlóerő veszteség"
+              value={loss}
+              formatter={(v) => `-${formatCurrency(v)}`}
+              subtitle={`(${lossPercentage}%)`}
+            />
+          </div>
+
+          {/* Bar Chart Comparison - Mobile: scrollable/expandable */}
+          <div style={{
+            padding: isMobile ? spacing.lg : spacing.xl,
+            backgroundColor: colors.primaryLight,
+            borderRadius: borderRadius.md,
+            border: `1px solid ${colors.primaryBorder}`,
+            position: 'relative'
+          }}>
+            <div style={{
+              fontSize: typography.fontSize.base,
+              color: colors.text.secondary,
+              marginBottom: spacing.lg,
+              fontWeight: typography.fontWeight.medium
+            }}>
+              Összehasonlítás
             </div>
-            <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
-              {formatCurrency(finalNominal)}
+            <div 
+              style={isMobile ? {
+                overflowX: 'auto',
+                overflowY: 'hidden',
+                WebkitOverflowScrolling: 'touch',
+                minWidth: 'min-content',
+                margin: `0 -${spacing.xs}`,
+                padding: `0 ${spacing.xs}`,
+                cursor: 'pointer',
+                transition: 'transform 0.2s ease'
+              } : undefined}
+              onClick={isMobile ? () => setExpandedChart('bar') : undefined}
+              role={isMobile ? 'button' : undefined}
+              tabIndex={isMobile ? 0 : undefined}
+              onKeyDown={isMobile ? (e) => e.key === 'Enter' && setExpandedChart('bar') : undefined}
+              aria-label={isMobile ? 'Érdemes megnyitás a nagyobb nézethez' : undefined}
+              onTouchStart={(e) => {
+                if (isMobile) {
+                  const touch = e.touches[0]
+                  const target = e.currentTarget
+                  const startX = touch.clientX
+                  const startScroll = target.scrollLeft
+                  
+                  const handleMove = (moveEvent: TouchEvent) => {
+                    const deltaX = moveEvent.touches[0].clientX - startX
+                    target.scrollLeft = startScroll - deltaX
+                  }
+                  
+                  const handleEnd = () => {
+                    document.removeEventListener('touchmove', handleMove)
+                    document.removeEventListener('touchend', handleEnd)
+                  }
+                  
+                  document.addEventListener('touchmove', handleMove, { passive: true })
+                  document.addEventListener('touchend', handleEnd)
+                }
+              }}
+            >
+              <div style={{ minWidth: isMobile ? 320 : undefined }}>
+                <ModernBarChart
+                  nominalValue={finalNominal}
+                  realValue={finalReal}
+                  formatCurrency={formatCurrency}
+                  height={isMobile ? 220 : 250}
+                />
+              </div>
+              {isMobile && (
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: spacing.xs,
+                  marginTop: spacing.md,
+                  fontSize: typography.fontSize.xs,
+                  color: colors.text.muted
+                }}>
+                  <Maximize2 size={14} />
+                  Érintse meg a nagyításért
+                </div>
+              )}
             </div>
           </div>
 
+          {/* Output Section - Plain Language Result */}
           <div style={{
-            padding: '20px',
-            backgroundColor: '#F9FAFB',
-            borderRadius: '8px'
+            padding: spacing['2xl'],
+            backgroundColor: colors.primaryLight,
+            borderRadius: borderRadius.lg,
+            boxShadow: shadows.md,
+            border: `2px solid ${colors.primaryBorder}`,
+            textAlign: 'center',
+            marginTop: spacing.xl,
+            position: 'relative',
+            overflow: 'hidden'
           }}>
-            <div style={{ fontSize: '13px', color: '#6B7280', marginBottom: '8px', fontWeight: '400' }}>
-              Inflációval korrigált érték
-            </div>
-            <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
-              {formatCurrency(finalReal)}
-            </div>
+            {/* Decorative accent */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '4px',
+              background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 100%)`
+            }} />
+            <p style={{
+              fontSize: typography.fontSize['2xl'],
+              lineHeight: typography.lineHeight.relaxed,
+              color: colors.text.primary,
+              margin: '0',
+              fontWeight: typography.fontWeight.normal
+            }}>
+              Ugyanaz az összeg <strong>{lossPercentage}%-kal kevesebb</strong> vásárlóerővel rendelkezik, mint {startYear}-ben ({startYear}–{endYear}).
+            </p>
           </div>
+        </Card>
 
-          <div style={{
-            padding: '20px',
-            backgroundColor: '#F9FAFB',
-            borderRadius: '8px'
+        {/* Chart and Explanation in same card */}
+        <Card style={{ marginBottom: isMobile ? spacing.xl : spacing['2xl'] }}>
+          <h3 style={{
+            fontSize: typography.fontSize['3xl'],
+            fontWeight: typography.fontWeight.semibold,
+            marginBottom: spacing.xl,
+            color: colors.text.primary,
+            lineHeight: typography.lineHeight.tight
           }}>
-            <div style={{ fontSize: '13px', color: '#6B7280', marginBottom: '8px', fontWeight: '400' }}>
-              Vásárlóerő veszteség
-            </div>
-            <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
-              -{formatCurrency(loss)}
-            </div>
-            <div style={{ fontSize: '14px', color: '#1F2937', marginTop: '4px', fontWeight: '400' }}>
-              ({lossPercentage}%)
-            </div>
-          </div>
-        </div>
-
-        {/* Bar Chart Comparison - Mobile: scrollable/expandable */}
-        <div style={{
-          padding: isMobile ? '16px' : '24px',
-          backgroundColor: '#F0FDFA',
-          borderRadius: '8px',
-          border: '1px solid rgba(45, 212, 191, 0.2)',
-          position: 'relative'
-        }}>
-          <div style={{
-            fontSize: '14px',
-            color: '#1F2937',
-            marginBottom: '16px',
-            fontWeight: '500'
-          }}>
-            Összehasonlítás
-          </div>
+            Vásárlóerő alakulása
+          </h3>
           <div 
             style={isMobile ? {
               overflowX: 'auto',
               overflowY: 'hidden',
               WebkitOverflowScrolling: 'touch',
-              minWidth: 'min-content',
-              margin: '0 -8px',
-              padding: '0 8px',
-              cursor: 'pointer'
+              margin: `0 -${spacing.xs}`,
+              padding: `0 ${spacing.xs}`,
+              cursor: 'pointer',
+              transition: 'transform 0.2s ease'
             } : undefined}
-            onClick={isMobile ? () => setExpandedChart('bar') : undefined}
+            onClick={isMobile ? () => setExpandedChart('line') : undefined}
             role={isMobile ? 'button' : undefined}
             tabIndex={isMobile ? 0 : undefined}
-            onKeyDown={isMobile ? (e) => e.key === 'Enter' && setExpandedChart('bar') : undefined}
+            onKeyDown={isMobile ? (e) => e.key === 'Enter' && setExpandedChart('line') : undefined}
             aria-label={isMobile ? 'Érdemes megnyitás a nagyobb nézethez' : undefined}
+            onTouchStart={(e) => {
+              if (isMobile) {
+                const touch = e.touches[0]
+                const target = e.currentTarget
+                const startX = touch.clientX
+                const startScroll = target.scrollLeft
+                
+                const handleMove = (moveEvent: TouchEvent) => {
+                  const deltaX = moveEvent.touches[0].clientX - startX
+                  target.scrollLeft = startScroll - deltaX
+                }
+                
+                const handleEnd = () => {
+                  document.removeEventListener('touchmove', handleMove)
+                  document.removeEventListener('touchend', handleEnd)
+                }
+                
+                document.addEventListener('touchmove', handleMove, { passive: true })
+                document.addEventListener('touchend', handleEnd)
+              }
+            }}
           >
-            <div style={{ minWidth: isMobile ? 320 : undefined }}>
-              <ModernBarChart
-                nominalValue={finalNominal}
-                realValue={finalReal}
+            <div style={{ minWidth: isMobile ? 500 : undefined }}>
+              <ModernLineChart
+                data={data}
                 formatCurrency={formatCurrency}
-                height={isMobile ? 220 : 250}
+                height={isMobile ? 320 : 400}
+                isMobile={isMobile}
               />
             </div>
             {isMobile && (
@@ -167,107 +269,17 @@ export default function DemoCalculator({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '6px',
-                marginTop: '12px',
-                fontSize: '12px',
-                color: '#6B7280'
+                gap: spacing.xs,
+                marginTop: spacing.md,
+                marginBottom: spacing.xs,
+                fontSize: typography.fontSize.xs,
+                color: colors.text.muted
               }}>
                 <Maximize2 size={14} />
-                Érintse meg a nagyításért
+                Érintse meg vagy görgessen a teljes ábra megtekintéséhez
               </div>
             )}
           </div>
-        </div>
-
-        {/* Output Section - Plain Language Result */}
-        <div style={{
-          padding: '32px',
-          backgroundColor: '#F0FDFA',
-          borderRadius: '12px',
-          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-          border: '2px solid rgba(45, 212, 191, 0.3)',
-          textAlign: 'center',
-          marginTop: '24px',
-          position: 'relative',
-          overflow: 'hidden'
-        }}>
-          {/* Decorative accent */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '4px',
-            background: 'linear-gradient(90deg, #2DD4BF 0%, #14B8A6 100%)'
-          }} />
-          <p style={{
-            fontSize: '20px',
-            lineHeight: '1.7',
-            color: '#111827',
-            margin: '0',
-            fontWeight: '400'
-          }}>
-            Ugyanaz az összeg <strong>{lossPercentage}%-kal kevesebb</strong> vásárlóerővel rendelkezik, mint {startYear}-ben ({startYear}–{endYear}).
-          </p>
-        </div>
-      </div>
-
-      {/* Chart and Explanation in same card */}
-      <div style={{
-        marginBottom: isMobile ? '24px' : '32px',
-        padding: isMobile ? '20px' : '32px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '12px',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
-      }}>
-        <h3 style={{
-          fontSize: '18px',
-          fontWeight: '600',
-          marginBottom: '24px',
-          color: '#111827',
-          lineHeight: '1.3'
-        }}>
-          Vásárlóerő alakulása
-        </h3>
-        <div 
-          style={isMobile ? {
-            overflowX: 'auto',
-            overflowY: 'hidden',
-            WebkitOverflowScrolling: 'touch',
-            margin: '0 -8px',
-            padding: '0 8px',
-            cursor: 'pointer'
-          } : undefined}
-          onClick={isMobile ? () => setExpandedChart('line') : undefined}
-          role={isMobile ? 'button' : undefined}
-          tabIndex={isMobile ? 0 : undefined}
-          onKeyDown={isMobile ? (e) => e.key === 'Enter' && setExpandedChart('line') : undefined}
-          aria-label={isMobile ? 'Érdemes megnyitás a nagyobb nézethez' : undefined}
-        >
-          <div style={{ minWidth: isMobile ? 500 : undefined }}>
-            <ModernLineChart
-              data={data}
-              formatCurrency={formatCurrency}
-              height={isMobile ? 320 : 400}
-              isMobile={isMobile}
-            />
-          </div>
-          {isMobile && (
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              marginTop: '12px',
-              marginBottom: '8px',
-              fontSize: '12px',
-              color: '#6B7280'
-            }}>
-              <Maximize2 size={14} />
-              Érintse meg vagy görgessen a teljes ábra megtekintéséhez
-            </div>
-          )}
-        </div>
 
         {/* M2 Contextual Indicator */}
         {(() => {
@@ -300,144 +312,97 @@ export default function DemoCalculator({
           )
         })()}
 
-        {/* Explanation - No border/line between M2 card and this section */}
-        <div style={{
-          marginTop: '32px',
-          fontSize: '15px',
-          lineHeight: '1.7',
-          color: '#1F2937',
-          fontWeight: '400'
-        }}>
-          <p style={{ margin: '0 0 16px 0', fontWeight: '600', color: '#111827', fontSize: '16px' }}>
-            A számítás magyarázata
-          </p>
-          <p style={{ margin: '0 0 16px 0' }}>
-            Ez az ábra azt mutatja meg, hogyan változott <strong>{formatCurrency(amount)} vásárlóereje {startYear} és {endYear} között</strong> az infláció hatására.
-            A pénz <strong>névleges értéke változatlan</strong>, miközben a <strong>valós vásárlóerő fokozatosan csökken</strong>.
-          </p>
-          <p style={{ margin: '0 0 16px 0' }}>
-            A bemutatott eredmény <strong>egy általános példa</strong>. Fix összeget és időszakot használ, és kizárólag azt szemlélteti, hogyan hat az infláció a pénz értékére hosszabb távon.
-          </p>
-          <p style={{ margin: '0 0 16px 0' }}>
-            A számítás <strong>nem személyre szabott</strong>. Nem veszi figyelembe az egyéni megtakarításokat, jövedelmet vagy befektetési döntéseket. Célja a mechanizmus bemutatása, nem pénzügyi tanácsadás.
-          </p>
-          <p style={{ margin: '0 0 20px 0' }}>
-            Az adatok forrása a <strong>KSH hivatalos éves inflációs statisztikái</strong>.
-            A múltbeli adatok nem jelentenek garanciát a jövőbeli értékekre.
-          </p>
-          <p style={{
-            margin: '20px 0 0 0',
-            padding: '16px',
-            backgroundColor: '#F9FAFB',
-            borderRadius: '8px',
-            fontSize: '14px',
-            lineHeight: '1.7',
-            color: '#1F2937',
-            fontWeight: '400'
+          {/* Explanation - No border/line between M2 card and this section */}
+          <div style={{
+            marginTop: spacing['2xl'],
+            fontSize: typography.fontSize.md,
+            lineHeight: typography.lineHeight.relaxed,
+            color: colors.text.secondary,
+            fontWeight: typography.fontWeight.normal
           }}>
-            <strong style={{ fontWeight: '600' }}>Az itt megjelenített adatok múltbeli, aggregált mutatókon alapulnak. Nem előrejelzések, és nem minősülnek pénzügyi tanácsnak.</strong>
-          </p>
-          <img 
-            src="/mi-tortenik.png" 
-            alt="Mi történik"
-            style={{
-              width: '100%',
-              height: 'auto',
-              marginTop: '24px'
-            }}
-          />
+            <p style={{ margin: `0 0 ${spacing.lg} 0`, fontWeight: typography.fontWeight.semibold, color: colors.text.primary, fontSize: typography.fontSize.xl }}>
+              A számítás magyarázata
+            </p>
+            <p style={{ margin: `0 0 ${spacing.lg} 0` }}>
+              Ez az ábra azt mutatja meg, hogyan változott <strong>{formatCurrency(amount)} vásárlóereje {startYear} és {endYear} között</strong> az infláció hatására.
+              A pénz <strong>névleges értéke változatlan</strong>, miközben a <strong>valós vásárlóerő fokozatosan csökken</strong>.
+            </p>
+            <p style={{ margin: `0 0 ${spacing.lg} 0` }}>
+              A bemutatott eredmény <strong>egy általános példa</strong>. Fix összeget és időszakot használ, és kizárólag azt szemlélteti, hogyan hat az infláció a pénz értékére hosszabb távon.
+            </p>
+            <p style={{ margin: `0 0 ${spacing.lg} 0` }}>
+              A számítás <strong>nem személyre szabott</strong>. Nem veszi figyelembe az egyéni megtakarításokat, jövedelmet vagy befektetési döntéseket. Célja a mechanizmus bemutatása, nem pénzügyi tanácsadás.
+            </p>
+            <p style={{ margin: `0 0 ${spacing.xl} 0` }}>
+              Az adatok forrása a <strong>KSH hivatalos éves inflációs statisztikái</strong>.
+              A múltbeli adatok nem jelentenek garanciát a jövőbeli értékekre.
+            </p>
+            <p style={{
+              margin: `${spacing.xl} 0 0 0`,
+              padding: spacing.lg,
+              backgroundColor: colors.background.subtle,
+              borderRadius: borderRadius.md,
+              fontSize: typography.fontSize.base,
+              lineHeight: typography.lineHeight.relaxed,
+              color: colors.text.secondary,
+              fontWeight: typography.fontWeight.normal
+            }}>
+              <strong style={{ fontWeight: typography.fontWeight.semibold }}>Az itt megjelenített adatok múltbeli, aggregált mutatókon alapulnak. Nem előrejelzések, és nem minősülnek pénzügyi tanácsnak.</strong>
+            </p>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '0',
+            paddingTop: '0'
+          }}>
+            <img 
+              src="/mi-tortenik.png" 
+              alt="Mi történik"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                display: 'block'
+              }}
+            />
+          </div>
         </div>
       </div>
 
-      {/* Mobile: Expanded chart overlay */}
-      {isMobile && expandedChart && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 50,
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '16px'
-          }}
-          onClick={() => setExpandedChart(null)}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => e.key === 'Escape' && setExpandedChart(null)}
-          aria-label="Bezárás"
-        >
-          <div
-            style={{
-              backgroundColor: '#FFFFFF',
-              borderRadius: '12px',
-              padding: '20px',
-              maxWidth: '100%',
-              maxHeight: '90vh',
-              overflow: 'auto',
-              position: 'relative'
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setExpandedChart(null)}
-              style={{
-                position: 'absolute',
-                top: '12px',
-                right: '12px',
-                width: '36px',
-                height: '36px',
-                borderRadius: '8px',
-                border: 'none',
-                backgroundColor: '#F3F4F6',
-                color: '#6B7280',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-              aria-label="Bezárás"
-            >
-              <X size={20} />
-            </button>
-            <div style={{ paddingRight: '40px' }}>
-              {expandedChart === 'line' && (
-                <>
-                  <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '16px', color: '#111827' }}>
-                    Vásárlóerő alakulása
-                  </h4>
-                  <div style={{ width: '100%', minWidth: 450 }}>
-                    <ModernLineChart
-                      data={data}
-                      formatCurrency={formatCurrency}
-                      height={350}
-                      isMobile={false}
-                    />
-                  </div>
-                </>
-              )}
-              {expandedChart === 'bar' && (
-                <>
-                  <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '16px', color: '#111827' }}>
-                    Összehasonlítás
-                  </h4>
-                  <div style={{ width: '100%', minWidth: 320 }}>
-                    <ModernBarChart
-                      nominalValue={finalNominal}
-                      realValue={finalReal}
-                      formatCurrency={formatCurrency}
-                      height={280}
-                    />
-                  </div>
-                </>
-              )}
-            </div>
           </div>
-        </div>
-      )}
+        </Card>
+      </div>
 
-    </div>
+      {/* Mobile: Expanded chart overlay */}
+      <ChartOverlay
+        isOpen={isMobile && expandedChart === 'line'}
+        onClose={() => setExpandedChart(null)}
+        title="Vásárlóerő alakulása"
+      >
+        <div style={{ width: '100%', minWidth: 450 }}>
+          <ModernLineChart
+            data={data}
+            formatCurrency={formatCurrency}
+            height={350}
+            isMobile={false}
+          />
+        </div>
+      </ChartOverlay>
+
+      <ChartOverlay
+        isOpen={isMobile && expandedChart === 'bar'}
+        onClose={() => setExpandedChart(null)}
+        title="Összehasonlítás"
+      >
+        <div style={{ width: '100%', minWidth: 320 }}>
+          <ModernBarChart
+            nominalValue={finalNominal}
+            realValue={finalReal}
+            formatCurrency={formatCurrency}
+            height={280}
+          />
+        </div>
+      </ChartOverlay>
+    </>
   )
 }

@@ -2,6 +2,12 @@
 
 import React, { useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
+import { colors, spacing } from '@/lib/design-system'
+import Button from '@/components/ui/Button'
+import Input from '@/components/ui/Input'
+import Alert from '@/components/ui/Alert'
+import Card from '@/components/ui/Card'
+import PaymentProgress from '@/components/PaymentProgress'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '')
 
@@ -10,23 +16,31 @@ export default function PaymentForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  const validateEmail = (email: string): string | null => {
+    if (!email || email.trim().length === 0) {
+      return 'Az email cím megadása kötelező.'
+    }
+    if (email.length > 320) {
+      return 'Az email cím túl hosszú.'
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email.trim())) {
+      return 'Érvényes email címet adjon meg.'
+    }
+    return null
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    
+    const validationError = validateEmail(email)
+    if (validationError) {
+      setError(validationError)
+      return
+    }
+
     setLoading(true)
-
-    // Client-side email validation
-    if (!email || email.trim().length === 0) {
-      setError('Az email cím megadása kötelező.')
-      setLoading(false)
-      return
-    }
-
-    if (email.length > 320) {
-      setError('Az email cím túl hosszú.')
-      setLoading(false)
-      return
-    }
 
     try {
       // Create checkout session
@@ -65,103 +79,51 @@ export default function PaymentForm() {
   }
 
   return (
-      <form onSubmit={handleSubmit} style={{
-      maxWidth: '500px',
-      margin: '0 auto',
-      padding: '32px',
-      backgroundColor: '#FFFFFF',
-      borderRadius: '12px',
-      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
-    }}>
-      <div style={{
-        padding: '20px',
-        backgroundColor: '#F9FAFB',
-        borderRadius: '8px',
-        fontSize: '14px',
-        lineHeight: '1.7',
-        color: '#1F2937',
-        marginBottom: '24px',
-        fontWeight: '400'
-      }}>
+    <Card style={{ maxWidth: '500px', margin: '0 auto' }}>
+      <PaymentProgress currentStep={1} totalSteps={2} />
+      
+      <Alert type="info" style={{ marginBottom: spacing.xl }}>
         Ez az eszköz kizárólag oktatási célokat szolgál, nem minősül pénzügyi 
         tanácsadásnak. A számítások feltételezéseken alapulnak.
-      </div>
+      </Alert>
       
-      <div style={{ marginBottom: '16px' }}>
-        <label htmlFor="email" style={{
-          display: 'block',
-          marginBottom: '10px',
-          fontSize: '14px',
-          fontWeight: '500',
-          color: '#1F2937'
-        }}>
-          Email cím
-        </label>
-        <input
+      <form onSubmit={handleSubmit}>
+        <Input
           id="email"
           type="email"
+          label="Email cím"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          placeholder="pelda@email.hu"
-          style={{
-            width: '100%',
-            padding: '12px 16px',
-            fontSize: '16px',
-            border: '1px solid #E5E7EB',
-            borderRadius: '8px',
-            boxSizing: 'border-box',
-            backgroundColor: '#FFFFFF',
-            color: '#111827',
-            fontFamily: 'inherit',
-            fontWeight: '400'
+          onChange={(e) => {
+            setEmail(e.target.value)
+            if (error) setError('')
           }}
+          placeholder="pelda@email.hu"
+          error={error || undefined}
+          helperText="A fizetés után emailben kapja meg a hozzáférési linket."
+          required
         />
-      </div>
 
-      {error && (
-        <div style={{
-          padding: '16px',
-          backgroundColor: '#F9FAFB',
-          borderRadius: '8px',
-          color: '#1F2937',
+        <Button
+          type="submit"
+          variant="primary"
+          size="lg"
+          loading={loading}
+          disabled={loading}
+          style={{ width: '100%', marginTop: spacing.md }}
+        >
+          Fizetés
+        </Button>
+
+        <p style={{
           fontSize: '14px',
-          marginBottom: '16px',
+          color: colors.text.muted,
+          marginTop: spacing.lg,
+          lineHeight: '1.6',
           fontWeight: '400'
         }}>
-          {error}
-        </div>
-      )}
-
-      <button
-        type="submit"
-        disabled={loading}
-        style={{
-          width: '100%',
-          padding: '14px 24px',
-          fontSize: '15px',
-          fontWeight: '500',
-          color: loading ? '#9CA3AF' : '#FFFFFF',
-          backgroundColor: loading ? '#E5E7EB' : '#2DD4BF',
-          border: 'none',
-          borderRadius: '8px',
-          cursor: loading ? 'not-allowed' : 'pointer',
-          transition: 'background-color 0.15s ease'
-        }}
-      >
-        {loading ? 'Feldolgozás...' : 'Fizetés'}
-      </button>
-
-      <p style={{
-        fontSize: '14px',
-        color: '#6B7280',
-        marginTop: '16px',
-        lineHeight: '1.6',
-        fontWeight: '400'
-      }}>
-        A fizetés után emailben kapja meg a hozzáférési linket. 
-        Jelszó nem szükséges, csak az email cím alapján történik az azonosítás.
-      </p>
-    </form>
+          Jelszó nem szükséges, csak az email cím alapján történik az azonosítás.
+        </p>
+      </form>
+    </Card>
   )
 }

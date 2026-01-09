@@ -4,6 +4,8 @@ import React, { useMemo } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import { Calculator, Calendar, Minus, Plus } from 'lucide-react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
+import { colors, spacing, typography, borderRadius, shadows, componentStyles } from '@/lib/design-system'
+import Input from '@/components/ui/Input'
 
 const MAX_YEAR = 2025
 
@@ -48,14 +50,15 @@ export default function HeroVisualAnchor({
     <div className="hero-visual-card" style={{
       display: 'flex',
       flexDirection: 'column',
-      gap: isMobile ? '20px' : '24px',
-      padding: isMobile ? '24px' : '32px',
-      background: 'linear-gradient(135deg, #FFFFFF 0%, #F0FDFA 100%)',
-      borderRadius: '16px',
-      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(45, 212, 191, 0.1)',
-      border: '2px solid rgba(45, 212, 191, 0.2)',
+      gap: isMobile ? spacing.xl : spacing.xl,
+      padding: isMobile ? spacing.xl : spacing['2xl'],
+      background: `linear-gradient(135deg, ${colors.background.paper} 0%, ${colors.primaryLight} 100%)`,
+      borderRadius: borderRadius.xl,
+      boxShadow: shadows.lg + ', 0 0 0 1px ' + colors.primaryBorder,
+      border: `2px solid ${colors.primaryBorder}`,
       position: 'relative',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      transition: 'all 0.3s ease'
     }}>
       {/* Decorative accent */}
       <div style={{
@@ -71,22 +74,22 @@ export default function HeroVisualAnchor({
       <div style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
-        gap: '16px'
+        gap: spacing.lg
       }}>
         <div>
           <label style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            fontSize: '13px',
-            color: '#1F2937',
-            marginBottom: '8px',
-            fontWeight: '500'
+            gap: spacing.xs,
+            fontSize: typography.fontSize.sm,
+            color: colors.text.secondary,
+            marginBottom: spacing.xs,
+            fontWeight: typography.fontWeight.medium
           }}>
-            <Calculator size={14} style={{ color: '#6B7280' }} />
+            <Calculator size={14} style={{ color: colors.gray[500] }} />
             Összeg
           </label>
-          <input
+          <Input
             type="number"
             value={initialAmount}
             onChange={(e) => {
@@ -95,32 +98,21 @@ export default function HeroVisualAnchor({
             }}
             min="0"
             step="10000"
-            style={{
-              width: '100%',
-              padding: '10px 14px',
-              fontSize: '15px',
-              border: '1px solid #E5E7EB',
-              borderRadius: '8px',
-              backgroundColor: '#FFFFFF',
-              color: '#111827',
-              fontFamily: 'inherit',
-              fontWeight: '400',
-              transition: 'border-color 0.15s ease'
-            }}
-            className="tabular-nums"
+            suffix="HUF"
+            style={{ marginBottom: 0 }}
           />
         </div>
         <div>
           <label style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            fontSize: '13px',
-            color: '#1F2937',
-            marginBottom: '8px',
-            fontWeight: '500'
+            gap: spacing.xs,
+            fontSize: typography.fontSize.sm,
+            color: colors.text.secondary,
+            marginBottom: spacing.xs,
+            fontWeight: typography.fontWeight.medium
           }}>
-            <Calendar size={14} style={{ color: '#6B7280' }} />
+            <Calendar size={14} style={{ color: colors.gray[500] }} />
             Évek száma
           </label>
           {isMobile ? (
@@ -141,62 +133,82 @@ export default function HeroVisualAnchor({
                   if (onYearsChange) onYearsChange(newYears)
                 }}
                 disabled={years <= 1}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '44px',
-                  height: '44px',
-                  border: 'none',
-                  backgroundColor: 'transparent',
-                  color: years <= 1 ? '#9CA3AF' : '#111827',
-                  cursor: years <= 1 ? 'not-allowed' : 'pointer',
-                  flexShrink: 0
-                }}
-                aria-label="Évek csökkentése"
-              >
-                <Minus size={20} />
-              </button>
-              <span 
-                style={{
-                  fontSize: '16px',
-                  fontWeight: '600',
-                  color: '#111827',
-                  fontVariantNumeric: 'tabular-nums',
-                  minWidth: '32px',
-                  textAlign: 'center'
-                }}
-                className="tabular-nums"
-              >
-                {years}
-              </span>
-              <button
-                type="button"
-                onClick={() => {
-                  const maxYears = MAX_YEAR - startYear + 1
-                  const newYears = Math.min(maxYears, years + 1)
-                  if (onYearsChange) onYearsChange(newYears)
-                }}
-                disabled={years >= MAX_YEAR - startYear + 1}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '44px',
-                  height: '44px',
-                  border: 'none',
-                  backgroundColor: 'transparent',
-                  color: years >= MAX_YEAR - startYear + 1 ? '#9CA3AF' : '#111827',
-                  cursor: years >= MAX_YEAR - startYear + 1 ? 'not-allowed' : 'pointer',
-                  flexShrink: 0
-                }}
-                aria-label="Évek növelése"
-              >
-                <Plus size={20} />
-              </button>
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '44px',
+                height: '44px',
+                border: 'none',
+                backgroundColor: 'transparent',
+                color: years <= 1 ? colors.gray[400] : colors.text.primary,
+                cursor: years <= 1 ? 'not-allowed' : 'pointer',
+                flexShrink: 0,
+                borderRadius: borderRadius.md,
+                transition: 'background-color 0.15s ease'
+              }}
+              onMouseEnter={(e) => {
+                if (years > 1) {
+                  e.currentTarget.style.backgroundColor = colors.gray[100]
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent'
+              }}
+              aria-label="Évek csökkentése"
+            >
+              <Minus size={20} />
+            </button>
+            <span 
+              style={{
+                fontSize: typography.fontSize.lg,
+                fontWeight: typography.fontWeight.semibold,
+                color: colors.text.primary,
+                fontVariantNumeric: 'tabular-nums',
+                minWidth: '32px',
+                textAlign: 'center'
+              }}
+              className="tabular-nums"
+            >
+              {years}
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                const maxYears = MAX_YEAR - effectiveStartYear + 1
+                const newYears = Math.min(maxYears, years + 1)
+                if (onYearsChange) onYearsChange(newYears)
+              }}
+              disabled={years >= MAX_YEAR - effectiveStartYear + 1}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '44px',
+                height: '44px',
+                border: 'none',
+                backgroundColor: 'transparent',
+                color: years >= MAX_YEAR - effectiveStartYear + 1 ? colors.gray[400] : colors.text.primary,
+                cursor: years >= MAX_YEAR - effectiveStartYear + 1 ? 'not-allowed' : 'pointer',
+                flexShrink: 0,
+                borderRadius: borderRadius.md,
+                transition: 'background-color 0.15s ease'
+              }}
+              onMouseEnter={(e) => {
+                if (years < MAX_YEAR - effectiveStartYear + 1) {
+                  e.currentTarget.style.backgroundColor = colors.gray[100]
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent'
+              }}
+              aria-label="Évek növelése"
+            >
+              <Plus size={20} />
+            </button>
             </div>
           ) : (
-            <input
+            <Input
               type="number"
               value={years}
               onChange={(e) => {
@@ -205,19 +217,7 @@ export default function HeroVisualAnchor({
               }}
               min="1"
               max={MAX_YEAR - startYear + 1}
-              style={{
-                width: '100%',
-                padding: '10px 14px',
-                fontSize: '15px',
-                border: '1px solid #E5E7EB',
-                borderRadius: '8px',
-                backgroundColor: '#FFFFFF',
-                color: '#111827',
-                fontFamily: 'inherit',
-                fontWeight: '400',
-                transition: 'border-color 0.15s ease'
-              }}
-              className="tabular-nums"
+              style={{ marginBottom: 0 }}
             />
           )}
         </div>
@@ -230,61 +230,64 @@ export default function HeroVisualAnchor({
         alignItems: 'center',
         gap: '4px',
         width: '100%',
-        paddingTop: '16px',
-        borderTop: '1px solid rgba(45, 212, 191, 0.2)'
+        paddingTop: spacing.lg,
+        borderTop: `1px solid ${colors.primaryBorder}`
       }}>
         <div style={{
-          fontSize: '15px',
-          color: '#059669',
-          fontWeight: '600',
+          fontSize: typography.fontSize.md,
+          color: colors.success,
+          fontWeight: typography.fontWeight.semibold,
           textAlign: 'center',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
-          marginBottom: '8px'
+          marginBottom: spacing.xs
         }}>
           Azonos összeg, eltérő vásárlóerő
         </div>
         <div style={{
-          fontSize: isMobile ? '32px' : '38px',
-          fontWeight: '700',
-          color: '#111827',
+          fontSize: isMobile ? typography.fontSize['5xl'] : '38px',
+          fontWeight: typography.fontWeight.bold,
+          color: colors.text.primary,
           textAlign: 'center',
           fontVariantNumeric: 'tabular-nums',
-          marginBottom: '2px'
+          marginBottom: '2px',
+          transition: 'all 0.3s ease'
         }} className="hero-dynamic-number tabular-nums">
           {formatCurrency(startValue)}
         </div>
         <div style={{
-          fontSize: '12px',
-          color: '#6B7280',
-          fontWeight: '500',
-          marginBottom: '4px'
+          fontSize: typography.fontSize.xs,
+          color: colors.text.muted,
+          fontWeight: typography.fontWeight.medium,
+          marginBottom: spacing.xs
         }}>
           {effectiveStartYear}
         </div>
         <div style={{
-          fontSize: '20px',
-          color: '#EF4444',
-          fontWeight: '600',
-          margin: '4px 0',
-          transform: 'scale(1.2)'
+          fontSize: typography.fontSize['2xl'],
+          color: colors.error,
+          fontWeight: typography.fontWeight.semibold,
+          margin: `${spacing.xs} 0`,
+          transform: 'scale(1.2)',
+          transition: 'transform 0.2s ease'
         }}>
           ↓
         </div>
         <div style={{
-          fontSize: isMobile ? '32px' : '38px',
-          fontWeight: '700',
-          color: '#EF4444',
+          fontSize: isMobile ? typography.fontSize['5xl'] : '38px',
+          fontWeight: typography.fontWeight.bold,
+          color: colors.error,
           textAlign: 'center',
           fontVariantNumeric: 'tabular-nums',
-          marginBottom: '2px'
+          marginBottom: '2px',
+          transition: 'all 0.3s ease'
         }} className="hero-dynamic-number tabular-nums">
           ≈ {formatCurrency(endValue)}
         </div>
         <div style={{
-          fontSize: '12px',
-          color: '#6B7280',
-          fontWeight: '500'
+          fontSize: typography.fontSize.xs,
+          color: colors.text.muted,
+          fontWeight: typography.fontWeight.medium
         }}>
           {endYear}
         </div>

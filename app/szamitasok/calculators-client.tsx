@@ -173,7 +173,7 @@ export default function CalculatorsClient({
           border: '1px solid #E5E7EB'
         }}>
           <h2 style={{
-            fontSize: isMobile ? '15px' : '16px',
+            fontSize: isMobile ? '16.5px' : '17.6px',
             fontWeight: '400',
             marginBottom: isMobile ? '16px' : '20px',
             color: '#111827'
@@ -295,7 +295,7 @@ export default function CalculatorsClient({
           border: '1px solid #E5E7EB'
         }}>
           <h2 style={{
-            fontSize: '16px',
+            fontSize: '17.6px',
             fontWeight: '400',
             marginBottom: '20px',
             color: '#111827'
@@ -517,7 +517,7 @@ export default function CalculatorsClient({
           border: '1px solid #E5E7EB'
         }}>
           <h2 style={{
-            fontSize: isMobile ? '15px' : '16px',
+            fontSize: isMobile ? '16.5px' : '17.6px',
             fontWeight: '400',
             marginBottom: isMobile ? '16px' : '20px',
             color: '#111827'
@@ -714,7 +714,7 @@ export default function CalculatorsClient({
           border: '1px solid #E5E7EB'
         }}>
           <h2 style={{
-            fontSize: '16px',
+            fontSize: '17.6px',
             fontWeight: '400',
             marginBottom: '20px',
             color: '#111827'

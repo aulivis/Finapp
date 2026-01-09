@@ -7,6 +7,8 @@ import HeroVisualAnchor from '@/components/HeroVisualAnchor'
 import ContextaWordmark from '@/components/ContextaWordmark'
 import { MacroData } from '@/lib/types/database'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
+import { colors, spacing, typography } from '@/lib/design-system'
+import Button from '@/components/ui/Button'
 
 interface LandingPageClientProps {
   macroData?: MacroData[]
@@ -29,17 +31,17 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
     <>
       {/* Hero Section - Two columns */}
       <header className="hero-section" style={{
-        backgroundColor: '#F9FAFB',
-        padding: isMobile ? '48px 0 56px 0' : '96px 0 112px 0'
+        backgroundColor: colors.background.default,
+        padding: isMobile ? `${spacing['3xl']} 0 ${spacing['4xl']} 0` : `${spacing['5xl']} 0 ${spacing['4xl']} 0`
       }}>
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: isMobile ? '0 16px' : '0 24px'
+          padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`
         }}>
           {/* Wordmark */}
           <div style={{
-            marginBottom: isMobile ? '32px' : '64px'
+            marginBottom: isMobile ? spacing['2xl'] : spacing['4xl']
           }}>
             <ContextaWordmark />
           </div>
@@ -52,11 +54,11 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
             <div>
               {/* H1 */}
               <h1 className="hero-h1" style={{
-                fontSize: '36px',
-                fontWeight: '600',
-                margin: '0 0 24px 0',
-                color: '#111827',
-                lineHeight: '1.2',
+                fontSize: isMobile ? typography.fontSize['5xl'] : typography.fontSize['6xl'],
+                fontWeight: typography.fontWeight.semibold,
+                margin: `0 0 ${spacing.xl} 0`,
+                color: colors.text.primary,
+                lineHeight: typography.lineHeight.tight,
                 letterSpacing: '-0.02em'
               }}>
                 Mennyit ér valójában a pénzed?
@@ -64,11 +66,11 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
 
               {/* Subheadline */}
               <p style={{
-                fontSize: '18px',
-                lineHeight: '1.7',
-                color: '#1F2937',
-                margin: '0 0 48px 0',
-                fontWeight: '400'
+                fontSize: typography.fontSize.xl,
+                lineHeight: typography.lineHeight.relaxed,
+                color: colors.text.secondary,
+                margin: `0 0 ${spacing['3xl']} 0`,
+                fontWeight: typography.fontWeight.normal
               }}>
                 Az infláció önmagában nem ad teljes képet.<br />
                 Nézd meg, hogyan változott a vásárlóerőd az elmúlt években.
@@ -78,30 +80,20 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
               <div style={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '12px',
-                marginBottom: '24px'
+                gap: spacing.md,
+                marginBottom: spacing.xl
               }}>
-                <Link href="/fizetes" style={{
-                  display: 'inline-block',
-                  padding: '14px 32px',
-                  backgroundColor: '#2DD4BF',
-                  color: '#FFFFFF',
-                  textDecoration: 'none',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontSize: '15px',
-                  fontWeight: '500',
-                  transition: 'background-color 0.15s ease',
-                  width: 'fit-content'
-                }}>
-                  Személyre szabott számítás
+                <Link href="/fizetes">
+                  <Button variant="primary" size="lg" style={{ width: 'fit-content' }}>
+                    Személyre szabott számítás
+                  </Button>
                 </Link>
                 <p style={{
-                  fontSize: '13px',
-                  color: '#6B7280',
+                  fontSize: typography.fontSize.sm,
+                  color: colors.text.muted,
                   margin: '0',
-                  lineHeight: '1.6',
-                  fontWeight: '400'
+                  lineHeight: typography.lineHeight.normal,
+                  fontWeight: typography.fontWeight.normal
                 }}>
                   Nincs regisztráció. Nincs előrejelzés. Csak múltbeli adatok.
                 </p>
@@ -124,8 +116,8 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
 
       {/* Calculator - Directly below hero */}
       <div style={{
-        backgroundColor: '#F1F5F9',
-        padding: isMobile ? '32px 0 40px 0' : '64px 0'
+        backgroundColor: colors.gray[50],
+        padding: isMobile ? `${spacing['2xl']} 0 ${spacing['3xl']} 0` : `${spacing['4xl']} 0`
       }}>
         <DemoCalculator 
           macroData={macroData}

@@ -1,58 +1,40 @@
 import React from 'react'
 import Link from 'next/link'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
+import { colors, spacing, typography } from '@/lib/design-system'
+import Button from '@/components/ui/Button'
+import Card from '@/components/ui/Card'
+import Alert from '@/components/ui/Alert'
 
 export default function PaymentCancelledPage() {
   return (
-    <div style={{
+    <div id="main-content" style={{
       minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '24px',
-      backgroundColor: '#F9FAFB'
+      padding: spacing.xl,
+      backgroundColor: colors.background.default
     }}>
-      <div style={{
-        maxWidth: '600px',
-        padding: '48px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '12px',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-        textAlign: 'center'
-      }}>
+      <Card style={{ maxWidth: '600px', textAlign: 'center' }}>
         <h1 style={{
-          fontSize: '28px',
-          fontWeight: '600',
-          marginBottom: '16px',
-          color: '#111827',
-          lineHeight: '1.3'
+          fontSize: typography.fontSize['4xl'],
+          fontWeight: typography.fontWeight.semibold,
+          marginBottom: spacing.lg,
+          color: colors.text.primary,
+          lineHeight: typography.lineHeight.tight
         }}>
           Fizetés megszakítva
         </h1>
-        <p style={{
-          fontSize: '16px',
-          lineHeight: '1.7',
-          color: '#1F2937',
-          marginBottom: '32px',
-          fontWeight: '400'
-        }}>
+        <Alert type="warning" style={{ marginBottom: spacing['2xl'] }}>
           A fizetési folyamat megszakadt. A vásárlás újraindítható.
-        </p>
-        <Link href="/" style={{
-          display: 'inline-block',
-          padding: '12px 24px',
-          backgroundColor: '#2DD4BF',
-          color: '#FFFFFF',
-          textDecoration: 'none',
-          border: 'none',
-          borderRadius: '8px',
-          fontSize: '14px',
-          fontWeight: '500',
-          transition: 'background-color 0.15s ease'
-        }}>
-          Vissza a főoldalra
+        </Alert>
+        <Link href="/">
+          <Button variant="primary" size="md">
+            Vissza a főoldalra
+          </Button>
         </Link>
-      </div>
+      </Card>
       <FooterDisclaimer />
     </div>
   )

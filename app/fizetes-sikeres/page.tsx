@@ -1,6 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
+import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
+import Button from '@/components/ui/Button'
+import Card from '@/components/ui/Card'
+import Alert from '@/components/ui/Alert'
 
 interface PageProps {
   searchParams: { session_id?: string }
@@ -10,90 +14,60 @@ export default function PaymentSuccessPage({ searchParams }: PageProps) {
   const sessionId = searchParams.session_id
 
   return (
-    <div style={{
+    <div id="main-content" style={{
       minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '24px',
-      backgroundColor: '#F9FAFB'
+      padding: spacing.xl,
+      backgroundColor: colors.background.default
     }}>
-      <div style={{
-        maxWidth: '600px',
-        padding: '48px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '12px',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-        textAlign: 'center'
-      }}>
+      <Card style={{ maxWidth: '600px', textAlign: 'center' }}>
         <h1 style={{
-          fontSize: '28px',
-          fontWeight: '600',
-          marginBottom: '16px',
-          color: '#111827',
-          lineHeight: '1.3'
+          fontSize: typography.fontSize['4xl'],
+          fontWeight: typography.fontWeight.semibold,
+          marginBottom: spacing.lg,
+          color: colors.text.primary,
+          lineHeight: typography.lineHeight.tight
         }}>
           Fizetés sikeres
         </h1>
         <p style={{
-          fontSize: '16px',
-          lineHeight: '1.7',
-          color: '#1F2937',
-          marginBottom: '32px',
-          fontWeight: '400'
+          fontSize: typography.fontSize.lg,
+          lineHeight: typography.lineHeight.relaxed,
+          color: colors.text.secondary,
+          marginBottom: spacing['2xl'],
+          fontWeight: typography.fontWeight.normal
         }}>
           A fizetés sikeresen megtörtént. A hozzáférési linket emailben küldjük 
           néhány perc múlva. A link a személyre szabott számítási eszközökhöz 
           való hozzáférést biztosítja.
         </p>
 
-        <div style={{
-          marginTop: '32px',
-          marginBottom: '32px',
-          padding: '20px',
-          backgroundColor: '#F9FAFB',
-          borderRadius: '8px'
-        }}>
-          <p style={{
-            fontSize: '14px',
-            lineHeight: '1.7',
-            color: '#1F2937',
-            margin: '0',
-            fontWeight: '400'
-          }}>
-            <strong style={{ fontWeight: '600', color: '#111827' }}>Email tájékoztatás:</strong> Negyedévente egyszer 
-            automatikus emailt küldünk, amely az aktuális gazdasági változásokat összefoglalja. 
-            Nem küldünk marketing emailt.
-          </p>
-        </div>
+        <Alert type="success" style={{ marginTop: spacing['2xl'], marginBottom: spacing['2xl'] }}>
+          <strong>Email tájékoztatás:</strong> Negyedévente egyszer 
+          automatikus emailt küldünk, amely az aktuális gazdasági változásokat összefoglalja. 
+          Nem küldünk marketing emailt.
+        </Alert>
 
         {sessionId && typeof sessionId === 'string' && sessionId.length > 0 && (
           <p style={{
-            fontSize: '12px',
-            color: '#6B7280',
-            marginBottom: '24px',
+            fontSize: typography.fontSize.xs,
+            color: colors.text.muted,
+            marginBottom: spacing.xl,
             fontFamily: 'monospace',
             wordBreak: 'break-all',
-            fontWeight: '400'
+            fontWeight: typography.fontWeight.normal
           }}>
             Munkamenet ID: {sessionId.substring(0, 20)}...
           </p>
         )}
-        <Link href="/" style={{
-          display: 'inline-block',
-          padding: '12px 24px',
-          backgroundColor: '#2DD4BF',
-          color: '#FFFFFF',
-          textDecoration: 'none',
-          border: 'none',
-          borderRadius: '8px',
-          fontSize: '14px',
-          fontWeight: '500',
-          transition: 'background-color 0.15s ease'
-        }}>
-          Vissza a főoldalra
+        <Link href="/">
+          <Button variant="primary" size="md">
+            Vissza a főoldalra
+          </Button>
         </Link>
-      </div>
+      </Card>
       <FooterDisclaimer />
     </div>
   )

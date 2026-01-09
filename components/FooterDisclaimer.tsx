@@ -4,39 +4,40 @@
  */
 
 import React from 'react'
+import { colors, spacing, typography } from '@/lib/design-system'
 
 export default function FooterDisclaimer() {
   return (
     <div style={{
-      backgroundColor: '#FFFFFF',
-      borderTop: '1px solid #E5E7EB',
-      padding: '32px 0',
-      marginTop: '64px'
+      backgroundColor: colors.background.paper,
+      borderTop: `1px solid ${colors.gray[200]}`,
+      padding: `${spacing['2xl']} 0`,
+      marginTop: spacing['4xl']
     }}>
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '0 24px'
+        padding: `0 ${spacing.xl}`
       }}>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '32px',
-          marginBottom: '24px'
+          gap: spacing['2xl'],
+          marginBottom: spacing.xl
         }}>
           <div>
             <h4 style={{
-              fontSize: '14px',
-              fontWeight: '500',
-              margin: '0 0 12px 0',
-              color: '#111827'
+              fontSize: typography.fontSize.base,
+              fontWeight: typography.fontWeight.medium,
+              margin: `0 0 ${spacing.md} 0`,
+              color: colors.text.primary
             }}>
               Oktatási célok
             </h4>
             <p style={{
-              fontSize: '13px',
-              lineHeight: '1.7',
-              color: '#4B5563',
+              fontSize: typography.fontSize.sm,
+              lineHeight: typography.lineHeight.relaxed,
+              color: colors.gray[600],
               margin: 0
             }}>
               A Contexta kizárólag oktatási és tájékoztatási célokat szolgál. 
@@ -47,17 +48,17 @@ export default function FooterDisclaimer() {
           
           <div>
             <h4 style={{
-              fontSize: '14px',
-              fontWeight: '500',
-              margin: '0 0 12px 0',
-              color: '#111827'
+              fontSize: typography.fontSize.base,
+              fontWeight: typography.fontWeight.medium,
+              margin: `0 0 ${spacing.md} 0`,
+              color: colors.text.primary
             }}>
               Nem pénzügyi tanácsadás
             </h4>
             <p style={{
-              fontSize: '13px',
-              lineHeight: '1.7',
-              color: '#4B5563',
+              fontSize: typography.fontSize.sm,
+              lineHeight: typography.lineHeight.relaxed,
+              color: colors.gray[600],
               margin: 0
             }}>
               Az eszköz nem minősül pénzügyi tanácsadásnak, befektetési ajánlásnak 
@@ -68,17 +69,17 @@ export default function FooterDisclaimer() {
           
           <div>
             <h4 style={{
-              fontSize: '14px',
-              fontWeight: '500',
-              margin: '0 0 12px 0',
-              color: '#111827'
+              fontSize: typography.fontSize.base,
+              fontWeight: typography.fontWeight.medium,
+              margin: `0 0 ${spacing.md} 0`,
+              color: colors.text.primary
             }}>
               Feltételezések
             </h4>
             <p style={{
-              fontSize: '13px',
-              lineHeight: '1.7',
-              color: '#4B5563',
+              fontSize: typography.fontSize.sm,
+              lineHeight: typography.lineHeight.relaxed,
+              color: colors.gray[600],
               margin: 0
             }}>
               A szimulációk konzervatív feltételezéseken alapulnak. A számítások 
@@ -89,13 +90,13 @@ export default function FooterDisclaimer() {
         </div>
         
         <div style={{
-          paddingTop: '24px',
-          borderTop: '1px solid #E5E7EB',
+          paddingTop: spacing.xl,
+          borderTop: `1px solid ${colors.gray[200]}`,
           textAlign: 'center',
-          fontSize: '12px',
-          color: '#4B5563'
+          fontSize: typography.fontSize.xs,
+          color: colors.gray[600]
         }}>
-          <p style={{ margin: '0 0 8px 0' }}>
+          <p style={{ margin: `0 0 ${spacing.xs} 0` }}>
             © {new Date().getFullYear()} Contexta. Minden jog fenntartva.
           </p>
           <p style={{ margin: 0 }}>

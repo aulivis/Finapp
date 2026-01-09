@@ -1,6 +1,8 @@
 'use client'
 
-import React from 'react';
+import React from 'react'
+import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
+import Card from '@/components/ui/Card'
 
 interface M2ContextualIndicatorClientProps {
   year: number
@@ -31,118 +33,55 @@ export default function M2ContextualIndicatorClient({
 
   return (
     <div style={{
-      padding: '24px',
-      backgroundColor: '#F0FDFA',
-      borderRadius: '12px',
-      border: '1px solid rgba(45, 212, 191, 0.2)',
-      marginTop: '24px',
-      fontSize: '13px',
-      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+      padding: spacing.xl,
+      backgroundColor: colors.primaryLight,
+      borderRadius: borderRadius.lg,
+      border: `1px solid ${colors.primaryBorder}`,
+      marginTop: spacing.xl,
+      fontSize: typography.fontSize.sm,
+      boxShadow: shadows.md
     }}>
       <h3 style={{
-        fontSize: '16px',
-        fontWeight: '600',
-        marginBottom: '8px',
-        color: '#111827'
+        fontSize: typography.fontSize.xl,
+        fontWeight: typography.fontWeight.semibold,
+        marginBottom: spacing.xs,
+        color: colors.text.primary
       }}>
         Mi történik közben a pénzzel?
       </h3>
       <div style={{
-        fontSize: '14px',
-        fontWeight: '500',
-        marginBottom: '16px',
-        color: '#6B7280'
+        fontSize: typography.fontSize.base,
+        fontWeight: typography.fontWeight.medium,
+        marginBottom: spacing.lg,
+        color: colors.text.muted,
+        fontStyle: 'italic'
       }}>
         A pénz mennyisége a gazdaságban
       </div>
       
       <div style={{
-        marginBottom: '16px',
-        padding: '16px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '8px',
-        border: '1px solid rgba(45, 212, 191, 0.1)'
+        marginBottom: spacing.lg,
+        padding: spacing.lg,
+        backgroundColor: colors.background.paper,
+        borderRadius: borderRadius.md,
+        border: `1px solid ${colors.primaryBorder}`
       }}>
         <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          marginBottom: '6px'
+          marginBottom: spacing.xs
         }}>
           <div style={{
-            fontSize: '24px',
-            fontWeight: '600',
-            color: '#111827',
-            lineHeight: '1.2'
+            fontSize: typography.fontSize['3xl'],
+            fontWeight: typography.fontWeight.semibold,
+            color: colors.text.primary,
+            lineHeight: typography.lineHeight.tight
           }} className="tabular-nums">
             {formatPercentage(m2Growth)}
           </div>
-          {isCumulative && (
-            <svg
-              width="40"
-              height="40"
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{
-                flexShrink: 0,
-                color: 'currentColor',
-                opacity: 0.9
-              }}
-              className="m2-icon"
-            >
-              <style>{`
-                @media (prefers-reduced-motion: no-preference) {
-                  .m2-icon {
-                    animation: m2-icon-pulse 3.5s ease-in-out infinite;
-                  }
-                }
-                @keyframes m2-icon-pulse {
-                  0%, 100% {
-                    transform: scale(1);
-                    opacity: 0.9;
-                  }
-                  50% {
-                    transform: scale(1.04);
-                    opacity: 1;
-                  }
-                }
-              `}</style>
-              {/* Outer boundary circle (economy) */}
-              <circle
-                cx="20"
-                cy="20"
-                r="18"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                fill="none"
-                opacity="0.3"
-              />
-              {/* Inner money units - arranged in layers suggesting accumulation */}
-              <circle cx="20" cy="20" r="2" fill="currentColor" opacity="0.7" />
-              <circle cx="20" cy="12" r="1.5" fill="currentColor" opacity="0.6" />
-              <circle cx="20" cy="28" r="1.5" fill="currentColor" opacity="0.6" />
-              <circle cx="12" cy="20" r="1.5" fill="currentColor" opacity="0.6" />
-              <circle cx="28" cy="20" r="1.5" fill="currentColor" opacity="0.6" />
-              <circle cx="15" cy="15" r="1.5" fill="currentColor" opacity="0.5" />
-              <circle cx="25" cy="15" r="1.5" fill="currentColor" opacity="0.5" />
-              <circle cx="15" cy="25" r="1.5" fill="currentColor" opacity="0.5" />
-              <circle cx="25" cy="25" r="1.5" fill="currentColor" opacity="0.5" />
-              <circle cx="14" cy="11" r="1" fill="currentColor" opacity="0.4" />
-              <circle cx="26" cy="11" r="1" fill="currentColor" opacity="0.4" />
-              <circle cx="14" cy="29" r="1" fill="currentColor" opacity="0.4" />
-              <circle cx="26" cy="29" r="1" fill="currentColor" opacity="0.4" />
-              <circle cx="11" cy="14" r="1" fill="currentColor" opacity="0.4" />
-              <circle cx="29" cy="14" r="1" fill="currentColor" opacity="0.4" />
-              <circle cx="11" cy="26" r="1" fill="currentColor" opacity="0.4" />
-              <circle cx="29" cy="26" r="1" fill="currentColor" opacity="0.4" />
-            </svg>
-          )}
         </div>
         <div style={{
-          fontSize: '13px',
-          color: '#6B7280',
-          fontWeight: '400'
+          fontSize: typography.fontSize.sm,
+          color: colors.text.muted,
+          fontWeight: typography.fontWeight.normal
         }}>
           {isCumulative 
             ? `Kumulatív viágszíntű pénzkínálat-növekedés (${periodText})`
@@ -152,15 +91,15 @@ export default function M2ContextualIndicatorClient({
       </div>
 
       <div style={{
-        fontSize: '13px',
-        lineHeight: '1.7',
-        color: '#4B5563'
+        fontSize: typography.fontSize.sm,
+        lineHeight: typography.lineHeight.relaxed,
+        color: colors.gray[600]
       }}>
-        <p style={{ margin: '0 0 12px 0' }}>
+        <p style={{ margin: `0 0 ${spacing.md} 0` }}>
           Az infláció azt mutatja meg, hogy <strong>az árak mennyivel lettek magasabbak</strong>.
           A pénzkínálat pedig azt, hogy <strong>összesen mennyi pénz van forgalomban</strong>.
         </p>
-        <p style={{ margin: '0 0 12px 0' }}>
+        <p style={{ margin: `0 0 ${spacing.md} 0` }}>
           Ha egyre több pénz van a gazdaságban, de nem lesz ugyanilyen arányban több áru és szolgáltatás,
           akkor <strong>ugyanaz a pénz kevesebbet ér, mint korábban</strong>.
         </p>

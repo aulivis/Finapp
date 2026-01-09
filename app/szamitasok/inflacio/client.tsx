@@ -135,7 +135,7 @@ export default function PersonalInflationCalculatorClient({
         border: '1px solid #E5E7EB'
       }}>
         <h2 style={{
-          fontSize: '16px',
+          fontSize: '17.6px',
           fontWeight: '400',
           marginBottom: '20px',
           color: '#111827'
@@ -250,7 +250,7 @@ export default function PersonalInflationCalculatorClient({
         border: '1px solid #E5E7EB'
       }}>
         <h2 style={{
-          fontSize: '16px',
+          fontSize: '17.6px',
           fontWeight: '400',
           marginBottom: '20px',
           color: '#111827'
