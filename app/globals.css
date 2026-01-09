@@ -63,3 +63,28 @@ button:hover:not(:disabled),
 a[role="button"]:hover {
   background-color: #14B8A6;
 }
+
+/* Hero responsive layout */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+}
+
+/* Hero H1 responsive typography */
+.hero-h1 {
+  font-size: 36px;
+}
+
+@media (min-width: 768px) {
+  .hero-h1 {
+    font-size: 48px;
+  }
+}

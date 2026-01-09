@@ -82,16 +82,6 @@ export default function PaymentForm() {
       }}>
         Hozzáférés vásárlása
       </h3>
-      <p style={{
-        fontSize: '15px',
-        color: '#1F2937',
-        marginBottom: '16px',
-        lineHeight: '1.7',
-        fontWeight: '400'
-      }}>
-        Email cím megadása után a fizetés során hozzáférés jön létre a személyre 
-        szabott számítási eszközökhöz. A hozzáférés 1 évig érvényes.
-      </p>
       <div style={{
         padding: '20px',
         backgroundColor: '#F9FAFB',

@@ -1,6 +1,7 @@
 import React from 'react'
 import PaymentForm from '@/components/PaymentForm'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
+import Link from 'next/link'
 
 export default function PaymentPage() {
   return (
@@ -41,6 +42,23 @@ export default function PaymentPage() {
         </header>
 
         <PaymentForm />
+
+        <div style={{ marginTop: '24px', textAlign: 'center' }}>
+          <Link href="/" style={{
+            display: 'inline-block',
+            padding: '12px 24px',
+            backgroundColor: 'transparent',
+            color: '#1F2937',
+            textDecoration: 'none',
+            border: '1px solid #E5E7EB',
+            borderRadius: '8px',
+            fontSize: '14px',
+            fontWeight: '500',
+            transition: 'background-color 0.15s ease'
+          }}>
+            Vissza a kezdőlapra
+          </Link>
+        </div>
       </div>
 
       <FooterDisclaimer />

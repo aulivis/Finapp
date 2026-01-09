@@ -3,14 +3,15 @@
 import React, { useState, useMemo } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import ModernLineChart from '@/components/ModernLineChart'
+import ModernBarChart from '@/components/ModernBarChart'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
 import { MacroData } from '@/lib/types/database'
 import { Calculator, Calendar } from 'lucide-react'
 
 const INITIAL_AMOUNT = 1000000 // 1,000,000 HUF
-const START_YEAR = 2014
-const INITIAL_YEARS = 10
-const MAX_YEAR = 2024
+const START_YEAR = 2015
+const INITIAL_YEARS = 11
+const MAX_YEAR = 2025
 
 interface DemoCalculatorProps {
   macroData?: MacroData[]
@@ -178,7 +179,7 @@ export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) 
             borderRadius: '8px'
           }}>
             <div style={{ fontSize: '13px', color: '#6B7280', marginBottom: '8px', fontWeight: '400' }}>
-              Névleges érték ({startYear} → {endYear})
+              Névleges érték
             </div>
             <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
               {formatCurrency(finalNominal)}
@@ -191,7 +192,7 @@ export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) 
             borderRadius: '8px'
           }}>
             <div style={{ fontSize: '13px', color: '#6B7280', marginBottom: '8px', fontWeight: '400' }}>
-              Inflációval korrigált érték ({startYear} → {endYear})
+              Inflációval korrigált érték
             </div>
             <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
               {formatCurrency(finalReal)}
@@ -204,7 +205,7 @@ export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) 
             borderRadius: '8px'
           }}>
             <div style={{ fontSize: '13px', color: '#6B7280', marginBottom: '8px', fontWeight: '400' }}>
-              Vásárlóerő veszteség ({startYear} → {endYear})
+              Vásárlóerő veszteség
             </div>
             <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
               -{formatCurrency(loss)}
@@ -215,7 +216,7 @@ export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) 
           </div>
         </div>
 
-        {/* Simple Visual Comparison */}
+        {/* Bar Chart Comparison */}
         <div style={{
           padding: '24px',
           backgroundColor: '#F9FAFB',
@@ -229,81 +230,13 @@ export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) 
           }}>
             Összehasonlítás
           </div>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '16px',
-            marginBottom: '16px'
-          }}>
-            <div style={{ flex: 1 }}>
-              <div style={{
-                height: '8px',
-                backgroundColor: '#1F2937',
-                borderRadius: '4px',
-                width: '100%'
-              }} />
-              <div style={{
-                fontSize: '13px',
-                color: '#1F2937',
-                marginTop: '6px',
-                fontWeight: '400'
-              }}>
-                Névleges érték
-              </div>
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{
-                height: '8px',
-                backgroundColor: '#1F2937',
-                borderRadius: '4px',
-                width: `${(finalReal / finalNominal) * 100}%`
-              }} />
-              <div style={{
-                fontSize: '13px',
-                color: '#1F2937',
-                marginTop: '6px',
-                fontWeight: '400'
-              }}>
-                Inflációval korrigált érték
-              </div>
-            </div>
-          </div>
-          <p style={{
-            fontSize: '14px',
-            color: '#1F2937',
-            margin: '0',
-            lineHeight: '1.7',
-            fontWeight: '400'
-          }}>
-            A névleges érték változatlan marad ({formatCurrency(amount)}), 
-            azonban az inflációval korrigált érték {lossPercentage}%-kal alacsonyabb 
-            ({formatCurrency(finalReal)}).
-          </p>
+          <ModernBarChart
+            nominalValue={finalNominal}
+            realValue={finalReal}
+            formatCurrency={formatCurrency}
+            height={250}
+          />
         </div>
-      </div>
-
-      {/* Chart */}
-      <div style={{
-        marginBottom: '32px',
-        padding: '32px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '12px',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
-      }}>
-        <h3 style={{
-          fontSize: '18px',
-          fontWeight: '600',
-          marginBottom: '24px',
-          color: '#111827',
-          lineHeight: '1.3'
-        }}>
-          Vásárlóerő alakulása
-        </h3>
-        <ModernLineChart
-          data={data}
-          formatCurrency={formatCurrency}
-          height={400}
-        />
       </div>
 
       {/* M2 Contextual Indicator */}
@@ -329,41 +262,75 @@ export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) 
         )
       })()}
 
-      {/* Explanation */}
+      {/* Chart and Explanation in same card */}
       <div style={{
+        marginBottom: '32px',
         padding: '32px',
         backgroundColor: '#FFFFFF',
         borderRadius: '12px',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-        fontSize: '15px',
-        lineHeight: '1.7',
-        color: '#1F2937',
-        fontWeight: '400'
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
       }}>
-        <p style={{ margin: '0 0 16px 0', fontWeight: '600', color: '#111827', fontSize: '16px' }}>
-          A számítás magyarázata
-        </p>
-        <p style={{ margin: '0 0 16px 0' }}>
-          A számítás bemutatja, hogyan változott {formatCurrency(amount)} vásárlóereje 
-          {startYear} és {endYear} között. A névleges érték változatlan marad, 
-          azonban az infláció hatására a reál vásárlóerő csökken.
-        </p>
-        <p style={{ margin: '0 0 20px 0' }}>
-          A számítás a KSH által közzétett éves inflációs adatokon alapul. 
-          Ez egy általános példa, nem személyre szabott számítás.
-        </p>
-        <p style={{
-          margin: '20px 0 0 0',
-          padding: '16px',
-          backgroundColor: '#F9FAFB',
-          borderRadius: '8px',
-          fontSize: '14px',
+        <h3 style={{
+          fontSize: '18px',
+          fontWeight: '600',
+          marginBottom: '24px',
+          color: '#111827',
+          lineHeight: '1.3'
+        }}>
+          Vásárlóerő alakulása
+        </h3>
+        <ModernLineChart
+          data={data}
+          formatCurrency={formatCurrency}
+          height={400}
+        />
+
+        {/* Explanation */}
+        <div style={{
+          marginTop: '32px',
+          paddingTop: '32px',
+          borderTop: '1px solid #E5E7EB',
+          fontSize: '15px',
           lineHeight: '1.7',
           color: '#1F2937',
           fontWeight: '400'
         }}>
-          <strong style={{ fontWeight: '600' }}>Az itt megjelenített adatok múltbeli, aggregált mutatókon alapulnak. Nem előrejelzések, és nem minősülnek pénzügyi tanácsnak.</strong>
-        </p>
+          <p style={{ margin: '0 0 16px 0', fontWeight: '600', color: '#111827', fontSize: '16px' }}>
+            A számítás magyarázata
+          </p>
+          <p style={{ margin: '0 0 16px 0' }}>
+            A számítás bemutatja, hogyan változott {formatCurrency(amount)} vásárlóereje 
+            {startYear} és {endYear} között. A névleges érték változatlan marad, 
+            azonban az infláció hatására a reál vásárlóerő csökken.
+          </p>
+          <p style={{ margin: '0 0 16px 0' }}>
+            A fenti számítás egy általános példa. Rögzített értékeket használ 
+            ({formatCurrency(amount)}, {startYear}-{endYear} időszak) és bemutatja, hogyan csökken 
+            a pénz vásárlóereje az infláció hatására.
+          </p>
+          <p style={{ margin: '0 0 16px 0' }}>
+            Ez a számítás <strong>nem személyre szabott</strong>. Nem veszi 
+            figyelembe az egyéni körülményeket, a konkrét megtakarításokat, 
+            vagy a befektetési lehetőségeket. Csak egy általános mechanizmust 
+            mutat be.
+          </p>
+          <p style={{ margin: '0 0 20px 0' }}>
+            A számítás a KSH által közzétett éves inflációs adatokon alapul. 
+            A múltbeli adatok nem garantálják a jövőbeli eredményeket.
+          </p>
+          <p style={{
+            margin: '20px 0 0 0',
+            padding: '16px',
+            backgroundColor: '#F9FAFB',
+            borderRadius: '8px',
+            fontSize: '14px',
+            lineHeight: '1.7',
+            color: '#1F2937',
+            fontWeight: '400'
+          }}>
+            <strong style={{ fontWeight: '600' }}>Az itt megjelenített adatok múltbeli, aggregált mutatókon alapulnak. Nem előrejelzések, és nem minősülnek pénzügyi tanácsnak.</strong>
+          </p>
+        </div>
       </div>
 
     </div>
