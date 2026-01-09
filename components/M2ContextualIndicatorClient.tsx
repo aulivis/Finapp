@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react';
+import React from 'react';
 
 interface M2ContextualIndicatorClientProps {
   year: number

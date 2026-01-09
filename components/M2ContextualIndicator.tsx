@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { getMacroData } from '@/lib/data/macro-data';
 
 interface M2ContextualIndicatorProps {
