@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
-import { calculatePurchasingPower, historicalInflation } from '@/lib/data/inflation'
+import { calculatePurchasingPower } from '@/lib/data/inflation'
 import ModernLineChart from '@/components/ModernLineChart'
 
 const INITIAL_AMOUNT = 1000000 // 1,000,000 HUF
