@@ -87,7 +87,7 @@ export default async function CalculatorsPage({ searchParams }: PageProps) {
   const dataSources = await getDataSources('HU')
 
   return (
-    <AccessLayout email={email}>
+    <AccessLayout>
       {quarterlySummary && (
         <QuarterlyUpdateSummary 
           quarterName={quarterlySummary.quarterName}

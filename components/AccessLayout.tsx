@@ -3,11 +3,9 @@ import Link from 'next/link'
 
 interface AccessLayoutProps {
   children: React.ReactNode
-  email: string
 }
 
-export default function AccessLayout({ children, email }: AccessLayoutProps) {
-  // Email is validated before reaching this component, no need to display it
+export default function AccessLayout({ children }: AccessLayoutProps) {
   return (
     <div style={{
       minHeight: '100vh',
