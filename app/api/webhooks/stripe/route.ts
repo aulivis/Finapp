@@ -96,12 +96,6 @@ export async function POST(request: NextRequest) {
         ? '1 évig' 
         : validUntilDate.toLocaleDateString('hu-HU')
       
-      // Escape HTML in email to prevent XSS
-      const escapedEmail = email.replace(/[<>&"']/g, (char) => {
-        const map: Record<string, string> = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#039;' }
-        return map[char] || char
-      })
-      
       const emailSent = await sendEmail({
         to: email,
         subject: 'Hozzáférése aktiválva - Finapp',
