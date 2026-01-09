@@ -29,7 +29,7 @@ export default async function PersonalInflationCalculator({ searchParams }: Page
   }
 
   // Fetch data server-side
-  let historicalData
+  let historicalData: Array<{ year: number; inflationRate: number }>
   try {
     historicalData = await getHistoricalInflationData('HU')
   } catch (error) {
