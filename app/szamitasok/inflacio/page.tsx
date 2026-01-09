@@ -43,9 +43,15 @@ export default async function PersonalInflationCalculator({ searchParams }: Page
     ? Math.max(...historicalData.map(d => d.year), new Date().getFullYear())
     : new Date().getFullYear()
   const latestYearData = macroData.find(d => d.year === latestYear)
-  const m2Data = latestYearData ? {
-    inflationRate: isFinite(Number(latestYearData.inflation_rate)) ? Number(latestYearData.inflation_rate) : null,
-    m2Growth: latestYearData.m2_growth && isFinite(Number(latestYearData.m2_growth)) ? Number(latestYearData.m2_growth) : null
+  const inflationRate = latestYearData?.inflation_rate && isFinite(Number(latestYearData.inflation_rate)) 
+    ? Number(latestYearData.inflation_rate) 
+    : null
+  const m2Growth = latestYearData?.m2_growth && isFinite(Number(latestYearData.m2_growth)) 
+    ? Number(latestYearData.m2_growth) 
+    : null
+  const m2Data = latestYearData && inflationRate !== null ? {
+    inflationRate,
+    m2Growth
   } : null
 
   // Get data sources
