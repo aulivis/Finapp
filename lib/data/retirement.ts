@@ -44,7 +44,6 @@ export function calculateDoNothingScenario(
 
   if (yearsToRetirement <= 0) {
     // Already at or past retirement age
-    const cumulativeInflation = Math.pow(1 + PROJECTED_ANNUAL_INFLATION / 100, 0)
     return {
       yearsToRetirement: 0,
       retirementAge: currentAge,
@@ -63,7 +62,6 @@ export function calculateDoNothingScenario(
   }
 
   // Calculate monthly contributions over the period
-  const totalMonths = yearsToRetirement * 12
   let currentNominal = currentSavings
   const monthlyBreakdown: Array<{
     year: number
@@ -73,7 +71,6 @@ export function calculateDoNothingScenario(
   }> = []
 
   const currentYear = new Date().getFullYear()
-  let monthCount = 0
 
   // Add initial state
   monthlyBreakdown.push({

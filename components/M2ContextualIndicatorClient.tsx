@@ -19,8 +19,6 @@ export default function M2ContextualIndicatorClient({
     return null;
   }
 
-  const m2GrowthValue = m2Growth;
-
   const formatPercentage = (value: number): string => {
     return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
   };
@@ -56,7 +54,7 @@ export default function M2ContextualIndicatorClient({
           color: '#111827',
           marginBottom: '4px'
         }}>
-          {formatPercentage(m2GrowthValue)}
+          {formatPercentage(m2Growth)}
         </div>
         <div style={{
           fontSize: '12px',
