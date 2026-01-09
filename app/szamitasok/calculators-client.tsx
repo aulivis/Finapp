@@ -6,6 +6,7 @@ import { calculateDoNothingScenario, RETIREMENT_AGE, DEFAULT_PROJECTED_ANNUAL_IN
 import DataSourceDisclosureClient from '@/components/DataSourceDisclosureClient'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
 import ModernLineChart from '@/components/ModernLineChart'
+import { useIsMobile } from '@/lib/hooks/useIsMobile'
 
 interface CalculatorsClientProps {
   historicalData: Array<{ year: number; inflationRate: number }>
@@ -35,6 +36,9 @@ export default function CalculatorsClient({
   const [currentAge, setCurrentAge] = useState(30)
   const [currentSavings, setCurrentSavings] = useState(5000000)
   const [monthlySavings, setMonthlySavings] = useState(50000)
+
+  // Mobile detection for responsive UI
+  const isMobile = useIsMobile(768)
 
   // Use fetched data or fallback to hardcoded
   const historicalInflation = historicalData.length > 0 ? historicalData : fallbackData
@@ -134,14 +138,15 @@ export default function CalculatorsClient({
   return (
     <div style={{
       maxWidth: '1200px',
-      margin: '0 auto'
+      margin: '0 auto',
+      padding: isMobile ? '16px 12px' : '0'
     }}>
       {/* Inflation Calculator */}
-      <div style={{ marginBottom: '64px' }}>
+      <div style={{ marginBottom: isMobile ? '40px' : '64px' }}>
         <h1 style={{
-          fontSize: '28px',
+          fontSize: isMobile ? '22px' : '28px',
           fontWeight: '600',
-          marginBottom: '16px',
+          marginBottom: isMobile ? '12px' : '16px',
           color: '#111827',
           lineHeight: '1.3'
         }}>
@@ -149,10 +154,10 @@ export default function CalculatorsClient({
         </h1>
 
         <p style={{
-          fontSize: '16px',
+          fontSize: isMobile ? '15px' : '16px',
           lineHeight: '1.7',
           color: '#1F2937',
-          marginBottom: '32px',
+          marginBottom: isMobile ? '24px' : '32px',
           fontWeight: '400'
         }}>
           A számítás mutatja, hogyan változott a pénz vásárlóereje a kiválasztott időszakban. 
@@ -161,27 +166,27 @@ export default function CalculatorsClient({
 
         {/* Input Section */}
         <div style={{
-          marginBottom: '32px',
-          padding: '24px',
+          marginBottom: isMobile ? '24px' : '32px',
+          padding: isMobile ? '16px' : '24px',
           backgroundColor: '#FFFFFF',
           borderRadius: '2px',
           border: '1px solid #E5E7EB'
         }}>
           <h2 style={{
-            fontSize: '16px',
+            fontSize: isMobile ? '15px' : '16px',
             fontWeight: '400',
-            marginBottom: '20px',
+            marginBottom: isMobile ? '16px' : '20px',
             color: '#111827'
           }}>
             Számítási paraméterek
           </h2>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: isMobile ? '16px' : '20px' }}>
             <label style={{
               display: 'block',
-              marginBottom: '10px',
+              marginBottom: isMobile ? '8px' : '10px',
               fontWeight: '500',
-              fontSize: '14px',
+              fontSize: isMobile ? '13px' : '14px',
               color: '#1F2937'
             }}>
               Kezdeti összeg (HUF)
@@ -406,16 +411,17 @@ export default function CalculatorsClient({
         {/* Chart */}
         {inflationCalculation.dataPoints.length > 0 ? (
           <div style={{
-            marginBottom: '32px',
-            padding: '24px',
+            marginBottom: isMobile ? '24px' : '32px',
+            padding: isMobile ? '16px' : '24px',
             backgroundColor: '#ffffff',
             borderRadius: '4px',
-            border: '1px solid #dee2e6'
+            border: '1px solid #dee2e6',
+            overflow: 'hidden'
           }}>
             <h2 style={{
-              fontSize: '16px',
+              fontSize: isMobile ? '15px' : '16px',
               fontWeight: '400',
-              marginBottom: '20px',
+              marginBottom: isMobile ? '12px' : '20px',
               color: '#111827'
             }}>
               Vásárlóerő alakulása
@@ -423,7 +429,8 @@ export default function CalculatorsClient({
             <ModernLineChart
               data={inflationCalculation.dataPoints}
               formatCurrency={formatCurrency}
-              height={400}
+              height={isMobile ? 280 : 400}
+              isMobile={isMobile}
             />
           </div>
         ) : null}
@@ -477,72 +484,147 @@ export default function CalculatorsClient({
       </div>
 
       {/* Do-Nothing Calculator */}
-      <div style={{ marginBottom: '32px', paddingTop: '48px', borderTop: '1px solid #E5E7EB' }}>
+      <div style={{ 
+        marginBottom: isMobile ? '24px' : '32px', 
+        paddingTop: isMobile ? '32px' : '48px', 
+        borderTop: '1px solid #E5E7EB' 
+      }}>
         <h1 style={{
-          fontSize: '24px',
+          fontSize: isMobile ? '20px' : '24px',
           fontWeight: '400',
-          marginBottom: '12px',
+          marginBottom: isMobile ? '10px' : '12px',
           color: '#111827'
         }}>
           &quot;Semmit sem csinálok&quot; forgatókönyv
         </h1>
 
         <p style={{
-          fontSize: '15px',
+          fontSize: isMobile ? '14px' : '15px',
           lineHeight: '1.6',
           color: '#4B5563',
-          marginBottom: '32px'
+          marginBottom: isMobile ? '24px' : '32px'
         }}>
           A számítás bemutatja, hogyan változna a megtakarítások vásárlóereje, ha csak félretesz, de nem fektet be. 
           Az infláció hatása látható a nyugdíjkorhatárig tartó időszakban történelmi adatok alapján.
         </p>
 
-        {/* Input Section */}
+        {/* Input Section - Do Nothing Calculator */}
         <div style={{
-          marginBottom: '32px',
-          padding: '24px',
+          marginBottom: isMobile ? '24px' : '32px',
+          padding: isMobile ? '16px' : '24px',
           backgroundColor: '#FFFFFF',
           borderRadius: '2px',
           border: '1px solid #E5E7EB'
         }}>
           <h2 style={{
-            fontSize: '16px',
+            fontSize: isMobile ? '15px' : '16px',
             fontWeight: '400',
-            marginBottom: '20px',
+            marginBottom: isMobile ? '16px' : '20px',
             color: '#111827'
           }}>
             Számítási paraméterek
           </h2>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: isMobile ? '16px' : '20px' }}>
             <label style={{
               display: 'block',
-              marginBottom: '10px',
+              marginBottom: isMobile ? '8px' : '10px',
               fontWeight: '500',
-              fontSize: '14px',
+              fontSize: isMobile ? '13px' : '14px',
               color: '#1F2937'
             }}>
               Jelenlegi életkor
             </label>
-            <input
-              type="number"
-              value={currentAge}
-              onChange={(e) => setCurrentAge(Math.max(18, Math.min(100, Number(e.target.value))))}
-              min="18"
-              max="100"
-              style={{
-                width: '100%',
-                padding: '12px',
-                fontSize: '16px',
-                border: '1px solid #E5E7EB',
-                borderRadius: '8px',
-                backgroundColor: '#FFFFFF',
-                color: '#111827',
-                fontFamily: 'inherit',
-                fontWeight: '400',
+            {isMobile ? (
+              /* Mobile: Stepper control for better touch UX */
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
                 maxWidth: '200px'
-              }}
-            />
+              }}>
+                <button
+                  type="button"
+                  onClick={() => setCurrentAge(prev => Math.max(18, prev - 1))}
+                  disabled={currentAge <= 18}
+                  aria-label="Életkor csökkentése"
+                  style={{
+                    width: '44px',
+                    height: '44px',
+                    minWidth: '44px',
+                    padding: 0,
+                    fontSize: '20px',
+                    fontWeight: '600',
+                    border: '1px solid #E5E7EB',
+                    borderRadius: '8px',
+                    backgroundColor: currentAge <= 18 ? '#F3F4F6' : '#FFFFFF',
+                    color: currentAge <= 18 ? '#9CA3AF' : '#111827',
+                    cursor: currentAge <= 18 ? 'not-allowed' : 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: 'inherit'
+                  }}
+                >
+                  −
+                </button>
+                <span style={{
+                  flex: 1,
+                  textAlign: 'center',
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  color: '#111827',
+                  minWidth: '48px'
+                }} className="tabular-nums">
+                  {currentAge}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setCurrentAge(prev => Math.min(100, prev + 1))}
+                  disabled={currentAge >= 100}
+                  aria-label="Életkor növelése"
+                  style={{
+                    width: '44px',
+                    height: '44px',
+                    minWidth: '44px',
+                    padding: 0,
+                    fontSize: '20px',
+                    fontWeight: '600',
+                    border: '1px solid #E5E7EB',
+                    borderRadius: '8px',
+                    backgroundColor: currentAge >= 100 ? '#F3F4F6' : '#FFFFFF',
+                    color: currentAge >= 100 ? '#9CA3AF' : '#111827',
+                    cursor: currentAge >= 100 ? 'not-allowed' : 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: 'inherit'
+                  }}
+                >
+                  +
+                </button>
+              </div>
+            ) : (
+              <input
+                type="number"
+                value={currentAge}
+                onChange={(e) => setCurrentAge(Math.max(18, Math.min(100, Number(e.target.value))))}
+                min="18"
+                max="100"
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  fontSize: '16px',
+                  border: '1px solid #E5E7EB',
+                  borderRadius: '8px',
+                  backgroundColor: '#FFFFFF',
+                  color: '#111827',
+                  fontFamily: 'inherit',
+                  fontWeight: '400',
+                  maxWidth: '200px'
+                }}
+              />
+            )}
             <p style={{
               fontSize: '13px',
               color: '#4B5563',
@@ -836,16 +918,17 @@ export default function CalculatorsClient({
         {/* Chart */}
         {doNothingCalculation.yearsToRetirement > 0 && (
           <div style={{
-            marginBottom: '32px',
-            padding: '24px',
+            marginBottom: isMobile ? '24px' : '32px',
+            padding: isMobile ? '16px' : '24px',
             backgroundColor: '#ffffff',
             borderRadius: '4px',
-            border: '1px solid #dee2e6'
+            border: '1px solid #dee2e6',
+            overflow: 'hidden'
           }}>
             <h2 style={{
-              fontSize: '16px',
+              fontSize: isMobile ? '15px' : '16px',
               fontWeight: '400',
-              marginBottom: '20px',
+              marginBottom: isMobile ? '12px' : '20px',
               color: '#111827'
             }}>
               Vásárlóerő alakulása
@@ -854,7 +937,8 @@ export default function CalculatorsClient({
               data={doNothingCalculation.monthlyBreakdown}
               formatCurrency={formatCurrency}
               showAge={true}
-              height={400}
+              height={isMobile ? 280 : 400}
+              isMobile={isMobile}
             />
           </div>
         )}

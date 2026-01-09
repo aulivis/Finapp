@@ -17,6 +17,8 @@ interface ModernLineChartProps {
   formatYear?: (year: number) => string
   showAge?: boolean
   height?: number
+  /** Enable responsive/mobile-optimized layout */
+  isMobile?: boolean
 }
 
 /**
@@ -33,16 +35,29 @@ export default function ModernLineChart({
   formatCurrency,
   formatYear = (year) => year.toString(),
   showAge = false,
-  height = 400
+  height = 400,
+  isMobile = false
 }: ModernLineChartProps) {
   const prefersReducedMotion = useReducedMotion()
 
-  // Memoize chart configuration for performance
+  // Extend data with purchasing power loss (gap between nominal and real) for area fill
+  const chartData = useMemo(() => 
+    data.map(d => ({
+      ...d,
+      purchasingPowerLoss: Math.max(0, d.nominal - d.real)
+    })),
+    [data]
+  )
+
+  // Memoize chart configuration for performance - adjust for mobile
   const chartConfig = useMemo(() => ({
     animationDuration: prefersReducedMotion ? 0 : 800,
     animationEasing: 'ease-out' as const,
-    margin: { top: 16, right: 24, left: 24, bottom: 16 }
-  }), [prefersReducedMotion])
+    margin: isMobile 
+      ? { top: 12, right: 8, left: 8, bottom: 8 } 
+      : { top: 16, right: 24, left: 24, bottom: 16 },
+    chartHeight: isMobile ? 280 : height
+  }), [prefersReducedMotion, isMobile, height])
 
   // Enhanced tooltip with modern design
   const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
@@ -128,44 +143,31 @@ export default function ModernLineChart({
     )
   }
 
-  // Modern color scheme with brand colors and better visual appeal
+  // Modern color scheme - distinct colors to emphasize the gap between nominal and real values
+  // The area between the lines (purchasing power loss) uses amber to highlight the difference
   const colors = {
-    nominal: '#2DD4BF', // Teal for nominal (brand color)
-    real: '#14B8A6',    // Darker teal for real
-    grid: '#E5E7EB',    // Light gray for grid
-    text: '#4B5563',    // Medium gray for text
+    nominal: '#06B6D4',   // Cyan for nominal - stands out
+    real: '#10B981',      // Emerald for real purchasing power
+    gap: '#F59E0B',       // Amber for the gap/loss area between lines - emphasizes the difference
+    gapFill: 'rgba(245, 158, 11, 0.35)', // Semi-transparent amber for area fill
+    grid: '#E5E7EB',      // Light gray for grid
+    text: '#4B5563',      // Medium gray for text
+    textMobile: '#6B7280', // Lighter text for mobile
     background: '#F0FDFA' // Light teal background
   }
 
   return (
-    <div style={{ width: '100%', height: `${height}px` }}>
+    <div style={{ width: '100%', height: `${chartConfig.chartHeight}px`, minHeight: isMobile ? 260 : 350 }}>
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
-          data={data}
+          data={chartData}
           margin={chartConfig.margin}
         >
           <defs>
-            {/* Enhanced gradient for nominal line with area fill */}
-            <linearGradient id="nominalGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={colors.nominal} stopOpacity={0.3} />
-              <stop offset="50%" stopColor={colors.nominal} stopOpacity={0.15} />
-              <stop offset="100%" stopColor={colors.nominal} stopOpacity={0} />
-            </linearGradient>
-            {/* Enhanced gradient for real line with area fill */}
-            <linearGradient id="realGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={colors.real} stopOpacity={0.25} />
-              <stop offset="50%" stopColor={colors.real} stopOpacity={0.12} />
-              <stop offset="100%" stopColor={colors.real} stopOpacity={0} />
-            </linearGradient>
-            {/* Gradient for nominal line stroke */}
-            <linearGradient id="nominalStroke" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor={colors.nominal} />
-              <stop offset="100%" stopColor="#14B8A6" />
-            </linearGradient>
-            {/* Gradient for real line stroke */}
-            <linearGradient id="realStroke" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor={colors.real} />
-              <stop offset="100%" stopColor="#0D9488" />
+            {/* Gradient for the gap area (purchasing power loss between nominal and real) */}
+            <linearGradient id="gapGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={colors.gap} stopOpacity={0.5} />
+              <stop offset="100%" stopColor={colors.gap} stopOpacity={0.15} />
             </linearGradient>
           </defs>
           <CartesianGrid
@@ -176,34 +178,35 @@ export default function ModernLineChart({
           />
           <XAxis
             dataKey="year"
-            stroke={colors.text}
-            tick={{ fill: colors.text, fontSize: 12 }}
+            stroke={isMobile ? colors.textMobile : colors.text}
+            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 10 : 12 }}
             tickLine={{ stroke: colors.grid }}
             axisLine={{ stroke: colors.grid }}
-            label={{
+            label={!isMobile ? {
               value: 'Év',
               position: 'insideBottom',
               offset: -8,
               style: { fill: colors.text, fontSize: 12 }
-            }}
+            } : undefined}
             aria-label="Évek"
             domain={['dataMin', 'dataMax']}
             type="number"
             scale="linear"
-            tickCount={data.length > 0 ? Math.min(data.length, 15) : 5}
+            tickCount={data.length > 0 ? Math.min(data.length, isMobile ? 6 : 15) : 5}
           />
           <YAxis
-            stroke={colors.text}
-            tick={{ fill: colors.text, fontSize: 12 }}
+            stroke={isMobile ? colors.textMobile : colors.text}
+            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 10 : 12 }}
             tickLine={{ stroke: colors.grid }}
             axisLine={{ stroke: colors.grid }}
-            tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`}
-            label={{
+            tickFormatter={(value) => value >= 1000000 ? `${(value / 1000000).toFixed(isMobile ? 0 : 1)}M` : `${(value / 1000).toFixed(0)}K`}
+            width={isMobile ? 36 : 60}
+            label={!isMobile ? {
               value: 'Forint',
               angle: -90,
               position: 'insideLeft',
               style: { fill: colors.text, fontSize: 12 }
-            }}
+            } : undefined}
             aria-label="Forint értékek"
           />
           <Tooltip
@@ -217,44 +220,64 @@ export default function ModernLineChart({
             animationDuration={chartConfig.animationDuration}
           />
           <Legend
-            wrapperStyle={{ paddingTop: '16px' }}
-            iconType="line"
-            formatter={(value) => (
-              <span style={{ color: colors.text, fontSize: '13px', fontWeight: '500' }}>{value}</span>
+            wrapperStyle={{ paddingTop: isMobile ? '12px' : '16px' }}
+            // Only show the two Hungarian labels (Névleges érték, Reál vásárlóerő) - hide gap area and any nominal/real English text
+            content={({ payload }) => (
+              <div style={{ display: 'flex', justifyContent: 'center', gap: isMobile ? '16px' : '24px', flexWrap: 'wrap' }}>
+                {payload?.filter((entry) => entry.dataKey === 'nominal' || entry.dataKey === 'real').map((entry, index) => (
+                  <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ 
+                      width: isMobile ? 10 : 14, 
+                      height: 3, 
+                      backgroundColor: entry.color || colors.text, 
+                      borderRadius: 1 
+                    }} />
+                    <span style={{ 
+                      color: isMobile ? colors.textMobile : colors.text, 
+                      fontSize: isMobile ? '12px' : '13px', 
+                      fontWeight: '500' 
+                    }}>
+                      {entry.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
             )}
           />
-          {/* Area fill for nominal line */}
-          <Area
-            type="monotone"
-            dataKey="nominal"
-            fill="url(#nominalGradient)"
-            stroke="none"
-            connectNulls={false}
-            isAnimationActive={!prefersReducedMotion}
-            animationDuration={chartConfig.animationDuration}
-            animationEasing={chartConfig.animationEasing}
-            hide={true}
-          />
-          {/* Area fill for real line */}
+          {/* Stacked areas: real (base) + purchasingPowerLoss (gap between lines) */}
+          {/* Area 1: Real purchasing power - fills from baseline to real value */}
           <Area
             type="monotone"
             dataKey="real"
-            fill="url(#realGradient)"
+            stackId="purchasingPower"
+            fill={colors.real}
+            fillOpacity={0.25}
             stroke="none"
-            connectNulls={false}
             isAnimationActive={!prefersReducedMotion}
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
-            hide={true}
+            legendType="none"
+          />
+          {/* Area 2: The gap between nominal and real - emphasizes the purchasing power loss */}
+          <Area
+            type="monotone"
+            dataKey="purchasingPowerLoss"
+            stackId="purchasingPower"
+            fill="url(#gapGradient)"
+            stroke="none"
+            isAnimationActive={!prefersReducedMotion}
+            animationDuration={chartConfig.animationDuration}
+            animationEasing={chartConfig.animationEasing}
+            legendType="none"
           />
           <Line
             type="monotone"
             dataKey="nominal"
-            stroke="url(#nominalStroke)"
-            strokeWidth={3}
+            stroke={colors.nominal}
+            strokeWidth={isMobile ? 2.5 : 3}
             name="Névleges érték"
-            dot={{ r: 5, fill: colors.nominal, strokeWidth: 3, stroke: '#FFFFFF' }}
-            activeDot={{ r: 7, stroke: colors.nominal, strokeWidth: 3, fill: '#FFFFFF' }}
+            dot={{ r: isMobile ? 3 : 5, fill: colors.nominal, strokeWidth: 2, stroke: '#FFFFFF' }}
+            activeDot={{ r: isMobile ? 5 : 7, stroke: colors.nominal, strokeWidth: 2, fill: '#FFFFFF' }}
             isAnimationActive={!prefersReducedMotion}
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
@@ -263,11 +286,11 @@ export default function ModernLineChart({
           <Line
             type="monotone"
             dataKey="real"
-            stroke="url(#realStroke)"
-            strokeWidth={3}
+            stroke={colors.real}
+            strokeWidth={isMobile ? 2.5 : 3}
             name="Reál vásárlóerő"
-            dot={{ r: 5, fill: colors.real, strokeWidth: 3, stroke: '#FFFFFF' }}
-            activeDot={{ r: 7, stroke: colors.real, strokeWidth: 3, fill: '#FFFFFF' }}
+            dot={{ r: isMobile ? 3 : 5, fill: colors.real, strokeWidth: 2, stroke: '#FFFFFF' }}
+            activeDot={{ r: isMobile ? 5 : 7, stroke: colors.real, strokeWidth: 2, fill: '#FFFFFF' }}
             isAnimationActive={!prefersReducedMotion}
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
