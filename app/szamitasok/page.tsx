@@ -33,7 +33,7 @@ export default async function CalculatorsPage({ searchParams }: PageProps) {
   }
 
   // Fetch data server-side for both calculators
-  let historicalData
+  let historicalData: Array<{ year: number; inflationRate: number }>
   try {
     historicalData = await getHistoricalInflationData('HU')
   } catch (error) {
@@ -58,14 +58,26 @@ export default async function CalculatorsPage({ searchParams }: PageProps) {
   const latestYearData = macroData.find(d => d.year === latestYear)
   const currentYearData = macroData.find(d => d.year === currentYear)
   
-  const inflationM2Data = latestYearData ? {
-    inflationRate: isFinite(Number(latestYearData.inflation_rate)) ? Number(latestYearData.inflation_rate) : null,
-    m2Growth: latestYearData.m2_growth && isFinite(Number(latestYearData.m2_growth)) ? Number(latestYearData.m2_growth) : null
+  const latestInflationRate = latestYearData?.inflation_rate && isFinite(Number(latestYearData.inflation_rate))
+    ? Number(latestYearData.inflation_rate)
+    : null
+  const latestM2Growth = latestYearData?.m2_growth && isFinite(Number(latestYearData.m2_growth))
+    ? Number(latestYearData.m2_growth)
+    : null
+  const inflationM2Data = latestYearData && latestInflationRate !== null ? {
+    inflationRate: latestInflationRate,
+    m2Growth: latestM2Growth
   } : null
 
-  const doNothingM2Data = currentYearData ? {
-    inflationRate: isFinite(Number(currentYearData.inflation_rate)) ? Number(currentYearData.inflation_rate) : null,
-    m2Growth: currentYearData.m2_growth && isFinite(Number(currentYearData.m2_growth)) ? Number(currentYearData.m2_growth) : null
+  const currentInflationRate = currentYearData?.inflation_rate && isFinite(Number(currentYearData.inflation_rate))
+    ? Number(currentYearData.inflation_rate)
+    : null
+  const currentM2Growth = currentYearData?.m2_growth && isFinite(Number(currentYearData.m2_growth))
+    ? Number(currentYearData.m2_growth)
+    : null
+  const doNothingM2Data = currentYearData && currentInflationRate !== null ? {
+    inflationRate: currentInflationRate,
+    m2Growth: currentM2Growth
   } : null
 
   // Get latest quarterly summary
