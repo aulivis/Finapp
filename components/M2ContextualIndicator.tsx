@@ -1,5 +1,5 @@
-import React from 'react'
-import { getMacroData } from '@/lib/data/macro-data'
+import * as React from 'react';
+import { getMacroData } from '@/lib/data/macro-data';
 
 interface M2ContextualIndicatorProps {
   year: number
@@ -21,13 +21,13 @@ export default async function M2ContextualIndicator({
     return null;
   }
 
-  const m2Growth: number = Number(yearData.m2_growth);
+  const m2Growth = Number(yearData.m2_growth);
 
   const formatPercentage = (value: number): string => {
     return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
   };
 
-  const periodText: string = (periodStartYear && periodEndYear && periodStartYear !== periodEndYear)
+  const periodText = (periodStartYear && periodEndYear && periodStartYear !== periodEndYear)
     ? `${periodStartYear}-${periodEndYear}`
     : `${year}`;
 

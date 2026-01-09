@@ -10,6 +10,32 @@ Minimális web-alapú pénzügyi tudatossági eszköz.
 - **Email**: Postmark vagy MailerLite
 - **AI**: OpenAI API (csak batch használat)
 
+## Funkciók és Biztonsági Javítások
+
+Ez az alkalmazás az ipari best practice-eket követi:
+
+### Biztonság
+- ✅ Security headers (HSTS, CSP, X-Frame-Options, stb.)
+- ✅ Content Security Policy (CSP) konfigurálva
+- ✅ Rate limiting API végpontokon
+- ✅ Környezeti változók validálása
+- ✅ Webhook signature verification (Stripe)
+- ✅ Cron endpoint védelme (Vercel cron + CRON_SECRET)
+- ✅ Middleware a biztonsági ellenőrzésekhez
+
+### Teljesítmény és SEO
+- ✅ Robots.txt és sitemap.xml generálás
+- ✅ Open Graph és Twitter Card meta tagek
+- ✅ Optimalizált TypeScript konfiguráció
+- ✅ Error boundary komponens
+- ✅ Health check endpoint (`/api/health`)
+
+### Kódminőség
+- ✅ Stricter TypeScript beállítások
+- ✅ Központosított error handling
+- ✅ Standardizált API válaszok
+- ✅ Környezeti változók validálási script
+
 ## Környezeti változók
 
 Másold a `env.example` fájlt `.env.local` névre és töltsd ki a szükséges értékeket:
@@ -32,11 +58,31 @@ npm run dev
 
 Nyisd meg a [http://localhost:3000](http://localhost:3000) címet a böngészőben.
 
+## Scripts
+
+- `npm run dev` - Fejlesztői szerver indítása
+- `npm run build` - Production build készítése
+- `npm run start` - Production szerver indítása
+- `npm run lint` - ESLint futtatása
+- `npm run type-check` - TypeScript típusellenőrzés
+- `npm run validate-env` - Környezeti változók validálása
+- `npm run update-macro-data` - Makro adatok frissítése
+- `npm run send-quarterly-email` - Negyedéves email küldése (manuálisan)
+- `npm run generate-quarterly-ai-content` - AI tartalom generálása
+
 ## Build
 
 ```bash
 npm run build
 npm start
+```
+
+### Környezeti változók ellenőrzése
+
+A deployment előtt ellenőrizd a környezeti változókat:
+
+```bash
+npm run validate-env
 ```
 
 ## Vercel Deployment
@@ -73,3 +119,27 @@ vercel --prod
 ```
 
 vagy push a main branch-re, ha Vercel GitHub integrációval van beállítva.
+
+### Monitoring
+
+- **Health Check**: `GET /api/health` - Alkalmazás állapot ellenőrzése
+- **Cron Jobs**: A `vercel.json` fájlban konfigurálva, automatikusan futnak
+
+## Best Practices
+
+### Security
+- Minden API végpont rate limiting-gel védett
+- Webhook végpontok signature verification-tel védettek
+- Cron végpontok Vercel cron header + CRON_SECRET kombinációval védettek
+- Security headers minden kérésre alkalmazva
+- CSP (Content Security Policy) konfigurálva
+
+### Error Handling
+- Standardizált error responses (`lib/utils/api-response.ts`)
+- Error boundary komponens a frontend-en
+- Központosított error logging
+
+### Environment Variables
+- Központosított validáció (`lib/utils/env.ts`)
+- Validációs script (`npm run validate-env`)
+- Tiszta hibaüzenetek hiányzó változók esetén

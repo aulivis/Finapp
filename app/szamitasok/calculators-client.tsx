@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import * as React from 'react';
+import { useState, useMemo } from 'react';
 import { HoldingType, historicalInflation as fallbackData } from '@/lib/data/inflation'
 import { calculateDoNothingScenario, RETIREMENT_AGE, DEFAULT_PROJECTED_ANNUAL_INFLATION } from '@/lib/data/retirement'
 import DataSourceDisclosureClient from '@/components/DataSourceDisclosureClient'

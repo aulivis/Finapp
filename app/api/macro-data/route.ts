@@ -1,11 +1,12 @@
-import { NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { getHistoricalInflationData, getProjectedInflationRate, getDataSources } from '@/lib/data/macro-data'
+import { createSuccessResponse, ApiErrors } from '@/lib/utils/api-response'
 
 /**
  * API route to fetch macroeconomic data
  * This is called server-side during page rendering, not from client
  */
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   let country = searchParams.get('country') || 'HU'
 
@@ -24,7 +25,7 @@ export async function GET(request: Request) {
       getDataSources(country),
     ])
 
-    return NextResponse.json({
+    return createSuccessResponse({
       historical: historicalData,
       projectedInflation: projectedRate,
       sources,
@@ -32,9 +33,6 @@ export async function GET(request: Request) {
     })
   } catch (error: any) {
     console.error('Error fetching macro data:', error)
-    return NextResponse.json(
-      { error: 'Az adatok jelenleg nem elérhetők.' },
-      { status: 500 }
-    )
+    return ApiErrors.internalServerError('Az adatok jelenleg nem elérhetők.')
   }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import * as React from 'react';
 
 interface M2ContextualIndicatorClientProps {
   year: number
@@ -19,13 +19,13 @@ export default function M2ContextualIndicatorClient({
     return null;
   }
 
-  const m2GrowthValue: number = m2Growth;
+  const m2GrowthValue = m2Growth;
 
   const formatPercentage = (value: number): string => {
     return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
   };
 
-  const periodText: string = (periodStartYear && periodEndYear && periodStartYear !== periodEndYear)
+  const periodText = (periodStartYear && periodEndYear && periodStartYear !== periodEndYear)
     ? `${periodStartYear}-${periodEndYear}`
     : `${year}`;
 

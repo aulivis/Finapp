@@ -16,19 +16,37 @@ export const dynamic = 'force-dynamic'
  * Security: Add authentication header check in production
  */
 export async function GET(request: NextRequest) {
-  // Optional: Add authentication check
-  const authHeader = request.headers.get('authorization')
+  // Vercel Cron Jobs automatically add a special header
+  // For additional security, we also check for CRON_SECRET
   const cronSecret = process.env.CRON_SECRET
+  const authHeader = request.headers.get('authorization')
+  const vercelCronHeader = request.headers.get('x-vercel-cron')
 
-  // Require authentication if CRON_SECRET is set
-  if (cronSecret) {
-    if (!authHeader || authHeader !== `Bearer ${cronSecret}`) {
-      // Log failed attempt (without exposing secret)
-      console.warn('Unauthorized cron access attempt')
+  // In production, require either Vercel cron header or CRON_SECRET
+  if (process.env.NODE_ENV === 'production') {
+    const isVercelCron = vercelCronHeader === '1'
+    const isValidSecret = cronSecret && authHeader === `Bearer ${cronSecret}`
+
+    if (!isVercelCron && !isValidSecret) {
+      console.warn('Unauthorized cron access attempt', {
+        hasVercelHeader: !!vercelCronHeader,
+        hasAuthHeader: !!authHeader,
+      })
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       )
+    }
+  } else {
+    // In development, allow with CRON_SECRET if set
+    if (cronSecret) {
+      if (!authHeader || authHeader !== `Bearer ${cronSecret}`) {
+        console.warn('Unauthorized cron access attempt')
+        return NextResponse.json(
+          { error: 'Unauthorized' },
+          { status: 401 }
+        )
+      }
     }
   }
 

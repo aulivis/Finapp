@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe, STRIPE_PRICE_ID } from '@/lib/stripe/config'
 import { normalizeEmail, isValidEmail } from '@/lib/utils/email'
+import { rateLimit } from '@/lib/utils/rate-limit'
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: 5 requests per minute per IP
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || 
+               request.headers.get('x-real-ip') || 
+               'unknown'
+    
+    if (!rateLimit(ip, 5, 60 * 1000)) {
+      return NextResponse.json(
+        { error: 'Túl sok kérés. Kérjük, próbálja újra később.' },
+        { status: 429 }
+      )
+    }
+
     // Limit body size
     const MAX_BODY_SIZE = 1024 // 1KB is more than enough for email
     const contentLength = request.headers.get('content-length')

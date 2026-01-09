@@ -4,5 +4,16 @@
       "path": "/api/cron/quarterly-email",
       "schedule": "0 10 1 */3 *"
     }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    }
   ]
 }

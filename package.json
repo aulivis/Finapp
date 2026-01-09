@@ -7,27 +7,29 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "validate-env": "tsx scripts/validate-env.ts",
     "update-macro-data": "tsx scripts/update-macro-data.ts",
     "send-quarterly-email": "tsx scripts/send-quarterly-email.ts",
     "generate-quarterly-ai-content": "tsx scripts/generate-quarterly-ai-content.ts"
   },
   "dependencies": {
-    "next": "^14.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@supabase/supabase-js": "^2.38.0",
-    "stripe": "^14.0.0",
-    "@stripe/stripe-js": "^2.1.0",
-    "recharts": "^2.10.0"
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@supabase/supabase-js": "^2.45.4",
+    "stripe": "^17.3.1",
+    "@stripe/stripe-js": "^2.4.0",
+    "recharts": "^2.12.7"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "typescript": "^5.2.0",
+    "@types/node": "^20.14.12",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.4",
     "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.35",
-    "tsx": "^4.7.0"
+    "eslint-config-next": "^14.2.15",
+    "tsx": "^4.16.2"
   },
   "overrides": {
     "inflight": "npm:@jsdevtools/inflight@^1.0.6",

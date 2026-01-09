@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import DisclaimerBanner from '@/components/DisclaimerBanner'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -11,8 +12,48 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Finapp',
+  title: {
+    default: 'Finapp',
+    template: '%s | Finapp',
+  },
   description: 'Pénzügyi tudatossági eszköz',
+  keywords: ['pénzügy', 'számítás', 'infláció', 'nyugdíj', 'magyarország'],
+  authors: [{ name: 'Finapp' }],
+  creator: 'Finapp',
+  publisher: 'Finapp',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'hu_HU',
+    url: '/',
+    siteName: 'Finapp',
+    title: 'Finapp - Pénzügyi tudatossági eszköz',
+    description: 'Pénzügyi tudatossági eszköz',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Finapp - Pénzügyi tudatossági eszköz',
+    description: 'Pénzügyi tudatossági eszköz',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({
@@ -23,8 +64,10 @@ export default function RootLayout({
   return (
     <html lang="hu" className={inter.variable}>
       <body style={{ fontFamily: 'var(--font-inter), Inter, sans-serif' }}>
-        <DisclaimerBanner />
-        {children}
+        <ErrorBoundary>
+          <DisclaimerBanner />
+          {children}
+        </ErrorBoundary>
       </body>
     </html>
   )
