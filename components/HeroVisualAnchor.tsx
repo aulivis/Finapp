@@ -4,7 +4,6 @@ import React, { useMemo } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import { Calculator, Calendar } from 'lucide-react'
 
-const START_YEAR = 2015
 const MAX_YEAR = 2025
 
 interface HeroVisualAnchorProps {
