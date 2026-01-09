@@ -99,7 +99,6 @@ export default function ModernLineChart({
             .filter((entry) => entry.dataKey === 'nominal' || entry.dataKey === 'real')
             .map((entry, index) => {
               const isNominal = entry.dataKey === 'nominal'
-              const label = isNominal ? 'Névleges érték' : 'Reál vásárlóerő'
               return (
                 <div
                   key={index}
@@ -122,7 +121,7 @@ export default function ModernLineChart({
                       aria-hidden="true"
                     />
                     <span style={{ color: '#4B5563', fontSize: '13px' }}>
-                      {label}:
+                      {isNominal ? 'Névleges érték' : 'Reál'}:
                     </span>
                   </div>
                   <span

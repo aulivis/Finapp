@@ -20,8 +20,9 @@ const MAX_YEAR = 2025
 export default function LandingPageClient({ macroData = [] }: LandingPageClientProps) {
   const [calculatorAmount, setCalculatorAmount] = useState(INITIAL_AMOUNT)
   const [calculatorYears, setCalculatorYears] = useState(INITIAL_YEARS)
-  const calculatorStartYear = START_YEAR
-  const calculatorEndYear = Math.min(calculatorStartYear + calculatorYears - 1, MAX_YEAR)
+  // When years change, keep endYear at MAX_YEAR and adjust startYear
+  const calculatorEndYear = MAX_YEAR
+  const calculatorStartYear = Math.max(START_YEAR, calculatorEndYear - calculatorYears + 1)
   const isMobile = useIsMobile(768)
 
   return (

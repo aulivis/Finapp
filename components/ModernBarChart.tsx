@@ -1,14 +1,9 @@
 'use client'
 
 import React, { useMemo } from 'react'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, TooltipProps } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, TooltipProps, LabelList } from 'recharts'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 
-interface BarChartData {
-  name: string
-  nominal: number
-  real: number
-}
 
 interface ModernBarChartProps {
   nominalValue: number
@@ -25,6 +20,8 @@ interface ModernBarChartProps {
  * - Accessibility improvements (ARIA labels)
  * - Performance optimizations
  * - Modern color scheme
+ * - Independent bar hover states
+ * - Value labels inside bars
  */
 export default function ModernBarChart({
   nominalValue,
@@ -34,8 +31,9 @@ export default function ModernBarChart({
 }: ModernBarChartProps) {
   const prefersReducedMotion = useReducedMotion()
 
-  // Prepare data for the chart - single row with both values for grouped bars
-  const chartData: BarChartData[] = useMemo(() => [
+  // Prepare data for the chart - single entry with both values for grouped bars
+  // We'll use separate Bar components with cell customization for independent hover
+  const chartData = useMemo(() => [
     {
       name: 'Összehasonlítás',
       nominal: nominalValue,
@@ -54,15 +52,16 @@ export default function ModernBarChart({
   const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
     if (!active || !payload || payload.length === 0) return null
 
-    const dataPoint = payload[0].payload as BarChartData
-    const value = payload[0].value as number
+    const entry = payload[0]
+    const value = entry.value as number
+    const name = entry.name as string
 
     if (value === 0) return null
 
     return (
       <div
         role="tooltip"
-        aria-label={`${dataPoint.name}: ${formatCurrency(value)}`}
+        aria-label={`${name}: ${formatCurrency(value)}`}
         style={{
           backgroundColor: '#FFFFFF',
           padding: '16px',
@@ -79,7 +78,7 @@ export default function ModernBarChart({
           color: '#111827',
           marginBottom: '8px'
         }}>
-          {dataPoint.name}
+          {name}
         </div>
         <div style={{
           fontWeight: '600',
@@ -89,6 +88,27 @@ export default function ModernBarChart({
           {formatCurrency(value)}
         </div>
       </div>
+    )
+  }
+
+  // Custom label component for values inside bars
+  const CustomLabel = (props: any) => {
+    const { value, y, height: barHeight } = props
+    if (!value || barHeight < 30) return null // Don't show label if bar is too small
+    
+    return (
+      <text
+        x={props.x + props.width / 2}
+        y={y + barHeight / 2}
+        fill="#FFFFFF"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontSize="13"
+        fontWeight="600"
+        style={{ pointerEvents: 'none' }}
+      >
+        {formatCurrency(value)}
+      </text>
     )
   }
 
@@ -107,7 +127,7 @@ export default function ModernBarChart({
         <BarChart
           data={chartData}
           margin={chartConfig.margin}
-          barCategoryGap="30%"
+          barCategoryGap="20%"
           barGap={48}
           barSize={100}
         >
@@ -143,6 +163,8 @@ export default function ModernBarChart({
           <Tooltip
             content={<CustomTooltip />}
             animationDuration={chartConfig.animationDuration}
+            shared={false}
+            cursor={{ fill: 'transparent' }}
           />
           <Legend
             wrapperStyle={{ paddingTop: '16px' }}
@@ -160,7 +182,9 @@ export default function ModernBarChart({
             aria-label="Névleges érték oszlop"
             radius={[8, 8, 0, 0]}
             style={{ filter: 'drop-shadow(0 2px 4px rgba(45, 212, 191, 0.2))' }}
-          />
+          >
+            <LabelList content={<CustomLabel />} />
+          </Bar>
           <Bar
             dataKey="real"
             fill={colors.real}
@@ -171,7 +195,9 @@ export default function ModernBarChart({
             aria-label="Inflációval korrigált érték oszlop"
             radius={[8, 8, 0, 0]}
             style={{ filter: 'drop-shadow(0 2px 4px rgba(239, 68, 68, 0.2))' }}
-          />
+          >
+            <LabelList content={<CustomLabel />} />
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

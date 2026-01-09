@@ -28,8 +28,9 @@ export default function DemoCalculator({
   const isMobile = useIsMobile(768)
   const [expandedChart, setExpandedChart] = useState<'line' | 'bar' | null>(null)
   
-  const startYear = START_YEAR
-  const endYear = Math.min(startYear + years - 1, MAX_YEAR)
+  // When years change, keep endYear at MAX_YEAR and adjust startYear
+  const endYear = MAX_YEAR
+  const startYear = Math.max(START_YEAR, endYear - years + 1)
 
   const data = useMemo(() => {
     return calculatePurchasingPower(amount, startYear, endYear)
@@ -336,6 +337,15 @@ export default function DemoCalculator({
           }}>
             <strong style={{ fontWeight: '600' }}>Az itt megjelenített adatok múltbeli, aggregált mutatókon alapulnak. Nem előrejelzések, és nem minősülnek pénzügyi tanácsnak.</strong>
           </p>
+          <img 
+            src="/mi-tortenik.png" 
+            alt="Mi történik"
+            style={{
+              width: '100%',
+              height: 'auto',
+              marginTop: '24px'
+            }}
+          />
         </div>
       </div>
 

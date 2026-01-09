@@ -41,7 +41,8 @@ export default function HeroVisualAnchor({
   const startValue = data[0]?.nominal || initialAmount
   const endValue = data[data.length - 1]?.real || initialAmount
   const effectiveStartYear = Math.max(startYear, 2014)
-  const years = endYear - startYear + 1
+  // Calculate years from the actual start and end years
+  const years = endYear - effectiveStartYear + 1
 
   return (
     <div className="hero-visual-card" style={{
@@ -244,7 +245,7 @@ export default function HeroVisualAnchor({
           Azonos összeg, eltérő vásárlóerő
         </div>
         <div style={{
-          fontSize: isMobile ? '22px' : '28px',
+          fontSize: isMobile ? '32px' : '38px',
           fontWeight: '700',
           color: '#111827',
           textAlign: 'center',
@@ -271,7 +272,7 @@ export default function HeroVisualAnchor({
           ↓
         </div>
         <div style={{
-          fontSize: isMobile ? '22px' : '28px',
+          fontSize: isMobile ? '32px' : '38px',
           fontWeight: '700',
           color: '#EF4444',
           textAlign: 'center',
