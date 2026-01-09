@@ -83,7 +83,6 @@ export default async function CalculatorsPage({ searchParams }: PageProps) {
         />
       )}
       <CalculatorsClient
-        email={email}
         historicalData={historicalData}
         latestYear={latestYear}
         inflationM2Data={inflationM2Data}

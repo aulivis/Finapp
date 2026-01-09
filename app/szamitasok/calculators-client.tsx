@@ -8,7 +8,6 @@ import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClien
 import ModernLineChart from '@/components/ModernLineChart'
 
 interface CalculatorsClientProps {
-  email: string
   historicalData: Array<{ year: number; inflationRate: number }>
   latestYear: number
   inflationM2Data: { inflationRate: number; m2Growth: number | null } | null
@@ -19,7 +18,6 @@ interface CalculatorsClientProps {
 }
 
 export default function CalculatorsClient({
-  email,
   historicalData,
   latestYear,
   inflationM2Data,
