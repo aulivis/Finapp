@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { AlertCircle, CheckCircle, Info, AlertTriangle, X } from 'lucide-react'
-import { colors, borderRadius, spacing, shadows } from '@/lib/design-system'
+import { colors, borderRadius, spacing } from '@/lib/design-system'
 
 interface AlertProps {
   type?: 'success' | 'error' | 'warning' | 'info'

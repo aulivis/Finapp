@@ -4,7 +4,7 @@ import React, { useMemo } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import { Calculator, Calendar, Minus, Plus } from 'lucide-react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
-import { colors, spacing, typography, borderRadius, shadows, componentStyles } from '@/lib/design-system'
+import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
 import Input from '@/components/ui/Input'
 
 const MAX_YEAR = 2025

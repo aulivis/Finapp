@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { colors, borderRadius, shadows, spacing, componentStyles } from '@/lib/design-system'
+import { shadows, spacing, componentStyles } from '@/lib/design-system'
 
 interface CardProps {
   children: React.ReactNode

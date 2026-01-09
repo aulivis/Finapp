@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { Loader2 } from 'lucide-react'
-import { colors, borderRadius, spacing, shadows, transitions, componentStyles } from '@/lib/design-system'
+import { colors, borderRadius, spacing, transitions, componentStyles } from '@/lib/design-system'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'tertiary'

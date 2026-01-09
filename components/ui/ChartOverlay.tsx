@@ -61,14 +61,13 @@ export default function ChartOverlay({ isOpen, onClose, title, children }: Chart
           backgroundColor: colors.background.paper,
           borderRadius: borderRadius.lg,
           padding: spacing.xl,
-          maxWidth: '100%',
+          maxWidth: '600px',
           maxHeight: '90vh',
           overflow: 'auto',
           position: 'relative',
           boxShadow: shadows['2xl'],
           animation: 'slideUp 0.3s ease',
           width: '100%',
-          maxWidth: '600px',
         }}
         onClick={(e) => e.stopPropagation()}
       >

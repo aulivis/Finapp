@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
-import Card from '@/components/ui/Card'
 
 interface M2ContextualIndicatorClientProps {
   year: number

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { colors, borderRadius, spacing, componentStyles, focusStyles } from '@/lib/design-system'
+import { colors, spacing, componentStyles, focusStyles } from '@/lib/design-system'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
