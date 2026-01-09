@@ -18,37 +18,6 @@ interface CalculatorsClientProps {
   dataSources: string[]
 }
 
-// Helper functions outside component to avoid SWC parsing issues
-const formatCurrency = (value: number) => {
-  return new Intl.NumberFormat('hu-HU', {
-    style: 'currency',
-    currency: 'HUF',
-    maximumFractionDigits: 0,
-  }).format(value);
-};
-
-const formatPercentage = (value: number) => {
-  return `${value.toFixed(1)}%`;
-};
-
-const formatPercentageWithSign = (value: number) => {
-  const sign = value >= 0 ? '+' : '';
-  return `${sign}${value.toFixed(1)}%`;
-};
-
-const getHoldingTypeDescription = (type: HoldingType) => {
-  switch (type) {
-    case 'cash':
-      return 'Készpénz formában tartva, nincs kamatbevétel.';
-    case 'low-interest-savings':
-      return 'Alacsony kamatozású megtakarítási számla, éves 2% kamattal számolva (konzervatív becslés).';
-    case 'no-yield':
-      return 'Nincs hozam, csak az infláció hatása számít.';
-    default:
-      return '';
-  }
-};
-
 export default function CalculatorsClient({
   email,
   historicalData,
@@ -133,6 +102,36 @@ export default function CalculatorsClient({
     const projected = projectedInflation || DEFAULT_PROJECTED_ANNUAL_INFLATION
     return calculateDoNothingScenario(currentAge, currentSavings, monthlySavings, projected)
   }, [currentAge, currentSavings, monthlySavings, projectedInflation])
+
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('hu-HU', {
+      style: 'currency',
+      currency: 'HUF',
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
+  const formatPercentage = (value: number) => {
+    return `${value.toFixed(1)}%`;
+  };
+
+  const formatPercentageWithSign = (value: number) => {
+    const sign = value >= 0 ? '+' : '';
+    return `${sign}${value.toFixed(1)}%`;
+  };
+
+  const getHoldingTypeDescription = (type: HoldingType): string => {
+    switch (type) {
+      case 'cash':
+        return 'Készpénz formában tartva, nincs kamatbevétel.';
+      case 'low-interest-savings':
+        return 'Alacsony kamatozású megtakarítási számla, éves 2% kamattal számolva (konzervatív becslés).';
+      case 'no-yield':
+        return 'Nincs hozam, csak az infláció hatása számít.';
+      default:
+        return '';
+    }
+  };
 
   return (
     <div style={{
@@ -422,7 +421,7 @@ export default function CalculatorsClient({
               height={400}
             />
           </div>
-        )}
+        ) : null}
 
         {/* Contextual Explanation */}
         <div style={{
