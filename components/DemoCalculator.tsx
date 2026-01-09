@@ -129,26 +129,6 @@ export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) 
         </div>
       </div>
 
-      {/* Output Section - Plain Language Result */}
-      <div style={{
-        padding: '32px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '12px',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-        textAlign: 'center',
-        marginBottom: '32px'
-      }}>
-        <p style={{
-          fontSize: '20px',
-          lineHeight: '1.7',
-          color: '#111827',
-          margin: '0',
-          fontWeight: '400'
-        }}>
-          Ugyanaz az összeg <strong>{lossPercentage}%-kal kevesebb</strong> vásárlóerővel rendelkezik, mint {startYear}-ben ({startYear}–{endYear}).
-        </p>
-      </div>
-
       {/* Detailed Breakdown */}
       <div style={{
         marginBottom: '32px',
@@ -236,6 +216,26 @@ export default function DemoCalculator({ macroData = [] }: DemoCalculatorProps) 
             formatCurrency={formatCurrency}
             height={250}
           />
+        </div>
+
+        {/* Output Section - Plain Language Result */}
+        <div style={{
+          padding: '32px',
+          backgroundColor: '#FFFFFF',
+          borderRadius: '12px',
+          boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+          textAlign: 'center',
+          marginTop: '24px'
+        }}>
+          <p style={{
+            fontSize: '20px',
+            lineHeight: '1.7',
+            color: '#111827',
+            margin: '0',
+            fontWeight: '400'
+          }}>
+            Ugyanaz az összeg <strong>{lossPercentage}%-kal kevesebb</strong> vásárlóerővel rendelkezik, mint {startYear}-ben ({startYear}–{endYear}).
+          </p>
         </div>
       </div>
 

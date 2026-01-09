@@ -73,15 +73,6 @@ export default function PaymentForm() {
       borderRadius: '12px',
       boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
     }}>
-      <h3 style={{
-        fontSize: '20px',
-        fontWeight: '600',
-        marginBottom: '16px',
-        color: '#111827',
-        lineHeight: '1.3'
-      }}>
-        Hozzáférés vásárlása
-      </h3>
       <div style={{
         padding: '20px',
         backgroundColor: '#F9FAFB',

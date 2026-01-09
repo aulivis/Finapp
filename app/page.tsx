@@ -41,17 +41,6 @@ export default async function Home() {
           }} className="hero-grid">
             {/* Left: Text content */}
             <div>
-              {/* Subtitle */}
-              <p style={{
-                fontSize: '14px',
-                color: '#6B7280',
-                margin: '0 0 24px 0',
-                fontWeight: '400',
-                lineHeight: '1.6'
-              }}>
-                Pénzügyi kontextus, érthetően
-              </p>
-
               {/* H1 */}
               <h1 className="hero-h1" style={{
                 fontSize: '36px',
@@ -114,8 +103,8 @@ export default async function Home() {
             <div>
               <HeroVisualAnchor 
                 initialAmount={1000000}
-                startYear={2010}
-                endYear={2024}
+                startYear={2015}
+                endYear={2025}
               />
             </div>
           </div>

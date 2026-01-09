@@ -35,7 +35,7 @@ export default function ContextaWordmark({
           lineHeight: '1.4',
           letterSpacing: '0.01em'
         }}>
-          Purchasing Power Monitor
+          Pénzügyi kontextus, érthetően
         </div>
       )}
     </div>
