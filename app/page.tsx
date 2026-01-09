@@ -1,3 +1,4 @@
+import React from 'react'
 import DemoCalculator from '@/components/DemoCalculator'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
 import M2ContextualIndicator from '@/components/M2ContextualIndicator'

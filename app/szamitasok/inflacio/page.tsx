@@ -1,3 +1,4 @@
+import React from 'react'
 import { getHistoricalInflationData, getMacroData, getDataSources } from '@/lib/data/macro-data'
 import { hasAccess } from '@/lib/utils/access'
 import { isValidEmail } from '@/lib/utils/email'

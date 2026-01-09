@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { HoldingType, historicalInflation as fallbackData } from '@/lib/data/inflation'
 import DataSourceDisclosureClient from '@/components/DataSourceDisclosureClient'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'

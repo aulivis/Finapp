@@ -1,3 +1,4 @@
+import React from 'react'
 import { hasAccess } from '@/lib/utils/access'
 import { getHistoricalInflationData, getProjectedInflationRate, getMacroData, getDataSources } from '@/lib/data/macro-data'
 import { getLatestQuarterlySummary } from '@/lib/email/quarterly-summary'

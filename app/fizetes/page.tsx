@@ -1,3 +1,4 @@
+import React from 'react'
 import PaymentForm from '@/components/PaymentForm'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
 import DisclaimerBanner from '@/components/DisclaimerBanner'

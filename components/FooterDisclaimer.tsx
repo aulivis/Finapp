@@ -3,6 +3,8 @@
  * Displays comprehensive disclaimers in footer
  */
 
+import React from 'react'
+
 export default function FooterDisclaimer() {
   return (
     <div style={{

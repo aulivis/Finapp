@@ -3,6 +3,8 @@
  * Displays key disclaimers on all pages
  */
 
+import React from 'react'
+
 export default function DisclaimerBanner() {
   return (
     <div style={{
