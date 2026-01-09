@@ -214,9 +214,7 @@ export default function DemoCalculator({
           
           return (
             <div style={{
-              marginTop: '32px',
-              paddingTop: '32px',
-              borderTop: '1px solid #E5E7EB'
+              marginTop: '32px'
             }}>
               <M2ContextualIndicatorClient 
                 year={endYear}

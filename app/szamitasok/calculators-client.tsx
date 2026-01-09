@@ -644,66 +644,155 @@ export default function CalculatorsClient({
             <>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                gap: '16px',
-                marginBottom: '24px'
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gap: '20px',
+                marginBottom: '32px'
               }}>
                 <div style={{
-                  padding: '16px',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '2px',
-                  border: '1px solid #dee2e6'
+                  padding: '24px',
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '12px',
+                  border: '1px solid #E5E7EB',
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease'
                 }}>
-                  <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
-                    Hátralévő évek ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
+                  <div style={{ 
+                    fontSize: '13px', 
+                    color: '#6B7280', 
+                    marginBottom: '12px',
+                    fontWeight: '500',
+                    letterSpacing: '0.01em'
+                  }}>
+                    Hátralévő évek
                   </div>
-                  <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
-                    {doNothingCalculation.yearsToRetirement} év
+                  <div style={{ 
+                    fontSize: '32px', 
+                    fontWeight: '600', 
+                    color: '#111827',
+                    lineHeight: '1.2',
+                    marginBottom: '4px'
+                  }} className="tabular-nums">
+                    {doNothingCalculation.yearsToRetirement}
+                  </div>
+                  <div style={{ 
+                    fontSize: '14px', 
+                    color: '#9CA3AF',
+                    fontWeight: '400'
+                  }}>
+                    év ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                   </div>
                 </div>
 
                 <div style={{
-                  padding: '16px',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '2px',
-                  border: '1px solid #dee2e6'
+                  padding: '24px',
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '12px',
+                  border: '1px solid #E5E7EB',
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease'
                 }}>
-                  <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
-                    Névleges érték ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
+                  <div style={{ 
+                    fontSize: '13px', 
+                    color: '#6B7280', 
+                    marginBottom: '12px',
+                    fontWeight: '500',
+                    letterSpacing: '0.01em'
+                  }}>
+                    Névleges érték
                   </div>
-                  <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
+                  <div style={{ 
+                    fontSize: '28px', 
+                    fontWeight: '600', 
+                    color: '#111827',
+                    lineHeight: '1.2',
+                    marginBottom: '4px'
+                  }} className="tabular-nums">
                     {formatCurrency(doNothingCalculation.nominalValueAtRetirement)}
                   </div>
+                  <div style={{ 
+                    fontSize: '14px', 
+                    color: '#9CA3AF',
+                    fontWeight: '400'
+                  }}>
+                    ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
+                  </div>
                 </div>
 
                 <div style={{
-                  padding: '16px',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '2px',
-                  border: '1px solid #dee2e6'
+                  padding: '24px',
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '12px',
+                  border: '1px solid #E5E7EB',
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease'
                 }}>
-                  <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
-                    Reál vásárlóerő ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
+                  <div style={{ 
+                    fontSize: '13px', 
+                    color: '#6B7280', 
+                    marginBottom: '12px',
+                    fontWeight: '500',
+                    letterSpacing: '0.01em'
+                  }}>
+                    Reál vásárlóerő
                   </div>
-                  <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
+                  <div style={{ 
+                    fontSize: '28px', 
+                    fontWeight: '600', 
+                    color: '#111827',
+                    lineHeight: '1.2',
+                    marginBottom: '4px'
+                  }} className="tabular-nums">
                     {formatCurrency(doNothingCalculation.realValueAtRetirement)}
                   </div>
+                  <div style={{ 
+                    fontSize: '14px', 
+                    color: '#9CA3AF',
+                    fontWeight: '400'
+                  }}>
+                    ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
+                  </div>
                 </div>
 
                 <div style={{
-                  padding: '16px',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '2px',
-                  border: '1px solid #dee2e6'
+                  padding: '24px',
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '12px',
+                  border: '1px solid #E5E7EB',
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease'
                 }}>
-                  <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
-                    Vásárlóerő változás ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
+                  <div style={{ 
+                    fontSize: '13px', 
+                    color: '#6B7280', 
+                    marginBottom: '12px',
+                    fontWeight: '500',
+                    letterSpacing: '0.01em'
+                  }}>
+                    Vásárlóerő változás
                   </div>
-                  <div style={{ fontSize: '24px', fontWeight: '500', color: '#111827' }} className="tabular-nums">
+                  <div style={{ 
+                    fontSize: '28px', 
+                    fontWeight: '600', 
+                    color: doNothingCalculation.purchasingPowerChangePercentage < 0 ? '#EF4444' : '#059669',
+                    lineHeight: '1.2',
+                    marginBottom: '8px'
+                  }} className="tabular-nums">
                     {formatPercentageWithSign(doNothingCalculation.purchasingPowerChangePercentage)}
                   </div>
-                  <div style={{ fontSize: '14px', color: '#4B5563', marginTop: '4px' }} className="tabular-nums">
+                  <div style={{ 
+                    fontSize: '14px', 
+                    color: '#6B7280',
+                    fontWeight: '400'
+                  }} className="tabular-nums">
                     {formatCurrency(doNothingCalculation.purchasingPowerChange)}
+                  </div>
+                  <div style={{ 
+                    fontSize: '13px', 
+                    color: '#9CA3AF',
+                    fontWeight: '400',
+                    marginTop: '4px'
+                  }}>
+                    ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                   </div>
                 </div>
               </div>

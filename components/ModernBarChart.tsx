@@ -34,16 +34,11 @@ export default function ModernBarChart({
 }: ModernBarChartProps) {
   const prefersReducedMotion = useReducedMotion()
 
-  // Prepare data for the chart
+  // Prepare data for the chart - single row with both values for grouped bars
   const chartData: BarChartData[] = useMemo(() => [
     {
-      name: 'Névleges érték',
+      name: 'Összehasonlítás',
       nominal: nominalValue,
-      real: 0
-    },
-    {
-      name: 'Inflációval korrigált érték',
-      nominal: 0,
       real: realValue
     }
   ], [nominalValue, realValue])
@@ -100,7 +95,7 @@ export default function ModernBarChart({
   // Modern color scheme with better contrast and visual appeal
   const colors = {
     nominal: '#2DD4BF', // Teal for nominal (brand color)
-    real: '#14B8A6',    // Darker teal for real
+    real: '#EF4444',    // Red for real value to show loss (high contrast)
     grid: '#E5E7EB',    // Light gray for grid
     text: '#4B5563',    // Medium gray for text
     background: '#F0FDFA' // Light teal background
@@ -112,8 +107,9 @@ export default function ModernBarChart({
         <BarChart
           data={chartData}
           margin={chartConfig.margin}
-          barCategoryGap="20%"
-          barSize={80}
+          barCategoryGap="30%"
+          barGap={20}
+          barSize={100}
         >
           <CartesianGrid
             strokeDasharray="3 3"
@@ -128,6 +124,7 @@ export default function ModernBarChart({
             tickLine={{ stroke: colors.grid }}
             axisLine={{ stroke: colors.grid }}
             aria-label="Érték típusok"
+            hide={true}
           />
           <YAxis
             stroke={colors.text}
@@ -173,7 +170,7 @@ export default function ModernBarChart({
             animationEasing={chartConfig.animationEasing}
             aria-label="Inflációval korrigált érték oszlop"
             radius={[8, 8, 0, 0]}
-            style={{ filter: 'drop-shadow(0 2px 4px rgba(20, 184, 166, 0.2))' }}
+            style={{ filter: 'drop-shadow(0 2px 4px rgba(239, 68, 68, 0.2))' }}
           />
         </BarChart>
       </ResponsiveContainer>

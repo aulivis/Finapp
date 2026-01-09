@@ -65,8 +65,8 @@ export default function HeroVisualAnchor({
       
       {/* Input Fields */}
       <div style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
         gap: '16px'
       }}>
         <div>

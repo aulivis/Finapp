@@ -80,46 +80,49 @@ export default function ModernLineChart({
           )}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {payload.map((entry, index) => {
-            const isNominal = entry.dataKey === 'nominal'
-            return (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '12px'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div
-                    style={{
-                      width: '12px',
-                      height: '12px',
-                      borderRadius: '2px',
-                      backgroundColor: entry.color || '#111827',
-                      flexShrink: 0
-                    }}
-                    aria-hidden="true"
-                  />
-                  <span style={{ color: '#4B5563', fontSize: '13px' }}>
-                    {entry.name || (isNominal ? 'Névleges érték' : 'Reál vásárlóerő')}:
-                  </span>
-                </div>
-                <span
-                  className="tabular-nums"
+          {payload
+            .filter((entry) => entry.dataKey === 'nominal' || entry.dataKey === 'real')
+            .map((entry, index) => {
+              const isNominal = entry.dataKey === 'nominal'
+              const label = isNominal ? 'Névleges érték' : 'Reál vásárlóerő'
+              return (
+                <div
+                  key={index}
                   style={{
-                    fontWeight: '500',
-                    color: '#111827',
-                    fontSize: '14px'
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '12px'
                   }}
                 >
-                  {formatCurrency(entry.value as number)}
-                </span>
-              </div>
-            )
-          })}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div
+                      style={{
+                        width: '12px',
+                        height: '12px',
+                        borderRadius: '2px',
+                        backgroundColor: entry.color || '#111827',
+                        flexShrink: 0
+                      }}
+                      aria-hidden="true"
+                    />
+                    <span style={{ color: '#4B5563', fontSize: '13px' }}>
+                      {label}:
+                    </span>
+                  </div>
+                  <span
+                    className="tabular-nums"
+                    style={{
+                      fontWeight: '500',
+                      color: '#111827',
+                      fontSize: '14px'
+                    }}
+                  >
+                    {formatCurrency(entry.value as number)}
+                  </span>
+                </div>
+              )
+            })}
         </div>
       </div>
     )
@@ -230,6 +233,7 @@ export default function ModernLineChart({
             isAnimationActive={!prefersReducedMotion}
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
+            hide={true}
           />
           {/* Area fill for real line */}
           <Area
@@ -241,6 +245,7 @@ export default function ModernLineChart({
             isAnimationActive={!prefersReducedMotion}
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
+            hide={true}
           />
           <Line
             type="monotone"
