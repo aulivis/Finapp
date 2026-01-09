@@ -17,18 +17,18 @@ export default async function M2ContextualIndicator({
   const yearData = macroData.find(d => d.year === year)
   
   if (!yearData || yearData.m2_growth === null) {
-    return null
+    return null;
   }
 
-  const m2Growth = Number(yearData.m2_growth)
+  const m2Growth: number = Number(yearData.m2_growth);
 
-  const formatPercentage = (value: number) => {
-    return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`
-  }
+  const formatPercentage = (value: number): string => {
+    return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
+  };
 
-  const periodText = periodStartYear && periodEndYear && periodStartYear !== periodEndYear
-    ? `${periodStartYear}–${periodEndYear}`
-    : `${year}`
+  const periodText: string = (periodStartYear && periodEndYear && periodStartYear !== periodEndYear)
+    ? `${periodStartYear}-${periodEndYear}`
+    : `${year}`;
 
   return (
     <div style={{
@@ -80,5 +80,5 @@ export default async function M2ContextualIndicator({
         </p>
       </div>
     </div>
-  )
+  );
 }

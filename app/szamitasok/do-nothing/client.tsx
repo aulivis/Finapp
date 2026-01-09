@@ -36,13 +36,13 @@ export default function DoNothingCalculatorClient({
       style: 'currency',
       currency: 'HUF',
       maximumFractionDigits: 0,
-    }).format(value)
-  }
+    }).format(value);
+  };
 
   const formatPercentageWithSign = (value: number) => {
-    const sign = value >= 0 ? '+' : ''
-    return `${sign}${value.toFixed(1)}%`
-  }
+    const sign = value >= 0 ? '+' : '';
+    return `${sign}${value.toFixed(1)}%`;
+  };
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px' }}>
@@ -321,5 +321,5 @@ export default function DoNothingCalculatorClient({
         />
       )}
     </div>
-  )
+  );
 }

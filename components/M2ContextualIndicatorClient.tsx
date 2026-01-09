@@ -14,16 +14,18 @@ export default function M2ContextualIndicatorClient({
   periodEndYear
 }: M2ContextualIndicatorClientProps) {
   if (m2Growth === null) {
-    return null
+    return null;
   }
 
-  const formatPercentage = (value: number) => {
-    return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`
-  }
+  const m2GrowthValue: number = m2Growth;
 
-  const periodText = periodStartYear && periodEndYear && periodStartYear !== periodEndYear
-    ? `${periodStartYear}–${periodEndYear}`
-    : `${year}`
+  const formatPercentage = (value: number): string => {
+    return `${value >= 0 ? '+' : ''}${value.toFixed(1)}%`;
+  };
+
+  const periodText: string = (periodStartYear && periodEndYear && periodStartYear !== periodEndYear)
+    ? `${periodStartYear}-${periodEndYear}`
+    : `${year}`;
 
   return (
     <div style={{
@@ -52,7 +54,7 @@ export default function M2ContextualIndicatorClient({
           color: '#111827',
           marginBottom: '4px'
         }}>
-          {formatPercentage(m2Growth)}
+          {formatPercentage(m2GrowthValue)}
         </div>
         <div style={{
           fontSize: '12px',
@@ -75,5 +77,5 @@ export default function M2ContextualIndicatorClient({
         </p>
       </div>
     </div>
-  )
+  );
 }
