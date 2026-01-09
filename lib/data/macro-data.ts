@@ -94,7 +94,8 @@ export async function getInflationRateForYear(
 }
 
 /**
- * Get projected inflation rate (average of recent years or default)
+ * Get historical average inflation rate (average of recent years or default)
+ * Note: This is NOT a prediction/forecast, but a historical average used for illustrative calculations
  */
 export async function getProjectedInflationRate(country: string = DEFAULT_COUNTRY): Promise<number> {
   // Validate country parameter

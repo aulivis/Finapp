@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { calculatePersonalInflationImpact, HoldingType, historicalInflation as fallbackData } from '@/lib/data/inflation'
 import { calculateDoNothingScenario, RETIREMENT_AGE, DEFAULT_PROJECTED_ANNUAL_INFLATION } from '@/lib/data/retirement'
 import DataSourceDisclosure from '@/components/DataSourceDisclosure'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
+import ModernLineChart from '@/components/ModernLineChart'
 
 interface CalculatorsClientProps {
   email: string
@@ -131,30 +131,6 @@ export default function CalculatorsClient({
     }
   }
 
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div style={{
-          backgroundColor: '#FFFFFF',
-          padding: '12px',
-          border: '1px solid #E5E7EB',
-          borderRadius: '2px'
-        }}>
-          <p style={{ margin: '0 0 8px 0', fontWeight: '400', color: '#111827' }}>
-            {payload[0].payload.year}
-            {payload[0].payload.age !== undefined ? ` (életkor: ${payload[0].payload.age})` : ''}
-          </p>
-          <p style={{ margin: '4px 0', color: '#4B5563', fontSize: '13px' }}>
-            Névleges érték: <span className="tabular-nums">{formatCurrency(payload[0].value)}</span>
-          </p>
-          <p style={{ margin: '4px 0', color: '#4B5563', fontSize: '13px' }}>
-            Reál vásárlóerő: <span className="tabular-nums">{formatCurrency(payload[1].value)}</span>
-          </p>
-        </div>
-      )
-    }
-    return null
-  }
 
   return (
     <div style={{
@@ -316,6 +292,27 @@ export default function CalculatorsClient({
             Eredmények
           </h2>
 
+          {/* Main Human-Readable Message */}
+          <div style={{
+            padding: '20px',
+            backgroundColor: '#F9FAFB',
+            borderRadius: '2px',
+            border: '1px solid #E5E7EB',
+            marginBottom: '24px',
+            textAlign: 'center'
+          }}>
+            <p style={{
+              fontSize: '18px',
+              lineHeight: '1.6',
+              color: '#111827',
+              margin: '0',
+              fontWeight: '400'
+            }}>
+              Ugyanaz az összeg <strong>{formatPercentage(inflationCalculation.purchasingPowerLossPercentage)}-kal kevesebb</strong> vásárlóerővel rendelkezik 
+              a(z) {startYear} évhez képest ({startYear} → {endYear}).
+            </p>
+          </div>
+
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -329,7 +326,7 @@ export default function CalculatorsClient({
               border: '1px solid #E5E7EB'
             }}>
               <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
-                Kezdeti összeg
+                Kezdeti összeg ({startYear})
               </div>
               <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
                 {formatCurrency(inflationCalculation.initialAmount)}
@@ -343,7 +340,7 @@ export default function CalculatorsClient({
               border: '1px solid #E5E7EB'
             }}>
               <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
-                Névleges érték ({endYear})
+                Névleges érték ({startYear} → {endYear})
               </div>
               <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
                 {formatCurrency(inflationCalculation.finalNominalValue)}
@@ -357,7 +354,7 @@ export default function CalculatorsClient({
               border: '1px solid #E5E7EB'
             }}>
               <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
-                Reál érték ({endYear})
+                Reál érték ({startYear} → {endYear})
               </div>
               <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
                 {formatCurrency(inflationCalculation.finalRealValue)}
@@ -371,7 +368,7 @@ export default function CalculatorsClient({
               border: '1px solid #E5E7EB'
             }}>
               <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
-                Vásárlóerő veszteség
+                Vásárlóerő veszteség ({startYear} → {endYear})
               </div>
               <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
                 -{formatCurrency(inflationCalculation.purchasingPowerLoss)}
@@ -419,41 +416,11 @@ export default function CalculatorsClient({
             }}>
               Vásárlóerő alakulása
             </h2>
-            <div style={{ width: '100%', height: '400px' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={inflationCalculation.dataPoints} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                  <XAxis 
-                    dataKey="year" 
-                    stroke="#111827"
-                    label={{ value: 'Év', position: 'insideBottom', offset: -5, style: { fill: '#4B5563' } }}
-                  />
-                  <YAxis 
-                    stroke="#111827"
-                    label={{ value: 'Forint', angle: -90, position: 'insideLeft', style: { fill: '#4B5563' } }}
-                    tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`}
-                  />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey="nominal" 
-                    stroke="#111827" 
-                    strokeWidth={1.5}
-                    name="Névleges érték"
-                    dot={{ r: 3 }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="real" 
-                    stroke="#6B7280" 
-                    strokeWidth={1.5}
-                    name="Reál vásárlóerő"
-                    dot={{ r: 3 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            <ModernLineChart
+              data={inflationCalculation.dataPoints}
+              formatCurrency={formatCurrency}
+              height={400}
+            />
           </div>
         )}
 
@@ -468,16 +435,28 @@ export default function CalculatorsClient({
           lineHeight: '1.7',
           color: '#495057'
         }}>
-          <p style={{ margin: '0 0 12px 0 }}>
-            A számítás a KSH által közzétett éves inflációs adatokon alapul. Az infláció hatása kumulatív: 
-            minél hosszabb időtartam alatt tartja a pénzt, annál nagyobb a vásárlóerő veszteség. 
-            Ez egy matematikai tény, nem vélemény vagy ajánlás.
-          </p>
-          <p style={{ margin: '12px 0 0 0 }}>
-            A múltbeli adatok nem garantálják a jövőbeli eredményeket. A számítás nem veszi figyelembe 
-            az egyéni körülményeket, adózási tényezőket vagy piaci kockázatokat.
-          </p>
-        </div>
+            <p style={{ margin: '0 0 12px 0 }}>
+              A számítás a KSH által közzétett éves inflációs adatokon alapul. Az infláció hatása kumulatív: 
+              minél hosszabb időtartam alatt tartja a pénzt, annál nagyobb a vásárlóerő veszteség. 
+              Ez egy matematikai tény, nem vélemény vagy ajánlás.
+            </p>
+            <p style={{ margin: '12px 0 0 0 }}>
+              A múltbeli adatok nem garantálják a jövőbeli eredményeket. A számítás nem veszi figyelembe 
+              az egyéni körülményeket, adózási tényezőket vagy piaci kockázatokat.
+            </p>
+            <p style={{
+              margin: '16px 0 0 0',
+              padding: '12px',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid #E5E7EB',
+              borderRadius: '2px',
+              fontSize: '13px',
+              lineHeight: '1.6',
+              color: '#4B5563'
+            }}>
+              <strong>Az itt megjelenített adatok múltbeli, aggregált mutatókon alapulnak. Nem előrejelzések, és nem minősülnek pénzügyi tanácsnak.</strong>
+            </p>
+          </div>
 
         {/* Data Source Disclosure */}
         <DataSourceDisclosure country="HU" />
@@ -510,8 +489,8 @@ export default function CalculatorsClient({
           color: '#4B5563',
           marginBottom: '32px'
         }}>
-          A számítás mutatja, hogy mi történik a megtakarításokkal, ha csak félretesz, de nem fektet be. 
-          Az infláció hatása látható a nyugdíjkorhatárig tartó időszakban.
+          A számítás bemutatja, hogyan változna a megtakarítások vásárlóereje, ha csak félretesz, de nem fektet be. 
+          Az infláció hatása látható a nyugdíjkorhatárig tartó időszakban történelmi adatok alapján.
         </p>
 
         {/* Input Section */}
@@ -629,7 +608,7 @@ export default function CalculatorsClient({
               marginTop: '8px'
             }}>
               A számítás feltételezi, hogy ezt az összeget minden hónapban félreteszi, kamat nélkül. 
-              Az infláció becslése: {(projectedInflation || DEFAULT_PROJECTED_ANNUAL_INFLATION).toFixed(1)}% évente.
+              Az infláció számítása az elmúlt évek átlagos inflációs adatain alapul: {(projectedInflation || DEFAULT_PROJECTED_ANNUAL_INFLATION).toFixed(1)}% évente (történelmi átlag).
             </p>
           </div>
         </div>
@@ -666,7 +645,7 @@ export default function CalculatorsClient({
                   border: '1px solid #dee2e6'
                 }}>
                   <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
-                    Hátralévő évek
+                    Hátralévő évek ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                   </div>
                   <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
                     {doNothingCalculation.yearsToRetirement} év
@@ -680,7 +659,7 @@ export default function CalculatorsClient({
                   border: '1px solid #dee2e6'
                 }}>
                   <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
-                    Névleges érték ({doNothingCalculation.retirementAge} éves korban)
+                    Névleges érték ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                   </div>
                   <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
                     {formatCurrency(doNothingCalculation.nominalValueAtRetirement)}
@@ -694,7 +673,7 @@ export default function CalculatorsClient({
                   border: '1px solid #dee2e6'
                 }}>
                   <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
-                    Reál vásárlóerő ({doNothingCalculation.retirementAge} éves korban)
+                    Reál vásárlóerő ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                   </div>
                   <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
                     {formatCurrency(doNothingCalculation.realValueAtRetirement)}
@@ -708,7 +687,7 @@ export default function CalculatorsClient({
                   border: '1px solid #dee2e6'
                 }}>
                   <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
-                    Vásárlóerő változás
+                    Vásárlóerő változás ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                   </div>
                   <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
                     {formatPercentageWithSign(doNothingCalculation.purchasingPowerChangePercentage)}
@@ -731,11 +710,11 @@ export default function CalculatorsClient({
                 <p style={{ margin: '0 0 12px 0 }}>
                   A <strong>névleges érték</strong> a megtakarítások és havi hozzájárulások összege a nyugdíjkorhatár eléréséig. 
                   A <strong>reál vásárlóerő</strong> azt mutatja, hogy mennyi vásárlóerőt képvisel ez az összeg az infláció figyelembevételével. 
-                  A <strong>vásárlóerő változás</strong> azt mutatja, hogy a jelenlegi megtakarítások vásárlóerejéhez képest mennyi változás várható.
+                  A <strong>vásárlóerő változás</strong> azt mutatja, hogy a jelenlegi megtakarítások vásárlóerejéhez képest mennyi változás következik be.
                 </p>
                 <p style={{ margin: '12px 0 0 0 }}>
                   A számítás feltételezi, hogy a megtakarításokat készpénzben vagy kamatmentes számlán tartja, 
-                  és nincs kamatbevétel vagy hozam. Az infláció évente átlagosan {(projectedInflation || DEFAULT_PROJECTED_ANNUAL_INFLATION).toFixed(1)}%-kal növekszik (konzervatív becslés).
+                  és nincs kamatbevétel vagy hozam. Az infláció számítása az elmúlt évek történelmi átlagos inflációs adatain alapul: {(projectedInflation || DEFAULT_PROJECTED_ANNUAL_INFLATION).toFixed(1)}% évente.
                 </p>
               </div>
             </>
@@ -772,41 +751,12 @@ export default function CalculatorsClient({
             }}>
               Vásárlóerő alakulása
             </h2>
-            <div style={{ width: '100%', height: '400px' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={doNothingCalculation.monthlyBreakdown} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                  <XAxis 
-                    dataKey="year" 
-                    stroke="#111827"
-                    label={{ value: 'Év', position: 'insideBottom', offset: -5, style: { fill: '#4B5563' } }}
-                  />
-                  <YAxis 
-                    stroke="#111827"
-                    label={{ value: 'Forint', angle: -90, position: 'insideLeft', style: { fill: '#4B5563' } }}
-                    tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`}
-                  />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey="nominal" 
-                    stroke="#111827" 
-                    strokeWidth={1.5}
-                    name="Névleges érték"
-                    dot={{ r: 3 }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="real" 
-                    stroke="#6B7280" 
-                    strokeWidth={1.5}
-                    name="Reál vásárlóerő"
-                    dot={{ r: 3 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            <ModernLineChart
+              data={doNothingCalculation.monthlyBreakdown}
+              formatCurrency={formatCurrency}
+              showAge={true}
+              height={400}
+            />
           </div>
         )}
 
@@ -821,17 +771,28 @@ export default function CalculatorsClient({
           lineHeight: '1.7',
           color: '#495057'
         }}>
-          <p style={{ margin: '0 0 12px 0 }}>
-            Ez a számítás azt mutatja, hogy mi történik, ha rendszeresen félretesz pénzt, de azt nem fekteti be, 
-            hanem készpénzben vagy kamatmentes számlán tartja. Az infláció folyamatosan csökkenti a pénz vásárlóerejét, 
-            ami azt jelenti, hogy ugyanaz az összeg egyre kevesebbet ér.
-          </p>
-          <p style={{ margin: '12px 0 0 0 }}>
-            Az infláció hatása kumulatív: minél hosszabb időtartam alatt tartja a pénzt kamat nélkül, 
-            annál nagyobb a vásárlóerő veszteség. Ez egy matematikai tény, nem vélemény vagy ajánlás. 
-            A múltbeli inflációs adatok alapján ez a tendencia várható a jövőben is, bár az infláció mértéke változó.
-          </p>
-        </div>
+            <p style={{ margin: '0 0 12px 0 }}>
+              Ez a számítás bemutatja, hogyan változna a megtakarítások vásárlóereje, ha rendszeresen félretesz pénzt, de azt nem fekteti be, 
+              hanem készpénzben vagy kamatmentes számlán tartja. Az infláció folyamatosan csökkenti a pénz vásárlóerejét, 
+              ami azt jelenti, hogy ugyanaz az összeg egyre kevesebbet ér. A számítás történelmi inflációs adatok átlagán alapul.
+            </p>
+            <p style={{ margin: '12px 0 0 0 }}>
+              Az infláció hatása kumulatív: minél hosszabb időtartam alatt tartja a pénzt kamat nélkül, 
+              annál nagyobb a vásárlóerő veszteség. Ez egy matematikai tény, nem vélemény vagy ajánlás.
+            </p>
+            <p style={{
+              margin: '16px 0 0 0',
+              padding: '12px',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid #E5E7EB',
+              borderRadius: '2px',
+              fontSize: '13px',
+              lineHeight: '1.6',
+              color: '#4B5563'
+            }}>
+              <strong>Az itt megjelenített adatok múltbeli, aggregált mutatókon alapulnak. Nem előrejelzések, és nem minősülnek pénzügyi tanácsnak.</strong>
+            </p>
+          </div>
 
         {/* Data Source Disclosure */}
         <DataSourceDisclosure country="HU" />

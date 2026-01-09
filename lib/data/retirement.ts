@@ -4,18 +4,19 @@
 export const RETIREMENT_AGE = 65
 
 /**
- * Projected average inflation rate for future years
+ * Historical average inflation rate (based on recent years' data)
  * This should be fetched from Supabase, but we provide a default for client-side calculations
  * Server-side functions should use getProjectedInflationRate() from macro-data.ts
+ * Note: This is NOT a prediction, but a historical average used for illustrative calculations
  */
-export const DEFAULT_PROJECTED_ANNUAL_INFLATION = 4.0 // Default fallback
+export const DEFAULT_PROJECTED_ANNUAL_INFLATION = 4.0 // Default fallback (historical average)
 
 /**
  * Calculate "do nothing" scenario - savings without investment
  * @param currentAge - Current age
  * @param currentSavings - Current savings in HUF
  * @param monthlySavings - Monthly savings amount in HUF
- * @param projectedInflation - Projected annual inflation rate (default: 4.0%)
+ * @param projectedInflation - Historical average annual inflation rate (default: 4.0%, based on recent years' data)
  * @returns Calculation results
  */
 export function calculateDoNothingScenario(

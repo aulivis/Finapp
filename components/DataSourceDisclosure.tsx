@@ -7,10 +7,6 @@ interface DataSourceDisclosureProps {
 export default async function DataSourceDisclosure({ country = 'HU' }: DataSourceDisclosureProps) {
   const sources = await getDataSources(country)
 
-  if (sources.length === 0) {
-    return null
-  }
-
   return (
     <div style={{
       padding: '16px',
@@ -22,8 +18,15 @@ export default async function DataSourceDisclosure({ country = 'HU' }: DataSourc
       color: '#4B5563',
       marginTop: '16px'
     }}>
-      <strong style={{ color: '#111827' }}>Adatforrás:</strong>{' '}
-      {sources.join(', ')}
+      <p style={{ margin: '0 0 8px 0 }}>
+        Felhasznált fő mutatók: fogyasztói árindex (CPI), globális pénzmennyiség (M2).
+        Források: jegybanki és nemzetközi statisztikai adatbázisok.
+      </p>
+      {sources.length > 0 && (
+        <p style={{ margin: '8px 0 0 0', fontSize: '11px', color: '#6B7280' }}>
+          <strong>Konkrét források:</strong> {sources.join(', ')}
+        </p>
+      )}
     </div>
   )
 }

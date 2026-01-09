@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { calculatePurchasingPower, historicalInflation } from '@/lib/data/inflation'
+import ModernLineChart from '@/components/ModernLineChart'
 
 const INITIAL_AMOUNT = 1000000 // 1,000,000 HUF
 const START_YEAR = 2014
@@ -29,29 +29,6 @@ export default function DemoCalculator() {
     }).format(value)
   }
 
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div style={{
-          backgroundColor: '#FFFFFF',
-          padding: '12px',
-          border: '1px solid #E5E7EB',
-          borderRadius: '2px'
-        }}>
-          <p style={{ margin: '0 0 8px 0', fontWeight: '400', color: '#111827' }}>
-            {payload[0].payload.year}
-          </p>
-          <p style={{ margin: '4px 0', color: '#4B5563', fontSize: '13px' }}>
-            Névleges: <span className="tabular-nums">{formatCurrency(payload[0].value)}</span>
-          </p>
-          <p style={{ margin: '4px 0', color: '#4B5563', fontSize: '13px' }}>
-            Inflációval korrigált: <span className="tabular-nums">{formatCurrency(payload[1].value)}</span>
-          </p>
-        </div>
-      )
-    }
-    return null
-  }
 
   // Generate available years
   const availableYears = Array.from({ length: MAX_YEAR - MIN_YEAR + 1 }, (_, i) => MIN_YEAR + i)
@@ -127,10 +104,8 @@ export default function DemoCalculator() {
                 padding: '8px 12px',
                 fontSize: '16px',
                 border: '1px solid #E5E7EB',
-                backgroundColor: '#FFFFFF',
-                color: '#111827'
                 borderRadius: '2px',
-                backgroundColor: '#ffffff',
+                backgroundColor: '#FFFFFF',
                 color: '#111827',
                 cursor: 'pointer'
               }}
@@ -162,6 +137,27 @@ export default function DemoCalculator() {
           Eredmények ({selectedEndYear})
         </h3>
 
+        {/* Main Human-Readable Message */}
+        <div style={{
+          padding: '20px',
+          backgroundColor: '#F9FAFB',
+          borderRadius: '2px',
+          border: '1px solid #E5E7EB',
+          marginBottom: '24px',
+          textAlign: 'center'
+        }}>
+          <p style={{
+            fontSize: '18px',
+            lineHeight: '1.6',
+            color: '#111827',
+            margin: '0',
+            fontWeight: '400'
+          }}>
+            Ugyanaz az összeg <strong>{lossPercentage}%-kal kevesebb</strong> vásárlóerővel rendelkezik 
+            a(z) {START_YEAR} évhez képest ({START_YEAR} → {selectedEndYear}).
+          </p>
+        </div>
+
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -175,7 +171,7 @@ export default function DemoCalculator() {
             border: '1px solid #dee2e6'
           }}>
             <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
-              Névleges érték
+              Névleges érték ({START_YEAR} → {selectedEndYear})
             </div>
             <div style={{ fontSize: '24px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
               {formatCurrency(finalNominal)}
@@ -189,7 +185,7 @@ export default function DemoCalculator() {
             border: '1px solid #dee2e6'
           }}>
             <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
-              Inflációval korrigált érték
+              Inflációval korrigált érték ({START_YEAR} → {selectedEndYear})
             </div>
             <div style={{ fontSize: '24px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
               {formatCurrency(finalReal)}
@@ -203,7 +199,7 @@ export default function DemoCalculator() {
             border: '1px solid #dee2e6'
           }}>
             <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>
-              Vásárlóerő veszteség
+              Vásárlóerő veszteség ({START_YEAR} → {selectedEndYear})
             </div>
             <div style={{ fontSize: '24px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
               -{formatCurrency(loss)}
@@ -294,41 +290,11 @@ export default function DemoCalculator() {
         }}>
           Vásárlóerő alakulása
         </h3>
-        <div style={{ width: '100%', height: '400px' }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-              <XAxis 
-                dataKey="year" 
-                stroke="#111827"
-                label={{ value: 'Év', position: 'insideBottom', offset: -5, style: { fill: '#4B5563' } }}
-              />
-              <YAxis 
-                stroke="#111827"
-                label={{ value: 'Forint', angle: -90, position: 'insideLeft', style: { fill: '#4B5563' } }}
-                tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M`}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              <Line 
-                type="monotone" 
-                dataKey="nominal" 
-                stroke="#111827" 
-                strokeWidth={1.5}
-                name="Névleges érték"
-                dot={{ r: 3 }}
-              />
-              <Line 
-                type="monotone" 
-                dataKey="real" 
-                stroke="#6B7280" 
-                strokeWidth={1.5}
-                name="Inflációval korrigált érték"
-                dot={{ r: 3 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+        <ModernLineChart
+          data={data}
+          formatCurrency={formatCurrency}
+          height={400}
+        />
       </div>
 
       {/* Explanation */}
@@ -349,9 +315,21 @@ export default function DemoCalculator() {
           {START_YEAR} és {selectedEndYear} között. A névleges érték változatlan marad, 
           azonban az infláció hatására a reál vásárlóerő csökken.
         </p>
-        <p style={{ margin: '0' }}>
+        <p style={{ margin: '0 0 16px 0' }}>
           A számítás a KSH által közzétett éves inflációs adatokon alapul. 
           Ez egy általános példa, nem személyre szabott számítás.
+        </p>
+        <p style={{
+          margin: '16px 0 0 0',
+          padding: '12px',
+          backgroundColor: '#FFFFFF',
+          border: '1px solid #E5E7EB',
+          borderRadius: '2px',
+          fontSize: '13px',
+          lineHeight: '1.6',
+          color: '#4B5563'
+        }}>
+          <strong>Az itt megjelenített adatok múltbeli, aggregált mutatókon alapulnak. Nem előrejelzések, és nem minősülnek pénzügyi tanácsnak.</strong>
         </p>
       </div>
     </div>
