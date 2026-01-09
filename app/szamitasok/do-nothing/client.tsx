@@ -10,7 +10,6 @@ interface DoNothingCalculatorClientProps {
   initialProjectedInflation: number
   m2Data: { inflationRate: number; m2Growth: number | null } | null
   currentYear: number
-  email: string
   dataSources: string[]
 }
 
@@ -18,7 +17,6 @@ export default function DoNothingCalculatorClient({
   initialProjectedInflation,
   m2Data,
   currentYear,
-  email,
   dataSources
 }: DoNothingCalculatorClientProps) {
   const [currentAge, setCurrentAge] = useState(30)

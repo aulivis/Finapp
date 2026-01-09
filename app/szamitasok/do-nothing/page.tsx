@@ -49,11 +49,10 @@ export default async function DoNothingCalculator({ searchParams }: PageProps) {
   // Get data sources
   const dataSources = await getDataSources('HU')
 
-  return <DoNothingCalculatorClient 
+  return <DoNothingCalculatorClient
     initialProjectedInflation={projectedInflation}
     m2Data={m2Data}
     currentYear={currentYear}
-    email={email}
     dataSources={dataSources}
   />
 }
