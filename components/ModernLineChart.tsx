@@ -221,28 +221,40 @@ export default function ModernLineChart({
           />
           <Legend
             wrapperStyle={{ paddingTop: isMobile ? '12px' : '16px' }}
-            // Only show the two Hungarian labels (Névleges érték, Reál vásárlóerő) - hide gap area and any nominal/real English text
-            content={({ payload }) => (
-              <div style={{ display: 'flex', justifyContent: 'center', gap: isMobile ? '16px' : '24px', flexWrap: 'wrap' }}>
-                {payload?.filter((entry) => entry.dataKey === 'nominal' || entry.dataKey === 'real').map((entry, index) => (
-                  <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ 
-                      width: isMobile ? 10 : 14, 
-                      height: 3, 
-                      backgroundColor: entry.color || colors.text, 
-                      borderRadius: 1 
-                    }} />
-                    <span style={{ 
-                      color: isMobile ? colors.textMobile : colors.text, 
-                      fontSize: isMobile ? '12px' : '13px', 
-                      fontWeight: '500' 
-                    }}>
-                      {entry.value}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
+            // Only show the two Hungarian labels (Névleges érték, Reál vásárlóerő) - exclude Area components and use explicit Hungarian names
+            content={({ payload }) => {
+              // Filter to only include Line components (nominal, real) - excludes Area/purchasingPowerLoss
+              // Map to explicit Hungarian labels (entry.value from Recharts may show dataKey like "real")
+              const lineEntries = payload?.filter((entry) => 
+                entry.dataKey === 'nominal' || entry.dataKey === 'real'
+              ) || []
+              const labels: { dataKey: string; label: string; color: string }[] = lineEntries.map(entry => ({
+                dataKey: String(entry.dataKey ?? ''),
+                label: entry.dataKey === 'nominal' ? 'Névleges érték' : 'Reál vásárlóerő',
+                color: entry.color || colors.text
+              }))
+              return (
+                <div style={{ display: 'flex', justifyContent: 'center', gap: isMobile ? '16px' : '24px', flexWrap: 'wrap' }}>
+                  {labels.map((item, index) => (
+                    <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ 
+                        width: isMobile ? 10 : 14, 
+                        height: 3, 
+                        backgroundColor: item.color, 
+                        borderRadius: 1 
+                      }} />
+                      <span style={{ 
+                        color: isMobile ? colors.textMobile : colors.text, 
+                        fontSize: isMobile ? '12px' : '13px', 
+                        fontWeight: '500' 
+                      }}>
+                        {item.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )
+            }}
           />
           {/* Stacked areas: real (base) + purchasingPowerLoss (gap between lines) */}
           {/* Area 1: Real purchasing power - fills from baseline to real value */}

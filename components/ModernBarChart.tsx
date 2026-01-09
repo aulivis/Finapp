@@ -108,7 +108,7 @@ export default function ModernBarChart({
           data={chartData}
           margin={chartConfig.margin}
           barCategoryGap="30%"
-          barGap={20}
+          barGap={48}
           barSize={100}
         >
           <CartesianGrid

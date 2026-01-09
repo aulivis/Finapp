@@ -2,7 +2,8 @@
 
 import React, { useMemo } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
-import { Calculator, Calendar } from 'lucide-react'
+import { Calculator, Calendar, Minus, Plus } from 'lucide-react'
+import { useIsMobile } from '@/lib/hooks/useIsMobile'
 
 const MAX_YEAR = 2025
 
@@ -21,6 +22,8 @@ export default function HeroVisualAnchor({
   onAmountChange,
   onYearsChange
 }: HeroVisualAnchorProps) {
+  const isMobile = useIsMobile(768)
+  
   const data = useMemo(() => {
     // Try to calculate, but if startYear is too early, use 2014
     const effectiveStartYear = Math.max(startYear, 2014)
@@ -44,8 +47,8 @@ export default function HeroVisualAnchor({
     <div className="hero-visual-card" style={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '24px',
-      padding: '32px',
+      gap: isMobile ? '20px' : '24px',
+      padding: isMobile ? '24px' : '32px',
       background: 'linear-gradient(135deg, #FFFFFF 0%, #F0FDFA 100%)',
       borderRadius: '16px',
       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(45, 212, 191, 0.1)',
@@ -119,29 +122,103 @@ export default function HeroVisualAnchor({
             <Calendar size={14} style={{ color: '#6B7280' }} />
             Évek száma
           </label>
-          <input
-            type="number"
-            value={years}
-            onChange={(e) => {
-              const value = Math.max(1, Math.min(Number(e.target.value) || 1, MAX_YEAR - startYear + 1))
-              if (onYearsChange) onYearsChange(value)
-            }}
-            min="1"
-            max={MAX_YEAR - startYear + 1}
-            style={{
-              width: '100%',
-              padding: '10px 14px',
-              fontSize: '15px',
+          {isMobile ? (
+            /* Mobile: Stepper control with +/- buttons */
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
               backgroundColor: '#FFFFFF',
-              color: '#111827',
-              fontFamily: 'inherit',
-              fontWeight: '400',
-              transition: 'border-color 0.15s ease'
-            }}
-            className="tabular-nums"
-          />
+              overflow: 'hidden'
+            }}>
+              <button
+                type="button"
+                onClick={() => {
+                  const newYears = Math.max(1, years - 1)
+                  if (onYearsChange) onYearsChange(newYears)
+                }}
+                disabled={years <= 1}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '44px',
+                  height: '44px',
+                  border: 'none',
+                  backgroundColor: 'transparent',
+                  color: years <= 1 ? '#9CA3AF' : '#111827',
+                  cursor: years <= 1 ? 'not-allowed' : 'pointer',
+                  flexShrink: 0
+                }}
+                aria-label="Évek csökkentése"
+              >
+                <Minus size={20} />
+              </button>
+              <span 
+                style={{
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  color: '#111827',
+                  fontVariantNumeric: 'tabular-nums',
+                  minWidth: '32px',
+                  textAlign: 'center'
+                }}
+                className="tabular-nums"
+              >
+                {years}
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  const maxYears = MAX_YEAR - startYear + 1
+                  const newYears = Math.min(maxYears, years + 1)
+                  if (onYearsChange) onYearsChange(newYears)
+                }}
+                disabled={years >= MAX_YEAR - startYear + 1}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '44px',
+                  height: '44px',
+                  border: 'none',
+                  backgroundColor: 'transparent',
+                  color: years >= MAX_YEAR - startYear + 1 ? '#9CA3AF' : '#111827',
+                  cursor: years >= MAX_YEAR - startYear + 1 ? 'not-allowed' : 'pointer',
+                  flexShrink: 0
+                }}
+                aria-label="Évek növelése"
+              >
+                <Plus size={20} />
+              </button>
+            </div>
+          ) : (
+            <input
+              type="number"
+              value={years}
+              onChange={(e) => {
+                const value = Math.max(1, Math.min(Number(e.target.value) || 1, MAX_YEAR - startYear + 1))
+                if (onYearsChange) onYearsChange(value)
+              }}
+              min="1"
+              max={MAX_YEAR - startYear + 1}
+              style={{
+                width: '100%',
+                padding: '10px 14px',
+                fontSize: '15px',
+                border: '1px solid #E5E7EB',
+                borderRadius: '8px',
+                backgroundColor: '#FFFFFF',
+                color: '#111827',
+                fontFamily: 'inherit',
+                fontWeight: '400',
+                transition: 'border-color 0.15s ease'
+              }}
+              className="tabular-nums"
+            />
+          )}
         </div>
       </div>
 
@@ -150,36 +227,37 @@ export default function HeroVisualAnchor({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '12px',
+        gap: '4px',
         width: '100%',
         paddingTop: '16px',
         borderTop: '1px solid rgba(45, 212, 191, 0.2)'
       }}>
         <div style={{
-          fontSize: '13px',
+          fontSize: '15px',
           color: '#059669',
           fontWeight: '600',
           textAlign: 'center',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
-          marginBottom: '4px'
+          marginBottom: '8px'
         }}>
           Azonos összeg, eltérő vásárlóerő
         </div>
         <div style={{
-          fontSize: '24px',
+          fontSize: isMobile ? '22px' : '28px',
           fontWeight: '700',
           color: '#111827',
           textAlign: 'center',
           fontVariantNumeric: 'tabular-nums',
-          marginBottom: '4px'
-        }}>
+          marginBottom: '2px'
+        }} className="hero-dynamic-number tabular-nums">
           {formatCurrency(startValue)}
         </div>
         <div style={{
           fontSize: '12px',
           color: '#6B7280',
-          fontWeight: '500'
+          fontWeight: '500',
+          marginBottom: '4px'
         }}>
           {effectiveStartYear}
         </div>
@@ -187,19 +265,19 @@ export default function HeroVisualAnchor({
           fontSize: '20px',
           color: '#EF4444',
           fontWeight: '600',
-          margin: '6px 0',
+          margin: '4px 0',
           transform: 'scale(1.2)'
         }}>
           ↓
         </div>
         <div style={{
-          fontSize: '24px',
+          fontSize: isMobile ? '22px' : '28px',
           fontWeight: '700',
           color: '#EF4444',
           textAlign: 'center',
           fontVariantNumeric: 'tabular-nums',
-          marginBottom: '4px'
-        }}>
+          marginBottom: '2px'
+        }} className="hero-dynamic-number tabular-nums">
           ≈ {formatCurrency(endValue)}
         </div>
         <div style={{

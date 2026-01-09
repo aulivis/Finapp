@@ -1,11 +1,13 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import ModernLineChart from '@/components/ModernLineChart'
 import ModernBarChart from '@/components/ModernBarChart'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
 import { MacroData } from '@/lib/types/database'
+import { useIsMobile } from '@/lib/hooks/useIsMobile'
+import { Maximize2, X } from 'lucide-react'
 
 const START_YEAR = 2015
 const MAX_YEAR = 2025
@@ -23,6 +25,8 @@ export default function DemoCalculator({
 }: DemoCalculatorProps) {
   const amount = initialAmount
   const years = initialYears
+  const isMobile = useIsMobile(768)
+  const [expandedChart, setExpandedChart] = useState<'line' | 'bar' | null>(null)
   
   const startYear = START_YEAR
   const endYear = Math.min(startYear + years - 1, MAX_YEAR)
@@ -48,12 +52,12 @@ export default function DemoCalculator({
     <div style={{
       maxWidth: '900px',
       margin: '0 auto',
-      padding: '0 24px'
+      padding: isMobile ? '0 16px' : '0 24px'
     }}>
       {/* Detailed Breakdown */}
       <div style={{
-        marginBottom: '32px',
-        padding: '32px',
+        marginBottom: isMobile ? '24px' : '32px',
+        padding: isMobile ? '20px' : '32px',
         backgroundColor: '#FFFFFF',
         borderRadius: '12px',
         boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
@@ -65,7 +69,7 @@ export default function DemoCalculator({
           color: '#111827',
           lineHeight: '1.3'
         }}>
-          Eredmények ({endYear})
+          Eredmények
         </h3>
 
         <div style={{
@@ -117,12 +121,13 @@ export default function DemoCalculator({
           </div>
         </div>
 
-        {/* Bar Chart Comparison */}
+        {/* Bar Chart Comparison - Mobile: scrollable/expandable */}
         <div style={{
-          padding: '24px',
+          padding: isMobile ? '16px' : '24px',
           backgroundColor: '#F0FDFA',
           borderRadius: '8px',
-          border: '1px solid rgba(45, 212, 191, 0.2)'
+          border: '1px solid rgba(45, 212, 191, 0.2)',
+          position: 'relative'
         }}>
           <div style={{
             fontSize: '14px',
@@ -132,12 +137,45 @@ export default function DemoCalculator({
           }}>
             Összehasonlítás
           </div>
-          <ModernBarChart
-            nominalValue={finalNominal}
-            realValue={finalReal}
-            formatCurrency={formatCurrency}
-            height={250}
-          />
+          <div 
+            style={isMobile ? {
+              overflowX: 'auto',
+              overflowY: 'hidden',
+              WebkitOverflowScrolling: 'touch',
+              minWidth: 'min-content',
+              margin: '0 -8px',
+              padding: '0 8px',
+              cursor: 'pointer'
+            } : undefined}
+            onClick={isMobile ? () => setExpandedChart('bar') : undefined}
+            role={isMobile ? 'button' : undefined}
+            tabIndex={isMobile ? 0 : undefined}
+            onKeyDown={isMobile ? (e) => e.key === 'Enter' && setExpandedChart('bar') : undefined}
+            aria-label={isMobile ? 'Érdemes megnyitás a nagyobb nézethez' : undefined}
+          >
+            <div style={{ minWidth: isMobile ? 320 : undefined }}>
+              <ModernBarChart
+                nominalValue={finalNominal}
+                realValue={finalReal}
+                formatCurrency={formatCurrency}
+                height={isMobile ? 220 : 250}
+              />
+            </div>
+            {isMobile && (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                marginTop: '12px',
+                fontSize: '12px',
+                color: '#6B7280'
+              }}>
+                <Maximize2 size={14} />
+                Érintse meg a nagyításért
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Output Section - Plain Language Result */}
@@ -175,8 +213,8 @@ export default function DemoCalculator({
 
       {/* Chart and Explanation in same card */}
       <div style={{
-        marginBottom: '32px',
-        padding: '32px',
+        marginBottom: isMobile ? '24px' : '32px',
+        padding: isMobile ? '20px' : '32px',
         backgroundColor: '#FFFFFF',
         borderRadius: '12px',
         boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
@@ -190,11 +228,45 @@ export default function DemoCalculator({
         }}>
           Vásárlóerő alakulása
         </h3>
-        <ModernLineChart
-          data={data}
-          formatCurrency={formatCurrency}
-          height={400}
-        />
+        <div 
+          style={isMobile ? {
+            overflowX: 'auto',
+            overflowY: 'hidden',
+            WebkitOverflowScrolling: 'touch',
+            margin: '0 -8px',
+            padding: '0 8px',
+            cursor: 'pointer'
+          } : undefined}
+          onClick={isMobile ? () => setExpandedChart('line') : undefined}
+          role={isMobile ? 'button' : undefined}
+          tabIndex={isMobile ? 0 : undefined}
+          onKeyDown={isMobile ? (e) => e.key === 'Enter' && setExpandedChart('line') : undefined}
+          aria-label={isMobile ? 'Érdemes megnyitás a nagyobb nézethez' : undefined}
+        >
+          <div style={{ minWidth: isMobile ? 500 : undefined }}>
+            <ModernLineChart
+              data={data}
+              formatCurrency={formatCurrency}
+              height={isMobile ? 320 : 400}
+              isMobile={isMobile}
+            />
+          </div>
+          {isMobile && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              marginTop: '12px',
+              marginBottom: '8px',
+              fontSize: '12px',
+              color: '#6B7280'
+            }}>
+              <Maximize2 size={14} />
+              Érintse meg vagy görgessen a teljes ábra megtekintéséhez
+            </div>
+          )}
+        </div>
 
         {/* M2 Contextual Indicator */}
         {(() => {
@@ -227,11 +299,9 @@ export default function DemoCalculator({
           )
         })()}
 
-        {/* Explanation */}
+        {/* Explanation - No border/line between M2 card and this section */}
         <div style={{
           marginTop: '32px',
-          paddingTop: '32px',
-          borderTop: '1px solid #E5E7EB',
           fontSize: '15px',
           lineHeight: '1.7',
           color: '#1F2937',
@@ -268,6 +338,95 @@ export default function DemoCalculator({
           </p>
         </div>
       </div>
+
+      {/* Mobile: Expanded chart overlay */}
+      {isMobile && expandedChart && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 50,
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px'
+          }}
+          onClick={() => setExpandedChart(null)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Escape' && setExpandedChart(null)}
+          aria-label="Bezárás"
+        >
+          <div
+            style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: '12px',
+              padding: '20px',
+              maxWidth: '100%',
+              maxHeight: '90vh',
+              overflow: 'auto',
+              position: 'relative'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setExpandedChart(null)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                width: '36px',
+                height: '36px',
+                borderRadius: '8px',
+                border: 'none',
+                backgroundColor: '#F3F4F6',
+                color: '#6B7280',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              aria-label="Bezárás"
+            >
+              <X size={20} />
+            </button>
+            <div style={{ paddingRight: '40px' }}>
+              {expandedChart === 'line' && (
+                <>
+                  <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '16px', color: '#111827' }}>
+                    Vásárlóerő alakulása
+                  </h4>
+                  <div style={{ width: '100%', minWidth: 450 }}>
+                    <ModernLineChart
+                      data={data}
+                      formatCurrency={formatCurrency}
+                      height={350}
+                      isMobile={false}
+                    />
+                  </div>
+                </>
+              )}
+              {expandedChart === 'bar' && (
+                <>
+                  <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '16px', color: '#111827' }}>
+                    Összehasonlítás
+                  </h4>
+                  <div style={{ width: '100%', minWidth: 320 }}>
+                    <ModernBarChart
+                      nominalValue={finalNominal}
+                      realValue={finalReal}
+                      formatCurrency={formatCurrency}
+                      height={280}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   )

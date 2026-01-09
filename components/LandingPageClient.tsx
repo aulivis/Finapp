@@ -6,6 +6,7 @@ import DemoCalculator from '@/components/DemoCalculator'
 import HeroVisualAnchor from '@/components/HeroVisualAnchor'
 import ContextaWordmark from '@/components/ContextaWordmark'
 import { MacroData } from '@/lib/types/database'
+import { useIsMobile } from '@/lib/hooks/useIsMobile'
 
 interface LandingPageClientProps {
   macroData?: MacroData[]
@@ -21,22 +22,23 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
   const [calculatorYears, setCalculatorYears] = useState(INITIAL_YEARS)
   const calculatorStartYear = START_YEAR
   const calculatorEndYear = Math.min(calculatorStartYear + calculatorYears - 1, MAX_YEAR)
+  const isMobile = useIsMobile(768)
 
   return (
     <>
       {/* Hero Section - Two columns */}
-      <header style={{
+      <header className="hero-section" style={{
         backgroundColor: '#F9FAFB',
-        padding: '96px 0 112px 0'
+        padding: isMobile ? '48px 0 56px 0' : '96px 0 112px 0'
       }}>
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '0 24px'
+          padding: isMobile ? '0 16px' : '0 24px'
         }}>
           {/* Wordmark */}
           <div style={{
-            marginBottom: '64px'
+            marginBottom: isMobile ? '32px' : '64px'
           }}>
             <ContextaWordmark />
           </div>
@@ -122,7 +124,7 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
       {/* Calculator - Directly below hero */}
       <div style={{
         backgroundColor: '#F1F5F9',
-        padding: '64px 0'
+        padding: isMobile ? '32px 0 40px 0' : '64px 0'
       }}>
         <DemoCalculator 
           macroData={macroData}
