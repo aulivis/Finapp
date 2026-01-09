@@ -71,7 +71,7 @@ export default function M2ContextualIndicatorClient({
         lineHeight: '1.6',
         color: '#4B5563'
       }}>
-        <p style={{ margin: '0 0 8px 0 }}>
+        <p style={{ margin: '0 0 8px 0' }}>
           Az M2 pénzkínálat változása egy kontextuális mutató, amely a gazdaságban lévő pénzmennyiség változását mutatja.
         </p>
         <p style={{ margin: '0' }}>

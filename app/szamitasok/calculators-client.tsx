@@ -387,12 +387,12 @@ export default function CalculatorsClient({
             lineHeight: '1.7',
             color: '#4B5563'
           }}>
-            <p style={{ margin: '0 0 12px 0 }}>
+            <p style={{ margin: '0 0 12px 0' }}>
               A <strong>névleges érték</strong> az összeg aktuális forintban kifejezett értéke (kamatbevétellel együtt, ha van). 
               A <strong>reál érték</strong> azt mutatja, hogy mennyi vásárlóerőt képvisel ez az összeg az infláció figyelembevételével. 
               A <strong>vásárlóerő veszteség</strong> a névleges és reál érték közötti különbség, amely az infláció hatását mutatja.
             </p>
-            <p style={{ margin: '12px 0 0 0 }}>
+            <p style={{ margin: '12px 0 0 0' }}>
               A számítás konzervatív feltételezéseken alapul, és csak az infláció és az esetleges alacsony kamatbevétel hatását veszi figyelembe.
             </p>
           </div>
@@ -434,12 +434,12 @@ export default function CalculatorsClient({
           lineHeight: '1.7',
           color: '#495057'
         }}>
-            <p style={{ margin: '0 0 12px 0 }}>
+            <p style={{ margin: '0 0 12px 0' }}>
               A számítás a KSH által közzétett éves inflációs adatokon alapul. Az infláció hatása kumulatív: 
               minél hosszabb időtartam alatt tartja a pénzt, annál nagyobb a vásárlóerő veszteség. 
               Ez egy matematikai tény, nem vélemény vagy ajánlás.
             </p>
-            <p style={{ margin: '12px 0 0 0 }}>
+            <p style={{ margin: '12px 0 0 0' }}>
               A múltbeli adatok nem garantálják a jövőbeli eredményeket. A számítás nem veszi figyelembe 
               az egyéni körülményeket, adózási tényezőket vagy piaci kockázatokat.
             </p>
@@ -706,12 +706,12 @@ export default function CalculatorsClient({
                 lineHeight: '1.7',
                 color: '#4B5563'
               }}>
-                <p style={{ margin: '0 0 12px 0 }}>
+                <p style={{ margin: '0 0 12px 0' }}>
                   A <strong>névleges érték</strong> a megtakarítások és havi hozzájárulások összege a nyugdíjkorhatár eléréséig. 
                   A <strong>reál vásárlóerő</strong> azt mutatja, hogy mennyi vásárlóerőt képvisel ez az összeg az infláció figyelembevételével. 
                   A <strong>vásárlóerő változás</strong> azt mutatja, hogy a jelenlegi megtakarítások vásárlóerejéhez képest mennyi változás következik be.
                 </p>
-                <p style={{ margin: '12px 0 0 0 }}>
+                <p style={{ margin: '12px 0 0 0' }}>
                   A számítás feltételezi, hogy a megtakarításokat készpénzben vagy kamatmentes számlán tartja, 
                   és nincs kamatbevétel vagy hozam. Az infláció számítása az elmúlt évek történelmi átlagos inflációs adatain alapul: {(projectedInflation || DEFAULT_PROJECTED_ANNUAL_INFLATION).toFixed(1)}% évente.
                 </p>
@@ -770,12 +770,12 @@ export default function CalculatorsClient({
           lineHeight: '1.7',
           color: '#495057'
         }}>
-            <p style={{ margin: '0 0 12px 0 }}>
+            <p style={{ margin: '0 0 12px 0' }}>
               Ez a számítás bemutatja, hogyan változna a megtakarítások vásárlóereje, ha rendszeresen félretesz pénzt, de azt nem fekteti be, 
               hanem készpénzben vagy kamatmentes számlán tartja. Az infláció folyamatosan csökkenti a pénz vásárlóerejét, 
               ami azt jelenti, hogy ugyanaz az összeg egyre kevesebbet ér. A számítás történelmi inflációs adatok átlagán alapul.
             </p>
-            <p style={{ margin: '12px 0 0 0 }}>
+            <p style={{ margin: '12px 0 0 0' }}>
               Az infláció hatása kumulatív: minél hosszabb időtartam alatt tartja a pénzt kamat nélkül, 
               annál nagyobb a vásárlóerő veszteség. Ez egy matematikai tény, nem vélemény vagy ajánlás.
             </p>
