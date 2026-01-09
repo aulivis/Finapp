@@ -281,36 +281,36 @@ export default function DemoCalculator({
             )}
           </div>
 
-        {/* M2 Contextual Indicator */}
-        {(() => {
-          // Calculate cumulative M2 growth from startYear to endYear
-          // M2 growth is annual percentage, so cumulative = (1 + g1/100) * (1 + g2/100) * ... - 1
-          const periodM2Data = macroData
-            .filter(d => d.year >= startYear && d.year <= endYear && d.m2_growth !== null && d.m2_growth !== undefined)
-            .sort((a, b) => a.year - b.year)
-            .map(d => Number(d.m2_growth))
-            .filter(growth => isFinite(growth))
-          
-          if (periodM2Data.length === 0) return null
-          
-          // Calculate cumulative growth: multiply (1 + growth/100) for each year
-          const cumulativeMultiplier = periodM2Data.reduce((acc, growth) => acc * (1 + growth / 100), 1)
-          const cumulativeGrowth = (cumulativeMultiplier - 1) * 100
-          
-          return (
-            <div style={{
-              marginTop: '32px'
-            }}>
-              <M2ContextualIndicatorClient 
-                year={endYear}
-                m2Growth={cumulativeGrowth}
-                periodStartYear={startYear}
-                periodEndYear={endYear}
-                isCumulative={true}
-              />
-            </div>
-          )
-        })()}
+          {/* M2 Contextual Indicator */}
+          {(() => {
+            // Calculate cumulative M2 growth from startYear to endYear
+            // M2 growth is annual percentage, so cumulative = (1 + g1/100) * (1 + g2/100) * ... - 1
+            const periodM2Data = macroData
+              .filter(d => d.year >= startYear && d.year <= endYear && d.m2_growth !== null && d.m2_growth !== undefined)
+              .sort((a, b) => a.year - b.year)
+              .map(d => Number(d.m2_growth))
+              .filter(growth => isFinite(growth))
+            
+            if (periodM2Data.length === 0) return null
+            
+            // Calculate cumulative growth: multiply (1 + growth/100) for each year
+            const cumulativeMultiplier = periodM2Data.reduce((acc, growth) => acc * (1 + growth / 100), 1)
+            const cumulativeGrowth = (cumulativeMultiplier - 1) * 100
+            
+            return (
+              <div style={{
+                marginTop: '32px'
+              }}>
+                <M2ContextualIndicatorClient 
+                  year={endYear}
+                  m2Growth={cumulativeGrowth}
+                  periodStartYear={startYear}
+                  periodEndYear={endYear}
+                  isCumulative={true}
+                />
+              </div>
+            )
+          })()}
 
           {/* Explanation - No border/line between M2 card and this section */}
           <div style={{
@@ -349,26 +349,23 @@ export default function DemoCalculator({
             }}>
               <strong style={{ fontWeight: typography.fontWeight.semibold }}>Az itt megjelenített adatok múltbeli, aggregált mutatókon alapulnak. Nem előrejelzések, és nem minősülnek pénzügyi tanácsnak.</strong>
             </p>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '0',
-            paddingTop: '0'
-          }}>
-            <img 
-              src="/mi-tortenik.png" 
-              alt="Mi történik"
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-                display: 'block'
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: '0',
+              paddingTop: '0'
+            }}>
+              <img 
+                src="/mi-tortenik.png" 
+                alt="Mi történik"
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                  display: 'block'
+                }}
+              />
+            </div>
           </div>
         </Card>
       </div>
