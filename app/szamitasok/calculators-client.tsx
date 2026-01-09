@@ -479,7 +479,7 @@ export default function CalculatorsClient({
           marginBottom: '12px',
           color: '#111827'
         }}>
-          "Semmit sem csinálok" forgatókönyv
+          &quot;Semmit sem csinálok&quot; forgatókönyv
         </h1>
 
         <p style={{

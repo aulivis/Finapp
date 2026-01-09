@@ -141,7 +141,7 @@ export default async function Home() {
                 Személyre szabott inflációs számítás: saját összeg és időszak alapján
               </li>
               <li style={{ marginBottom: '8px' }}>
-                "Semmit sem csinálok" forgatókönyv: megtakarítások vásárlóerejének 
+                &quot;Semmit sem csinálok&quot; forgatókönyv: megtakarítások vásárlóerejének 
                 számítása nyugdíjkorhatárig
               </li>
             </ul>
