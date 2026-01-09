@@ -201,7 +201,7 @@ export default function CalculatorsClient({
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
                 fontFamily: 'inherit',
-                fontWeight: '400'
+                fontWeight: '400',
                 maxWidth: '300px'
               }}
             />
@@ -229,7 +229,7 @@ export default function CalculatorsClient({
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
                 fontFamily: 'inherit',
-                fontWeight: '400'
+                fontWeight: '400',
                 maxWidth: '200px'
               }}
             >
@@ -261,7 +261,7 @@ export default function CalculatorsClient({
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
                 fontFamily: 'inherit',
-                fontWeight: '400'
+                fontWeight: '400',
                 maxWidth: '400px'
               }}
             >
@@ -539,7 +539,7 @@ export default function CalculatorsClient({
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
                 fontFamily: 'inherit',
-                fontWeight: '400'
+                fontWeight: '400',
                 maxWidth: '200px'
               }}
             />
@@ -577,7 +577,7 @@ export default function CalculatorsClient({
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
                 fontFamily: 'inherit',
-                fontWeight: '400'
+                fontWeight: '400',
                 maxWidth: '300px'
               }}
             />
@@ -608,7 +608,7 @@ export default function CalculatorsClient({
                 backgroundColor: '#FFFFFF',
                 color: '#111827',
                 fontFamily: 'inherit',
-                fontWeight: '400'
+                fontWeight: '400',
                 maxWidth: '300px'
               }}
             />
