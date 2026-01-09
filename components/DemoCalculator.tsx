@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useMemo, useState } from 'react'
+import Image from 'next/image'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import ModernLineChart from '@/components/ModernLineChart'
 import ModernBarChart from '@/components/ModernBarChart'
@@ -354,11 +355,15 @@ export default function DemoCalculator({
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: '0',
-              paddingTop: '0'
+              paddingTop: '0',
+              width: '100%'
             }}>
-              <img 
+              <Image 
                 src="/mi-tortenik.png" 
                 alt="Mi történik"
+                width={800}
+                height={600}
+                sizes="(max-width: 768px) 100vw, 800px"
                 style={{
                   maxWidth: '100%',
                   height: 'auto',
