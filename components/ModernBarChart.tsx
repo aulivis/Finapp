@@ -112,6 +112,8 @@ export default function ModernBarChart({
         <BarChart
           data={chartData}
           margin={chartConfig.margin}
+          barCategoryGap="20%"
+          barSize={80}
         >
           <CartesianGrid
             strokeDasharray="3 3"

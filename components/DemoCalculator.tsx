@@ -1,36 +1,31 @@
 'use client'
 
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useMemo } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import ModernLineChart from '@/components/ModernLineChart'
 import ModernBarChart from '@/components/ModernBarChart'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
 import { MacroData } from '@/lib/types/database'
-import { Calculator, Calendar } from 'lucide-react'
 
-const INITIAL_AMOUNT = 1000000 // 1,000,000 HUF
 const START_YEAR = 2015
-const INITIAL_YEARS = 11
 const MAX_YEAR = 2025
 
 interface DemoCalculatorProps {
   macroData?: MacroData[]
-  onValuesChange?: (amount: number, startYear: number, endYear: number) => void
+  initialAmount?: number
+  initialYears?: number
 }
 
-export default function DemoCalculator({ macroData = [], onValuesChange }: DemoCalculatorProps) {
-  const [amount, setAmount] = useState(INITIAL_AMOUNT)
-  const [years, setYears] = useState(INITIAL_YEARS)
+export default function DemoCalculator({ 
+  macroData = [], 
+  initialAmount = 1000000,
+  initialYears = 11
+}: DemoCalculatorProps) {
+  const amount = initialAmount
+  const years = initialYears
   
   const startYear = START_YEAR
   const endYear = Math.min(startYear + years - 1, MAX_YEAR)
-
-  // Notify parent of value changes (including on mount)
-  useEffect(() => {
-    if (onValuesChange) {
-      onValuesChange(amount, startYear, endYear)
-    }
-  }, [amount, startYear, endYear, onValuesChange])
 
   const data = useMemo(() => {
     return calculatePurchasingPower(amount, startYear, endYear)
@@ -55,88 +50,6 @@ export default function DemoCalculator({ macroData = [], onValuesChange }: DemoC
       margin: '0 auto',
       padding: '0 24px'
     }}>
-      {/* Simple Inputs Card */}
-      <div style={{
-        padding: '32px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '12px',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-        marginBottom: '32px'
-      }}>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '24px'
-        }}>
-          <div>
-            <label style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '14px',
-              color: '#1F2937',
-              marginBottom: '10px',
-              fontWeight: '500'
-            }}>
-              <Calculator size={16} style={{ color: '#6B7280' }} />
-              Összeg
-            </label>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value) || 0)}
-              min="0"
-              step="10000"
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                fontSize: '16px',
-                border: '1px solid #E5E7EB',
-                borderRadius: '8px',
-                backgroundColor: '#FFFFFF',
-                color: '#111827',
-                fontFamily: 'inherit',
-                fontWeight: '400'
-              }}
-              className="tabular-nums"
-            />
-          </div>
-          <div>
-            <label style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '14px',
-              color: '#1F2937',
-              marginBottom: '10px',
-              fontWeight: '500'
-            }}>
-              <Calendar size={16} style={{ color: '#6B7280' }} />
-              Évek száma
-            </label>
-            <input
-              type="number"
-              value={years}
-              onChange={(e) => setYears(Math.max(1, Math.min(Number(e.target.value) || 1, MAX_YEAR - startYear + 1)))}
-              min="1"
-              max={MAX_YEAR - startYear + 1}
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                fontSize: '16px',
-                border: '1px solid #E5E7EB',
-                borderRadius: '8px',
-                backgroundColor: '#FFFFFF',
-                color: '#111827',
-                fontFamily: 'inherit',
-                fontWeight: '400'
-              }}
-              className="tabular-nums"
-            />
-          </div>
-        </div>
-      </div>
-
       {/* Detailed Breakdown */}
       <div style={{
         marginBottom: '32px',
@@ -285,36 +198,19 @@ export default function DemoCalculator({ macroData = [], onValuesChange }: DemoC
 
         {/* M2 Contextual Indicator */}
         {(() => {
-          // Try to find M2 data for the end year first, then fall back to latest available year in the period
-          let m2Growth: number | null = null
-          let m2Year = endYear
+          // Calculate cumulative M2 growth from startYear to endYear
+          // M2 growth is annual percentage, so cumulative = (1 + g1/100) * (1 + g2/100) * ... - 1
+          const periodM2Data = macroData
+            .filter(d => d.year >= startYear && d.year <= endYear && d.m2_growth !== null && d.m2_growth !== undefined)
+            .sort((a, b) => a.year - b.year)
+            .map(d => Number(d.m2_growth))
+            .filter(growth => isFinite(growth))
           
-          const endYearData = macroData.find(d => d.year === endYear)
-          if (endYearData?.m2_growth !== null && endYearData?.m2_growth !== undefined) {
-            const growth = Number(endYearData.m2_growth)
-            if (isFinite(growth)) {
-              m2Growth = growth
-              m2Year = endYear
-            }
-          }
+          if (periodM2Data.length === 0) return null
           
-          // If no M2 data for end year, try to find latest available in the period
-          if (m2Growth === null) {
-            const periodData = macroData
-              .filter(d => d.year >= startYear && d.year <= endYear && d.m2_growth !== null && d.m2_growth !== undefined)
-              .sort((a, b) => b.year - a.year)
-            
-            if (periodData.length > 0) {
-              const latestData = periodData[0]
-              const growth = Number(latestData.m2_growth)
-              if (isFinite(growth)) {
-                m2Growth = growth
-                m2Year = latestData.year
-              }
-            }
-          }
-          
-          if (m2Growth === null) return null
+          // Calculate cumulative growth: multiply (1 + growth/100) for each year
+          const cumulativeMultiplier = periodM2Data.reduce((acc, growth) => acc * (1 + growth / 100), 1)
+          const cumulativeGrowth = (cumulativeMultiplier - 1) * 100
           
           return (
             <div style={{
@@ -323,10 +219,11 @@ export default function DemoCalculator({ macroData = [], onValuesChange }: DemoC
               borderTop: '1px solid #E5E7EB'
             }}>
               <M2ContextualIndicatorClient 
-                year={m2Year}
-                m2Growth={m2Growth}
+                year={endYear}
+                m2Growth={cumulativeGrowth}
                 periodStartYear={startYear}
                 periodEndYear={endYear}
+                isCumulative={true}
               />
             </div>
           )

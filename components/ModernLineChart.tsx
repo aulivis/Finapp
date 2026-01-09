@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useMemo } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, TooltipProps } from 'recharts'
+import { ComposedChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, TooltipProps } from 'recharts'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 
 interface DataPoint {
@@ -125,31 +125,44 @@ export default function ModernLineChart({
     )
   }
 
-  // Modern color scheme with better contrast
+  // Modern color scheme with brand colors and better visual appeal
   const colors = {
-    nominal: '#111827', // Dark gray for nominal
-    real: '#6B7280',    // Medium gray for real
+    nominal: '#2DD4BF', // Teal for nominal (brand color)
+    real: '#14B8A6',    // Darker teal for real
     grid: '#E5E7EB',    // Light gray for grid
-    text: '#4B5563'     // Medium gray for text
+    text: '#4B5563',    // Medium gray for text
+    background: '#F0FDFA' // Light teal background
   }
 
   return (
     <div style={{ width: '100%', height: `${height}px` }}>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart
+        <ComposedChart
           data={data}
           margin={chartConfig.margin}
         >
           <defs>
-            {/* Gradient for nominal line */}
+            {/* Enhanced gradient for nominal line with area fill */}
             <linearGradient id="nominalGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={colors.nominal} stopOpacity={0.1} />
-              <stop offset="95%" stopColor={colors.nominal} stopOpacity={0} />
+              <stop offset="0%" stopColor={colors.nominal} stopOpacity={0.3} />
+              <stop offset="50%" stopColor={colors.nominal} stopOpacity={0.15} />
+              <stop offset="100%" stopColor={colors.nominal} stopOpacity={0} />
             </linearGradient>
-            {/* Gradient for real line */}
+            {/* Enhanced gradient for real line with area fill */}
             <linearGradient id="realGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={colors.real} stopOpacity={0.1} />
-              <stop offset="95%" stopColor={colors.real} stopOpacity={0} />
+              <stop offset="0%" stopColor={colors.real} stopOpacity={0.25} />
+              <stop offset="50%" stopColor={colors.real} stopOpacity={0.12} />
+              <stop offset="100%" stopColor={colors.real} stopOpacity={0} />
+            </linearGradient>
+            {/* Gradient for nominal line stroke */}
+            <linearGradient id="nominalStroke" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor={colors.nominal} />
+              <stop offset="100%" stopColor="#14B8A6" />
+            </linearGradient>
+            {/* Gradient for real line stroke */}
+            <linearGradient id="realStroke" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor={colors.real} />
+              <stop offset="100%" stopColor="#0D9488" />
             </linearGradient>
           </defs>
           <CartesianGrid
@@ -194,9 +207,9 @@ export default function ModernLineChart({
             content={<CustomTooltip />}
             cursor={{
               stroke: colors.nominal,
-              strokeWidth: 1,
+              strokeWidth: 2,
               strokeDasharray: '5 5',
-              opacity: 0.3
+              opacity: 0.4
             }}
             animationDuration={chartConfig.animationDuration}
           />
@@ -204,17 +217,39 @@ export default function ModernLineChart({
             wrapperStyle={{ paddingTop: '16px' }}
             iconType="line"
             formatter={(value) => (
-              <span style={{ color: colors.text, fontSize: '13px' }}>{value}</span>
+              <span style={{ color: colors.text, fontSize: '13px', fontWeight: '500' }}>{value}</span>
             )}
+          />
+          {/* Area fill for nominal line */}
+          <Area
+            type="monotone"
+            dataKey="nominal"
+            fill="url(#nominalGradient)"
+            stroke="none"
+            connectNulls={false}
+            isAnimationActive={!prefersReducedMotion}
+            animationDuration={chartConfig.animationDuration}
+            animationEasing={chartConfig.animationEasing}
+          />
+          {/* Area fill for real line */}
+          <Area
+            type="monotone"
+            dataKey="real"
+            fill="url(#realGradient)"
+            stroke="none"
+            connectNulls={false}
+            isAnimationActive={!prefersReducedMotion}
+            animationDuration={chartConfig.animationDuration}
+            animationEasing={chartConfig.animationEasing}
           />
           <Line
             type="monotone"
             dataKey="nominal"
-            stroke={colors.nominal}
-            strokeWidth={2}
+            stroke="url(#nominalStroke)"
+            strokeWidth={3}
             name="Névleges érték"
-            dot={{ r: 4, fill: colors.nominal, strokeWidth: 2, stroke: '#FFFFFF' }}
-            activeDot={{ r: 6, stroke: colors.nominal, strokeWidth: 2 }}
+            dot={{ r: 5, fill: colors.nominal, strokeWidth: 3, stroke: '#FFFFFF' }}
+            activeDot={{ r: 7, stroke: colors.nominal, strokeWidth: 3, fill: '#FFFFFF' }}
             isAnimationActive={!prefersReducedMotion}
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
@@ -223,17 +258,17 @@ export default function ModernLineChart({
           <Line
             type="monotone"
             dataKey="real"
-            stroke={colors.real}
-            strokeWidth={2}
+            stroke="url(#realStroke)"
+            strokeWidth={3}
             name="Reál vásárlóerő"
-            dot={{ r: 4, fill: colors.real, strokeWidth: 2, stroke: '#FFFFFF' }}
-            activeDot={{ r: 6, stroke: colors.real, strokeWidth: 2 }}
+            dot={{ r: 5, fill: colors.real, strokeWidth: 3, stroke: '#FFFFFF' }}
+            activeDot={{ r: 7, stroke: colors.real, strokeWidth: 3, fill: '#FFFFFF' }}
             isAnimationActive={!prefersReducedMotion}
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
             aria-label="Reál vásárlóerő vonal"
           />
-        </LineChart>
+        </ComposedChart>
       </ResponsiveContainer>
     </div>
   )

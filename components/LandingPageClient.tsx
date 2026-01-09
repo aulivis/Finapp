@@ -11,10 +11,16 @@ interface LandingPageClientProps {
   macroData?: MacroData[]
 }
 
+const START_YEAR = 2015
+const INITIAL_AMOUNT = 1000000
+const INITIAL_YEARS = 11
+const MAX_YEAR = 2025
+
 export default function LandingPageClient({ macroData = [] }: LandingPageClientProps) {
-  const [calculatorAmount, setCalculatorAmount] = useState(1000000)
-  const [calculatorStartYear, setCalculatorStartYear] = useState(2015)
-  const [calculatorEndYear, setCalculatorEndYear] = useState(2025)
+  const [calculatorAmount, setCalculatorAmount] = useState(INITIAL_AMOUNT)
+  const [calculatorYears, setCalculatorYears] = useState(INITIAL_YEARS)
+  const calculatorStartYear = START_YEAR
+  const calculatorEndYear = Math.min(calculatorStartYear + calculatorYears - 1, MAX_YEAR)
 
   return (
     <>
@@ -50,7 +56,7 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
                 lineHeight: '1.2',
                 letterSpacing: '-0.02em'
               }}>
-                Mennyit ér valójában a pénzed idővel?
+                Mennyit ér valójában a pénzed?
               </h1>
 
               {/* Subheadline */}
@@ -105,6 +111,8 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
                 initialAmount={calculatorAmount}
                 startYear={calculatorStartYear}
                 endYear={calculatorEndYear}
+                onAmountChange={setCalculatorAmount}
+                onYearsChange={setCalculatorYears}
               />
             </div>
           </div>
@@ -118,11 +126,8 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
       }}>
         <DemoCalculator 
           macroData={macroData}
-          onValuesChange={(amount, startYear, endYear) => {
-            setCalculatorAmount(amount)
-            setCalculatorStartYear(startYear)
-            setCalculatorEndYear(endYear)
-          }}
+          initialAmount={calculatorAmount}
+          initialYears={calculatorYears}
         />
       </div>
     </>
