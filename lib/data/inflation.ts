@@ -63,7 +63,6 @@ export function calculatePurchasingPower(
   }
 
   let cumulativeInflation = 1
-  let currentAmount = initialAmount
 
   for (let i = startIndex; i < historicalInflation.length && historicalInflation[i].year <= endYear; i++) {
     const { year, inflationRate } = historicalInflation[i]
