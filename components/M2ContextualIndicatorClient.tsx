@@ -1,5 +1,7 @@
 'use client'
 
+import React from 'react'
+
 interface M2ContextualIndicatorClientProps {
   year: number
   m2Growth: number | null
