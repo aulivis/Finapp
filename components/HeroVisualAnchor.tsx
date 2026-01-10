@@ -262,7 +262,7 @@ export default function HeroVisualAnchor({
                   e.currentTarget.blur()
                 }
               }}
-              onBlur={(e) => {
+              onBlur={(_e) => {
                 setIsInputFocused(false)
                 // Validate and clamp value on blur
                 const numValue = Number(inputValue)
