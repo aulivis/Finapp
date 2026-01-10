@@ -1,4 +1,7 @@
+'use client'
+
 import React from 'react'
+import { useIsMobile } from '@/lib/hooks/useIsMobile'
 
 interface QuarterlyUpdateSummaryProps {
   quarterName: string
@@ -9,6 +12,8 @@ export default function QuarterlyUpdateSummary({
   quarterName,
   summaryPoints
 }: QuarterlyUpdateSummaryProps) {
+  const isMobile = useIsMobile(768)
+  
   if (summaryPoints.length === 0) {
     return null
   }
@@ -16,10 +21,10 @@ export default function QuarterlyUpdateSummary({
   return (
     <div style={{
       marginBottom: '32px',
-      padding: '20px',
-      backgroundColor: '#FFFFFF',
-      borderRadius: '2px',
-      border: '1px solid #E5E7EB'
+      padding: isMobile ? 0 : '20px',
+      backgroundColor: isMobile ? 'transparent' : '#FFFFFF',
+      borderRadius: isMobile ? 0 : '2px',
+      border: isMobile ? 'none' : '1px solid #E5E7EB'
     }}>
       <h2 style={{
         fontSize: '16px',

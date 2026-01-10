@@ -15,6 +15,7 @@ export const historicalInflation: Array<{ year: number; inflationRate: number }>
   { year: 2022, inflationRate: 14.5 },
   { year: 2023, inflationRate: 17.6 },
   { year: 2024, inflationRate: 3.7 }, // Estimated/partial year
+  { year: 2025, inflationRate: 3.7 }, // Estimated - using same as 2024 for projection
 ]
 
 /**
@@ -62,10 +63,23 @@ export function calculatePurchasingPower(
     return results
   }
 
+  // Add starting point first - in the starting year, real = nominal (no inflation applied yet)
+  results.push({
+    year: startYear,
+    nominal: Math.round(initialAmount),
+    real: Math.round(initialAmount),
+  })
+
+  // Now apply inflation for subsequent years
   let cumulativeInflation = 1
 
   for (let i = startIndex; i < historicalInflation.length && historicalInflation[i].year <= endYear; i++) {
     const { year, inflationRate } = historicalInflation[i]
+    
+    // Skip the starting year as we already added it
+    if (year === startYear) {
+      continue
+    }
     
     // Apply inflation (convert percentage to multiplier)
     cumulativeInflation *= (1 + inflationRate / 100)
@@ -130,8 +144,20 @@ export function calculatePersonalInflationImpact(
   let cumulativeInflation = 1
   const dataPoints: Array<{ year: number; nominal: number; real: number }> = []
 
+  // Add starting point first - in the starting year, real = nominal (no inflation or interest applied yet)
+  dataPoints.push({
+    year: startYear,
+    nominal: Math.round(initialAmount),
+    real: Math.round(initialAmount),
+  })
+
   for (let i = startIndex; i < historicalInflation.length && historicalInflation[i].year <= endYear; i++) {
     const { year, inflationRate } = historicalInflation[i]
+    
+    // Skip the starting year as we already added it
+    if (year === startYear) {
+      continue
+    }
     
     // Apply interest (if any) - compound annually
     currentNominal = currentNominal * (1 + interestRate)

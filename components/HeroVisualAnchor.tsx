@@ -13,6 +13,7 @@ interface HeroVisualAnchorProps {
   initialAmount?: number
   startYear?: number
   endYear?: number
+  years?: number  // Explicit years prop for controlled component
   onAmountChange?: (amount: number) => void
   onYearsChange?: (years: number) => void
 }
@@ -21,6 +22,7 @@ export default function HeroVisualAnchor({
   initialAmount = 1000000,
   startYear = 2015,
   endYear = 2025,
+  years: controlledYears,
   onAmountChange,
   onYearsChange
 }: HeroVisualAnchorProps) {
@@ -43,8 +45,8 @@ export default function HeroVisualAnchor({
   const startValue = data[0]?.nominal || initialAmount
   const endValue = data[data.length - 1]?.real || initialAmount
   const effectiveStartYear = Math.max(startYear, 2014)
-  // Calculate years from the actual start and end years
-  const years = endYear - effectiveStartYear + 1
+  // Use controlled years if provided, otherwise calculate from start and end years
+  const years = controlledYears !== undefined ? controlledYears : (endYear - effectiveStartYear + 1)
 
   return (
     <div className="hero-visual-card" style={{
@@ -129,10 +131,10 @@ export default function HeroVisualAnchor({
               <button
                 type="button"
                 onClick={() => {
-                  const newYears = Math.max(1, years - 1)
+                  const newYears = Math.max(2, years - 1)
                   if (onYearsChange) onYearsChange(newYears)
                 }}
-                disabled={years <= 1}
+                disabled={years <= 2}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -141,14 +143,14 @@ export default function HeroVisualAnchor({
                 height: '44px',
                 border: 'none',
                 backgroundColor: 'transparent',
-                color: years <= 1 ? colors.gray[400] : colors.text.primary,
-                cursor: years <= 1 ? 'not-allowed' : 'pointer',
+                color: years <= 2 ? colors.gray[400] : colors.text.primary,
+                cursor: years <= 2 ? 'not-allowed' : 'pointer',
                 flexShrink: 0,
                 borderRadius: borderRadius.md,
                 transition: 'background-color 0.15s ease'
               }}
               onMouseEnter={(e) => {
-                if (years > 1) {
+                if (years > 2) {
                   e.currentTarget.style.backgroundColor = colors.gray[100]
                 }
               }}
@@ -179,7 +181,7 @@ export default function HeroVisualAnchor({
                 const newYears = Math.min(maxYears, years + 1)
                 if (onYearsChange) onYearsChange(newYears)
               }}
-              disabled={years >= MAX_YEAR - effectiveStartYear + 1}
+              disabled={years >= (MAX_YEAR - effectiveStartYear + 1)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -188,14 +190,15 @@ export default function HeroVisualAnchor({
                 height: '44px',
                 border: 'none',
                 backgroundColor: 'transparent',
-                color: years >= MAX_YEAR - effectiveStartYear + 1 ? colors.gray[400] : colors.text.primary,
-                cursor: years >= MAX_YEAR - effectiveStartYear + 1 ? 'not-allowed' : 'pointer',
+                color: years >= (MAX_YEAR - effectiveStartYear + 1) ? colors.gray[400] : colors.text.primary,
+                cursor: years >= (MAX_YEAR - effectiveStartYear + 1) ? 'not-allowed' : 'pointer',
                 flexShrink: 0,
                 borderRadius: borderRadius.md,
                 transition: 'background-color 0.15s ease'
               }}
               onMouseEnter={(e) => {
-                if (years < MAX_YEAR - effectiveStartYear + 1) {
+                const maxYears = MAX_YEAR - effectiveStartYear + 1
+                if (years < maxYears) {
                   e.currentTarget.style.backgroundColor = colors.gray[100]
                 }
               }}
@@ -212,11 +215,12 @@ export default function HeroVisualAnchor({
               type="number"
               value={years}
               onChange={(e) => {
-                const value = Math.max(1, Math.min(Number(e.target.value) || 1, MAX_YEAR - startYear + 1))
+                const maxYears = MAX_YEAR - effectiveStartYear + 1
+                const value = Math.max(2, Math.min(Number(e.target.value) || 2, maxYears))
                 if (onYearsChange) onYearsChange(value)
               }}
-              min="1"
-              max={MAX_YEAR - startYear + 1}
+              min="2"
+              max={MAX_YEAR - effectiveStartYear + 1}
               style={{ marginBottom: 0 }}
             />
           )}

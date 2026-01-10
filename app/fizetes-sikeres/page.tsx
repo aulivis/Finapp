@@ -20,7 +20,7 @@ export default function PaymentSuccessPage({ searchParams }: PageProps) {
       alignItems: 'center',
       justifyContent: 'center',
       padding: spacing.xl,
-      backgroundColor: colors.background.default
+      background: 'linear-gradient(to bottom, #F9FAFB 0%, #F3F4F6 100%)'
     }}>
       <Card style={{ maxWidth: '600px', textAlign: 'center' }}>
         <h1 style={{

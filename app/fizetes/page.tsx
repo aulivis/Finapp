@@ -9,7 +9,7 @@ export default function PaymentPage() {
   return (
     <main id="main-content" style={{
       minHeight: '100vh',
-      backgroundColor: colors.background.default,
+      background: 'linear-gradient(to bottom, #F9FAFB 0%, #F3F4F6 100%)',
       padding: '0'
     }}>
       <div style={{

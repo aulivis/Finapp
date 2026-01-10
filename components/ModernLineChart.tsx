@@ -220,7 +220,7 @@ export default function ModernLineChart({
           />
           <Legend
             wrapperStyle={{ paddingTop: isMobile ? '12px' : '16px' }}
-            // Only show the two Hungarian labels (Névleges érték, Reál vásárlóerő) - exclude Area components and use explicit Hungarian names
+            // Only show the two Hungarian labels (Névleges érték, Valódi vásárlóérő) - exclude Area components and use explicit Hungarian names
             content={({ payload }) => {
               // Filter to only include Line components (nominal, real) - excludes Area/purchasingPowerLoss
               // Map to explicit Hungarian labels (entry.value from Recharts may show dataKey like "real")
@@ -229,7 +229,7 @@ export default function ModernLineChart({
               ) || []
               const labels: { dataKey: string; label: string; color: string }[] = lineEntries.map(entry => ({
                 dataKey: String(entry.dataKey ?? ''),
-                label: entry.dataKey === 'nominal' ? 'Névleges érték' : 'Reál vásárlóerő',
+                label: entry.dataKey === 'nominal' ? 'Névleges érték' : 'Valódi vásárlóérő',
                 color: entry.color || colors.text
               }))
               return (
@@ -299,13 +299,13 @@ export default function ModernLineChart({
             dataKey="real"
             stroke={colors.real}
             strokeWidth={isMobile ? 2.5 : 3}
-            name="Reál vásárlóerő"
+            name="Valódi vásárlóérő"
             dot={{ r: isMobile ? 3 : 5, fill: colors.real, strokeWidth: 2, stroke: '#FFFFFF' }}
             activeDot={{ r: isMobile ? 5 : 7, stroke: colors.real, strokeWidth: 2, fill: '#FFFFFF' }}
             isAnimationActive={!prefersReducedMotion}
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
-            aria-label="Reál vásárlóerő vonal"
+            aria-label="Valódi vásárlóérő vonal"
           />
         </ComposedChart>
       </ResponsiveContainer>

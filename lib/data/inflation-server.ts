@@ -32,6 +32,7 @@ export async function getHistoricalInflation() {
     { year: 2022, inflationRate: 14.5 },
     { year: 2023, inflationRate: 17.6 },
     { year: 2024, inflationRate: 3.7 },
+    { year: 2025, inflationRate: 3.7 }, // Estimated - using same as 2024 for projection
   ]
 }
 

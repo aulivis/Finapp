@@ -235,7 +235,7 @@ export async function generateQuarterlyUpdateContent(): Promise<{
               ${aiExplanation.content.split('\n').map((para: string) => `<p style="margin: 0 0 12px 0;">${para}</p>`).join('')}
             </div>
             <p style="color: #495057; line-height: 1.6; margin: 12px 0 0 0;">
-              A számítási eszközök segítségével megnézheti, hogyan érinti ez a saját megtakarításait.
+              A számítási eszközök segítségével megnézheted, hogyan érinti ez a saját megtakarításaidat.
             </p>
           ` : economicData.currentInflation !== null ? `
             <p style="color: #495057; line-height: 1.6; margin: 0 0 12px 0;">
@@ -252,7 +252,7 @@ export async function generateQuarterlyUpdateContent(): Promise<{
               `}
             </p>
             <p style="color: #495057; line-height: 1.6; margin: 0;">
-              A számítási eszközök segítségével megnézheti, hogyan érinti ez a saját megtakarításait.
+              A számítási eszközök segítségével megnézheted, hogyan érinti ez a saját megtakarításaidat.
             </p>
           ` : `
             <p style="color: #495057; line-height: 1.6; margin: 0;">
@@ -267,7 +267,7 @@ export async function generateQuarterlyUpdateContent(): Promise<{
           </h3>
           <p style="color: #495057; line-height: 1.6; margin: 0 0 16px 0;">
             A számítási eszközök a legfrissebb makroökonómiai adatokkal frissültek. 
-            Használhatja az eszközöket a saját adatai alapján történő számításokhoz.
+            Használhatod az eszközöket a saját adataid alapján történő számításokhoz.
           </p>
           <a href="${appUrl}/szamitasok" style="display: inline-block; padding: 12px 24px; background-color: #ffffff; color: #212529; text-decoration: none; border: 1px solid #dee2e6; border-radius: 4px; font-weight: 400;">
             Számítási eszközök
@@ -277,8 +277,8 @@ export async function generateQuarterlyUpdateContent(): Promise<{
         <hr style="border: none; border-top: 1px solid #dee2e6; margin: 32px 0;">
         
         <p style="color: #6c757d; font-size: 12px; line-height: 1.6; margin: 0;">
-          Ez egy automatikus, negyedévente egyszer küldött tájékoztató email. Ha nem szeretne több ilyen 
-          üzenetet kapni, kérjük, lépjen velünk kapcsolatba.
+          Ez egy automatikus, negyedévente egyszer küldött tájékoztató email. Ha nem szeretnél több ilyen 
+          üzenetet kapni, lépj velünk kapcsolatba.
         </p>
         <p style="color: #6c757d; font-size: 12px; line-height: 1.6; margin: 8px 0 0 0;">
           A Contexta kizárólag oktatási és tájékoztatási célokat szolgál. Nem minősül pénzügyi tanácsadásnak.
@@ -321,7 +321,7 @@ Adatforrás: ${economicData?.source || 'KSH (Központi Statisztikai Hivatal)'}
 ${m2Text ? `Pénzkínálat (M2) trendek\n\n${m2Text}\n\n` : ''}Mit jelent ez a vásárlóerőre?
 
 ${explanationText}
-${economicData && economicData.currentInflation !== null ? '\nA számítási eszközök segítségével megnézheti, hogyan érinti ez a saját megtakarításait.' : ''}
+${economicData && economicData.currentInflation !== null ? '\nA számítási eszközök segítségével megnézheted, hogyan érinti ez a saját megtakarításaidat.' : ''}
 
 Számítási eszközök frissítve
 
@@ -332,8 +332,8 @@ Számítási eszközök: ${appUrl}/szamitasok
 
 ---
 
-Ez egy automatikus, negyedévente egyszer küldött tájékoztató email. Ha nem szeretne több ilyen 
-üzenetet kapni, kérjük, lépjen velünk kapcsolatba.
+Ez egy automatikus, negyedévente egyszer küldött tájékoztató email. Ha nem szeretnél több ilyen 
+üzenetet kapni, lépj velünk kapcsolatba.
 
 A Contexta kizárólag oktatási és tájékoztatási célokat szolgál. Nem minősül pénzügyi tanácsadásnak.
   `.trim()

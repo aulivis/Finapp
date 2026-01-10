@@ -12,7 +12,7 @@ export default function AccessGate({ calculatorName }: AccessGateProps) {
   return (
     <div id="main-content" style={{
       minHeight: '100vh',
-      backgroundColor: colors.background.default,
+      background: 'linear-gradient(to bottom, #F9FAFB 0%, #F3F4F6 100%)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

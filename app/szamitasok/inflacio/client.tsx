@@ -5,6 +5,7 @@ import { HoldingType, historicalInflation as fallbackData } from '@/lib/data/inf
 import DataSourceDisclosureClient from '@/components/DataSourceDisclosureClient'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
 import ModernLineChart from '@/components/ModernLineChart'
+import { useIsMobile } from '@/lib/hooks/useIsMobile'
 
 interface PersonalInflationCalculatorClientProps {
   initialData: Array<{ year: number; inflationRate: number }>
@@ -19,6 +20,7 @@ export default function PersonalInflationCalculatorClient({
   latestYear,
   dataSources
 }: PersonalInflationCalculatorClientProps) {
+  const isMobile = useIsMobile(768)
   const [amount, setAmount] = useState(1000000)
   const [startYear, setStartYear] = useState(2014)
   const [holdingType, setHoldingType] = useState<HoldingType>('cash')
@@ -51,11 +53,26 @@ export default function PersonalInflationCalculatorClient({
     let cumulativeInflation = 1
     const dataPoints: Array<{ year: number; nominal: number; real: number }> = []
 
+    // Add starting point first - in the starting year, real = nominal (no inflation or interest applied yet)
+    dataPoints.push({
+      year: startYear,
+      nominal: Math.round(amount),
+      real: Math.round(amount),
+    })
+
     for (let i = startIndex; i < historicalInflation.length && historicalInflation[i].year <= endYear; i++) {
       const { year, inflationRate } = historicalInflation[i]
       
+      // Skip the starting year as we already added it
+      if (year === startYear) {
+        continue
+      }
+      
+      // Apply interest (if any) - compound annually
       currentNominal = currentNominal * (1 + interestRate)
+      // Apply inflation (convert percentage to multiplier)
       cumulativeInflation *= (1 + inflationRate / 100)
+      // Real purchasing power = nominal value adjusted for inflation
       const real = currentNominal / cumulativeInflation
       
       dataPoints.push({
@@ -129,10 +146,10 @@ export default function PersonalInflationCalculatorClient({
       {/* Input Section */}
       <div style={{
         marginBottom: '32px',
-        padding: '24px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '2px',
-        border: '1px solid #E5E7EB'
+        padding: isMobile ? 0 : '24px',
+        backgroundColor: isMobile ? 'transparent' : '#FFFFFF',
+        borderRadius: isMobile ? 0 : '2px',
+        border: isMobile ? 'none' : '1px solid #E5E7EB'
       }}>
         <h2 style={{
           fontSize: '17.6px',

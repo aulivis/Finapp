@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
-import SkipToContent from '@/components/SkipToContent'
 import BackToTop from '@/components/BackToTop'
 
 const inter = Inter({ 
@@ -65,7 +64,6 @@ export default function RootLayout({
   return (
     <html lang="hu" className={inter.variable}>
       <body style={{ fontFamily: 'var(--font-inter), Inter, sans-serif', position: 'relative' }}>
-        <SkipToContent />
         <ErrorBoundary>
           {children}
         </ErrorBoundary>

@@ -98,21 +98,21 @@ export async function POST(request: NextRequest) {
       
       const emailSent = await sendEmail({
         to: email,
-        subject: 'Hozzáférése aktiválva - Contexta',
+        subject: 'Hozzáférésed aktiválva - Contexta',
         html: `
           <h2>Hozzáférés aktiválva</h2>
-          <p>Hozzáférése aktiválva lett a Contexta számítási eszközeihez.</p>
+          <p>A hozzáférésed aktiválva lett a Contexta számítási eszközeihez.</p>
           <p>Hozzáférési link:</p>
           <p><a href="${accessLink.replace(/[<>&"']/g, (char) => {
             const map: Record<string, string> = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#039;' }
             return map[char] || char
           })}" style="display: inline-block; padding: 12px 24px; background-color: #ffffff; color: #212529; text-decoration: none; border: 1px solid #dee2e6; border-radius: 4px; font-weight: 400;">Hozzáférések</a></p>
-          <p>Vagy másolja be ezt a linket a böngészőjébe:</p>
+          <p>Vagy másold be ezt a linket a böngésződbe:</p>
           <p style="word-break: break-all;">${accessLink.replace(/[<>&"']/g, (char) => {
             const map: Record<string, string> = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#039;' }
             return map[char] || char
           })}</p>
-          <p>Hozzáférése ${formattedDate.replace(/[<>&"']/g, (char) => {
+          <p>A hozzáférésed ${formattedDate.replace(/[<>&"']/g, (char) => {
             const map: Record<string, string> = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#039;' }
             return map[char] || char
           })}-ig érvényes.</p>
@@ -126,11 +126,11 @@ export async function POST(request: NextRequest) {
         text: `
 Köszönjük a vásárlást!
 
-Hozzáférése sikeresen aktiválva lett a Contexta számítási eszközeihez.
+A hozzáférésed sikeresen aktiválva lett a Contexta számítási eszközeihez.
 
-Hozzáférési linkje: ${accessLink}
+Hozzáférési linked: ${accessLink}
 
-Hozzáférése ${new Date(access.access_valid_until).toLocaleDateString('hu-HU')}-ig érvényes.
+A hozzáférésed ${new Date(access.access_valid_until).toLocaleDateString('hu-HU')}-ig érvényes.
 
 ---
 

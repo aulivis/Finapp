@@ -18,6 +18,7 @@ const START_YEAR = 2015
 const INITIAL_AMOUNT = 1000000
 const INITIAL_YEARS = 11
 const MAX_YEAR = 2025
+const MIN_YEARS = 2
 
 export default function LandingPageClient({ macroData = [] }: LandingPageClientProps) {
   const [calculatorAmount, setCalculatorAmount] = useState(INITIAL_AMOUNT)
@@ -26,12 +27,18 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
   const calculatorEndYear = MAX_YEAR
   const calculatorStartYear = Math.max(START_YEAR, calculatorEndYear - calculatorYears + 1)
   const isMobile = useIsMobile(768)
+  
+  // Ensure years stays within valid range
+  const handleYearsChange = (newYears: number) => {
+    const validYears = Math.max(MIN_YEARS, Math.min(newYears, MAX_YEAR - START_YEAR + 1))
+    setCalculatorYears(validYears)
+  }
 
   return (
     <>
       {/* Hero Section - Two columns */}
       <header className="hero-section" style={{
-        backgroundColor: colors.background.default,
+        background: 'linear-gradient(to bottom, #FFFFFF 0%, #F9FAFB 100%)',
         padding: isMobile ? `${spacing['3xl']} 0 ${spacing['4xl']} 0` : `${spacing['5xl']} 0 ${spacing['4xl']} 0`
       }}>
         <div style={{
@@ -106,8 +113,9 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
                 initialAmount={calculatorAmount}
                 startYear={calculatorStartYear}
                 endYear={calculatorEndYear}
+                years={calculatorYears}
                 onAmountChange={setCalculatorAmount}
-                onYearsChange={setCalculatorYears}
+                onYearsChange={handleYearsChange}
               />
             </div>
           </div>

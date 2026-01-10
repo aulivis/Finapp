@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     
     if (!rateLimit(ip, 5, 60 * 1000)) {
       return NextResponse.json(
-        { error: 'Túl sok kérés. Kérjük, próbálja újra később.' },
+        { error: 'Túl sok kérés. Próbáld újra később.' },
         { status: 429 }
       )
     }

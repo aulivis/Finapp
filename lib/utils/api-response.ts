@@ -51,7 +51,7 @@ export const ApiErrors = {
   notFound: (message: string = 'Nem található') =>
     createErrorResponse(message, 404, 'NOT_FOUND'),
   
-  tooManyRequests: (message: string = 'Túl sok kérés. Kérjük, próbálja újra később.') =>
+  tooManyRequests: (message: string = 'Túl sok kérés. Próbáld újra később.') =>
     createErrorResponse(message, 429, 'TOO_MANY_REQUESTS'),
   
   internalServerError: (message: string = 'Belső szerver hiba') =>

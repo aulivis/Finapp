@@ -25,7 +25,7 @@ export default function PaymentForm() {
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email.trim())) {
-      return 'Érvényes email címet adjon meg.'
+      return 'Érvényes email címet adj meg.'
     }
     return null
   }
@@ -99,7 +99,7 @@ export default function PaymentForm() {
           }}
           placeholder="pelda@email.hu"
           error={error || undefined}
-          helperText="A fizetés után emailben kapja meg a hozzáférési linket."
+          helperText="A fizetés után emailben kapsz meg a hozzáférési linket."
           required
         />
 

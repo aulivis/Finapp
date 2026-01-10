@@ -5,6 +5,7 @@ import { calculateDoNothingScenario, RETIREMENT_AGE, DEFAULT_PROJECTED_ANNUAL_IN
 import DataSourceDisclosureClient from '@/components/DataSourceDisclosureClient'
 import M2ContextualIndicatorClient from '@/components/M2ContextualIndicatorClient'
 import ModernLineChart from '@/components/ModernLineChart'
+import { useIsMobile } from '@/lib/hooks/useIsMobile'
 
 interface DoNothingCalculatorClientProps {
   initialProjectedInflation: number
@@ -19,6 +20,7 @@ export default function DoNothingCalculatorClient({
   currentYear,
   dataSources
 }: DoNothingCalculatorClientProps) {
+  const isMobile = useIsMobile(768)
   const [currentAge, setCurrentAge] = useState(30)
   const [currentSavings, setCurrentSavings] = useState(5000000)
   const [monthlySavings, setMonthlySavings] = useState(50000)
@@ -66,10 +68,10 @@ export default function DoNothingCalculatorClient({
       {/* Input Section */}
       <div style={{
         marginBottom: '32px',
-        padding: '24px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '2px',
-        border: '1px solid #E5E7EB'
+        padding: isMobile ? 0 : '24px',
+        backgroundColor: isMobile ? 'transparent' : '#FFFFFF',
+        borderRadius: isMobile ? 0 : '2px',
+        border: isMobile ? 'none' : '1px solid #E5E7EB'
       }}>
         <h2 style={{
           fontSize: '17.6px',
@@ -243,7 +245,7 @@ export default function DoNothingCalculatorClient({
                 border: '1px solid #dee2e6'
               }}>
                 <div style={{ fontSize: '12px', color: '#4B5563', marginBottom: '8px' }}>
-                  Reál vásárlóerő ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
+                  Valódi vásárlóérő ({currentYear} → {doNothingCalculation.retirementAge} éves kor)
                 </div>
                 <div style={{ fontSize: '22px', fontWeight: '400', color: '#111827' }} className="tabular-nums">
                   {formatCurrency(doNothingCalculation.realValueAtRetirement)}

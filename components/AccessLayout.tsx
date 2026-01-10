@@ -11,10 +11,10 @@ export default function AccessLayout({ children }: AccessLayoutProps) {
   return (
     <div id="main-content" style={{
       minHeight: '100vh',
-      backgroundColor: colors.background.default
+      background: 'linear-gradient(to bottom, #F9FAFB 0%, #F3F4F6 100%)'
     }}>
       <header style={{
-        backgroundColor: colors.background.paper,
+        background: 'linear-gradient(to bottom, #FFFFFF 0%, #F9FAFB 100%)',
         borderBottom: `1px solid ${colors.gray[200]}`,
         padding: `${spacing.xl} 0`,
         position: 'sticky',
