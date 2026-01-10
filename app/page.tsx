@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { getMacroData } from '@/lib/data/macro-data'
 import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
 import Button from '@/components/ui/Button'
-import Card from '@/components/ui/Card'
 import { Check, ArrowRight } from 'lucide-react'
 
 export default async function Home() {

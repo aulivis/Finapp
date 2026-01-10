@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { shadows, spacing, componentStyles, colors, borderRadius } from '@/lib/design-system'
+import { shadows, spacing, componentStyles, colors } from '@/lib/design-system'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 
 interface CardProps {
