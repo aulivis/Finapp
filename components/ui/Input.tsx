@@ -20,6 +20,9 @@ export default function Input({
   id,
   className = '',
   style,
+  onFocus,
+  onBlur,
+  onKeyDown,
   ...props
 }: InputProps) {
   const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
@@ -81,14 +84,17 @@ export default function Input({
               e.target.style.borderColor = colors.primary
               e.target.style.boxShadow = focusStyles.boxShadow
             }
-            props.onFocus?.(e)
+            onFocus?.(e)
           }}
           onBlur={(e) => {
             if (!error) {
               e.target.style.borderColor = colors.gray[200]
               e.target.style.boxShadow = 'none'
             }
-            props.onBlur?.(e)
+            onBlur?.(e)
+          }}
+          onKeyDown={(e) => {
+            onKeyDown?.(e)
           }}
           {...props}
         />

@@ -32,21 +32,12 @@ export default async function Home() {
           background: `linear-gradient(135deg, ${colors.background.paper} 0%, ${colors.primaryLight} 100%)`,
           borderRadius: borderRadius.xl,
           padding: spacing['3xl'],
-          border: `2px solid ${colors.primaryBorder}`,
-          boxShadow: shadows.xl,
-          marginBottom: spacing['4xl']
+          border: `1px solid ${colors.primaryBorder}40`,
+          boxShadow: `${shadows.xl}, inset 0 1px 0 0 rgba(255, 255, 255, 0.7)`,
+          marginBottom: spacing['4xl'],
+          overflow: 'hidden',
+          transition: 'all 0.3s ease'
         }}>
-          {/* Decorative accent */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '4px',
-            background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 100%)`,
-            borderRadius: `${borderRadius.xl} ${borderRadius.xl} 0 0`
-          }} />
-          
           {/* Content */}
           <div style={{ position: 'relative' }}>
             {/* Heading */}
@@ -88,7 +79,7 @@ export default async function Home() {
                 backgroundColor: colors.background.paper,
                 borderRadius: borderRadius.lg,
                 border: `1px solid ${colors.gray[200]}`,
-                boxShadow: shadows.sm,
+                boxShadow: `${shadows.sm}, inset 0 1px 0 0 rgba(255, 255, 255, 0.8)`,
                 transition: 'all 0.2s ease'
               }}>
                 <div style={{
@@ -135,7 +126,7 @@ export default async function Home() {
                 backgroundColor: colors.background.paper,
                 borderRadius: borderRadius.lg,
                 border: `1px solid ${colors.gray[200]}`,
-                boxShadow: shadows.sm,
+                boxShadow: `${shadows.sm}, inset 0 1px 0 0 rgba(255, 255, 255, 0.8)`,
                 transition: 'all 0.2s ease'
               }}>
                 <div style={{
@@ -182,7 +173,7 @@ export default async function Home() {
                 backgroundColor: colors.background.paper,
                 borderRadius: borderRadius.lg,
                 border: `1px solid ${colors.gray[200]}`,
-                boxShadow: shadows.sm,
+                boxShadow: `${shadows.sm}, inset 0 1px 0 0 rgba(255, 255, 255, 0.8)`,
                 transition: 'all 0.2s ease'
               }}>
                 <div style={{
@@ -228,7 +219,8 @@ export default async function Home() {
             <div style={{
               textAlign: 'center',
               paddingTop: spacing.xl,
-              borderTop: `1px solid ${colors.primaryBorder}`
+              marginTop: spacing.xl,
+              borderTop: `1px solid ${colors.gray[200]}`
             }}>
               <Link href="/fizetes" style={{ display: 'inline-block' }}>
                 <Button 

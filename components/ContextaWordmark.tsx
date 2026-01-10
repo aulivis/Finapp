@@ -17,9 +17,9 @@ export default function ContextaWordmark({
       gap: '4px'
     }}>
       <div style={{
-        fontFamily: 'var(--font-inter), Inter, sans-serif',
+        fontFamily: 'var(--font-share-tech), "Share Tech", sans-serif',
         fontSize: '28px',
-        fontWeight: '600', // SemiBold
+        fontWeight: '400',
         letterSpacing: '0.05em', // tracking-wide
         color: '#111827',
         lineHeight: '1.2'

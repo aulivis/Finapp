@@ -402,25 +402,6 @@ export default function CalculatorsClient({
               </div>
             </div>
           </div>
-
-          <div style={{
-            padding: '16px',
-            backgroundColor: '#f8f9fa',
-            borderRadius: '4px',
-            borderLeft: '3px solid #4B5563',
-            fontSize: '14px',
-            lineHeight: '1.7',
-            color: '#4B5563'
-          }}>
-            <p style={{ margin: '0 0 12px 0' }}>
-              A <strong>névleges érték</strong> az összeg aktuális forintban kifejezett értéke (kamatbevétellel együtt, ha van). 
-              A <strong>reál érték</strong> azt mutatja, hogy mennyi vásárlóerőt képvisel ez az összeg az infláció figyelembevételével. 
-              A <strong>vásárlóerő veszteség</strong> a névleges és reál érték közötti különbség, amely az infláció hatását mutatja.
-            </p>
-            <p style={{ margin: '12px 0 0 0' }}>
-              A számítás konzervatív feltételezéseken alapul, és csak az infláció és az esetleges alacsony kamatbevétel hatását veszi figyelembe.
-            </p>
-          </div>
         </div>
 
         {/* Chart */}

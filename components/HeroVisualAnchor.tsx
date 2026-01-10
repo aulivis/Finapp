@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import { Calculator, Calendar, Minus, Plus } from 'lucide-react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
@@ -47,6 +47,18 @@ export default function HeroVisualAnchor({
   const effectiveStartYear = Math.max(startYear, 2014)
   // Use controlled years if provided, otherwise calculate from start and end years
   const years = controlledYears !== undefined ? controlledYears : (endYear - effectiveStartYear + 1)
+  
+  // Local state for input value to allow free typing
+  const [inputValue, setInputValue] = useState<string>(years.toString())
+  const [isInputFocused, setIsInputFocused] = useState(false)
+  
+  // Sync local state when years prop changes (but not when we're actively typing)
+  useEffect(() => {
+    // Only sync if the input is not focused to avoid interrupting typing
+    if (!isInputFocused) {
+      setInputValue(years.toString())
+    }
+  }, [years, isInputFocused])
 
   return (
     <div className="hero-visual-card" style={{
@@ -56,22 +68,12 @@ export default function HeroVisualAnchor({
       padding: isMobile ? spacing.xl : spacing['2xl'],
       background: `linear-gradient(135deg, ${colors.background.paper} 0%, ${colors.primaryLight} 100%)`,
       borderRadius: borderRadius.xl,
-      boxShadow: shadows.lg + ', 0 0 0 1px ' + colors.primaryBorder,
-      border: `2px solid ${colors.primaryBorder}`,
+      boxShadow: `${shadows.lg}, inset 0 1px 0 0 rgba(255, 255, 255, 0.7)`,
+      border: `1px solid ${colors.primaryBorder}40`,
       position: 'relative',
       overflow: 'hidden',
       transition: 'all 0.3s ease'
     }}>
-      {/* Decorative accent */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: '4px',
-        background: 'linear-gradient(90deg, #2DD4BF 0%, #14B8A6 100%)'
-      }} />
-      
       {/* Input Fields */}
       <div style={{
         display: 'grid',
@@ -213,11 +215,76 @@ export default function HeroVisualAnchor({
           ) : (
             <Input
               type="number"
-              value={years}
+              value={inputValue}
+              onFocus={(e) => {
+                setIsInputFocused(true)
+                // Select all text on focus for easy editing
+                e.target.select()
+              }}
               onChange={(e) => {
+                // Allow free typing - update local state immediately
+                const newValue = e.target.value
+                setInputValue(newValue)
+              }}
+              onKeyDown={(e) => {
+                // Handle arrow keys for stepper functionality
                 const maxYears = MAX_YEAR - effectiveStartYear + 1
-                const value = Math.max(2, Math.min(Number(e.target.value) || 2, maxYears))
-                if (onYearsChange) onYearsChange(value)
+                if (e.key === 'ArrowUp') {
+                  e.preventDefault()
+                  const newYears = Math.min(maxYears, years + 1)
+                  if (onYearsChange && newYears !== years) {
+                    onYearsChange(newYears)
+                    setInputValue(newYears.toString())
+                  }
+                } else if (e.key === 'ArrowDown') {
+                  e.preventDefault()
+                  const newYears = Math.max(2, years - 1)
+                  if (onYearsChange && newYears !== years) {
+                    onYearsChange(newYears)
+                    setInputValue(newYears.toString())
+                  }
+                } else if (e.key === 'Enter') {
+                  // Validate on Enter key
+                  e.preventDefault()
+                  const numValue = Number(inputValue)
+                  const maxYears = MAX_YEAR - effectiveStartYear + 1
+                  if (isNaN(numValue) || numValue < 2) {
+                    const clampedValue = 2
+                    if (onYearsChange) onYearsChange(clampedValue)
+                    setInputValue(clampedValue.toString())
+                  } else if (numValue > maxYears) {
+                    if (onYearsChange) onYearsChange(maxYears)
+                    setInputValue(maxYears.toString())
+                  } else {
+                    if (onYearsChange) onYearsChange(numValue)
+                    setInputValue(numValue.toString())
+                  }
+                  e.currentTarget.blur()
+                }
+              }}
+              onBlur={(e) => {
+                setIsInputFocused(false)
+                // Validate and clamp value on blur
+                const numValue = Number(inputValue)
+                const maxYears = MAX_YEAR - effectiveStartYear + 1
+                
+                if (inputValue === '' || isNaN(numValue) || numValue < 2) {
+                  // If empty or invalid, set to minimum
+                  const clampedValue = 2
+                  if (onYearsChange) onYearsChange(clampedValue)
+                  setInputValue(clampedValue.toString())
+                } else if (numValue > maxYears) {
+                  // If too large, set to maximum
+                  if (onYearsChange) onYearsChange(maxYears)
+                  setInputValue(maxYears.toString())
+                } else {
+                  // Valid value - update parent with integer value
+                  const intValue = Math.floor(numValue)
+                  if (onYearsChange && intValue !== years) {
+                    onYearsChange(intValue)
+                  }
+                  setInputValue(intValue.toString())
+                }
               }}
               min="2"
               max={MAX_YEAR - effectiveStartYear + 1}
@@ -235,7 +302,8 @@ export default function HeroVisualAnchor({
         gap: '4px',
         width: '100%',
         paddingTop: spacing.lg,
-        borderTop: `1px solid ${colors.primaryBorder}`
+        marginTop: spacing.md,
+        borderTop: `1px solid ${colors.gray[200]}`
       }}>
         <div style={{
           fontSize: typography.fontSize.md,

@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Share_Tech } from 'next/font/google'
 import './globals.css'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import BackToTop from '@/components/BackToTop'
@@ -9,6 +9,13 @@ const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
+})
+
+const shareTech = Share_Tech({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-share-tech',
+  weight: '400',
 })
 
 export const metadata: Metadata = {
@@ -62,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="hu" className={inter.variable}>
+    <html lang="hu" className={`${inter.variable} ${shareTech.variable}`}>
       <body style={{ fontFamily: 'var(--font-inter), Inter, sans-serif', position: 'relative' }}>
         <ErrorBoundary>
           {children}

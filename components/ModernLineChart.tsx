@@ -95,9 +95,21 @@ export default function ModernLineChart({
           )}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {payload
-            .filter((entry) => entry.dataKey === 'nominal' || entry.dataKey === 'real')
-            .map((entry, index) => {
+          {(() => {
+            // Filter to only Line components (nominal, real) and deduplicate by dataKey
+            // Both Area and Line components can have the same dataKey, so we deduplicate
+            const seen = new Set<string>()
+            const filteredPayload = payload
+              .filter((entry) => {
+                const dataKey = entry.dataKey as string
+                if ((dataKey === 'nominal' || dataKey === 'real') && !seen.has(dataKey) && entry.value !== undefined && entry.value !== null) {
+                  seen.add(dataKey)
+                  return true
+                }
+                return false
+              })
+
+            return filteredPayload.map((entry, index) => {
               const isNominal = entry.dataKey === 'nominal'
               return (
                 <div
@@ -121,7 +133,7 @@ export default function ModernLineChart({
                       aria-hidden="true"
                     />
                     <span style={{ color: '#4B5563', fontSize: '13px' }}>
-                      {isNominal ? 'Névleges érték' : 'Reál'}:
+                      {isNominal ? 'Névleges érték' : 'Valódi vásárlóérő'}:
                     </span>
                   </div>
                   <span
@@ -136,7 +148,8 @@ export default function ModernLineChart({
                   </span>
                 </div>
               )
-            })}
+            })
+          })()}
         </div>
       </div>
     )

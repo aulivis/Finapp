@@ -38,7 +38,8 @@ export default function FooterDisclaimer() {
               fontSize: typography.fontSize.sm,
               lineHeight: typography.lineHeight.relaxed,
               color: colors.gray[600],
-              margin: 0
+              margin: 0,
+              textAlign: 'justify'
             }}>
               A Contexta kizárólag oktatási és tájékoztatási célokat szolgál. 
               Az eszköz a pénzügyi folyamatok mechanizmusait mutatja be, 
@@ -59,7 +60,8 @@ export default function FooterDisclaimer() {
               fontSize: typography.fontSize.sm,
               lineHeight: typography.lineHeight.relaxed,
               color: colors.gray[600],
-              margin: 0
+              margin: 0,
+              textAlign: 'justify'
             }}>
               Az eszköz nem minősül pénzügyi tanácsadásnak, befektetési ajánlásnak 
               vagy egyéb szakmai szolgáltatásnak. A számítások nem helyettesítik 
@@ -80,7 +82,8 @@ export default function FooterDisclaimer() {
               fontSize: typography.fontSize.sm,
               lineHeight: typography.lineHeight.relaxed,
               color: colors.gray[600],
-              margin: 0
+              margin: 0,
+              textAlign: 'justify'
             }}>
               A szimulációk konzervatív feltételezéseken alapulnak. A számítások 
               közelítő értékek, és nem veszik figyelembe az egyéni körülményeket, 
