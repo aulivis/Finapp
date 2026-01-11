@@ -1,15 +1,15 @@
 /**
  * Retirement age constant (Hungary)
+ * Imported from centralized economic data file
  */
-export const RETIREMENT_AGE = 65
+import { RETIREMENT_AGE, DEFAULT_PROJECTED_INFLATION } from './economic-data'
 
 /**
- * Historical average inflation rate (based on recent years' data)
- * This should be fetched from Supabase, but we provide a default for client-side calculations
- * Server-side functions should use getProjectedInflationRate() from macro-data.ts
- * Note: This is NOT a prediction, but a historical average used for illustrative calculations
+ * @deprecated Use DEFAULT_PROJECTED_INFLATION from './economic-data' instead
+ * Kept for backward compatibility
  */
-export const DEFAULT_PROJECTED_ANNUAL_INFLATION = 4.0 // Default fallback (historical average)
+export { RETIREMENT_AGE }
+export const DEFAULT_PROJECTED_ANNUAL_INFLATION = DEFAULT_PROJECTED_INFLATION
 
 /**
  * Calculate "do nothing" scenario - savings without investment

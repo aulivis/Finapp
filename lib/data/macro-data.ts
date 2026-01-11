@@ -1,8 +1,8 @@
 import { supabaseAdmin } from '@/lib/supabase/server'
 import { MacroData } from '@/lib/types/database'
+import { DEFAULT_PROJECTED_INFLATION } from './economic-data'
 
 const DEFAULT_COUNTRY = 'HU'
-const DEFAULT_PROJECTED_INFLATION = 4.0 // Fallback if no data available
 
 /**
  * Get all macroeconomic data for a country, sorted by year

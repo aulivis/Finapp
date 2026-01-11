@@ -65,90 +65,146 @@ export default function HeroSection() {
       ref={sectionRef}
       className="hero-section" 
       style={{
-        background: 'linear-gradient(to bottom, #FFFFFF 0%, #F9FAFB 100%)',
-        padding: isMobile ? `${spacing['3xl']} 0 ${spacing['4xl']} 0` : `${spacing['5xl']} 0 ${spacing['4xl']} 0`
+        background: 'linear-gradient(135deg, #F0FDFA 0%, #FFFFFF 50%, #F9FAFB 100%)',
+        padding: isMobile ? `${spacing['4xl']} 0 ${spacing['5xl']} 0` : `${spacing['5xl']} 0 ${spacing['5xl']} 0`,
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
+      {/* Decorative background elements */}
+      <div style={{
+        position: 'absolute',
+        top: '-20%',
+        right: '-10%',
+        width: '600px',
+        height: '600px',
+        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.08) 0%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none'
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '-10%',
+        left: '-5%',
+        width: '400px',
+        height: '400px',
+        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.05) 0%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none'
+      }} />
+
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`
+        padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`,
+        position: 'relative',
+        zIndex: 1
       }}>
         {/* Wordmark */}
         <div style={{
-          marginBottom: isMobile ? spacing['2xl'] : spacing['4xl']
+          marginBottom: isMobile ? spacing['3xl'] : spacing['5xl']
         }}>
           <ContextaWordmark />
         </div>
 
         {/* Hero Content */}
         <div style={{
-          maxWidth: '800px',
+          maxWidth: '900px',
           margin: '0 auto',
           textAlign: 'center'
         }}>
           {/* Main Headline */}
           <h1 style={{
             fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
-            fontWeight: typography.fontWeight.semibold,
+            fontWeight: typography.fontWeight.bold,
             margin: `0 0 ${spacing.xl} 0`,
             color: colors.text.primary,
             lineHeight: typography.lineHeight.tight,
-            letterSpacing: '-0.02em'
+            letterSpacing: '-0.03em'
           }}>
             Mi történik a pénzeddel, ha nem csinálsz semmit?
           </h1>
 
           {/* Subheading */}
           <p style={{
-            fontSize: isMobile ? typography.fontSize.lg : typography.fontSize.xl,
+            fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
             lineHeight: typography.lineHeight.relaxed,
             color: colors.text.secondary,
-            margin: `0 0 ${spacing['3xl']} 0`,
-            fontWeight: typography.fontWeight.normal
+            margin: `0 0 ${spacing['4xl']} 0`,
+            fontWeight: typography.fontWeight.normal,
+            maxWidth: '700px',
+            marginLeft: 'auto',
+            marginRight: 'auto'
           }}>
             Az infláció miatt a pénz értéke idővel csökken — még akkor is, ha a számlán ugyanannyi forintot látsz.
           </p>
 
-          {/* Primary CTA Button */}
+          {/* Impact Stat - Large, prominent */}
           <div style={{
-            marginBottom: spacing['2xl']
+            marginBottom: spacing['4xl'],
+            padding: isMobile ? spacing['2xl'] : spacing['3xl'],
+            background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.5) 100%)`,
+            borderRadius: borderRadius.xl,
+            border: `2px solid ${colors.primaryBorder}`,
+            position: 'relative',
+            overflow: 'hidden'
           }}>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={scrollToCalculator}
-              style={{
-                fontSize: typography.fontSize.lg,
-                padding: `${spacing.md} ${spacing['2xl']}`,
-                minWidth: isMobile ? '100%' : 'auto',
-                fontWeight: typography.fontWeight.semibold,
-                boxShadow: shadows.lg
-              }}
-            >
-              Nézd meg a saját számaidon
-            </Button>
-          </div>
-
-          {/* Static Result Block - Moved below CTA for better hierarchy */}
-          <div style={{
-            padding: spacing.xl,
-            backgroundColor: colors.primaryLight,
-            borderRadius: borderRadius.md,
-            border: `1px solid ${colors.primaryBorder}`,
-            marginBottom: spacing['3xl'],
-            boxShadow: shadows.sm
-          }}>
+            {/* Decorative accent */}
             <div style={{
-              fontSize: typography.fontSize['2xl'],
-              fontWeight: typography.fontWeight.semibold,
-              color: colors.text.primary,
-              marginBottom: spacing.sm,
-              fontVariantNumeric: 'tabular-nums'
-            }} className="tabular-nums">
-              {formatCurrency(EXAMPLE_AMOUNT)} vásárlóereje {EXAMPLE_START_YEAR} és {EXAMPLE_END_YEAR} között ≈ <span style={{ color: colors.error }}>–{lossPercentage}%</span>
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '4px',
+              background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 100%)`
+            }} />
+            
+            <div style={{
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: isMobile ? spacing.lg : spacing['2xl'],
+              flexWrap: 'wrap'
+            }}>
+              <div style={{
+                fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['5xl'],
+                fontWeight: typography.fontWeight.bold,
+                color: colors.text.primary,
+                fontVariantNumeric: 'tabular-nums',
+                lineHeight: 1
+              }} className="tabular-nums">
+                {formatCurrency(EXAMPLE_AMOUNT)}
+              </div>
+              <div style={{
+                fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
+                color: colors.text.secondary,
+                fontWeight: typography.fontWeight.normal
+              }}>
+                vásárlóereje
+              </div>
+              <div style={{
+                fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+                color: colors.text.muted,
+                padding: `${spacing.xs} ${spacing.md}`,
+                backgroundColor: colors.background.paper,
+                borderRadius: borderRadius.full,
+                fontWeight: typography.fontWeight.medium
+              }}>
+                {EXAMPLE_START_YEAR} → {EXAMPLE_END_YEAR}
+              </div>
+              <div style={{
+                fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
+                fontWeight: typography.fontWeight.bold,
+                color: colors.error,
+                fontVariantNumeric: 'tabular-nums',
+                lineHeight: 1
+              }} className="tabular-nums">
+                –{lossPercentage}%
+              </div>
             </div>
             <div style={{
+              marginTop: spacing.lg,
               fontSize: typography.fontSize.sm,
               color: colors.text.muted,
               fontWeight: typography.fontWeight.normal
@@ -157,15 +213,91 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Optional Microcopy */}
-          <p style={{
+          {/* Primary CTA Button - More prominent */}
+          <div style={{
+            marginBottom: spacing.xl
+          }}>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={scrollToCalculator}
+              style={{
+                fontSize: isMobile ? typography.fontSize.base : typography.fontSize.xl,
+                padding: `${spacing.lg} ${spacing['3xl']}`,
+                minWidth: isMobile ? '100%' : '280px',
+                fontWeight: typography.fontWeight.semibold,
+                boxShadow: shadows.xl,
+                transform: 'translateY(0)',
+                transition: transitions.all
+              }}
+              onMouseEnter={(e) => {
+                if (!prefersReducedMotion) {
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                  e.currentTarget.style.boxShadow = shadows['2xl']
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!prefersReducedMotion) {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = shadows.xl
+                }
+              }}
+            >
+              Nézd meg a saját számaidon
+            </Button>
+          </div>
+
+          {/* Trust signals */}
+          <div style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: spacing.lg,
             fontSize: typography.fontSize.sm,
             color: colors.text.muted,
-            margin: '0',
-            fontWeight: typography.fontWeight.normal
+            fontWeight: typography.fontWeight.normal,
+            flexWrap: 'wrap'
           }}>
-            30 másodperc • nincs regisztráció
-          </p>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: spacing.xs
+            }}>
+              <span style={{ fontSize: '18px' }}>⚡</span>
+              <span>30 másodperc</span>
+            </div>
+            <div style={{
+              display: isMobile ? 'none' : 'block',
+              width: '4px',
+              height: '4px',
+              borderRadius: '50%',
+              backgroundColor: colors.gray[300]
+            }} />
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: spacing.xs
+            }}>
+              <span style={{ fontSize: '18px' }}>🔒</span>
+              <span>Nincs regisztráció</span>
+            </div>
+            <div style={{
+              display: isMobile ? 'none' : 'block',
+              width: '4px',
+              height: '4px',
+              borderRadius: '50%',
+              backgroundColor: colors.gray[300]
+            }} />
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: spacing.xs
+            }}>
+              <span style={{ fontSize: '18px' }}>📊</span>
+              <span>KSH adatok</span>
+            </div>
+          </div>
         </div>
       </div>
     </header>

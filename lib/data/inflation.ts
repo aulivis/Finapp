@@ -1,34 +1,24 @@
 /**
- * Historical inflation data for Hungary (annual inflation rates)
- * Source: Based on Hungarian Central Statistical Office (KSH) data
- * Format: { year: number, inflationRate: number } (inflationRate as percentage, e.g., 15.6 means 15.6%)
+ * Historical inflation data and interest rates
+ * Imported from centralized economic data file
  */
-export const historicalInflation: Array<{ year: number; inflationRate: number }> = [
-  { year: 2014, inflationRate: -0.2 },
-  { year: 2015, inflationRate: 0.1 },
-  { year: 2016, inflationRate: 0.4 },
-  { year: 2017, inflationRate: 2.4 },
-  { year: 2018, inflationRate: 2.8 },
-  { year: 2019, inflationRate: 3.4 },
-  { year: 2020, inflationRate: 3.3 },
-  { year: 2021, inflationRate: 5.1 },
-  { year: 2022, inflationRate: 14.5 },
-  { year: 2023, inflationRate: 17.6 },
-  { year: 2024, inflationRate: 3.7 }, // Estimated/partial year
-  { year: 2025, inflationRate: 3.7 }, // Estimated - using same as 2024 for projection
-]
+import {
+  HISTORICAL_INFLATION,
+  HOLDING_TYPE_INTEREST_RATES,
+  type HoldingType,
+} from './economic-data'
 
 /**
- * Conservative interest rate assumptions by holding type
- * These are conservative estimates based on typical Hungarian savings products
+ * @deprecated Use HISTORICAL_INFLATION from './economic-data' instead
+ * Kept for backward compatibility
  */
-export const HOLDING_TYPE_INTEREST_RATES = {
-  cash: 0, // No yield for cash
-  'low-interest-savings': 2.0, // Conservative estimate for low-interest savings accounts (annual %)
-  'no-yield': 0, // Explicitly no yield
-} as const
+export const historicalInflation = HISTORICAL_INFLATION
 
-export type HoldingType = keyof typeof HOLDING_TYPE_INTEREST_RATES
+/**
+ * @deprecated Use HOLDING_TYPE_INTEREST_RATES from './economic-data' instead
+ * Kept for backward compatibility
+ */
+export { HOLDING_TYPE_INTEREST_RATES, type HoldingType }
 
 /**
  * Calculate purchasing power over time
@@ -58,7 +48,7 @@ export function calculatePurchasingPower(
   }
   
   // Find starting index
-  const startIndex = historicalInflation.findIndex(d => d.year === startYear)
+  const startIndex = HISTORICAL_INFLATION.findIndex(d => d.year === startYear)
   if (startIndex === -1) {
     return results
   }
@@ -73,8 +63,8 @@ export function calculatePurchasingPower(
   // Now apply inflation for subsequent years
   let cumulativeInflation = 1
 
-  for (let i = startIndex; i < historicalInflation.length && historicalInflation[i].year <= endYear; i++) {
-    const { year, inflationRate } = historicalInflation[i]
+  for (let i = startIndex; i < HISTORICAL_INFLATION.length && HISTORICAL_INFLATION[i].year <= endYear; i++) {
+    const { year, inflationRate } = HISTORICAL_INFLATION[i]
     
     // Skip the starting year as we already added it
     if (year === startYear) {
@@ -134,7 +124,7 @@ export function calculatePersonalInflationImpact(
     throw new Error(`Invalid end year: ${endYear}. Must be >= start year and <= ${new Date().getFullYear() + 10}`)
   }
 
-  const startIndex = historicalInflation.findIndex(d => d.year === startYear)
+  const startIndex = HISTORICAL_INFLATION.findIndex(d => d.year === startYear)
   if (startIndex === -1) {
     throw new Error(`Invalid start year: ${startYear}. No data available for this year.`)
   }
@@ -151,8 +141,8 @@ export function calculatePersonalInflationImpact(
     real: Math.round(initialAmount),
   })
 
-  for (let i = startIndex; i < historicalInflation.length && historicalInflation[i].year <= endYear; i++) {
-    const { year, inflationRate } = historicalInflation[i]
+  for (let i = startIndex; i < HISTORICAL_INFLATION.length && HISTORICAL_INFLATION[i].year <= endYear; i++) {
+    const { year, inflationRate } = HISTORICAL_INFLATION[i]
     
     // Skip the starting year as we already added it
     if (year === startYear) {

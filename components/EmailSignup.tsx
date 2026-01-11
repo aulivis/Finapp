@@ -6,7 +6,6 @@ import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions } from '@/lib/design-system'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
-import Card from '@/components/ui/Card'
 
 export default function EmailSignup() {
   const isMobile = useIsMobile(768)
@@ -100,40 +99,61 @@ export default function EmailSignup() {
     <section 
       ref={sectionRef}
       style={{
-        backgroundColor: colors.background.paper,
-        padding: isMobile ? `${spacing['3xl']} 0` : `${spacing['4xl']} 0`
+        background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.3) 100%)`,
+        padding: isMobile ? `${spacing['4xl']} 0` : `${spacing['5xl']} 0`,
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
+      {/* Decorative background */}
+      <div style={{
+        position: 'absolute',
+        top: '-50%',
+        right: '-20%',
+        width: '500px',
+        height: '500px',
+        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.1) 0%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none'
+      }} />
+
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`
+        padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`,
+        position: 'relative',
+        zIndex: 1
       }}>
-        <Card>
-          <div style={{
-            maxWidth: '600px',
-            margin: '0 auto',
-            textAlign: 'center'
+        <div style={{
+          maxWidth: '700px',
+          margin: '0 auto',
+          textAlign: 'center',
+          padding: isMobile ? spacing['2xl'] : spacing['3xl'],
+          backgroundColor: colors.background.paper,
+          borderRadius: borderRadius.xl,
+          border: `1px solid ${colors.primaryBorder}`,
+          boxShadow: shadows.lg
+        }}>
+          <h2 style={{
+            fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['5xl'],
+            fontWeight: typography.fontWeight.bold,
+            marginBottom: spacing.lg,
+            color: colors.text.primary,
+            lineHeight: typography.lineHeight.tight,
+            letterSpacing: '-0.02em'
           }}>
-            <h2 style={{
-              fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
-              fontWeight: typography.fontWeight.semibold,
-              marginBottom: spacing.lg,
-              color: colors.text.primary,
-              lineHeight: typography.lineHeight.tight
-            }}>
-              Havonta összefoglaljuk a gazdasági változásokat — világ és Magyarország
-            </h2>
+            Havonta összefoglaljuk a gazdasági változásokat
+          </h2>
 
-            <p style={{
-              fontSize: typography.fontSize.base,
-              color: colors.text.secondary,
-              marginBottom: spacing['2xl'],
-              lineHeight: typography.lineHeight.relaxed,
-              fontWeight: typography.fontWeight.normal
-            }}>
-              Értelmezhető, adatvezérelt összefoglaló, nem clickbait hírlevél.
-            </p>
+          <p style={{
+            fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
+            color: colors.text.secondary,
+            marginBottom: spacing['3xl'],
+            lineHeight: typography.lineHeight.relaxed,
+            fontWeight: typography.fontWeight.normal
+          }}>
+            Értelmezhető, adatvezérelt összefoglaló, nem clickbait hírlevél.
+          </p>
 
             <form onSubmit={handleSubmit} style={{ marginBottom: spacing.xl }}>
               <div style={{
@@ -222,17 +242,58 @@ export default function EmailSignup() {
               )}
             </form>
 
-            <p style={{
-              fontSize: typography.fontSize.xs,
+            {/* Trust signals */}
+            <div style={{
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: spacing.md,
+              fontSize: typography.fontSize.sm,
               color: colors.text.muted,
-              margin: '0',
-              lineHeight: typography.lineHeight.normal,
-              marginTop: spacing.lg
+              marginTop: spacing.xl,
+              flexWrap: 'wrap'
             }}>
-              Nem küldünk spamet. Bármikor leiratkozhatsz.
-            </p>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.xs
+              }}>
+                <span style={{ fontSize: '16px' }}>🔒</span>
+                <span>Nem küldünk spamet</span>
+              </div>
+              <div style={{
+                display: isMobile ? 'none' : 'block',
+                width: '4px',
+                height: '4px',
+                borderRadius: '50%',
+                backgroundColor: colors.gray[300]
+              }} />
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.xs
+              }}>
+                <span style={{ fontSize: '16px' }}>✉️</span>
+                <span>Havi egy email</span>
+              </div>
+              <div style={{
+                display: isMobile ? 'none' : 'block',
+                width: '4px',
+                height: '4px',
+                borderRadius: '50%',
+                backgroundColor: colors.gray[300]
+              }} />
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.xs
+              }}>
+                <span style={{ fontSize: '16px' }}>🚪</span>
+                <span>Bármikor leiratkozhatsz</span>
+              </div>
+            </div>
           </div>
-        </Card>
       </div>
     </section>
   )

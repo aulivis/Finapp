@@ -8,7 +8,6 @@ import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions } from '@/lib/design-system'
 import Input from '@/components/ui/Input'
-import Card from '@/components/ui/Card'
 import StatCard from '@/components/ui/StatCard'
 
 const DEFAULT_AMOUNT = 1000000
@@ -31,7 +30,7 @@ export default function LandingCalculator({
   const isMobile = useIsMobile(768)
   const prefersReducedMotion = useReducedMotion()
   const [isCalculating, setIsCalculating] = useState(false)
-  const [hasUserInteracted, setHasUserInteracted] = useState(false)
+  const [hasUserInteracted, setHasUserInteracted] = useState(true) // Initialize to true to show default results
   const [startYearError, setStartYearError] = useState('')
   const [endYearError, setEndYearError] = useState('')
   const sectionRef = useRef<HTMLElement>(null)
@@ -179,9 +178,10 @@ export default function LandingCalculator({
       ref={sectionRef}
       id="calculator-section"
       style={{
-        backgroundColor: colors.background.default,
-        padding: isMobile ? `${spacing['3xl']} 0` : `${spacing['4xl']} 0`,
-        scrollMarginTop: '80px'
+        backgroundColor: colors.background.paper,
+        padding: isMobile ? `${spacing['4xl']} 0` : `${spacing['5xl']} 0`,
+        scrollMarginTop: '80px',
+        position: 'relative'
       }}
     >
       <div style={{
@@ -189,26 +189,51 @@ export default function LandingCalculator({
         margin: '0 auto',
         padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`
       }}>
-        {/* Calculator Card */}
-        <Card>
+        {/* Section Header */}
+        <div style={{
+          textAlign: 'center',
+          marginBottom: spacing['4xl'],
+          maxWidth: '700px',
+          marginLeft: 'auto',
+          marginRight: 'auto'
+        }}>
+          <h2 style={{
+            fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['5xl'],
+            fontWeight: typography.fontWeight.bold,
+            marginBottom: spacing.lg,
+            color: colors.text.primary,
+            lineHeight: typography.lineHeight.tight,
+            letterSpacing: '-0.02em'
+          }}>
+            Számítsd ki a saját számaid
+          </h2>
+          <p style={{
+            fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
+            color: colors.text.secondary,
+            lineHeight: typography.lineHeight.relaxed,
+            margin: 0
+          }}>
+            Nézd meg, mennyit veszít a megtakarításod vásárlóereje az infláció miatt
+          </p>
+        </div>
+
+        {/* Calculator Container - No Card, just clean layout */}
+        <div style={{
+          backgroundColor: colors.background.paper,
+          borderRadius: borderRadius.xl,
+          padding: isMobile ? spacing['2xl'] : spacing['3xl'],
+          border: `1px solid ${colors.gray[200]}`,
+          boxShadow: shadows.sm
+        }}>
           {/* Inputs Section */}
           <div style={{
             marginBottom: spacing['3xl']
           }}>
-            <h2 style={{
-              fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
-              fontWeight: typography.fontWeight.semibold,
-              marginBottom: spacing.xl,
-              color: colors.text.primary,
-              lineHeight: typography.lineHeight.tight
-            }}>
-              Számítsd ki a saját számaid
-            </h2>
 
             <div style={{
               display: 'grid',
               gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-              gap: spacing.xl,
+              gap: spacing.lg,
               marginBottom: spacing['2xl']
             }}>
               <Input
@@ -387,15 +412,15 @@ export default function LandingCalculator({
                 <h3 style={{
                   fontSize: typography.fontSize['2xl'],
                   fontWeight: typography.fontWeight.semibold,
-                  marginBottom: spacing.lg,
+                  marginBottom: spacing.xl,
                   color: colors.text.primary
                 }}>
                   Vásárlóerő alakulása
                 </h3>
                 <div style={{
-                  padding: spacing.lg,
-                  backgroundColor: colors.background.paper,
-                  borderRadius: borderRadius.md,
+                  padding: spacing.xl,
+                  backgroundColor: colors.gray[50],
+                  borderRadius: borderRadius.lg,
                   border: `1px solid ${colors.gray[200]}`
                 }}>
                   {calculationData.dataPoints.length > 0 ? (
@@ -421,26 +446,37 @@ export default function LandingCalculator({
                 </div>
               </div>
 
-              {/* Summary Message */}
+              {/* Summary Message - More prominent */}
               <div style={{
-                padding: spacing.xl,
-                backgroundColor: colors.primaryLight,
-                borderRadius: borderRadius.md,
-                border: `1px solid ${colors.primaryBorder}`,
-                textAlign: 'center'
+                padding: spacing['2xl'],
+                background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.8) 100%)`,
+                borderRadius: borderRadius.lg,
+                border: `2px solid ${colors.primaryBorder}`,
+                textAlign: 'center',
+                position: 'relative',
+                overflow: 'hidden'
               }}>
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: '3px',
+                  background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 100%)`
+                }} />
                 <p style={{
-                  fontSize: typography.fontSize.lg,
+                  fontSize: isMobile ? typography.fontSize.base : typography.fontSize.xl,
                   lineHeight: typography.lineHeight.relaxed,
                   color: colors.text.primary,
                   margin: '0',
                   fontWeight: typography.fontWeight.normal
                 }}>
-                  A <strong>{formatCurrency(amount)}</strong> vásárlóereje{' '}
+                  A <strong style={{ fontWeight: typography.fontWeight.semibold }}>{formatCurrency(amount)}</strong> vásárlóereje{' '}
                   <strong style={{ 
                     color: colors.error,
-                    fontSize: typography.fontSize['2xl'],
-                    fontWeight: typography.fontWeight.bold
+                    fontSize: isMobile ? typography.fontSize['2xl'] : typography.fontSize['3xl'],
+                    fontWeight: typography.fontWeight.bold,
+                    display: 'inline-block'
                   }}>
                     {formatPercentage(calculationData.lossPercentage)}-kal csökkent
                   </strong>{' '}
@@ -465,7 +501,7 @@ export default function LandingCalculator({
               </p>
             </div>
           )}
-        </Card>
+        </div>
       </div>
     </section>
   )
