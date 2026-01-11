@@ -5,7 +5,7 @@ import { calculatePurchasingPower } from '@/lib/data/inflation'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, shadows, transitions } from '@/lib/design-system'
-import { ArrowRight, Calendar } from 'lucide-react'
+import { ArrowRight, Calendar, TrendingDown } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import ContextaWordmark from '@/components/ContextaWordmark'
 
@@ -218,10 +218,13 @@ export default function HeroSection() {
                   <ArrowRight size={isMobile ? 32 : 48} strokeWidth={2.5} />
                 </div>
                 <div style={{
-                  padding: isMobile ? `${spacing.md} ${spacing.xl}` : `${spacing.sm} ${spacing.lg}`,
+                  display: isMobile ? 'none' : 'flex',
+                  alignItems: 'center',
+                  gap: spacing.xs,
+                  padding: `${spacing.sm} ${spacing.lg}`,
                   backgroundColor: colors.errorLight,
-                  borderRadius: borderRadius.md,
-                  fontSize: isMobile ? typography.fontSize.base : typography.fontSize.sm,
+                  borderRadius: borderRadius.full,
+                  fontSize: typography.fontSize.sm,
                   color: colors.error,
                   fontWeight: typography.fontWeight.bold,
                   border: `1px solid ${colors.error}`,
@@ -229,7 +232,8 @@ export default function HeroSection() {
                   boxShadow: shadows.md,
                   animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite'
                 }}>
-                  –{lossPercentage}%
+                  <TrendingDown size={16} />
+                  <span>–{lossPercentage}%</span>
                 </div>
               </div>
 
@@ -282,11 +286,38 @@ export default function HeroSection() {
             <div style={{
               marginTop: spacing['2xl'],
               padding: spacing.xl,
+              paddingTop: isMobile ? spacing['2xl'] : spacing.xl,
               backgroundColor: colors.errorLight,
               borderRadius: borderRadius.lg,
               border: `2px solid ${colors.error}`,
-              textAlign: 'center'
+              textAlign: 'center',
+              position: 'relative'
             }}>
+              {/* Mobile badge at top center */}
+              {isMobile && (
+                <div style={{
+                  position: 'absolute',
+                  top: '-18px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: spacing.xs,
+                  padding: `${spacing.md} ${spacing.xl}`,
+                  backgroundColor: colors.errorLight,
+                  borderRadius: borderRadius.full,
+                  fontSize: typography.fontSize.base,
+                  color: colors.error,
+                  fontWeight: typography.fontWeight.bold,
+                  border: `1px solid ${colors.error}`,
+                  whiteSpace: 'nowrap',
+                  boxShadow: shadows.md,
+                  animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite'
+                }}>
+                  <TrendingDown size={18} />
+                  <span>–{lossPercentage}%</span>
+                </div>
+              )}
               <div style={{
                 fontSize: typography.fontSize.sm,
                 color: colors.text.muted,

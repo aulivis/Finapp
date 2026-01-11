@@ -118,13 +118,13 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
   // Get pale gradient background for each card based on asset type
   const getCardBackground = (label: string): string => {
     const backgrounds: { [key: string]: string } = {
-      'Big Mac ára': 'linear-gradient(135deg, rgba(254, 243, 199, 0.3) 0%, rgba(255, 247, 237, 0.2) 100%)', // Pale orange/red for burger
-      'Ingatlan értéke': 'linear-gradient(135deg, rgba(219, 234, 254, 0.3) 0%, rgba(239, 246, 255, 0.2) 100%)', // Pale blue for home
-      'Arany árfolyama': 'linear-gradient(135deg, rgba(254, 252, 232, 0.4) 0%, rgba(255, 253, 245, 0.3) 100%)', // Pale gold/yellow for gold
-      'S&P 500 index': 'linear-gradient(135deg, rgba(236, 253, 245, 0.3) 0%, rgba(240, 253, 250, 0.2) 100%)', // Pale green for stocks
-      'Bitcoin ára': 'linear-gradient(135deg, rgba(255, 237, 213, 0.3) 0%, rgba(255, 247, 237, 0.2) 100%)', // Pale amber/orange for bitcoin
+      'Big Mac ára': 'linear-gradient(135deg, rgba(254, 243, 199, 0.12) 0%, rgba(255, 247, 237, 0.08) 100%)', // Pale orange/red for burger
+      'Ingatlan értéke': 'linear-gradient(135deg, rgba(219, 234, 254, 0.12) 0%, rgba(239, 246, 255, 0.08) 100%)', // Pale blue for home
+      'Arany árfolyama': 'linear-gradient(135deg, rgba(254, 252, 232, 0.15) 0%, rgba(255, 253, 245, 0.1) 100%)', // Pale gold/yellow for gold
+      'S&P 500 index': 'linear-gradient(135deg, rgba(236, 253, 245, 0.12) 0%, rgba(240, 253, 250, 0.08) 100%)', // Pale green for stocks
+      'Bitcoin ára': 'linear-gradient(135deg, rgba(255, 237, 213, 0.12) 0%, rgba(255, 247, 237, 0.08) 100%)', // Pale amber/orange for bitcoin
     }
-    return backgrounds[label] || 'linear-gradient(135deg, rgba(249, 250, 251, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%)'
+    return backgrounds[label] || 'linear-gradient(135deg, rgba(249, 250, 251, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%)'
   }
 
   return (
@@ -216,6 +216,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                     alignItems: 'center',
                     textAlign: 'center',
                     padding: `${spacing['2xl']} ${spacing.lg}`,
+                    paddingTop: isMobile ? spacing['3xl'] : spacing['2xl'],
                     background: `${getCardBackground(item.label)}, ${colors.background.paper}`,
                     backgroundColor: colors.background.paper,
                     borderRadius: borderRadius.lg,
@@ -225,21 +226,43 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                     overflow: 'visible'
                   }}
                 >
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '64px',
-                    height: '64px',
-                    borderRadius: borderRadius.full,
-                    background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.6) 100%)`,
-                    color: colors.primary,
-                    flexShrink: 0,
-                    marginBottom: spacing.lg,
-                    border: `1px solid ${colors.primaryBorder}`
-                  }}>
-                    <Icon size={34} strokeWidth={2} />
-                  </div>
+                  {isMobile ? (
+                    <div style={{
+                      position: 'absolute',
+                      top: '-32px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '64px',
+                      height: '64px',
+                      borderRadius: borderRadius.full,
+                      background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.6) 100%)`,
+                      color: colors.primary,
+                      flexShrink: 0,
+                      border: `1px solid ${colors.primaryBorder}`,
+                      boxShadow: shadows.md
+                    }}>
+                      <Icon size={42} strokeWidth={2} />
+                    </div>
+                  ) : (
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '64px',
+                      height: '64px',
+                      borderRadius: borderRadius.full,
+                      background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.6) 100%)`,
+                      color: colors.primary,
+                      flexShrink: 0,
+                      marginBottom: spacing.lg,
+                      border: `1px solid ${colors.primaryBorder}`
+                    }}>
+                      <Icon size={34} strokeWidth={2} />
+                    </div>
+                  )}
                   <div style={{ flex: 1, minWidth: 0, width: '100%', position: 'relative' }}>
                     <div style={{
                       display: 'flex',
@@ -249,7 +272,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                       marginBottom: spacing.md
                     }}>
                       <div style={{
-                        fontSize: typography.fontSize.base,
+                        fontSize: isMobile ? typography.fontSize.lg : typography.fontSize.base,
                         color: colors.text.muted,
                         fontWeight: typography.fontWeight.medium
                       }}>

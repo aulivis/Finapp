@@ -67,12 +67,33 @@ export default function ModernLineChart({
     return [0, Math.max(roundedUpper, maxValue + 250000)]
   }, [maxValue])
 
+  // Calculate which years to show on mobile (first, last, and every second year)
+  const mobileTicksArray = useMemo(() => {
+    if (!isMobile || data.length === 0) return undefined
+    const years = data.map(d => d.year)
+    const firstYear = years[0]
+    const lastYear = years[years.length - 1]
+    const ticksArray: number[] = [firstYear]
+    
+    // Add every second year (skip first and last)
+    for (let i = 1; i < years.length - 1; i += 2) {
+      ticksArray.push(years[i])
+    }
+    
+    // Always include last year
+    if (lastYear !== firstYear) {
+      ticksArray.push(lastYear)
+    }
+    
+    return ticksArray
+  }, [isMobile, data])
+
   // Memoize chart configuration for performance - adjust for mobile
   const chartConfig = useMemo(() => ({
     animationDuration: prefersReducedMotion ? 0 : (isMobile ? 500 : 800),
     animationEasing: 'ease-out' as const,
     margin: isMobile 
-      ? { top: 12, right: 8, left: 8, bottom: 12 } 
+      ? { top: 12, right: 16, left: 8, bottom: 12 } 
       : { top: 8, right: 8, left: 8, bottom: 8 },
     chartHeight: isMobile ? Math.max(360, height - 30) : height
   }), [prefersReducedMotion, isMobile, height])
@@ -83,7 +104,7 @@ export default function ModernLineChart({
 
     const dataPoint = payload[0].payload as DataPoint
     
-    // Calculate safe position on mobile using coordinate and viewBox
+    // Calculate safe position using coordinate and viewBox (works for both mobile and desktop)
     let tooltipStyle: React.CSSProperties = {
       backgroundColor: '#FFFFFF',
       padding: isMobile ? '10px' : '16px',
@@ -93,38 +114,38 @@ export default function ModernLineChart({
       fontSize: isMobile ? '13px' : '14px',
       lineHeight: '1.5',
       minWidth: isMobile ? '180px' : '200px',
-      maxWidth: isMobile ? 'calc(100vw - 24px)' : 'none',
+      maxWidth: isMobile ? 'calc(100vw - 24px)' : '320px',
       position: 'relative',
       zIndex: 1000,
     }
 
-    if (isMobile && coordinate && viewBox && coordinate.x !== undefined && coordinate.y !== undefined) {
-      const viewportWidth = window.innerWidth || 375
-      const viewportHeight = window.innerHeight || 667
-      const padding = 12
-      const tooltipWidth = 200 // Approximate width
-      const tooltipHeight = 120 // Approximate height
+    // Apply positioning logic for both mobile and desktop to prevent viewport cutoff
+    // Note: Coordinate values are in SVG space, so we use a simple heuristic
+    // The main fix (overflow: visible) allows tooltips to escape the container
+    if (coordinate && coordinate.x !== undefined && coordinate.y !== undefined && viewBox) {
+      // Get chart dimensions from viewBox
+      const chartWidth = viewBox.width || 800
+      const chartHeight = viewBox.height || 400
       
-      // Calculate if tooltip would overflow
-      const chartX = coordinate.x
-      const chartY = coordinate.y
+      // Estimate if tooltip is near edges (using coordinate as percentage of chart size)
+      // This is a heuristic - not perfect but helps in many cases
+      const xRatio = coordinate.x / chartWidth
+      const yRatio = coordinate.y / chartHeight
       
-      // Check if we need to adjust horizontal position
-      if (chartX + tooltipWidth > viewportWidth - padding) {
-        // Position to the left of the coordinate
-        tooltipStyle.transform = `translateX(calc(-100% - 8px))`
-      } else if (chartX - tooltipWidth < padding) {
-        // Position to the right, but ensure it doesn't overflow
-        tooltipStyle.transform = 'translateX(0)'
+      const transforms: string[] = []
+      
+      // If tooltip is in the right portion of the chart and might overflow viewport, flip left
+      if (xRatio > 0.7) {
+        transforms.push('translateX(calc(-100% - 8px))')
       }
       
-      // Check if we need to adjust vertical position
-      if (chartY + tooltipHeight > viewportHeight - padding) {
-        // Position above the coordinate
-        tooltipStyle.transform = `translateY(calc(-100% - 8px)) ${tooltipStyle.transform || ''}`
-      } else if (chartY - tooltipHeight < padding) {
-        // Position below
-        tooltipStyle.transform = `translateY(8px) ${tooltipStyle.transform || ''}`
+      // If tooltip is in the bottom portion of the chart and might overflow viewport, flip up
+      if (yRatio > 0.7) {
+        transforms.push('translateY(calc(-100% - 8px))')
+      }
+      
+      if (transforms.length > 0) {
+        tooltipStyle.transform = transforms.join(' ')
       }
     }
 
@@ -229,7 +250,7 @@ export default function ModernLineChart({
       minHeight: isMobile ? 360 : 350,
       position: 'relative',
       touchAction: 'pan-y pinch-zoom',
-      overflow: isMobile ? 'visible' : 'hidden'
+      overflow: 'visible'
     }}>
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
@@ -252,15 +273,42 @@ export default function ModernLineChart({
           <XAxis
             dataKey="year"
             stroke={isMobile ? colors.textMobile : colors.text}
-            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 12 : 12 }}
+            tick={isMobile && mobileTicksArray 
+              ? ({ x, y, payload, index }) => {
+                  const value = payload.value as number
+                  const years = data.map(d => d.year)
+                  const firstYear = years[0]
+                  const lastYear = years[years.length - 1]
+                  const isFirst = value === firstYear
+                  const isLast = value === lastYear
+                  const textAnchor = isFirst ? 'start' : isLast ? 'end' : 'middle'
+                  const dx = isFirst ? 8 : isLast ? -8 : 0
+                  
+                  return (
+                    <text
+                      x={x}
+                      y={y}
+                      dy={16}
+                      dx={dx}
+                      textAnchor={textAnchor}
+                      fill={colors.textMobile}
+                      fontSize={12}
+                    >
+                      {formatYear(value)}
+                    </text>
+                  )
+                }
+              : { fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 12 : 12 }
+            }
+            ticks={mobileTicksArray}
             tickLine={{ stroke: colors.grid }}
             axisLine={{ stroke: colors.grid }}
             aria-label="Évek"
             domain={['dataMin', 'dataMax']}
             type="number"
             scale="linear"
-            tickCount={data.length > 0 ? Math.min(data.length, isMobile ? Math.min(6, Math.max(4, Math.floor(data.length / 3))) : 15) : 5}
-            interval={isMobile ? 'preserveStartEnd' : 0}
+            tickCount={isMobile && mobileTicksArray ? undefined : (data.length > 0 ? Math.min(data.length, 15) : 5)}
+            interval={isMobile ? undefined : 0}
           />
           <YAxis
             domain={yAxisDomain}

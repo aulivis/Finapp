@@ -29,11 +29,11 @@ export default function ContextaWordmark({
       {showSubtitle && (
         <div style={{
           fontFamily: 'var(--font-inter), Inter, sans-serif',
-          fontSize: '13px',
+          fontSize: '10px',
           fontWeight: '400',
           color: '#6B7280',
           lineHeight: '1.4',
-          letterSpacing: '0.01em'
+          letterSpacing: '0.02em'
         }}>
           Pénzügyi kontextus, érthetően
         </div>
