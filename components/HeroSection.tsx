@@ -7,7 +7,6 @@ import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, shadows, transitions } from '@/lib/design-system'
 import Button from '@/components/ui/Button'
 import ContextaWordmark from '@/components/ContextaWordmark'
-import AnimatedNumber from '@/components/ui/AnimatedNumber'
 
 const EXAMPLE_AMOUNT = 1000000
 const EXAMPLE_START_YEAR = 2015
