@@ -98,7 +98,7 @@ export default function ModernLineChart({
       zIndex: 1000,
     }
 
-    if (isMobile && coordinate && viewBox) {
+    if (isMobile && coordinate && viewBox && coordinate.x !== undefined && coordinate.y !== undefined) {
       const viewportWidth = window.innerWidth || 375
       const viewportHeight = window.innerHeight || 667
       const padding = 12
