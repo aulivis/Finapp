@@ -103,6 +103,6 @@ export function generateAccessLink(email: string): string {
   // Remove trailing slash
   sanitizedBaseUrl = sanitizedBaseUrl.replace(/\/+$/, '')
   
-  const encodedEmail = encodeURIComponent(email)
-  return `${sanitizedBaseUrl}/hozzaferes?email=${encodedEmail}`
+  // Return home page URL since calculators are now on the landing page
+  return sanitizedBaseUrl
 }

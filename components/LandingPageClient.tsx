@@ -1,14 +1,12 @@
 'use client'
 
 import React, { useState } from 'react'
-import Link from 'next/link'
 import DemoCalculator from '@/components/DemoCalculator'
 import HeroVisualAnchor from '@/components/HeroVisualAnchor'
 import ContextaWordmark from '@/components/ContextaWordmark'
 import { MacroData } from '@/lib/types/database'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { colors, spacing, typography } from '@/lib/design-system'
-import Button from '@/components/ui/Button'
 
 interface LandingPageClientProps {
   macroData?: MacroData[]
@@ -83,18 +81,13 @@ export default function LandingPageClient({ macroData = [] }: LandingPageClientP
                 Nézd meg, hogyan változott a vásárlóerőd az elmúlt években.
               </p>
 
-              {/* Primary CTA */}
+              {/* Description */}
               <div style={{
                 display: 'flex',
                 flexDirection: 'column',
                 gap: spacing.md,
                 marginBottom: spacing.xl
               }}>
-                <Link href="/fizetes">
-                  <Button variant="primary" size="lg" style={{ width: 'fit-content' }}>
-                    Személyre szabott számítás
-                  </Button>
-                </Link>
                 <p style={{
                   fontSize: typography.fontSize.sm,
                   color: colors.text.muted,

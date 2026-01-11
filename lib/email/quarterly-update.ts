@@ -269,7 +269,7 @@ export async function generateQuarterlyUpdateContent(): Promise<{
             A számítási eszközök a legfrissebb makroökonómiai adatokkal frissültek. 
             Használhatod az eszközöket a saját adataid alapján történő számításokhoz.
           </p>
-          <a href="${appUrl}/szamitasok" style="display: inline-block; padding: 12px 24px; background-color: #ffffff; color: #212529; text-decoration: none; border: 1px solid #dee2e6; border-radius: 4px; font-weight: 400;">
+          <a href="${appUrl}" style="display: inline-block; padding: 12px 24px; background-color: #ffffff; color: #212529; text-decoration: none; border: 1px solid #dee2e6; border-radius: 4px; font-weight: 400;">
             Számítási eszközök
           </a>
         </div>
@@ -328,7 +328,7 @@ Számítási eszközök frissítve
 A számítási eszközök a legfrissebb makroökonómiai adatokkal frissültek. 
 Használhatja az eszközöket a saját adatai alapján történő számításokhoz.
 
-Számítási eszközök: ${appUrl}/szamitasok
+Számítási eszközök: ${appUrl}
 
 ---
 
