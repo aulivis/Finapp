@@ -81,7 +81,9 @@ export default function HeroSection() {
       }}>
         {/* Wordmark */}
         <div style={{
-          marginBottom: isMobile ? spacing['3xl'] : spacing['5xl']
+          marginBottom: isMobile ? spacing['3xl'] : spacing['5xl'],
+          display: 'flex',
+          justifyContent: 'center'
         }}>
           <ContextaWordmark />
         </div>

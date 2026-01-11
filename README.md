@@ -142,3 +142,83 @@ vagy push a main branch-re, ha Vercel GitHub integrációval van beállítva.
 - Központosított validáció (`lib/utils/env.ts`)
 - Validációs script (`npm run validate-env`)
 - Tiszta hibaüzenetek hiányzó változók esetén
+
+## Adatfájl frissítése
+
+Az alkalmazás központi adatfájlja a `lib/data/economic-data.ts`, amely tartalmazza az összes hardcoded gazdasági adatot. Ez a fájl az alkalmazás egészén keresztül használt adatok központi forrása.
+
+### Mi található ebben a fájlban?
+
+1. **Történelmi inflációs adatok** (`HISTORICAL_INFLATION`)
+   - Éves inflációs ráták Magyarországra
+   - Forrás: KSH (Központi Statisztikai Hivatal)
+   - Formátum: `{ year: number, inflationRate: number }[]`
+
+2. **Kamatlábak** (`HOLDING_TYPE_INTEREST_RATES`)
+   - Konzervatív kamatláb becslések megtakarítási típusokra
+   - Formátum: objektum, ahol a kulcs a megtakarítás típusa, az érték az éves százalék
+
+3. **Összehasonlítási árak** (`HISTORICAL_PRICES`)
+   - Big Mac ára (HUF)
+   - 60 m² belvárosi lakás ára (HUF)
+   - Arany árfolyam (HUF/uncia)
+   - S&P 500 index érték (USD)
+   - Bitcoin ár (USD)
+
+4. **M2 pénzmennyiség növekedés** (`HISTORICAL_M2_GROWTH`)
+   - Éves M2 pénzmennyiség növekedési ráták
+   - Forrás: MNB (Magyar Nemzeti Bank) - amikor elérhető
+
+5. **Nyugdíj korhatár** (`RETIREMENT_AGE`)
+   - Konstans érték (jelenleg: 65)
+
+### Hogyan frissítsd az adatokat?
+
+1. **Nyisd meg a fájlt**: `lib/data/economic-data.ts`
+
+2. **Frissítsd a megfelelő adatszerkezetet**:
+   - **Inflációs adatok**: Frissítsd az `HISTORICAL_INFLATION` tömböt újabb évek adataival
+   - **Árak**: Frissítsd a `HISTORICAL_PRICES` objektumban a megfelelő kategóriát (bigMac, apartment60sqm, gold, sp500, bitcoin)
+   - **M2 adatok**: Frissítsd az `HISTORICAL_M2_GROWTH` tömböt, ha elérhetőek újabb adatok
+
+3. **Figyelj a formátumra**:
+   - Az inflációs ráták és kamatlábak százalékban vannak (pl. `15.6` = 15.6%)
+   - Az árak a megfelelő pénznemben (HUF vagy USD)
+   - Minden évet numerikus kulcsként add meg (pl. `2024: 1500`)
+
+4. **Példa - Új év inflációs adatának hozzáadása**:
+   ```typescript
+   export const HISTORICAL_INFLATION: Array<{ year: number; inflationRate: number }> = [
+     // ... meglévő adatok ...
+     { year: 2024, inflationRate: 3.7 },
+     { year: 2025, inflationRate: 4.2 }, // Új adat
+   ]
+   ```
+
+5. **Példa - Új év árának hozzáadása**:
+   ```typescript
+   export const HISTORICAL_PRICES = {
+     bigMac: {
+       // ... meglévő adatok ...
+       2024: 1500,
+       2025: 1550, // Új adat
+     },
+     // ... többi kategória ...
+   }
+   ```
+
+6. **Vizsgáld meg a változásokat**:
+   - Futtasd le a type-checket: `npm run type-check`
+   - Teszteld az alkalmazást fejlesztői módban: `npm run dev`
+   - Ellenőrizd, hogy a változások megfelelően jelennek meg az összehasonlítási kártyákon
+
+### Fontos megjegyzések
+
+- **Adatforrások**: Mindig jelöld meg az adatforrást (pl. KSH, MNB) a fájlban lévő kommentekben
+- **Becsült értékek**: Ha az adatok becslések, jelöld meg a kommentekben (pl. `// Estimated`)
+- **TypeScript típusok**: A fájl típusokkal védett, ezért a formátum betartása kötelező
+- **Backward compatibility**: Néhány régi export továbbra is elérhető backward compatibility miatt, de az új kód a `economic-data.ts`-ből importáljon
+
+### Adatstruktúrák részletes dokumentációja
+
+A fájlban részletes JSDoc kommentek találhatók minden adatszerkezethez, amelyek részletesebben elmagyarázzák az egyes mezők jelentését és formátumát.

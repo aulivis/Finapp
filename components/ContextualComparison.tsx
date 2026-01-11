@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useMemo, useEffect, useRef } from 'react'
+import React, { useMemo, useEffect, useRef, useState } from 'react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
-import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
-import { UtensilsCrossed, Home, Coins, TrendingUp, Bitcoin } from 'lucide-react'
+import { colors, spacing, typography, borderRadius, transitions, shadows, zIndex } from '@/lib/design-system'
+import { UtensilsCrossed, Home, Coins, TrendingUp, Bitcoin, Info, ChevronDown } from 'lucide-react'
 import {
   HISTORICAL_PRICES,
   getPriceForYear,
@@ -20,6 +20,8 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
   const isMobile = useIsMobile(768)
   const prefersReducedMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   // Add fade-in animation on mount
   useEffect(() => {
@@ -63,26 +65,31 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
         icon: UtensilsCrossed,
         label: 'Big Mac ára',
         change: bigMacChange,
+        explanation: 'A Big Mac Index egy gazdasági mutató, amely a hamburger árát használja az infláció mérésére. Ez az összehasonlítás mutatja, hogyan változott a Big Mac ára ugyanabban az időszakban, amely segít megérteni az általános árbeváltozásokat.',
       },
       {
         icon: Home,
         label: '60 m² belvárosi lakás ára',
         change: apartmentChange,
+        explanation: 'Ez az összehasonlítás egy 60 négyzetméteres belvárosi lakás átlagos árának változását mutatja. A lakásárak gyakran más ütemben változnak, mint az általános infláció, és fontos mutatót adnak a reálvagyon változásáról.',
       },
       {
         icon: Coins,
         label: 'Arany árfolyama',
         change: goldChange,
+        explanation: 'Az arany hagyományosan értékmegőrző eszköznek számít. Ez az összehasonlítás mutatja, hogyan változott az arany árfolyama, amely segít megérteni, hogyan teljesítettek volna más eszközök ugyanabban az időszakban.',
       },
       {
         icon: TrendingUp,
         label: 'S&P 500 index',
         change: sp500Change,
+        explanation: 'Az S&P 500 az Amerikai tőzsdén jegyzett 500 legnagyobb vállalat részvényeinek indexe, amely a részvénypiac teljesítményét méri. Ez az összehasonlítás mutatja, hogyan teljesítettek volna ezek a részvények ugyanabban az időszakban.',
       },
       {
         icon: Bitcoin,
         label: 'Bitcoin ára',
         change: bitcoinChange,
+        explanation: 'A Bitcoin egy digitális kriptovaluta, amely gyakran jelentős árfolyamingadozásokkal jár. Ez az összehasonlítás mutatja, hogyan változott a Bitcoin ára, bár a kriptovaluták rendkívül volatilisek, és nagy kockázattal járnak.',
       },
     ]
   }, [startYear, endYear])
@@ -140,12 +147,15 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
             gap: spacing.lg,
-            marginBottom: spacing['3xl']
+            marginBottom: spacing['3xl'],
+            position: 'relative'
           }}>
             {comparisons.map((item, index) => {
               const Icon = item.icon
               const change = item.change
               const hasData = change !== null
+              const isExpanded = expandedIndex === index
+              const isHovered = hoveredIndex === index
 
               return (
                 <div
@@ -162,20 +172,24 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                     transition: prefersReducedMotion ? 'none' : transitions.all,
                     cursor: 'default',
                     position: 'relative',
-                    overflow: 'hidden'
+                    overflow: 'visible'
                   }}
                   onMouseEnter={(e) => {
-                    if (!prefersReducedMotion) {
+                    if (!prefersReducedMotion && !isMobile) {
                       e.currentTarget.style.transform = 'translateY(-4px)'
                       e.currentTarget.style.boxShadow = shadows.lg
                       e.currentTarget.style.borderColor = colors.primaryBorder
                     }
                   }}
                   onMouseLeave={(e) => {
-                    if (!prefersReducedMotion) {
+                    if (!prefersReducedMotion && !isMobile) {
                       e.currentTarget.style.transform = 'translateY(0)'
                       e.currentTarget.style.boxShadow = 'none'
                       e.currentTarget.style.borderColor = colors.gray[200]
+                      // Only clear hover if not hovering over the button
+                      if (hoveredIndex === index) {
+                        setHoveredIndex(null)
+                      }
                     }
                   }}
                 >
@@ -194,14 +208,107 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                   }}>
                     <Icon size={28} strokeWidth={2} />
                   </div>
-                  <div style={{ flex: 1, minWidth: 0, width: '100%' }}>
+                  <div style={{ flex: 1, minWidth: 0, width: '100%', position: 'relative' }}>
                     <div style={{
-                      fontSize: typography.fontSize.sm,
-                      color: colors.text.muted,
-                      marginBottom: spacing.md,
-                      fontWeight: typography.fontWeight.medium
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: spacing.xs,
+                      marginBottom: spacing.md
                     }}>
-                      {item.label}
+                      <div style={{
+                        fontSize: typography.fontSize.sm,
+                        color: colors.text.muted,
+                        fontWeight: typography.fontWeight.medium
+                      }}>
+                        {item.label}
+                      </div>
+                      {/* Info Icon */}
+                      <div style={{ position: 'relative', display: 'inline-flex' }}>
+                        <button
+                          onClick={() => {
+                            if (isMobile) {
+                              setExpandedIndex(isExpanded ? null : index)
+                            }
+                          }}
+                          onMouseEnter={() => {
+                            if (!isMobile) {
+                              setHoveredIndex(index)
+                            }
+                          }}
+                          onMouseLeave={() => {
+                            if (!isMobile) {
+                              setHoveredIndex(null)
+                            }
+                          }}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '20px',
+                            height: '20px',
+                            padding: 0,
+                            border: 'none',
+                            background: 'transparent',
+                            cursor: 'pointer',
+                            color: colors.text.muted,
+                            transition: prefersReducedMotion ? 'none' : transitions.all,
+                            flexShrink: 0
+                          }}
+                          aria-label="További információk"
+                        >
+                          {isMobile ? (
+                            <ChevronDown 
+                              size={16} 
+                              style={{
+                                transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                                transition: prefersReducedMotion ? 'none' : transitions.all
+                              }}
+                            />
+                          ) : (
+                            <Info size={16} />
+                          )}
+                        </button>
+                        {/* Desktop Tooltip */}
+                        {!isMobile && isHovered && (
+                          <div
+                            style={{
+                              position: 'absolute',
+                              bottom: 'calc(100% + 8px)',
+                              left: '50%',
+                              transform: 'translateX(-50%)',
+                              padding: spacing.md,
+                              backgroundColor: colors.gray[900],
+                              color: colors.background.paper,
+                              borderRadius: borderRadius.md,
+                              fontSize: typography.fontSize.sm,
+                              lineHeight: typography.lineHeight.normal,
+                              maxWidth: '280px',
+                              width: 'max-content',
+                              zIndex: zIndex.tooltip,
+                              boxShadow: shadows.xl,
+                              pointerEvents: 'none',
+                              whiteSpace: 'normal'
+                            }}
+                          >
+                            {item.explanation}
+                            {/* Tooltip Arrow */}
+                            <div
+                              style={{
+                                position: 'absolute',
+                                top: '100%',
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                width: 0,
+                                height: 0,
+                                borderLeft: '6px solid transparent',
+                                borderRight: '6px solid transparent',
+                                borderTop: `6px solid ${colors.gray[900]}`
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <div style={{
                       fontSize: typography.fontSize['3xl'],
@@ -214,6 +321,24 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                     }} className="tabular-nums">
                       {formatPercentage(item.change)}
                     </div>
+                    {/* Mobile Expanded Explanation */}
+                    {isMobile && isExpanded && (
+                      <div
+                        style={{
+                          marginTop: spacing.lg,
+                          padding: spacing.md,
+                          backgroundColor: colors.gray[50],
+                          borderRadius: borderRadius.md,
+                          border: `1px solid ${colors.gray[200]}`,
+                          fontSize: typography.fontSize.sm,
+                          lineHeight: typography.lineHeight.relaxed,
+                          color: colors.text.secondary,
+                          textAlign: 'left'
+                        }}
+                      >
+                        {item.explanation}
+                      </div>
+                    )}
                   </div>
                 </div>
               )

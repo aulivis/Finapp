@@ -13,12 +13,12 @@ export default function ContextaWordmark({
     <div className={className} style={{
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'flex-start',
+      alignItems: 'center',
       gap: '4px'
     }}>
       <div style={{
         fontFamily: 'var(--font-share-tech), "Share Tech", sans-serif',
-        fontSize: '28px',
+        fontSize: '32px',
         fontWeight: '400',
         letterSpacing: '0.05em', // tracking-wide
         color: '#111827',
