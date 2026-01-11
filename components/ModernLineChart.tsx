@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useRef, useEffect, useState } from 'react'
 import { ComposedChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, TooltipProps } from 'recharts'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 
@@ -49,6 +49,24 @@ export default function ModernLineChart({
     [data]
   )
 
+  // Calculate max value and extend domain to add one more level above
+  const maxValue = useMemo(() => {
+    if (chartData.length === 0) return 1000000
+    const maxNominal = Math.max(...chartData.map(d => d.nominal))
+    const maxReal = Math.max(...chartData.map(d => d.real))
+    return Math.max(maxNominal, maxReal)
+  }, [chartData])
+
+  // Calculate domain with one extra tick level (25% more) above max value
+  // Round to nearest 250K increment to ensure clean tick marks
+  const yAxisDomain = useMemo(() => {
+    const targetUpper = maxValue * 1.25
+    // Round up to nearest 250K increment
+    const roundedUpper = Math.ceil(targetUpper / 250000) * 250000
+    // Ensure we have at least one level above (minimum 250K increment)
+    return [0, Math.max(roundedUpper, maxValue + 250000)]
+  }, [maxValue])
+
   // Memoize chart configuration for performance - adjust for mobile
   const chartConfig = useMemo(() => ({
     animationDuration: prefersReducedMotion ? 0 : (isMobile ? 500 : 800),
@@ -59,29 +77,62 @@ export default function ModernLineChart({
     chartHeight: isMobile ? Math.max(360, height - 30) : height
   }), [prefersReducedMotion, isMobile, height])
 
-  // Enhanced tooltip with modern design
-  const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
+  // Enhanced tooltip with modern design and viewport-aware positioning
+  const CustomTooltip = ({ active, payload, coordinate, viewBox }: TooltipProps<number, string>) => {
     if (!active || !payload || payload.length === 0) return null
 
     const dataPoint = payload[0].payload as DataPoint
+    
+    // Calculate safe position on mobile using coordinate and viewBox
+    let tooltipStyle: React.CSSProperties = {
+      backgroundColor: '#FFFFFF',
+      padding: isMobile ? '10px' : '16px',
+      border: '1px solid #E5E7EB',
+      borderRadius: '8px',
+      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+      fontSize: isMobile ? '13px' : '14px',
+      lineHeight: '1.5',
+      minWidth: isMobile ? '180px' : '200px',
+      maxWidth: isMobile ? 'calc(100vw - 24px)' : 'none',
+      position: 'relative',
+      zIndex: 1000,
+    }
+
+    if (isMobile && coordinate && viewBox) {
+      const viewportWidth = window.innerWidth || 375
+      const viewportHeight = window.innerHeight || 667
+      const padding = 12
+      const tooltipWidth = 200 // Approximate width
+      const tooltipHeight = 120 // Approximate height
+      
+      // Calculate if tooltip would overflow
+      const chartX = coordinate.x
+      const chartY = coordinate.y
+      
+      // Check if we need to adjust horizontal position
+      if (chartX + tooltipWidth > viewportWidth - padding) {
+        // Position to the left of the coordinate
+        tooltipStyle.transform = `translateX(calc(-100% - 8px))`
+      } else if (chartX - tooltipWidth < padding) {
+        // Position to the right, but ensure it doesn't overflow
+        tooltipStyle.transform = 'translateX(0)'
+      }
+      
+      // Check if we need to adjust vertical position
+      if (chartY + tooltipHeight > viewportHeight - padding) {
+        // Position above the coordinate
+        tooltipStyle.transform = `translateY(calc(-100% - 8px)) ${tooltipStyle.transform || ''}`
+      } else if (chartY - tooltipHeight < padding) {
+        // Position below
+        tooltipStyle.transform = `translateY(8px) ${tooltipStyle.transform || ''}`
+      }
+    }
 
     return (
       <div
         role="tooltip"
         aria-label={`Év: ${dataPoint.year}${showAge && dataPoint.age ? `, életkor: ${dataPoint.age}` : ''}`}
-        style={{
-          backgroundColor: '#FFFFFF',
-          padding: isMobile ? '10px' : '16px',
-          border: '1px solid #E5E7EB',
-          borderRadius: '8px',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-          fontSize: isMobile ? '13px' : '14px',
-          lineHeight: '1.5',
-          minWidth: isMobile ? '180px' : '200px',
-          maxWidth: isMobile ? '90vw' : 'none',
-          position: 'relative',
-          zIndex: 1000
-        }}
+        style={tooltipStyle}
       >
         <div style={{
           fontWeight: '500',
@@ -178,7 +229,7 @@ export default function ModernLineChart({
       minHeight: isMobile ? 360 : 350,
       position: 'relative',
       touchAction: 'pan-y pinch-zoom',
-      overflow: 'hidden'
+      overflow: isMobile ? 'visible' : 'hidden'
     }}>
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
@@ -212,6 +263,7 @@ export default function ModernLineChart({
             interval={isMobile ? 'preserveStartEnd' : 0}
           />
           <YAxis
+            domain={yAxisDomain}
             stroke={isMobile ? colors.textMobile : colors.text}
             tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 12 : 12 }}
             tickLine={{ stroke: colors.grid }}
@@ -219,6 +271,7 @@ export default function ModernLineChart({
             tickFormatter={(value) => value >= 1000000 ? `${(value / 1000000).toFixed(isMobile ? 0 : 1)}M` : `${(value / 1000).toFixed(0)}K`}
             width={isMobile ? 55 : 60}
             aria-label="Forint értékek"
+            tickCount={6}
           />
           <Tooltip
             content={<CustomTooltip />}
@@ -230,6 +283,10 @@ export default function ModernLineChart({
             }}
             animationDuration={chartConfig.animationDuration}
             allowEscapeViewBox={{ x: true, y: true }}
+            wrapperStyle={isMobile ? {
+              maxWidth: 'calc(100vw - 24px)',
+              pointerEvents: 'none'
+            } : undefined}
           />
           <Legend
             wrapperStyle={{ paddingTop: isMobile ? '12px' : '16px', paddingBottom: isMobile ? '8px' : '0' }}

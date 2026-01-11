@@ -207,7 +207,7 @@ export default function LandingCalculator({
         {/* Section Header */}
         <div style={{
           textAlign: 'center',
-          marginBottom: spacing['4xl'],
+          marginBottom: spacing['2xl'],
           maxWidth: '700px',
           marginLeft: 'auto',
           marginRight: 'auto'
@@ -408,27 +408,33 @@ export default function LandingCalculator({
             <>
               {/* Chart Section - Show first for visual impact */}
               <div style={{
-                marginBottom: spacing['3xl']
+                marginBottom: spacing['3xl'],
+                ...(isMobile ? {
+                  marginLeft: `calc(-${spacing['2xl']} - ${spacing.md})`, // Break out of calculator (32px) + maxWidth (12px) padding
+                  marginRight: `calc(-${spacing['2xl']} - ${spacing.md})`, // Break out of calculator (32px) + maxWidth (12px) padding
+                  width: `calc(100% + ${spacing['2xl']} + ${spacing['2xl']} + ${spacing.md} + ${spacing.md})` // Full width accounting for all parent padding
+                } : {})
               }}>
                 <h3 style={{
                   fontSize: typography.fontSize['2xl'],
                   fontWeight: typography.fontWeight.semibold,
                   marginBottom: spacing.xl,
-                  color: colors.text.primary
+                  color: colors.text.primary,
+                  ...(isMobile ? {
+                    paddingLeft: spacing['2xl'], // Add back padding for the title
+                    paddingRight: spacing['2xl']
+                  } : {})
                 }}>
                   Vásárlóerő alakulása
                 </h3>
                 <div style={{
-                  padding: isMobile ? `${spacing.lg} ${spacing.sm}` : spacing.xl,
+                  padding: isMobile ? `${spacing.lg} 0` : spacing.xl,
                   backgroundColor: colors.gray[50],
                   borderRadius: isMobile ? 0 : borderRadius.lg,
                   border: isMobile ? 'none' : `1px solid ${colors.gray[200]}`,
                   borderTop: isMobile ? `1px solid ${colors.gray[200]}` : undefined,
                   borderBottom: isMobile ? `1px solid ${colors.gray[200]}` : undefined,
-                  overflow: 'hidden',
-                  marginLeft: isMobile ? `-${spacing.md}` : 0,
-                  marginRight: isMobile ? `-${spacing.md}` : 0,
-                  width: isMobile ? `calc(100% + ${spacing.md} + ${spacing.md})` : 'auto'
+                  overflow: 'hidden'
                 }}>
                   {calculationData.dataPoints.length > 0 ? (
                     <ChartErrorBoundary
@@ -464,7 +470,6 @@ export default function LandingCalculator({
                   label="Valódi vásárlóerő"
                   value={calculationData.finalReal}
                   formatter={formatCurrency}
-                  subtitle={`${validStartYear} → ${validEndYear}`}
                   style={{
                     border: `2px solid ${colors.success}`
                   }}
@@ -473,7 +478,6 @@ export default function LandingCalculator({
                   label="Vásárlóerő veszteség"
                   value={calculationData.loss}
                   formatter={(v) => `-${formatCurrency(v)}`}
-                  subtitle={`${formatPercentage(calculationData.lossPercentage)}`}
                   style={{
                     border: `2px solid ${colors.error}`,
                     backgroundColor: colors.errorLight
@@ -491,7 +495,7 @@ export default function LandingCalculator({
                 position: 'relative',
                 overflow: 'hidden',
                 boxShadow: shadows.lg,
-                marginTop: spacing['3xl']
+                marginBottom: spacing['3xl']
               }}>
                 <div style={{
                   position: 'absolute',
@@ -569,7 +573,7 @@ export default function LandingCalculator({
           borderRadius: borderRadius.lg,
           border: `1px solid ${colors.info}`,
           maxWidth: '800px',
-          margin: `${spacing['3xl']} auto 0 auto`
+          margin: '0 auto'
         }}>
           <div style={{
             flexShrink: 0,

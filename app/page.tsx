@@ -33,19 +33,19 @@ export default async function Home() {
   return (
     <main id="main-content" style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #F0FDFA 0%, #FFFFFF 50%, #F9FAFB 100%)',
+      background: 'linear-gradient(135deg, #F0FDFA 0%, #EFF6FF 25%, #FFFFFF 50%, #F3E8FF 75%, #F9FAFB 100%)',
       padding: '0',
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* Decorative background elements - matching hero section */}
+      {/* Decorative background elements - more colorful */}
       <div style={{
         position: 'absolute',
         top: '-20%',
         right: '-10%',
         width: '600px',
         height: '600px',
-        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.08) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.12) 0%, rgba(59, 130, 246, 0.08) 50%, transparent 70%)',
         borderRadius: '50%',
         pointerEvents: 'none',
         zIndex: 0
@@ -56,7 +56,18 @@ export default async function Home() {
         left: '-5%',
         width: '400px',
         height: '400px',
-        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.05) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, rgba(45, 212, 191, 0.06) 50%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none',
+        zIndex: 0
+      }} />
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        right: '15%',
+        width: '300px',
+        height: '300px',
+        background: 'radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 60%)',
         borderRadius: '50%',
         pointerEvents: 'none',
         zIndex: 0

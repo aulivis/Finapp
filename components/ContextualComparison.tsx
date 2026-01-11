@@ -115,6 +115,18 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
     return userAmount * (1 + percentageChange / 100)
   }
 
+  // Get pale gradient background for each card based on asset type
+  const getCardBackground = (label: string): string => {
+    const backgrounds: { [key: string]: string } = {
+      'Big Mac ára': 'linear-gradient(135deg, rgba(254, 243, 199, 0.3) 0%, rgba(255, 247, 237, 0.2) 100%)', // Pale orange/red for burger
+      'Ingatlan értéke': 'linear-gradient(135deg, rgba(219, 234, 254, 0.3) 0%, rgba(239, 246, 255, 0.2) 100%)', // Pale blue for home
+      'Arany árfolyama': 'linear-gradient(135deg, rgba(254, 252, 232, 0.4) 0%, rgba(255, 253, 245, 0.3) 100%)', // Pale gold/yellow for gold
+      'S&P 500 index': 'linear-gradient(135deg, rgba(236, 253, 245, 0.3) 0%, rgba(240, 253, 250, 0.2) 100%)', // Pale green for stocks
+      'Bitcoin ára': 'linear-gradient(135deg, rgba(255, 237, 213, 0.3) 0%, rgba(255, 247, 237, 0.2) 100%)', // Pale amber/orange for bitcoin
+    }
+    return backgrounds[label] || 'linear-gradient(135deg, rgba(249, 250, 251, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%)'
+  }
+
   return (
     <section 
       ref={sectionRef}
@@ -204,6 +216,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                     alignItems: 'center',
                     textAlign: 'center',
                     padding: `${spacing['2xl']} ${spacing.lg}`,
+                    background: `${getCardBackground(item.label)}, ${colors.background.paper}`,
                     backgroundColor: colors.background.paper,
                     borderRadius: borderRadius.lg,
                     border: `1px solid ${colors.gray[200]}`,

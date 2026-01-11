@@ -5,7 +5,7 @@ import { calculatePurchasingPower } from '@/lib/data/inflation'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, shadows, transitions } from '@/lib/design-system'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Calendar } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import ContextaWordmark from '@/components/ContextaWordmark'
 
@@ -144,34 +144,6 @@ export default function HeroSection() {
             transform: showCalculation ? 'translateY(0)' : 'translateY(20px)',
             transition: prefersReducedMotion ? 'none' : `opacity ${transitions.slow}, transform ${transitions.slow}`
           }}>
-            {/* Decorative accent */}
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '4px',
-              background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 50%, ${colors.error} 100%)`
-            }} />
-            
-            {/* Year badge */}
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: spacing.xs,
-              padding: `${spacing.sm} ${spacing.lg}`,
-              backgroundColor: colors.background.paper,
-              borderRadius: borderRadius.full,
-              fontSize: typography.fontSize.sm,
-              color: colors.text.secondary,
-              fontWeight: typography.fontWeight.semibold,
-              border: `1px solid ${colors.gray[300]}`,
-              marginBottom: spacing['2xl'],
-              boxShadow: shadows.sm
-            }}>
-              <span>📅</span>
-              <span>{EXAMPLE_START_YEAR} → {EXAMPLE_END_YEAR}</span>
-            </div>
 
             {/* Before/After Transformation */}
             <div style={{
@@ -191,14 +163,21 @@ export default function HeroSection() {
                 flex: 1
               }}>
                 <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: spacing.xs,
+                  padding: `${spacing.xs} ${spacing.md}`,
+                  backgroundColor: colors.background.paper,
+                  borderRadius: borderRadius.full,
                   fontSize: typography.fontSize.sm,
-                  color: colors.text.muted,
-                  fontWeight: typography.fontWeight.medium,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                  marginBottom: isMobile ? spacing.xs : 0
+                  color: colors.text.secondary,
+                  fontWeight: typography.fontWeight.semibold,
+                  border: `1px solid ${colors.gray[300]}`,
+                  marginBottom: isMobile ? spacing.xs : spacing.sm,
+                  boxShadow: shadows.sm
                 }}>
-                  {EXAMPLE_START_YEAR}-ben a pénzed
+                  <Calendar size={14} />
+                  <span>{EXAMPLE_START_YEAR}</span>
                 </div>
                 <div style={{
                   fontSize: isMobile ? typography.fontSize['5xl'] : typography.fontSize['6xl'],
@@ -206,7 +185,7 @@ export default function HeroSection() {
                   color: colors.text.primary,
                   fontVariantNumeric: 'tabular-nums',
                   lineHeight: 1.1,
-                  marginBottom: isMobile ? spacing.xs : spacing.xs
+                  marginBottom: spacing.xs
                 }} className="tabular-nums">
                   {formatCurrency(EXAMPLE_AMOUNT)}
                 </div>
@@ -263,14 +242,21 @@ export default function HeroSection() {
                 flex: 1
               }}>
                 <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: spacing.xs,
+                  padding: `${spacing.xs} ${spacing.md}`,
+                  backgroundColor: colors.background.paper,
+                  borderRadius: borderRadius.full,
                   fontSize: typography.fontSize.sm,
-                  color: colors.text.muted,
-                  fontWeight: typography.fontWeight.medium,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                  marginBottom: isMobile ? spacing.xs : 0
+                  color: colors.text.secondary,
+                  fontWeight: typography.fontWeight.semibold,
+                  border: `1px solid ${colors.gray[300]}`,
+                  marginBottom: isMobile ? spacing.xs : spacing.sm,
+                  boxShadow: shadows.sm
                 }}>
-                  {EXAMPLE_END_YEAR}-ben
+                  <Calendar size={14} />
+                  <span>{EXAMPLE_END_YEAR}</span>
                 </div>
                 <div style={{
                   fontSize: isMobile ? typography.fontSize['5xl'] : typography.fontSize['6xl'],
@@ -278,7 +264,7 @@ export default function HeroSection() {
                   color: colors.error,
                   fontVariantNumeric: 'tabular-nums',
                   lineHeight: 1.1,
-                  marginBottom: isMobile ? spacing.xs : spacing.xs
+                  marginBottom: spacing.xs
                 }} className="tabular-nums">
                   {formatCurrency(Math.round(finalReal))}
                 </div>

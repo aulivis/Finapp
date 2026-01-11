@@ -56,12 +56,13 @@ export default function Input({
           <div
             style={{
               position: 'absolute',
-              left: spacing.lg,
+              left: isMobile ? spacing.xl : spacing.lg,
               top: '50%',
               transform: 'translateY(-50%)',
               color: colors.gray[500],
               display: 'flex',
               alignItems: 'center',
+              zIndex: 1,
             }}
           >
             {icon}
@@ -72,7 +73,7 @@ export default function Input({
           style={{
             ...componentStyles.input,
             padding: `${verticalPadding} ${horizontalPadding}`,
-            paddingLeft: icon ? spacing['3xl'] : horizontalPadding,
+            paddingLeft: icon ? (isMobile ? spacing['4xl'] : spacing['3xl']) : horizontalPadding,
             paddingRight: suffix ? spacing['3xl'] : horizontalPadding,
             width: '100%',
             backgroundColor: colors.background.paper,

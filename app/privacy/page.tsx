@@ -44,11 +44,7 @@ export default function PrivacyPage() {
 
         {/* Privacy Policy Content */}
         <article style={{
-          backgroundColor: colors.background.paper,
-          borderRadius: borderRadius.xl,
           padding: spacing['3xl'],
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-          border: `1px solid ${colors.primaryBorder}`,
         }}>
           <h1 style={{
             fontSize: typography.fontSize['5xl'],
