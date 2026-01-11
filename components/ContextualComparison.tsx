@@ -4,7 +4,7 @@ import React, { useMemo, useEffect, useRef, useState } from 'react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
-import { Hamburger, Home, Cuboid, TrendingUp, Bitcoin, Info, ChevronDown } from 'lucide-react'
+import { Hamburger, Home, Cuboid, TrendingUp, Bitcoin, Info } from 'lucide-react'
 import {
   HISTORICAL_PRICES,
   getPriceForYear,
@@ -144,7 +144,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
         {/* Section Header */}
         <div style={{
           textAlign: 'center',
-          marginBottom: isMobile ? spacing['3xl'] : spacing['4xl'],
+          marginBottom: isMobile ? spacing['3xl'] : spacing['3xl'],
           maxWidth: '700px',
           marginLeft: 'auto',
           marginRight: 'auto'
@@ -164,7 +164,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: spacing.md
+            gap: isMobile ? spacing.md : spacing.xl
           }}>
             <p style={{
               fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
@@ -196,7 +196,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
           <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: isMobile ? spacing.md : spacing.lg,
+            gap: isMobile ? spacing.lg : spacing.lg,
             marginBottom: spacing['3xl'],
             position: 'relative'
           }}>
@@ -216,7 +216,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                     alignItems: 'center',
                     textAlign: 'center',
                     padding: `${spacing['2xl']} ${spacing.lg}`,
-                    paddingTop: isMobile ? spacing['3xl'] : spacing['2xl'],
+                    paddingTop: isMobile ? spacing['2xl'] : spacing['2xl'],
                     background: `${getCardBackground(item.label)}, ${colors.background.paper}`,
                     backgroundColor: colors.background.paper,
                     borderRadius: borderRadius.lg,
@@ -265,10 +265,10 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                   )}
                   <div style={{ flex: 1, minWidth: 0, width: '100%', position: 'relative' }}>
                     <div style={{
+                      position: 'relative',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: spacing.xs,
                       marginBottom: spacing.md
                     }}>
                       <div style={{
@@ -279,7 +279,11 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                         {item.label}
                       </div>
                       {/* Info Icon */}
-                      <div style={{ position: 'relative', display: 'inline-flex' }}>
+                      <div style={{ 
+                        position: 'absolute',
+                        right: 0,
+                        display: 'inline-flex'
+                      }}>
                         <button
                           onClick={() => {
                             if (isMobile) {
@@ -314,17 +318,9 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                           }}
                           aria-label="További információk"
                         >
-                          {isMobile ? (
-                            <ChevronDown 
-                              size={20} 
-                              style={{
-                                transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                                transition: prefersReducedMotion ? 'none' : transitions.all
-                              }}
-                            />
-                          ) : (
-                            <Info size={16} />
-                          )}
+                          <Info 
+                            size={isMobile ? 20 : 16}
+                          />
                         </button>
                         {/* Desktop Tooltip */}
                         {!isMobile && isHovered && (
@@ -375,7 +371,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                         : colors.text.muted,
                       fontVariantNumeric: 'tabular-nums',
                       lineHeight: 1.2,
-                      marginBottom: spacing.md
+                      marginBottom: isMobile ? spacing.lg : spacing.md
                     }} className="tabular-nums">
                       {formatPercentage(item.change)}
                     </div>

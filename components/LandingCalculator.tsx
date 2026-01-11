@@ -7,7 +7,7 @@ import { ChartErrorBoundary } from '@/components/ChartErrorBoundary'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
-import { Info, Wallet, Calendar } from 'lucide-react'
+import { Info, Wallet, Calendar, TrendingDown } from 'lucide-react'
 import Input from '@/components/ui/Input'
 import StatCard from '@/components/ui/StatCard'
 
@@ -519,6 +519,10 @@ export default function LandingCalculator({
                     Vásárlóerő veszteség
                   </div>
                   <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: spacing.md,
                     fontSize: isMobile ? typography.fontSize['5xl'] : typography.fontSize['6xl'],
                     fontWeight: typography.fontWeight.bold,
                     color: colors.error,
@@ -526,7 +530,8 @@ export default function LandingCalculator({
                     marginBottom: spacing.md,
                     fontFeatureSettings: '"tnum"',
                   }}>
-                    {formatPercentage(calculationData.lossPercentage)}
+                    <TrendingDown size={isMobile ? 32 : 40} />
+                    <span>{formatPercentage(calculationData.lossPercentage)}</span>
                   </div>
                   <div style={{
                     fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,

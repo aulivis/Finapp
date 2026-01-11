@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { colors, spacing, typography } from '@/lib/design-system'
 import Link from 'next/link'
+import ContextaWordmark from '@/components/ContextaWordmark'
 
 export const metadata: Metadata = {
   title: 'Adatkezelési tájékoztató | Contexta',
@@ -22,8 +23,17 @@ export default function PrivacyPage() {
       <div style={{
         maxWidth: '800px',
         margin: '0 auto',
-        padding: `0 ${spacing.xl}`,
+        padding: `0 ${spacing.md}`,
       }}>
+        {/* Wordmark */}
+        <div style={{
+          marginBottom: spacing['3xl'],
+          display: 'flex',
+          justifyContent: 'center'
+        }}>
+          <ContextaWordmark />
+        </div>
+
         {/* Back to home link */}
         <div style={{ marginBottom: spacing['2xl'] }}>
           <Link 
@@ -44,7 +54,7 @@ export default function PrivacyPage() {
 
         {/* Privacy Policy Content */}
         <article style={{
-          padding: spacing['3xl'],
+          padding: spacing['2xl'],
         }}>
           <h1 style={{
             fontSize: typography.fontSize['5xl'],

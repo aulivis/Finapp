@@ -304,15 +304,16 @@ export default function HeroSection() {
                   alignItems: 'center',
                   gap: spacing.xs,
                   padding: `${spacing.md} ${spacing.xl}`,
-                  backgroundColor: colors.errorLight,
+                  backgroundColor: colors.primaryLight,
                   borderRadius: borderRadius.full,
                   fontSize: typography.fontSize.base,
                   color: colors.error,
                   fontWeight: typography.fontWeight.bold,
-                  border: `1px solid ${colors.error}`,
+                  border: `2px solid ${colors.error}`,
                   whiteSpace: 'nowrap',
                   boxShadow: shadows.md,
-                  animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite'
+                  animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite',
+                  zIndex: 1
                 }}>
                   <TrendingDown size={18} />
                   <span>–{lossPercentage}%</span>
