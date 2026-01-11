@@ -178,7 +178,7 @@ export default function LandingCalculator({
       ref={sectionRef}
       id="calculator-section"
       style={{
-        backgroundColor: colors.background.paper,
+        backgroundColor: 'transparent',
         padding: isMobile ? `${spacing['4xl']} 0` : `${spacing['5xl']} 0`,
         scrollMarginTop: '80px',
         position: 'relative'
@@ -217,14 +217,26 @@ export default function LandingCalculator({
           </p>
         </div>
 
-        {/* Calculator Container - No Card, just clean layout */}
+        {/* Calculator Container */}
         <div style={{
           backgroundColor: colors.background.paper,
           borderRadius: borderRadius.xl,
           padding: isMobile ? spacing['2xl'] : spacing['3xl'],
           border: `1px solid ${colors.gray[200]}`,
-          boxShadow: shadows.sm
+          boxShadow: shadows.md,
+          position: 'relative',
+          overflow: 'hidden'
         }}>
+          {/* Subtle accent line */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '2px',
+            background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 50%, transparent 100%)`,
+            opacity: 0.3
+          }} />
           {/* Inputs Section */}
           <div style={{
             marginBottom: spacing['3xl']
@@ -449,19 +461,20 @@ export default function LandingCalculator({
               {/* Summary Message - More prominent */}
               <div style={{
                 padding: spacing['2xl'],
-                background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.8) 100%)`,
+                background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.7) 100%)`,
                 borderRadius: borderRadius.lg,
-                border: `2px solid ${colors.primaryBorder}`,
+                border: `1px solid ${colors.primaryBorder}`,
                 textAlign: 'center',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                boxShadow: shadows.sm
               }}>
                 <div style={{
                   position: 'absolute',
                   top: 0,
                   left: 0,
                   right: 0,
-                  height: '3px',
+                  height: '2px',
                   background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 100%)`
                 }} />
                 <p style={{

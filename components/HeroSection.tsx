@@ -65,33 +65,12 @@ export default function HeroSection() {
       ref={sectionRef}
       className="hero-section" 
       style={{
-        background: 'linear-gradient(135deg, #F0FDFA 0%, #FFFFFF 50%, #F9FAFB 100%)',
+        backgroundColor: 'transparent',
         padding: isMobile ? `${spacing['4xl']} 0 ${spacing['5xl']} 0` : `${spacing['5xl']} 0 ${spacing['5xl']} 0`,
         position: 'relative',
         overflow: 'hidden'
       }}
     >
-      {/* Decorative background elements */}
-      <div style={{
-        position: 'absolute',
-        top: '-20%',
-        right: '-10%',
-        width: '600px',
-        height: '600px',
-        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.08) 0%, transparent 70%)',
-        borderRadius: '50%',
-        pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '-10%',
-        left: '-5%',
-        width: '400px',
-        height: '400px',
-        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.05) 0%, transparent 70%)',
-        borderRadius: '50%',
-        pointerEvents: 'none'
-      }} />
 
       <div style={{
         maxWidth: '1200px',
@@ -143,11 +122,12 @@ export default function HeroSection() {
           <div style={{
             marginBottom: spacing['4xl'],
             padding: isMobile ? spacing['2xl'] : spacing['3xl'],
-            background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.5) 100%)`,
+            background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.6) 100%)`,
             borderRadius: borderRadius.xl,
-            border: `2px solid ${colors.primaryBorder}`,
+            border: `1px solid ${colors.primaryBorder}`,
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            boxShadow: shadows.md
           }}>
             {/* Decorative accent */}
             <div style={{
@@ -155,7 +135,7 @@ export default function HeroSection() {
               top: 0,
               left: 0,
               right: 0,
-              height: '4px',
+              height: '3px',
               background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 100%)`
             }} />
             
@@ -168,46 +148,72 @@ export default function HeroSection() {
               flexWrap: 'wrap'
             }}>
               <div style={{
-                fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['5xl'],
-                fontWeight: typography.fontWeight.bold,
-                color: colors.text.primary,
-                fontVariantNumeric: 'tabular-nums',
-                lineHeight: 1
-              }} className="tabular-nums">
-                {formatCurrency(EXAMPLE_AMOUNT)}
-              </div>
-              <div style={{
-                fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
-                color: colors.text.secondary,
-                fontWeight: typography.fontWeight.normal
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: isMobile ? 'center' : 'flex-end',
+                gap: spacing.xs
               }}>
-                vásárlóereje
+                <div style={{
+                  fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['5xl'],
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.text.primary,
+                  fontVariantNumeric: 'tabular-nums',
+                  lineHeight: 1
+                }} className="tabular-nums">
+                  {formatCurrency(EXAMPLE_AMOUNT)}
+                </div>
+                <div style={{
+                  fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+                  color: colors.text.muted,
+                  fontWeight: typography.fontWeight.normal
+                }}>
+                  vásárlóereje
+                </div>
               </div>
               <div style={{
-                fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+                fontSize: isMobile ? typography.fontSize.xs : typography.fontSize.sm,
                 color: colors.text.muted,
                 padding: `${spacing.xs} ${spacing.md}`,
                 backgroundColor: colors.background.paper,
                 borderRadius: borderRadius.full,
-                fontWeight: typography.fontWeight.medium
+                fontWeight: typography.fontWeight.medium,
+                border: `1px solid ${colors.gray[200]}`,
+                whiteSpace: 'nowrap'
               }}>
                 {EXAMPLE_START_YEAR} → {EXAMPLE_END_YEAR}
               </div>
               <div style={{
-                fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
-                fontWeight: typography.fontWeight.bold,
-                color: colors.error,
-                fontVariantNumeric: 'tabular-nums',
-                lineHeight: 1
-              }} className="tabular-nums">
-                –{lossPercentage}%
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: isMobile ? 'center' : 'flex-start',
+                gap: spacing.xs
+              }}>
+                <div style={{
+                  fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.error,
+                  fontVariantNumeric: 'tabular-nums',
+                  lineHeight: 1
+                }} className="tabular-nums">
+                  –{lossPercentage}%
+                </div>
+                <div style={{
+                  fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+                  color: colors.text.muted,
+                  fontWeight: typography.fontWeight.normal
+                }}>
+                  veszteség
+                </div>
               </div>
             </div>
             <div style={{
-              marginTop: spacing.lg,
+              marginTop: spacing.xl,
+              paddingTop: spacing.xl,
+              borderTop: `1px solid ${colors.primaryBorder}`,
               fontSize: typography.fontSize.sm,
               color: colors.text.muted,
-              fontWeight: typography.fontWeight.normal
+              fontWeight: typography.fontWeight.normal,
+              textAlign: 'center'
             }}>
               Történelmi példa a KSH (Központi Statisztikai Hivatal) inflációs adatai alapján
             </div>
@@ -253,48 +259,58 @@ export default function HeroSection() {
             flexDirection: isMobile ? 'column' : 'row',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: spacing.lg,
+            gap: isMobile ? spacing.md : spacing.xl,
             fontSize: typography.fontSize.sm,
             color: colors.text.muted,
-            fontWeight: typography.fontWeight.normal,
+            fontWeight: typography.fontWeight.medium,
             flexWrap: 'wrap'
           }}>
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: spacing.xs
+              gap: spacing.xs,
+              padding: `${spacing.xs} ${spacing.md}`,
+              backgroundColor: colors.background.paper,
+              borderRadius: borderRadius.md,
+              border: `1px solid ${colors.gray[200]}`
             }}>
-              <span style={{ fontSize: '18px' }}>⚡</span>
+              <span style={{ fontSize: '16px', lineHeight: 1 }}>⚡</span>
               <span>30 másodperc</span>
             </div>
             <div style={{
               display: isMobile ? 'none' : 'block',
-              width: '4px',
-              height: '4px',
-              borderRadius: '50%',
+              width: '1px',
+              height: '16px',
               backgroundColor: colors.gray[300]
             }} />
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: spacing.xs
+              gap: spacing.xs,
+              padding: `${spacing.xs} ${spacing.md}`,
+              backgroundColor: colors.background.paper,
+              borderRadius: borderRadius.md,
+              border: `1px solid ${colors.gray[200]}`
             }}>
-              <span style={{ fontSize: '18px' }}>🔒</span>
+              <span style={{ fontSize: '16px', lineHeight: 1 }}>🔒</span>
               <span>Nincs regisztráció</span>
             </div>
             <div style={{
               display: isMobile ? 'none' : 'block',
-              width: '4px',
-              height: '4px',
-              borderRadius: '50%',
+              width: '1px',
+              height: '16px',
               backgroundColor: colors.gray[300]
             }} />
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: spacing.xs
+              gap: spacing.xs,
+              padding: `${spacing.xs} ${spacing.md}`,
+              backgroundColor: colors.background.paper,
+              borderRadius: borderRadius.md,
+              border: `1px solid ${colors.gray[200]}`
             }}>
-              <span style={{ fontSize: '18px' }}>📊</span>
+              <span style={{ fontSize: '16px', lineHeight: 1 }}>📊</span>
               <span>KSH adatok</span>
             </div>
           </div>

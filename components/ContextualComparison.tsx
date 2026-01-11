@@ -97,7 +97,7 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
     <section 
       ref={sectionRef}
       style={{
-        backgroundColor: colors.background.default,
+        backgroundColor: 'transparent',
         padding: isMobile ? `${spacing['4xl']} 0` : `${spacing['5xl']} 0`,
         position: 'relative'
       }}
@@ -186,12 +186,13 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                     width: '64px',
                     height: '64px',
                     borderRadius: borderRadius.full,
-                    background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.5) 100%)`,
+                    background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.6) 100%)`,
                     color: colors.primary,
                     flexShrink: 0,
-                    marginBottom: spacing.lg
+                    marginBottom: spacing.lg,
+                    border: `1px solid ${colors.primaryBorder}`
                   }}>
-                    <Icon size={28} />
+                    <Icon size={28} strokeWidth={2} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0, width: '100%' }}>
                     <div style={{

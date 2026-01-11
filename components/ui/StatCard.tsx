@@ -28,8 +28,9 @@ export default function StatCard({
     <div
       style={{
         padding: spacing.xl,
-        backgroundColor: colors.background.subtle,
-        borderRadius: borderRadius.md,
+        backgroundColor: colors.background.paper,
+        borderRadius: borderRadius.lg,
+        border: `1px solid ${colors.gray[200]}`,
         transition: prefersReducedMotion ? 'none' : transitions.all,
         ...style,
       }}
@@ -37,13 +38,15 @@ export default function StatCard({
       onMouseEnter={(e) => {
         if (!prefersReducedMotion) {
           e.currentTarget.style.transform = 'translateY(-2px)'
-          e.currentTarget.style.boxShadow = shadows.md
+          e.currentTarget.style.boxShadow = shadows.lg
+          e.currentTarget.style.borderColor = colors.primaryBorder
         }
       }}
       onMouseLeave={(e) => {
         if (!prefersReducedMotion) {
           e.currentTarget.style.transform = 'translateY(0)'
           e.currentTarget.style.boxShadow = 'none'
+          e.currentTarget.style.borderColor = colors.gray[200]
         }
       }}
     >

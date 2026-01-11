@@ -99,23 +99,12 @@ export default function EmailSignup() {
     <section 
       ref={sectionRef}
       style={{
-        background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.3) 100%)`,
+        backgroundColor: 'transparent',
         padding: isMobile ? `${spacing['4xl']} 0` : `${spacing['5xl']} 0`,
         position: 'relative',
         overflow: 'hidden'
       }}
     >
-      {/* Decorative background */}
-      <div style={{
-        position: 'absolute',
-        top: '-50%',
-        right: '-20%',
-        width: '500px',
-        height: '500px',
-        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.1) 0%, transparent 70%)',
-        borderRadius: '50%',
-        pointerEvents: 'none'
-      }} />
 
       <div style={{
         maxWidth: '1200px',
@@ -132,8 +121,19 @@ export default function EmailSignup() {
           backgroundColor: colors.background.paper,
           borderRadius: borderRadius.xl,
           border: `1px solid ${colors.primaryBorder}`,
-          boxShadow: shadows.lg
+          boxShadow: shadows.lg,
+          position: 'relative',
+          overflow: 'hidden'
         }}>
+          {/* Subtle accent */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '3px',
+            background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 100%)`
+          }} />
           <h2 style={{
             fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['5xl'],
             fontWeight: typography.fontWeight.bold,
@@ -248,25 +248,25 @@ export default function EmailSignup() {
               flexDirection: isMobile ? 'column' : 'row',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: spacing.md,
+              gap: isMobile ? spacing.md : spacing.lg,
               fontSize: typography.fontSize.sm,
               color: colors.text.muted,
               marginTop: spacing.xl,
-              flexWrap: 'wrap'
+              flexWrap: 'wrap',
+              fontWeight: typography.fontWeight.medium
             }}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: spacing.xs
               }}>
-                <span style={{ fontSize: '16px' }}>🔒</span>
+                <span style={{ fontSize: '16px', lineHeight: 1 }}>🔒</span>
                 <span>Nem küldünk spamet</span>
               </div>
               <div style={{
                 display: isMobile ? 'none' : 'block',
-                width: '4px',
-                height: '4px',
-                borderRadius: '50%',
+                width: '1px',
+                height: '16px',
                 backgroundColor: colors.gray[300]
               }} />
               <div style={{
@@ -274,14 +274,13 @@ export default function EmailSignup() {
                 alignItems: 'center',
                 gap: spacing.xs
               }}>
-                <span style={{ fontSize: '16px' }}>✉️</span>
+                <span style={{ fontSize: '16px', lineHeight: 1 }}>✉️</span>
                 <span>Havi egy email</span>
               </div>
               <div style={{
                 display: isMobile ? 'none' : 'block',
-                width: '4px',
-                height: '4px',
-                borderRadius: '50%',
+                width: '1px',
+                height: '16px',
                 backgroundColor: colors.gray[300]
               }} />
               <div style={{
@@ -289,7 +288,7 @@ export default function EmailSignup() {
                 alignItems: 'center',
                 gap: spacing.xs
               }}>
-                <span style={{ fontSize: '16px' }}>🚪</span>
+                <span style={{ fontSize: '16px', lineHeight: 1 }}>🚪</span>
                 <span>Bármikor leiratkozhatsz</span>
               </div>
             </div>

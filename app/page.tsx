@@ -19,11 +19,39 @@ export default async function Home() {
   return (
     <main style={{
       minHeight: '100vh',
-      background: 'linear-gradient(to bottom, #F9FAFB 0%, #F3F4F6 100%)',
-      padding: '0'
+      background: 'linear-gradient(135deg, #F0FDFA 0%, #FFFFFF 50%, #F9FAFB 100%)',
+      padding: '0',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
+      {/* Decorative background elements - matching hero section */}
+      <div style={{
+        position: 'absolute',
+        top: '-20%',
+        right: '-10%',
+        width: '600px',
+        height: '600px',
+        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.08) 0%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none',
+        zIndex: 0
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        left: '-5%',
+        width: '400px',
+        height: '400px',
+        background: 'radial-gradient(circle, rgba(45, 212, 191, 0.05) 0%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none',
+        zIndex: 0
+      }} />
+      
       {/* Hero and Calculator sections - Client component for state management */}
-      <LandingPageClient />
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <LandingPageClient />
+      </div>
 
       {/* Footer with Disclaimers */}
       <FooterDisclaimer />

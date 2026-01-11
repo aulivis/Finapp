@@ -26,9 +26,20 @@ export default function VisualExplanation() {
         const response = await fetch('/api/macro-data?country=HU')
         if (response.ok) {
           const data = await response.json()
-          if (data.success && data.data.m2) {
+          console.log('M2 API response:', data) // Debug log
+          if (data.success && data.data && data.data.m2) {
+            console.log('M2 data received:', data.data.m2) // Debug log
             setM2Data(data.data.m2)
+          } else {
+            console.warn('M2 data not available in response:', {
+              success: data.success,
+              hasData: !!data.data,
+              hasM2: !!(data.data && data.data.m2),
+              fullData: data
+            })
           }
+        } else {
+          console.error('Failed to fetch M2 data:', response.status, response.statusText)
         }
       } catch (error) {
         console.error('Error fetching M2 data:', error)
@@ -59,7 +70,7 @@ export default function VisualExplanation() {
     <section 
       ref={sectionRef}
       style={{
-        backgroundColor: colors.background.paper,
+        backgroundColor: 'transparent',
         padding: isMobile ? `${spacing['4xl']} 0` : `${spacing['5xl']} 0`,
         position: 'relative'
       }}
@@ -96,13 +107,7 @@ export default function VisualExplanation() {
           </p>
 
           <div style={{
-            marginBottom: spacing['3xl'],
-            borderRadius: borderRadius.xl,
-            overflow: 'hidden',
-            backgroundColor: colors.background.paper,
-            padding: spacing.xl,
-            border: `1px solid ${colors.gray[200]}`,
-            boxShadow: shadows.md
+            marginBottom: spacing['3xl']
           }}>
             <Image 
               src="/mi-tortenik.png" 
@@ -113,8 +118,7 @@ export default function VisualExplanation() {
               style={{
                 width: '100%',
                 height: 'auto',
-                display: 'block',
-                borderRadius: borderRadius.sm
+                display: 'block'
               }}
               priority={false}
               loading="lazy"
@@ -134,8 +138,24 @@ export default function VisualExplanation() {
             A passzív tétlenség is valós hatással jár: az infláció folyamatosan csökkenti a pénz vásárlóerejét, még akkor is, ha a számlán ugyanannyi forintot látsz.
           </p>
 
+          {/* Debug info - remove in production */}
+          {process.env.NODE_ENV === 'development' && (
+            <div style={{
+              marginTop: spacing.xl,
+              padding: spacing.md,
+              backgroundColor: colors.gray[100],
+              borderRadius: borderRadius.md,
+              fontSize: typography.fontSize.xs,
+              color: colors.text.muted
+            }}>
+              <strong>Debug:</strong> isLoadingM2={String(isLoadingM2)}, 
+              m2Data={m2Data ? JSON.stringify(m2Data) : 'null'}, 
+              averageM2Growth={m2Data?.averageM2Growth ?? 'null'}
+            </div>
+          )}
+
           {/* M2 Section */}
-          {!isLoadingM2 && m2Data && m2Data.averageM2Growth !== null && (
+          {!isLoadingM2 && m2Data && m2Data.averageM2Growth !== null && m2Data.averageM2Growth !== undefined && (
             <div style={{
               marginTop: spacing['4xl'],
               padding: spacing['2xl'],
