@@ -61,7 +61,7 @@ export default function HeroSection() {
     if (calculatorSection) {
       const offset = 80 // Account for any fixed headers
       const elementPosition = calculatorSection.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - offset
+      const offsetPosition = elementPosition + window.scrollY - offset
 
       window.scrollTo({
         top: offsetPosition,
@@ -331,104 +331,105 @@ export default function HeroSection() {
             }}>
               Történelmi példa a KSH (Központi Statisztikai Hivatal) inflációs adatai alapján
             </div>
-          </div>
 
-          {/* Primary CTA Button - More prominent */}
-          <div style={{
-            marginBottom: spacing.xl
-          }}>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={scrollToCalculator}
-              style={{
-                fontSize: isMobile ? typography.fontSize.base : typography.fontSize.xl,
-                padding: `${spacing.lg} ${spacing['3xl']}`,
-                minWidth: isMobile ? '100%' : '280px',
-                fontWeight: typography.fontWeight.semibold,
-                boxShadow: shadows.xl,
-                transform: 'translateY(0)',
-                transition: transitions.all
-              }}
-              onMouseEnter={(e) => {
-                if (!prefersReducedMotion) {
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.boxShadow = shadows['2xl']
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!prefersReducedMotion) {
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = shadows.xl
-                }
-              }}
-            >
-              Számold ki a saját pénzeddel
-            </Button>
-          </div>
+            {/* Primary CTA Button - More prominent */}
+            <div style={{
+              marginTop: spacing['2xl'],
+              marginBottom: spacing.lg
+            }}>
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={scrollToCalculator}
+                style={{
+                  fontSize: isMobile ? typography.fontSize.base : typography.fontSize.xl,
+                  padding: `${spacing.lg} ${spacing['3xl']}`,
+                  minWidth: isMobile ? '100%' : '280px',
+                  fontWeight: typography.fontWeight.semibold,
+                  boxShadow: shadows.xl,
+                  transform: 'translateY(0)',
+                  transition: transitions.all
+                }}
+                onMouseEnter={(e) => {
+                  if (!prefersReducedMotion) {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                    e.currentTarget.style.boxShadow = shadows['2xl']
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!prefersReducedMotion) {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = shadows.xl
+                  }
+                }}
+              >
+                Számold ki a saját pénzeddel
+              </Button>
+            </div>
 
-          {/* Trust signals */}
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: isMobile ? spacing.sm : spacing.xl,
-            fontSize: typography.fontSize.sm,
-            color: colors.text.muted,
-            fontWeight: typography.fontWeight.medium,
-            flexWrap: 'wrap'
-          }}>
+            {/* Trust signals */}
             <div style={{
               display: 'flex',
+              flexDirection: 'row',
               alignItems: 'center',
-              gap: spacing.xs,
-              padding: `${spacing.xs} ${spacing.md}`,
-              backgroundColor: colors.background.paper,
-              borderRadius: borderRadius.md,
-              border: `1px solid ${colors.gray[200]}`,
-              flexShrink: 0
+              justifyContent: 'center',
+              gap: isMobile ? spacing.sm : spacing.xl,
+              fontSize: typography.fontSize.sm,
+              color: colors.text.muted,
+              fontWeight: typography.fontWeight.medium,
+              flexWrap: 'wrap'
             }}>
-              <span style={{ fontSize: '16px', lineHeight: 1 }}>📊</span>
-              <span>KSH adatok</span>
-            </div>
-            <div style={{
-              display: isMobile ? 'none' : 'block',
-              width: '1px',
-              height: '16px',
-              backgroundColor: colors.gray[300]
-            }} />
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: spacing.xs,
-              padding: `${spacing.xs} ${spacing.md}`,
-              backgroundColor: colors.background.paper,
-              borderRadius: borderRadius.md,
-              border: `1px solid ${colors.gray[200]}`,
-              flexShrink: 0
-            }}>
-              <span style={{ fontSize: '16px', lineHeight: 1 }}>🔒</span>
-              <span>Nincs regisztráció</span>
-            </div>
-            <div style={{
-              display: isMobile ? 'none' : 'block',
-              width: '1px',
-              height: '16px',
-              backgroundColor: colors.gray[300]
-            }} />
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: spacing.xs,
-              padding: `${spacing.xs} ${spacing.md}`,
-              backgroundColor: colors.background.paper,
-              borderRadius: borderRadius.md,
-              border: `1px solid ${colors.gray[200]}`,
-              flexShrink: 0
-            }}>
-              <span style={{ fontSize: '16px', lineHeight: 1 }}>⚡</span>
-              <span>30 másodperc</span>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.xs,
+                padding: `${spacing.xs} ${spacing.md}`,
+                backgroundColor: colors.background.paper,
+                borderRadius: borderRadius.md,
+                border: `1px solid ${colors.gray[200]}`,
+                flexShrink: 0
+              }}>
+                <span style={{ fontSize: '16px', lineHeight: 1 }}>📊</span>
+                <span>KSH adatok</span>
+              </div>
+              <div style={{
+                display: isMobile ? 'none' : 'block',
+                width: '1px',
+                height: '16px',
+                backgroundColor: colors.gray[300]
+              }} />
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.xs,
+                padding: `${spacing.xs} ${spacing.md}`,
+                backgroundColor: colors.background.paper,
+                borderRadius: borderRadius.md,
+                border: `1px solid ${colors.gray[200]}`,
+                flexShrink: 0
+              }}>
+                <span style={{ fontSize: '16px', lineHeight: 1 }}>🔒</span>
+                <span>Nincs regisztráció</span>
+              </div>
+              <div style={{
+                display: isMobile ? 'none' : 'block',
+                width: '1px',
+                height: '16px',
+                backgroundColor: colors.gray[300]
+              }} />
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.xs,
+                padding: `${spacing.xs} ${spacing.md}`,
+                backgroundColor: colors.background.paper,
+                borderRadius: borderRadius.md,
+                border: `1px solid ${colors.gray[200]}`,
+                flexShrink: 0
+              }}>
+                <span style={{ fontSize: '16px', lineHeight: 1 }}>⚡</span>
+                <span>30 másodperc</span>
+              </div>
             </div>
           </div>
         </div>

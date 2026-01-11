@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
+import { isValidEmail } from '@/lib/utils/email'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 
@@ -42,11 +43,6 @@ export default function EmailSignup() {
     }
   }, [status])
 
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(email)
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
@@ -56,7 +52,7 @@ export default function EmailSignup() {
       return
     }
 
-    if (!validateEmail(email)) {
+    if (!isValidEmail(email)) {
       setErrorMessage('Kérjük, adjon meg egy érvényes email címet.')
       setStatus('error')
       return

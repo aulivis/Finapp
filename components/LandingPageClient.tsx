@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import HeroSection from '@/components/HeroSection'
 import LandingCalculator from '@/components/LandingCalculator'
 import ContextualComparison from '@/components/ContextualComparison'
@@ -13,10 +13,14 @@ const DEFAULT_END_YEAR = 2025
 const DEFAULT_AMOUNT = 1000000
 
 export default function LandingPageClient() {
-  // Get available years from historical inflation data
-  const availableYears = historicalInflation.map(d => d.year).sort((a, b) => a - b)
-  const minYear = Math.min(...availableYears)
-  const maxYear = Math.max(...availableYears)
+  // Memoize available years calculation to avoid recomputing on every render
+  const { minYear, maxYear } = useMemo(() => {
+    const years = historicalInflation.map(d => d.year).sort((a, b) => a - b)
+    return {
+      minYear: Math.min(...years),
+      maxYear: Math.max(...years)
+    }
+  }, [])
 
   const [startYear, setStartYear] = useState(DEFAULT_START_YEAR)
   const [endYear, setEndYear] = useState(DEFAULT_END_YEAR)

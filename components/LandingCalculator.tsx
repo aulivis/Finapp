@@ -220,7 +220,7 @@ export default function LandingCalculator({
             lineHeight: typography.lineHeight.tight,
             letterSpacing: '-0.02em'
           }}>
-            Számítsd ki a saját számaid
+            Megtakarításod vásárlóerejének alakulása
           </h2>
           <p style={{
             fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
@@ -228,30 +228,15 @@ export default function LandingCalculator({
             lineHeight: typography.lineHeight.relaxed,
             margin: 0
           }}>
-            Nézd meg, mennyit veszít a megtakarításod vásárlóereje az infláció miatt
+            Nézd meg, hogy az általad megadott összeg ma mennyit érne az infláció hatására.
           </p>
         </div>
 
         {/* Calculator Container */}
         <div style={{
-          backgroundColor: colors.background.paper,
-          borderRadius: borderRadius.xl,
           padding: isMobile ? spacing['2xl'] : spacing['3xl'],
-          border: `1px solid ${colors.gray[200]}`,
-          boxShadow: shadows.md,
-          position: 'relative',
-          overflow: 'hidden'
+          position: 'relative'
         }}>
-          {/* Subtle accent line */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '2px',
-            background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 50%, transparent 100%)`,
-            opacity: 0.3
-          }} />
           {/* Inputs Section */}
           <div style={{
             marginBottom: spacing['3xl']
@@ -594,10 +579,9 @@ export default function LandingCalculator({
             lineHeight: typography.lineHeight.relaxed
           }}>
             <p style={{ margin: '0' }}>
-              A <strong>vásárlóerő</strong> azt mutatja meg, hogy a pénzeddel valójában mennyi dolgot tudsz megvásárolni. 
-              Ha a számládon ugyanannyi pénz marad, de az árak emelkednek, akkor a vásárlóerejed csökken – 
-              ugyanazért a pénzért kevesebb terméket és szolgáltatást kapsz. Ez a számítás mutatja, 
-              hogy az infláció miatt mennyit veszít a megtakarításod valós értéke.
+              Mi az a <strong>vásárlóerő</strong>? A vásárlóerő azt mutatja meg, hogy egy adott összeggel valójában mennyi terméket és szolgáltatást tudsz megvásárolni.
+              <br /><br />
+              Ha az árak emelkednek, miközben a pénzösszeg változatlan marad, a vásárlóerő csökken. Ez a kalkulátor azt szemlélteti, hogy az infláció hogyan befolyásolja a megtakarításod <strong>valós értékét</strong>.
             </p>
           </div>
         </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useId } from 'react'
 import { colors, spacing, componentStyles, focusStyles } from '@/lib/design-system'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 
@@ -26,7 +26,8 @@ export default function Input({
   onKeyDown,
   ...props
 }: InputProps) {
-  const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
+  const generatedId = useId()
+  const inputId = id || generatedId
   const isMobile = useIsMobile(768)
   
   // Calculate padding: larger on mobile for easier typing

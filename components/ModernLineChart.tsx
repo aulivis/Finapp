@@ -54,8 +54,8 @@ export default function ModernLineChart({
     animationDuration: prefersReducedMotion ? 0 : 800,
     animationEasing: 'ease-out' as const,
     margin: isMobile 
-      ? { top: 16, right: 4, left: 4, bottom: 12 } 
-      : { top: 16, right: 24, left: 24, bottom: 16 },
+      ? { top: 8, right: 4, left: 4, bottom: 8 } 
+      : { top: 8, right: 8, left: 8, bottom: 8 },
     chartHeight: isMobile ? Math.max(280, height - 30) : height
   }), [prefersReducedMotion, isMobile, height])
 
@@ -201,12 +201,6 @@ export default function ModernLineChart({
             tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 11 : 12 }}
             tickLine={{ stroke: colors.grid }}
             axisLine={{ stroke: colors.grid }}
-            label={!isMobile ? {
-              value: 'Év',
-              position: 'insideBottom',
-              offset: -8,
-              style: { fill: colors.text, fontSize: 12 }
-            } : undefined}
             aria-label="Évek"
             domain={['dataMin', 'dataMax']}
             type="number"
@@ -221,12 +215,6 @@ export default function ModernLineChart({
             axisLine={{ stroke: colors.grid }}
             tickFormatter={(value) => value >= 1000000 ? `${(value / 1000000).toFixed(isMobile ? 0 : 1)}M` : `${(value / 1000).toFixed(0)}K`}
             width={isMobile ? 40 : 60}
-            label={!isMobile ? {
-              value: 'Forint',
-              angle: -90,
-              position: 'insideLeft',
-              style: { fill: colors.text, fontSize: 12 }
-            } : undefined}
             aria-label="Forint értékek"
           />
           <Tooltip
@@ -246,9 +234,16 @@ export default function ModernLineChart({
             content={({ payload }) => {
               // Filter to only include Line components (nominal, real) - excludes Area/purchasingPowerLoss
               // Map to explicit Hungarian labels (entry.value from Recharts may show dataKey like "real")
-              const lineEntries = payload?.filter((entry) => 
-                entry.dataKey === 'nominal' || entry.dataKey === 'real'
-              ) || []
+              // Deduplicate by dataKey to prevent duplicates
+              const seen = new Set<string>()
+              const lineEntries = payload?.filter((entry) => {
+                const dataKey = entry.dataKey as string
+                if ((dataKey === 'nominal' || dataKey === 'real') && !seen.has(dataKey)) {
+                  seen.add(dataKey)
+                  return true
+                }
+                return false
+              }) || []
               const labels: { dataKey: string; label: string; color: string }[] = lineEntries.map(entry => ({
                 dataKey: String(entry.dataKey ?? ''),
                 label: entry.dataKey === 'nominal' ? 'Névleges érték' : 'Valódi vásárlóérő',

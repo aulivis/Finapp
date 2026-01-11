@@ -41,6 +41,8 @@ export class ErrorBoundary extends React.Component<
 
       return (
         <div
+          role="alert"
+          aria-live="assertive"
           style={{
             padding: '2rem',
             textAlign: 'center',
@@ -68,6 +70,7 @@ export class ErrorBoundary extends React.Component<
               cursor: 'pointer',
               fontSize: '1rem',
             }}
+            aria-label="Oldal újratöltése"
           >
             Oldal újratöltése
           </button>
