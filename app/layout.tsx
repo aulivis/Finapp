@@ -5,6 +5,7 @@ import { Inter, Share_Tech } from 'next/font/google'
 import './globals.css'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import BackToTop from '@/components/BackToTop'
+import SkipLink from '@/components/SkipLink'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -102,27 +103,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
         {/* Skip to main content link for accessibility */}
-        <a
-          href="#main-content"
-          style={{
-            position: 'absolute',
-            top: '-40px',
-            left: 0,
-            backgroundColor: '#000',
-            color: '#fff',
-            padding: '8px 16px',
-            textDecoration: 'none',
-            zIndex: 1000,
-          }}
-          onFocus={(e) => {
-            e.currentTarget.style.top = '0'
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.top = '-40px'
-          }}
-        >
-          Ugrás a fő tartalomhoz
-        </a>
+        <SkipLink />
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
