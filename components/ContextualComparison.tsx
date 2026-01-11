@@ -3,7 +3,7 @@
 import React, { useMemo, useEffect, useRef, useState } from 'react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
-import { colors, spacing, typography, borderRadius, transitions, shadows, zIndex } from '@/lib/design-system'
+import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
 import { UtensilsCrossed, Home, Coins, TrendingUp, Bitcoin, Info, ChevronDown } from 'lucide-react'
 import {
   HISTORICAL_PRICES,
