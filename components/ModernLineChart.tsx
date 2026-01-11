@@ -239,7 +239,6 @@ export default function ModernLineChart({
             }}
             animationDuration={chartConfig.animationDuration}
             allowEscapeViewBox={{ x: true, y: true }}
-            position={isMobile ? { x: 'auto', y: 'auto' } : undefined}
           />
           <Legend
             wrapperStyle={{ paddingTop: isMobile ? '8px' : '16px', paddingBottom: isMobile ? '4px' : '0' }}
