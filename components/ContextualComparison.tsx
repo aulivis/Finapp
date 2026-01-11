@@ -3,7 +3,7 @@
 import React, { useMemo, useEffect, useRef } from 'react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
-import { colors, spacing, typography, borderRadius, transitions } from '@/lib/design-system'
+import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
 import Card from '@/components/ui/Card'
 import { UtensilsCrossed, Home, Coins, TrendingUp, Bitcoin } from 'lucide-react'
 
@@ -220,9 +220,10 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
           }}>
             {comparisons.map((item, index) => {
               const Icon = item.icon
-              const hasData = item.change !== null
-              const isPositive = hasData && item.change > 0
-              const isNegative = hasData && item.change < 0
+              const change = item.change
+              const hasData = change !== null
+              const isPositive = hasData && change > 0
+              const isNegative = hasData && change < 0
 
               return (
                 <div
