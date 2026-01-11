@@ -146,8 +146,6 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
               const Icon = item.icon
               const change = item.change
               const hasData = change !== null
-              const isPositive = hasData && change > 0
-              const isNegative = hasData && change < 0
 
               return (
                 <div
