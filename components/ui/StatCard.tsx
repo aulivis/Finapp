@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react'
-import { colors, spacing, typography, borderRadius } from '@/lib/design-system'
+import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
+import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import AnimatedNumber from './AnimatedNumber'
 
 interface StatCardProps {
@@ -21,21 +22,29 @@ export default function StatCard({
   className = '',
   style,
 }: StatCardProps) {
+  const prefersReducedMotion = useReducedMotion()
+  
   return (
     <div
       style={{
         padding: spacing.xl,
         backgroundColor: colors.background.subtle,
         borderRadius: borderRadius.md,
-        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+        transition: prefersReducedMotion ? 'none' : transitions.all,
         ...style,
       }}
       className={className}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-2px)'
+        if (!prefersReducedMotion) {
+          e.currentTarget.style.transform = 'translateY(-2px)'
+          e.currentTarget.style.boxShadow = shadows.md
+        }
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)'
+        if (!prefersReducedMotion) {
+          e.currentTarget.style.transform = 'translateY(0)'
+          e.currentTarget.style.boxShadow = 'none'
+        }
       }}
     >
       <div style={{

@@ -1,131 +1,44 @@
 'use client'
 
 import React, { useState } from 'react'
-import DemoCalculator from '@/components/DemoCalculator'
-import HeroVisualAnchor from '@/components/HeroVisualAnchor'
-import ContextaWordmark from '@/components/ContextaWordmark'
-import { MacroData } from '@/lib/types/database'
-import { useIsMobile } from '@/lib/hooks/useIsMobile'
-import { colors, spacing, typography } from '@/lib/design-system'
+import HeroSection from '@/components/HeroSection'
+import LandingCalculator from '@/components/LandingCalculator'
+import ContextualComparison from '@/components/ContextualComparison'
+import VisualExplanation from '@/components/VisualExplanation'
+import EmailSignup from '@/components/EmailSignup'
+import { historicalInflation } from '@/lib/data/inflation'
 
-interface LandingPageClientProps {
-  macroData?: MacroData[]
-}
+const DEFAULT_START_YEAR = 2015
+const DEFAULT_END_YEAR = 2025
 
-const START_YEAR = 2015
-const INITIAL_AMOUNT = 1000000
-const INITIAL_YEARS = 11
-const MAX_YEAR = 2025
-const MIN_YEARS = 2
+export default function LandingPageClient() {
+  // Get available years from historical inflation data
+  const availableYears = historicalInflation.map(d => d.year).sort((a, b) => a - b)
+  const minYear = Math.min(...availableYears)
+  const maxYear = Math.max(...availableYears)
 
-export default function LandingPageClient({ macroData = [] }: LandingPageClientProps) {
-  const [calculatorAmount, setCalculatorAmount] = useState(INITIAL_AMOUNT)
-  const [calculatorYears, setCalculatorYears] = useState(INITIAL_YEARS)
-  // When years change, keep endYear at MAX_YEAR and adjust startYear
-  const calculatorEndYear = MAX_YEAR
-  const calculatorStartYear = Math.max(START_YEAR, calculatorEndYear - calculatorYears + 1)
-  const isMobile = useIsMobile(768)
-  
-  // Ensure years stays within valid range
-  const handleYearsChange = (newYears: number) => {
-    const validYears = Math.max(MIN_YEARS, Math.min(newYears, MAX_YEAR - START_YEAR + 1))
-    setCalculatorYears(validYears)
-  }
+  const [startYear, setStartYear] = useState(DEFAULT_START_YEAR)
+  const [endYear, setEndYear] = useState(DEFAULT_END_YEAR)
+
+  // Validate and clamp years
+  const validStartYear = Math.max(minYear, Math.min(startYear, maxYear))
+  const validEndYear = Math.max(validStartYear, Math.min(endYear, maxYear))
 
   return (
     <>
-      {/* Hero Section - Two columns */}
-      <header className="hero-section" style={{
-        background: 'linear-gradient(to bottom, #FFFFFF 0%, #F9FAFB 100%)',
-        padding: isMobile ? `${spacing['3xl']} 0 ${spacing['4xl']} 0` : `${spacing['5xl']} 0 ${spacing['4xl']} 0`
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`
-        }}>
-          {/* Wordmark */}
-          <div style={{
-            marginBottom: isMobile ? spacing['2xl'] : spacing['4xl']
-          }}>
-            <ContextaWordmark />
-          </div>
-
-          {/* Two-column hero layout */}
-          <div className="hero-grid" style={{
-            alignItems: 'center'
-          }}>
-            {/* Left: Text content */}
-            <div>
-              {/* H1 */}
-              <h1 className="hero-h1" style={{
-                fontSize: isMobile ? typography.fontSize['5xl'] : typography.fontSize['6xl'],
-                fontWeight: typography.fontWeight.semibold,
-                margin: `0 0 ${spacing.xl} 0`,
-                color: colors.text.primary,
-                lineHeight: typography.lineHeight.tight,
-                letterSpacing: '-0.02em'
-              }}>
-                Mennyit ér valójában a pénzed?
-              </h1>
-
-              {/* Subheadline */}
-              <p style={{
-                fontSize: typography.fontSize.xl,
-                lineHeight: typography.lineHeight.relaxed,
-                color: colors.text.secondary,
-                margin: `0 0 ${spacing['3xl']} 0`,
-                fontWeight: typography.fontWeight.normal
-              }}>
-                Az infláció önmagában nem ad teljes képet.<br />
-                Nézd meg, hogyan változott a vásárlóerőd az elmúlt években.
-              </p>
-
-              {/* Description */}
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: spacing.md,
-                marginBottom: spacing.xl
-              }}>
-                <p style={{
-                  fontSize: typography.fontSize.sm,
-                  color: colors.text.muted,
-                  margin: '0',
-                  lineHeight: typography.lineHeight.normal,
-                  fontWeight: typography.fontWeight.normal
-                }}>
-                  Nincs regisztráció. Nincs előrejelzés. Csak múltbeli adatok.
-                </p>
-              </div>
-            </div>
-
-            {/* Right: Visual anchor - Reactive card */}
-            <div>
-              <HeroVisualAnchor 
-                initialAmount={calculatorAmount}
-                startYear={calculatorStartYear}
-                endYear={calculatorEndYear}
-                years={calculatorYears}
-                onAmountChange={setCalculatorAmount}
-                onYearsChange={handleYearsChange}
-              />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Calculator - Directly below hero */}
-      <div style={{
-        backgroundColor: colors.gray[50],
-        padding: isMobile ? `${spacing['2xl']} 0 ${spacing['3xl']} 0` : `${spacing['4xl']} 0`
-      }}>
-        <DemoCalculator 
-          macroData={macroData}
-          initialAmount={calculatorAmount}
-          initialYears={calculatorYears}
-        />
-      </div>
+      <HeroSection />
+      <LandingCalculator 
+        startYear={startYear}
+        endYear={endYear}
+        onStartYearChange={setStartYear}
+        onEndYearChange={setEndYear}
+      />
+      <ContextualComparison 
+        startYear={validStartYear} 
+        endYear={validEndYear} 
+      />
+      <VisualExplanation />
+      <EmailSignup />
     </>
   )
 }
