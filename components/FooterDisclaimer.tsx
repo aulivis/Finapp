@@ -35,7 +35,7 @@ export default function FooterDisclaimer() {
               margin: `0 0 ${spacing.md} 0`,
               color: colors.text.primary
             }}>
-              Oktatási célok
+              Oktatási cél
             </h4>
             <p style={{
               fontSize: typography.fontSize.sm,
@@ -44,9 +44,8 @@ export default function FooterDisclaimer() {
               margin: 0,
               textAlign: 'justify'
             }}>
-              A Contexta kizárólag oktatási és tájékoztatási célokat szolgál. 
-              Az eszköz a pénzügyi folyamatok mechanizmusait mutatja be, 
-              de nem nyújt személyre szabott tanácsokat.
+              A Contexta kizárólag oktatási és tájékoztatási célt szolgál. 
+              Az eszköz pénzügyi folyamatok működését szemlélteti, nem nyújt személyre szabott tanácsot.
             </p>
           </div>
           
@@ -66,9 +65,8 @@ export default function FooterDisclaimer() {
               margin: 0,
               textAlign: 'justify'
             }}>
-              Az eszköz nem minősül pénzügyi tanácsadásnak, befektetési ajánlásnak 
-              vagy egyéb szakmai szolgáltatásnak. A számítások nem helyettesítik 
-              a szakértői konzultációt.
+              A Contexta nem minősül pénzügyi tanácsadásnak, befektetési ajánlásnak 
+              vagy egyéb szakmai szolgáltatásnak. A megjelenített információk nem helyettesítik szakértő bevonását.
             </p>
           </div>
           
@@ -79,7 +77,7 @@ export default function FooterDisclaimer() {
               margin: `0 0 ${spacing.md} 0`,
               color: colors.text.primary
             }}>
-              Feltételezések
+              Feltételezések és korlátok
             </h4>
             <p style={{
               fontSize: typography.fontSize.sm,
@@ -88,9 +86,8 @@ export default function FooterDisclaimer() {
               margin: 0,
               textAlign: 'justify'
             }}>
-              A szimulációk konzervatív feltételezéseken alapulnak. A számítások 
-              közelítő értékek, és nem veszik figyelembe az egyéni körülményeket, 
-              adózási tényezőket vagy piaci kockázatokat.
+              A szimulációk egyszerűsített, konzervatív feltételezéseken alapulnak. Az eredmények 
+              közelítőek, nem veszik figyelembe az egyéni körülményeket, adózást vagy piaci kockázatokat.
             </p>
           </div>
         </div>
@@ -103,12 +100,8 @@ export default function FooterDisclaimer() {
           color: colors.gray[600]
         }}>
           <p style={{ margin: `0 0 ${spacing.xs} 0` }}>
-            © {new Date().getFullYear()} Contexta. Minden jog fenntartva.
-          </p>
-          <p style={{ margin: `0 0 ${spacing.xs} 0` }}>
-            A múltbeli adatok nem garantálják a jövőbeli eredményeket.
-          </p>
-          <p style={{ margin: 0 }}>
+            © {new Date().getFullYear()} Contexta. Minden jog fenntartva. {' '}
+            <span style={{ color: colors.gray[400] }}>|</span>{' '}
             <Link 
               href="/privacy"
               style={{
@@ -126,6 +119,9 @@ export default function FooterDisclaimer() {
             >
               Adatkezelési tájékoztató
             </Link>
+          </p>
+          <p style={{ margin: 0 }}>
+            A múltbeli adatok nem garantálják a jövőbeli eredményeket.
           </p>
         </div>
       </div>

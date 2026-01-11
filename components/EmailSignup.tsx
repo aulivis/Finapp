@@ -153,7 +153,7 @@ export default function EmailSignup() {
             lineHeight: typography.lineHeight.relaxed,
             fontWeight: typography.fontWeight.normal
           }}>
-            Érthető, adatvezérelt összefoglaló arról, hogyan hatnak az infláció, pénzkínálat és piaci változások a nehezen megkeresett pénzedre.
+            Érthető, adatvezérelt összefoglaló arról, hogyan hat az infláció, pénzkínálat és piaci változások a nehezen megkeresett pénzedre.
           </p>
 
             <form onSubmit={handleSubmit} style={{ marginBottom: spacing.xl }}>

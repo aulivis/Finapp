@@ -172,10 +172,11 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
               fontSize: typography.fontSize.sm,
               color: colors.text.secondary,
               fontWeight: typography.fontWeight.semibold,
-              border: `1px solid ${colors.gray[200]}`,
+              border: `1px solid ${colors.gray[300]}`,
               boxShadow: shadows.sm
             }}>
-              {startYear}–{endYear}
+              <span>📅</span>
+              <span>{startYear} → {endYear}</span>
             </div>
           </div>
         </div>
@@ -202,7 +203,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                     flexDirection: 'column',
                     alignItems: 'center',
                     textAlign: 'center',
-                    padding: spacing['2xl'],
+                    padding: `${spacing['2xl']} ${spacing.lg}`,
                     backgroundColor: colors.background.paper,
                     borderRadius: borderRadius.lg,
                     border: `1px solid ${colors.gray[200]}`,
@@ -329,7 +330,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                       </div>
                     </div>
                     <div style={{
-                      fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['5xl'],
+                      fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
                       fontWeight: typography.fontWeight.bold,
                       color: hasData
                         ? colors.text.primary
@@ -342,7 +343,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                     </div>
                     {hasData && calculateAssetValue(item.change) !== null && (
                       <div style={{
-                        fontSize: typography.fontSize.sm,
+                        fontSize: typography.fontSize.xs,
                         color: colors.text.secondary,
                         lineHeight: typography.lineHeight.normal,
                         marginTop: spacing.xs

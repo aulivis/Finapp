@@ -54,9 +54,9 @@ export default function ModernLineChart({
     animationDuration: prefersReducedMotion ? 0 : 800,
     animationEasing: 'ease-out' as const,
     margin: isMobile 
-      ? { top: 12, right: 8, left: 8, bottom: 8 } 
+      ? { top: 16, right: 4, left: 4, bottom: 12 } 
       : { top: 16, right: 24, left: 24, bottom: 16 },
-    chartHeight: isMobile ? 280 : height
+    chartHeight: isMobile ? Math.max(280, height - 30) : height
   }), [prefersReducedMotion, isMobile, height])
 
   // Enhanced tooltip with modern design
@@ -71,13 +71,14 @@ export default function ModernLineChart({
         aria-label={`Év: ${dataPoint.year}${showAge && dataPoint.age ? `, életkor: ${dataPoint.age}` : ''}`}
         style={{
           backgroundColor: '#FFFFFF',
-          padding: '16px',
+          padding: isMobile ? '12px' : '16px',
           border: '1px solid #E5E7EB',
           borderRadius: '8px',
           boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-          fontSize: '14px',
+          fontSize: isMobile ? '13px' : '14px',
           lineHeight: '1.5',
-          minWidth: '200px'
+          minWidth: isMobile ? '180px' : '200px',
+          maxWidth: isMobile ? '90vw' : 'none'
         }}
       >
         <div style={{
@@ -169,7 +170,13 @@ export default function ModernLineChart({
   }
 
   return (
-    <div style={{ width: '100%', height: `${chartConfig.chartHeight}px`, minHeight: isMobile ? 260 : 350 }}>
+    <div style={{ 
+      width: '100%', 
+      height: `${chartConfig.chartHeight}px`, 
+      minHeight: isMobile ? 280 : 350,
+      position: 'relative',
+      touchAction: 'pan-y pinch-zoom'
+    }}>
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
           data={chartData}
@@ -191,7 +198,7 @@ export default function ModernLineChart({
           <XAxis
             dataKey="year"
             stroke={isMobile ? colors.textMobile : colors.text}
-            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 10 : 12 }}
+            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 11 : 12 }}
             tickLine={{ stroke: colors.grid }}
             axisLine={{ stroke: colors.grid }}
             label={!isMobile ? {
@@ -204,15 +211,16 @@ export default function ModernLineChart({
             domain={['dataMin', 'dataMax']}
             type="number"
             scale="linear"
-            tickCount={data.length > 0 ? Math.min(data.length, isMobile ? 6 : 15) : 5}
+            tickCount={data.length > 0 ? Math.min(data.length, isMobile ? Math.min(8, Math.max(5, Math.floor(data.length / 2))) : 15) : 5}
+            interval={isMobile ? 'preserveStartEnd' : 0}
           />
           <YAxis
             stroke={isMobile ? colors.textMobile : colors.text}
-            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 10 : 12 }}
+            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 11 : 12 }}
             tickLine={{ stroke: colors.grid }}
             axisLine={{ stroke: colors.grid }}
             tickFormatter={(value) => value >= 1000000 ? `${(value / 1000000).toFixed(isMobile ? 0 : 1)}M` : `${(value / 1000).toFixed(0)}K`}
-            width={isMobile ? 36 : 60}
+            width={isMobile ? 40 : 60}
             label={!isMobile ? {
               value: 'Forint',
               angle: -90,
@@ -225,14 +233,16 @@ export default function ModernLineChart({
             content={<CustomTooltip />}
             cursor={{
               stroke: colors.nominal,
-              strokeWidth: 2,
+              strokeWidth: isMobile ? 1.5 : 2,
               strokeDasharray: '5 5',
               opacity: 0.4
             }}
             animationDuration={chartConfig.animationDuration}
+            allowEscapeViewBox={{ x: true, y: true }}
+            position={isMobile ? { x: 'auto', y: 'auto' } : undefined}
           />
           <Legend
-            wrapperStyle={{ paddingTop: isMobile ? '12px' : '16px' }}
+            wrapperStyle={{ paddingTop: isMobile ? '8px' : '16px', paddingBottom: isMobile ? '4px' : '0' }}
             // Only show the two Hungarian labels (Névleges érték, Valódi vásárlóérő) - exclude Area components and use explicit Hungarian names
             content={({ payload }) => {
               // Filter to only include Line components (nominal, real) - excludes Area/purchasingPowerLoss
@@ -246,19 +256,32 @@ export default function ModernLineChart({
                 color: entry.color || colors.text
               }))
               return (
-                <div style={{ display: 'flex', justifyContent: 'center', gap: isMobile ? '16px' : '24px', flexWrap: 'wrap' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  gap: isMobile ? '12px' : '24px', 
+                  flexWrap: 'wrap',
+                  alignItems: 'center'
+                }}>
                   {labels.map((item, index) => (
-                    <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div key={index} style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: isMobile ? '5px' : '6px',
+                      minHeight: isMobile ? '20px' : 'auto'
+                    }}>
                       <span style={{ 
-                        width: isMobile ? 10 : 14, 
-                        height: 3, 
+                        width: isMobile ? 12 : 14, 
+                        height: isMobile ? 2.5 : 3, 
                         backgroundColor: item.color, 
-                        borderRadius: 1 
+                        borderRadius: 1,
+                        flexShrink: 0
                       }} />
                       <span style={{ 
                         color: isMobile ? colors.textMobile : colors.text, 
-                        fontSize: isMobile ? '12px' : '13px', 
-                        fontWeight: '500' 
+                        fontSize: isMobile ? '11px' : '13px', 
+                        fontWeight: '500',
+                        lineHeight: 1.2
                       }}>
                         {item.label}
                       </span>

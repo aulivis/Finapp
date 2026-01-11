@@ -277,7 +277,7 @@ export default function FAQ() {
                   borderRadius: borderRadius.lg,
                   border: `1px solid ${colors.gray[200]}`,
                   overflow: 'hidden',
-                  transition: prefersReducedMotion ? 'none' : transitions.all,
+                  transition: 'none',
                 }}
               >
                 <button
@@ -293,7 +293,7 @@ export default function FAQ() {
                     alignItems: 'flex-start',
                     justifyContent: 'space-between',
                     gap: spacing.lg,
-                    transition: prefersReducedMotion ? 'none' : transitions.all,
+                    transition: 'none',
                   }}
                   aria-expanded={isExpanded}
                   aria-controls={`faq-answer-${index}`}
@@ -306,7 +306,8 @@ export default function FAQ() {
                     lineHeight: typography.lineHeight.normal,
                     margin: 0,
                     flex: 1,
-                    paddingRight: spacing.md
+                    paddingRight: spacing.md,
+                    transition: 'none',
                   }}>
                     {item.question}
                   </h3>
@@ -320,13 +321,13 @@ export default function FAQ() {
                     borderRadius: borderRadius.md,
                     backgroundColor: isExpanded ? colors.primaryLight : colors.gray[100],
                     color: isExpanded ? colors.primary : colors.text.muted,
-                    transition: prefersReducedMotion ? 'none' : transitions.all,
+                    transition: prefersReducedMotion ? 'none' : `background-color ${transitions.normal} ease, color ${transitions.normal} ease`,
                   }}>
                     <ChevronDown
                       size={20}
                       style={{
                         transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: prefersReducedMotion ? 'none' : transitions.all,
+                        transition: prefersReducedMotion ? 'none' : `transform ${transitions.slow} cubic-bezier(0.4, 0, 0.2, 1)`,
                       }}
                     />
                   </div>
@@ -341,14 +342,13 @@ export default function FAQ() {
                     overflow: 'hidden',
                     transition: prefersReducedMotion
                       ? 'none'
-                      : `max-height ${transitions.slow} ease-in-out, padding ${transitions.slow} ease-in-out`,
-                    paddingLeft: isMobile ? spacing.xl : spacing['2xl'],
-                    paddingRight: isMobile ? spacing.xl : spacing['2xl'],
-                    paddingTop: isExpanded ? (isMobile ? 0 : 0) : '0',
-                    paddingBottom: isExpanded ? (isMobile ? spacing.xl : spacing['2xl']) : '0',
+                      : `max-height ${transitions.slow} cubic-bezier(0.4, 0, 0.2, 1)`,
                   }}
                 >
                   <div style={{
+                    paddingLeft: isMobile ? spacing.xl : spacing['2xl'],
+                    paddingRight: isMobile ? spacing.xl : spacing['2xl'],
+                    paddingTop: spacing.lg,
                     paddingBottom: spacing.md,
                   }}>
                     {item.answers.map((answer, answerIndex) => (
@@ -359,6 +359,7 @@ export default function FAQ() {
                           color: colors.text.secondary,
                           lineHeight: typography.lineHeight.relaxed,
                           margin: answerIndex === item.answers.length - 1 ? '0' : `0 0 ${spacing.md} 0`,
+                          textAlign: 'justify',
                         }}
                       >
                         {answer}

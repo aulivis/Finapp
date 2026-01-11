@@ -264,7 +264,7 @@ export default function HeroSection() {
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em'
                 }}>
-                  {EXAMPLE_END_YEAR} - ennyit ér
+                  {EXAMPLE_END_YEAR}-ben
                 </div>
                 <div style={{
                   fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
@@ -272,19 +272,7 @@ export default function HeroSection() {
                   color: colors.error,
                   fontVariantNumeric: 'tabular-nums',
                   lineHeight: 1.1,
-                  marginBottom: spacing.xs,
-                  textDecoration: 'line-through',
-                  textDecorationThickness: '3px',
-                  textDecorationColor: colors.error
-                }} className="tabular-nums">
-                  {formatCurrency(582075)}
-                </div>
-                <div style={{
-                  fontSize: isMobile ? typography.fontSize['2xl'] : typography.fontSize['3xl'],
-                  fontWeight: typography.fontWeight.bold,
-                  color: colors.text.primary,
-                  fontVariantNumeric: 'tabular-nums',
-                  lineHeight: 1.1
+                  marginBottom: spacing.xs
                 }} className="tabular-nums">
                   {formatCurrency(Math.round(finalReal))}
                 </div>
@@ -327,8 +315,8 @@ export default function HeroSection() {
             </div>
 
             <div style={{
-              marginTop: spacing.xl,
-              paddingTop: spacing.xl,
+              marginTop: spacing.lg,
+              paddingTop: spacing.lg,
               borderTop: `1px solid ${colors.primaryBorder}`,
               fontSize: typography.fontSize.xs,
               color: colors.text.muted,

@@ -444,10 +444,11 @@ export default function LandingCalculator({
                   Vásárlóerő alakulása
                 </h3>
                 <div style={{
-                  padding: spacing.xl,
+                  padding: isMobile ? spacing.lg : spacing.xl,
                   backgroundColor: colors.gray[50],
                   borderRadius: borderRadius.lg,
-                  border: `1px solid ${colors.gray[200]}`
+                  border: `1px solid ${colors.gray[200]}`,
+                  overflow: 'hidden'
                 }}>
                   {calculationData.dataPoints.length > 0 ? (
                     <ChartErrorBoundary
@@ -464,7 +465,7 @@ export default function LandingCalculator({
                       <ModernLineChart
                         data={calculationData.dataPoints}
                         formatCurrency={formatCurrency}
-                        height={isMobile ? 350 : 400}
+                        height={isMobile ? 320 : 400}
                         isMobile={isMobile}
                       />
                     </ChartErrorBoundary>
