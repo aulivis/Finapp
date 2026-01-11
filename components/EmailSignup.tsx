@@ -115,7 +115,7 @@ export default function EmailSignup() {
         zIndex: 1
       }}>
         <div style={{
-          maxWidth: '700px',
+          maxWidth: '800px',
           margin: '0 auto',
           textAlign: 'center',
           padding: isMobile ? spacing['2xl'] : spacing['3xl'],
@@ -275,10 +275,10 @@ export default function EmailSignup() {
             {/* Trust signals */}
             <div style={{
               display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
+              flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: isMobile ? spacing.md : spacing.lg,
+              gap: isMobile ? spacing.sm : spacing.lg,
               fontSize: typography.fontSize.sm,
               color: colors.text.muted,
               marginTop: spacing.xl,
@@ -288,7 +288,8 @@ export default function EmailSignup() {
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: spacing.xs
+                gap: spacing.xs,
+                flexShrink: 0
               }}>
                 <span style={{ fontSize: '16px', lineHeight: 1 }}>✉️</span>
                 <span>Havi egy email</span>
@@ -302,7 +303,8 @@ export default function EmailSignup() {
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: spacing.xs
+                gap: spacing.xs,
+                flexShrink: 0
               }}>
                 <span style={{ fontSize: '16px', lineHeight: 1 }}>🚪</span>
                 <span>Bármikor leiratkozhatsz</span>
@@ -316,7 +318,8 @@ export default function EmailSignup() {
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: spacing.xs
+                gap: spacing.xs,
+                flexShrink: 0
               }}>
                 <span style={{ fontSize: '16px', lineHeight: 1 }}>🔒</span>
                 <span>Nem küldünk spamet</span>

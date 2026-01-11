@@ -7,6 +7,7 @@ import { ChartErrorBoundary } from '@/components/ChartErrorBoundary'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
+import { Info, Wallet, Calendar } from 'lucide-react'
 import Input from '@/components/ui/Input'
 import StatCard from '@/components/ui/StatCard'
 
@@ -255,136 +256,145 @@ export default function LandingCalculator({
           <div style={{
             marginBottom: spacing['3xl']
           }}>
-
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-              gap: spacing.lg,
+              backgroundColor: colors.gray[50],
+              borderRadius: borderRadius.lg,
+              padding: spacing.xl,
+              border: `1px solid ${colors.gray[200]}`,
               marginBottom: spacing['2xl']
             }}>
-              <Input
-                type="number"
-                label="Kezdeti összeg"
-                value={amount}
-                onChange={(e) => {
-                  setHasUserInteracted(true)
-                  setAmount(Math.max(0, Number(e.target.value) || 0))
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'ArrowUp') {
-                    e.preventDefault()
-                    setHasUserInteracted(true)
-                    setAmount(prev => prev + 10000)
-                  } else if (e.key === 'ArrowDown') {
-                    e.preventDefault()
-                    setHasUserInteracted(true)
-                    setAmount(prev => Math.max(0, prev - 10000))
-                  }
-                }}
-                min="0"
-                step="10000"
-                suffix="HUF"
-                style={{ marginBottom: 0 }}
-                aria-label="Kezdeti összeg forintban"
-              />
-
-              <div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+                gap: spacing.lg,
+              }}>
                 <Input
                   type="number"
-                  label="Kezdő év"
-                  value={startYear}
+                  label="Kezdeti összeg"
+                  value={amount}
                   onChange={(e) => {
                     setHasUserInteracted(true)
-                    const newYear = Number(e.target.value)
-                    if (!isNaN(newYear)) {
-                      handleStartYearChange(newYear)
-                    }
+                    setAmount(Math.max(0, Number(e.target.value) || 0))
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'ArrowUp') {
                       e.preventDefault()
-                      const newYear = Math.min(maxYear, startYear + 1)
                       setHasUserInteracted(true)
-                      handleStartYearChange(newYear)
+                      setAmount(prev => prev + 10000)
                     } else if (e.key === 'ArrowDown') {
                       e.preventDefault()
-                      const newYear = Math.max(minYear, startYear - 1)
                       setHasUserInteracted(true)
-                      handleStartYearChange(newYear)
+                      setAmount(prev => Math.max(0, prev - 10000))
                     }
                   }}
-                  onBlur={(e) => {
-                    const newYear = Number(e.target.value)
-                    const clampedYear = Math.max(minYear, Math.min(newYear || minYear, maxYear))
-                    handleStartYearChange(clampedYear)
-                    if (clampedYear > endYear) {
+                  min="0"
+                  step="10000"
+                  suffix="HUF"
+                  icon={<Wallet size={18} />}
+                  style={{ marginBottom: 0 }}
+                  aria-label="Kezdeti összeg forintban"
+                />
+
+                <div>
+                  <Input
+                    type="number"
+                    label="Kezdő év"
+                    value={startYear}
+                    onChange={(e) => {
+                      setHasUserInteracted(true)
+                      const newYear = Number(e.target.value)
+                      if (!isNaN(newYear)) {
+                        handleStartYearChange(newYear)
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'ArrowUp') {
+                        e.preventDefault()
+                        const newYear = Math.min(maxYear, startYear + 1)
+                        setHasUserInteracted(true)
+                        handleStartYearChange(newYear)
+                      } else if (e.key === 'ArrowDown') {
+                        e.preventDefault()
+                        const newYear = Math.max(minYear, startYear - 1)
+                        setHasUserInteracted(true)
+                        handleStartYearChange(newYear)
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const newYear = Number(e.target.value)
+                      const clampedYear = Math.max(minYear, Math.min(newYear || minYear, maxYear))
+                      handleStartYearChange(clampedYear)
+                      if (clampedYear > endYear) {
+                        handleEndYearChange(clampedYear)
+                      }
+                    }}
+                    min={minYear}
+                    max={maxYear}
+                    error={startYearError}
+                    icon={<Calendar size={18} />}
+                    style={{ marginBottom: 0 }}
+                    aria-label="Kezdő év"
+                    aria-describedby={startYearError ? 'start-year-error' : undefined}
+                  />
+                  {startYearError && (
+                    <div id="start-year-error" role="alert" style={{
+                      fontSize: typography.fontSize.xs,
+                      color: colors.error,
+                      marginTop: spacing.xs
+                    }}>
+                      {startYearError}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <Input
+                    type="number"
+                    label="Végződő év"
+                    value={endYear}
+                    onChange={(e) => {
+                      setHasUserInteracted(true)
+                      const newYear = Number(e.target.value)
+                      if (!isNaN(newYear)) {
+                        handleEndYearChange(newYear)
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'ArrowUp') {
+                        e.preventDefault()
+                        const newYear = Math.min(maxYear, endYear + 1)
+                        setHasUserInteracted(true)
+                        handleEndYearChange(newYear)
+                      } else if (e.key === 'ArrowDown') {
+                        e.preventDefault()
+                        const newYear = Math.max(startYear, endYear - 1)
+                        setHasUserInteracted(true)
+                        handleEndYearChange(newYear)
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const newYear = Number(e.target.value)
+                      const clampedYear = Math.max(startYear, Math.min(newYear || startYear, maxYear))
                       handleEndYearChange(clampedYear)
-                    }
-                  }}
-                  min={minYear}
-                  max={maxYear}
-                  error={startYearError}
-                  style={{ marginBottom: 0 }}
-                  aria-label="Kezdő év"
-                  aria-describedby={startYearError ? 'start-year-error' : undefined}
-                />
-                {startYearError && (
-                  <div id="start-year-error" role="alert" style={{
-                    fontSize: typography.fontSize.xs,
-                    color: colors.error,
-                    marginTop: spacing.xs
-                  }}>
-                    {startYearError}
-                  </div>
-                )}
-              </div>
-
-              <div>
-                <Input
-                  type="number"
-                  label="Végződő év"
-                  value={endYear}
-                  onChange={(e) => {
-                    setHasUserInteracted(true)
-                    const newYear = Number(e.target.value)
-                    if (!isNaN(newYear)) {
-                      handleEndYearChange(newYear)
-                    }
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'ArrowUp') {
-                      e.preventDefault()
-                      const newYear = Math.min(maxYear, endYear + 1)
-                      setHasUserInteracted(true)
-                      handleEndYearChange(newYear)
-                    } else if (e.key === 'ArrowDown') {
-                      e.preventDefault()
-                      const newYear = Math.max(startYear, endYear - 1)
-                      setHasUserInteracted(true)
-                      handleEndYearChange(newYear)
-                    }
-                  }}
-                  onBlur={(e) => {
-                    const newYear = Number(e.target.value)
-                    const clampedYear = Math.max(startYear, Math.min(newYear || startYear, maxYear))
-                    handleEndYearChange(clampedYear)
-                  }}
-                  min={startYear}
-                  max={maxYear}
-                  error={endYearError}
-                  style={{ marginBottom: 0 }}
-                  aria-label="Végződő év"
-                  aria-describedby={endYearError ? 'end-year-error' : undefined}
-                />
-                {endYearError && (
-                  <div id="end-year-error" role="alert" style={{
-                    fontSize: typography.fontSize.xs,
-                    color: colors.error,
-                    marginTop: spacing.xs
-                  }}>
-                    {endYearError}
-                  </div>
-                )}
+                    }}
+                    min={startYear}
+                    max={maxYear}
+                    error={endYearError}
+                    icon={<Calendar size={18} />}
+                    style={{ marginBottom: 0 }}
+                    aria-label="Végződő év"
+                    aria-describedby={endYearError ? 'end-year-error' : undefined}
+                  />
+                  {endYearError && (
+                    <div id="end-year-error" role="alert" style={{
+                      fontSize: typography.fontSize.xs,
+                      color: colors.error,
+                      marginTop: spacing.xs
+                    }}>
+                      {endYearError}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -411,29 +421,9 @@ export default function LandingCalculator({
           {/* Outputs Section */}
           {!isCalculating && calculationData.dataPoints.length > 0 && (
             <>
+              {/* Chart Section - Show first for visual impact */}
               <div style={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-                gap: spacing.lg,
                 marginBottom: spacing['3xl']
-              }}>
-                <StatCard
-                  label="Valódi vásárlóerő"
-                  value={calculationData.finalReal}
-                  formatter={formatCurrency}
-                  subtitle={`${validStartYear} → ${validEndYear}`}
-                />
-                <StatCard
-                  label="Vásárlóerő veszteség"
-                  value={calculationData.loss}
-                  formatter={(v) => `-${formatCurrency(v)}`}
-                  subtitle={`${formatPercentage(calculationData.lossPercentage)}`}
-                />
-              </div>
-
-              {/* Chart Section */}
-              <div style={{
-                marginBottom: spacing.xl
               }}>
                 <h3 style={{
                   fontSize: typography.fontSize['2xl'],
@@ -473,43 +463,91 @@ export default function LandingCalculator({
                 </div>
               </div>
 
-              {/* Summary Message - More prominent */}
+              {/* StatCards - Detailed numbers */}
               <div style={{
-                padding: spacing['2xl'],
-                background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.7) 100%)`,
-                borderRadius: borderRadius.lg,
-                border: `1px solid ${colors.primaryBorder}`,
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+                gap: spacing.lg,
+                marginBottom: spacing['3xl']
+              }}>
+                <StatCard
+                  label="Valódi vásárlóerő"
+                  value={calculationData.finalReal}
+                  formatter={formatCurrency}
+                  subtitle={`${validStartYear} → ${validEndYear}`}
+                  style={{
+                    border: `2px solid ${colors.success}`
+                  }}
+                />
+                <StatCard
+                  label="Vásárlóerő veszteség"
+                  value={calculationData.loss}
+                  formatter={(v) => `-${formatCurrency(v)}`}
+                  subtitle={`${formatPercentage(calculationData.lossPercentage)}`}
+                  style={{
+                    border: `2px solid ${colors.error}`,
+                    backgroundColor: colors.errorLight
+                  }}
+                />
+              </div>
+
+              {/* Hero Result Message - The Key Insight */}
+              <div style={{
+                padding: isMobile ? spacing['2xl'] : spacing['3xl'],
+                background: `linear-gradient(135deg, ${colors.errorLight} 0%, rgba(254, 226, 226, 0.5) 100%)`,
+                borderRadius: borderRadius.xl,
+                border: `2px solid ${colors.error}`,
                 textAlign: 'center',
                 position: 'relative',
                 overflow: 'hidden',
-                boxShadow: shadows.sm
+                boxShadow: shadows.lg,
+                marginTop: spacing['3xl']
               }}>
                 <div style={{
                   position: 'absolute',
                   top: 0,
                   left: 0,
                   right: 0,
-                  height: '2px',
-                  background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 100%)`
+                  height: '3px',
+                  background: `linear-gradient(90deg, ${colors.error} 0%, #DC2626 100%)`
                 }} />
-                <p style={{
-                  fontSize: isMobile ? typography.fontSize.base : typography.fontSize.xl,
-                  lineHeight: typography.lineHeight.relaxed,
-                  color: colors.text.primary,
-                  margin: '0',
-                  fontWeight: typography.fontWeight.normal
+                <div style={{
+                  marginBottom: spacing.lg
                 }}>
-                  A <strong style={{ fontWeight: typography.fontWeight.semibold }}>{formatCurrency(amount)}</strong> vásárlóereje{' '}
-                  <strong style={{ 
+                  <div style={{
+                    fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
                     color: colors.error,
-                    fontSize: isMobile ? typography.fontSize['2xl'] : typography.fontSize['3xl'],
-                    fontWeight: typography.fontWeight.bold,
-                    display: 'inline-block'
+                    fontWeight: typography.fontWeight.semibold,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    marginBottom: spacing.md
                   }}>
-                    {formatPercentage(calculationData.lossPercentage)}-kal csökkent
-                  </strong>{' '}
-                  {validStartYear} és {validEndYear} között.
-                </p>
+                    Vásárlóerő veszteség
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? typography.fontSize['5xl'] : typography.fontSize['6xl'],
+                    fontWeight: typography.fontWeight.bold,
+                    color: colors.error,
+                    lineHeight: typography.lineHeight.tight,
+                    marginBottom: spacing.md,
+                    fontFeatureSettings: '"tnum"',
+                  }}>
+                    {formatPercentage(calculationData.lossPercentage)}
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
+                    color: colors.text.secondary,
+                    lineHeight: typography.lineHeight.relaxed,
+                    maxWidth: '600px',
+                    margin: '0 auto'
+                  }}>
+                    A <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.semibold }}>{formatCurrency(amount)}</strong> vásárlóereje{' '}
+                    <strong style={{ color: colors.error, fontWeight: typography.fontWeight.bold }}>
+                      {formatPercentage(calculationData.lossPercentage)}-kal csökkent
+                    </strong>{' '}
+                    <strong style={{ color: colors.text.primary }}>{validStartYear}</strong> és <strong style={{ color: colors.text.primary }}>{validEndYear}</strong> között.
+                  </div>
+                </div>
               </div>
             </>
           )}
@@ -529,6 +567,39 @@ export default function LandingCalculator({
               </p>
             </div>
           )}
+        </div>
+
+        {/* Information Box - What is purchasing power */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: spacing.md,
+          padding: spacing.xl,
+          backgroundColor: colors.infoLight,
+          borderRadius: borderRadius.lg,
+          border: `1px solid ${colors.info}`,
+          maxWidth: '800px',
+          margin: `${spacing['3xl']} auto 0 auto`
+        }}>
+          <div style={{
+            flexShrink: 0,
+            marginTop: '2px'
+          }}>
+            <Info size={20} color={colors.info} />
+          </div>
+          <div style={{
+            flex: 1,
+            fontSize: typography.fontSize.sm,
+            color: colors.text.secondary,
+            lineHeight: typography.lineHeight.relaxed
+          }}>
+            <p style={{ margin: '0' }}>
+              A <strong>vásárlóerő</strong> azt mutatja meg, hogy a pénzeddel valójában mennyi dolgot tudsz megvásárolni. 
+              Ha a számládon ugyanannyi pénz marad, de az árak emelkednek, akkor a vásárlóerejed csökken – 
+              ugyanazért a pénzért kevesebb terméket és szolgáltatást kapsz. Ez a számítás mutatja, 
+              hogy az infláció miatt mennyit veszít a megtakarításod valós értéke.
+            </p>
+          </div>
         </div>
       </div>
     </section>

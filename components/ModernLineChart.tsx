@@ -156,17 +156,17 @@ export default function ModernLineChart({
     )
   }
 
-  // Modern color scheme - distinct colors to emphasize the gap between nominal and real values
-  // The area between the lines (purchasing power loss) uses amber to highlight the difference
+  // Modern color scheme - intuitive colors to emphasize the purchasing power loss
+  // Blue for nominal (neutral, unchanged value), Green for real purchasing power (positive), Red/Amber for loss (negative)
   const colors = {
-    nominal: '#06B6D4',   // Cyan for nominal - stands out
-    real: '#10B981',      // Emerald for real purchasing power
-    gap: '#F59E0B',       // Amber for the gap/loss area between lines - emphasizes the difference
-    gapFill: 'rgba(245, 158, 11, 0.35)', // Semi-transparent amber for area fill
+    nominal: '#3B82F6',   // Blue for nominal - neutral, represents unchanged amount
+    real: '#10B981',      // Green for real purchasing power - positive framing
+    gap: '#EF4444',       // Red for the gap/loss area - clearly shows negative impact
+    gapFill: 'rgba(239, 68, 68, 0.25)', // Semi-transparent red for area fill
     grid: '#E5E7EB',      // Light gray for grid
     text: '#4B5563',      // Medium gray for text
     textMobile: '#6B7280', // Lighter text for mobile
-    background: '#F0FDFA' // Light teal background
+    background: '#F9FAFB' // Light gray background
   }
 
   return (

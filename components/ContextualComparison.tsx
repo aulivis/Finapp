@@ -4,7 +4,7 @@ import React, { useMemo, useEffect, useRef, useState } from 'react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
-import { Hamburger, Home, Coins, TrendingUp, Bitcoin, Info, ChevronDown } from 'lucide-react'
+import { Hamburger, Home, Cuboid, TrendingUp, Bitcoin, Info, ChevronDown } from 'lucide-react'
 import {
   HISTORICAL_PRICES,
   getPriceForYear,
@@ -75,7 +75,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
         explanation: 'Ez az összehasonlítás egy 60 négyzetméteres Budapest belvárosi lakás átlagos árának változását mutatja. A lakásárak gyakran más ütemben változnak, mint az általános infláció, és fontos mutatót adnak a reálvagyon változásáról.',
       },
       {
-        icon: Coins,
+        icon: Cuboid,
         label: 'Arany árfolyama',
         change: goldChange,
         explanation: 'Az arany hagyományosan értékmegőrző eszköznek számít. Ez az összehasonlítás mutatja, hogyan változott az arany árfolyama, amely segít megérteni, hogyan teljesítettek volna más eszközök ugyanabban az időszakban.',
@@ -127,7 +127,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`
+        padding: isMobile ? `0 ${spacing.xl}` : `0 ${spacing.xl}`
       }}>
         {/* Section Header */}
         <div style={{
@@ -225,7 +225,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                     marginBottom: spacing.lg,
                     border: `1px solid ${colors.primaryBorder}`
                   }}>
-                    <Icon size={28} strokeWidth={2} />
+                    <Icon size={34} strokeWidth={2} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0, width: '100%', position: 'relative' }}>
                     <div style={{
@@ -330,7 +330,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                       </div>
                     </div>
                     <div style={{
-                      fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
+                      fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['4xl'],
                       fontWeight: typography.fontWeight.bold,
                       color: hasData
                         ? colors.text.primary
@@ -363,7 +363,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                           fontSize: typography.fontSize.sm,
                           lineHeight: typography.lineHeight.relaxed,
                           color: colors.text.secondary,
-                          textAlign: 'left'
+                          textAlign: 'justify'
                         }}
                       >
                         {item.explanation}

@@ -5,6 +5,7 @@ import { calculatePurchasingPower } from '@/lib/data/inflation'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, shadows, transitions } from '@/lib/design-system'
+import { ArrowRight } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import ContextaWordmark from '@/components/ContextaWordmark'
 
@@ -132,7 +133,7 @@ export default function HeroSection() {
           {/* Impact Stat - Large, prominent with transformation */}
           <div style={{
             marginBottom: spacing['4xl'],
-            padding: isMobile ? `${spacing.xl} ${spacing['3xl']}` : `${spacing['2xl']} ${spacing['4xl']}`,
+            padding: isMobile ? `${spacing.xl} ${spacing.lg}` : `${spacing['2xl']} ${spacing['4xl']}`,
             background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.8) 100%)`,
             borderRadius: borderRadius.xl,
             border: `2px solid ${colors.primaryBorder}`,
@@ -178,7 +179,7 @@ export default function HeroSection() {
               flexDirection: isMobile ? 'column' : 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: isMobile ? spacing['2xl'] : spacing['3xl'],
+              gap: isMobile ? spacing.lg : spacing['3xl'],
               marginBottom: spacing['2xl']
             }}>
               {/* Before */}
@@ -186,7 +187,7 @@ export default function HeroSection() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: isMobile ? 'center' : 'flex-start',
-                gap: spacing.md,
+                gap: isMobile ? spacing.xs : spacing.md,
                 flex: 1
               }}>
                 <div style={{
@@ -194,17 +195,18 @@ export default function HeroSection() {
                   color: colors.text.muted,
                   fontWeight: typography.fontWeight.medium,
                   textTransform: 'uppercase',
-                  letterSpacing: '0.05em'
+                  letterSpacing: '0.05em',
+                  marginBottom: isMobile ? spacing.xs : 0
                 }}>
                   {EXAMPLE_START_YEAR}-ben a pénzed
                 </div>
                 <div style={{
-                  fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
+                  fontSize: isMobile ? typography.fontSize['5xl'] : typography.fontSize['6xl'],
                   fontWeight: typography.fontWeight.bold,
                   color: colors.text.primary,
                   fontVariantNumeric: 'tabular-nums',
                   lineHeight: 1.1,
-                  marginBottom: spacing.xs
+                  marginBottom: isMobile ? spacing.xs : spacing.xs
                 }} className="tabular-nums">
                   {formatCurrency(EXAMPLE_AMOUNT)}
                 </div>
@@ -226,18 +228,21 @@ export default function HeroSection() {
                 flexShrink: 0
               }}>
                 <div style={{
-                  fontSize: isMobile ? '32px' : '48px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   transform: isMobile ? 'rotate(90deg)' : 'none',
                   transition: prefersReducedMotion ? 'none' : transitions.all,
-                  lineHeight: 1
+                  lineHeight: 1,
+                  color: colors.primary
                 }}>
-                  →
+                  <ArrowRight size={isMobile ? 32 : 48} strokeWidth={2.5} />
                 </div>
                 <div style={{
-                  padding: `${spacing.sm} ${spacing.lg}`,
+                  padding: isMobile ? `${spacing.md} ${spacing.xl}` : `${spacing.sm} ${spacing.lg}`,
                   backgroundColor: colors.errorLight,
                   borderRadius: borderRadius.md,
-                  fontSize: typography.fontSize.sm,
+                  fontSize: isMobile ? typography.fontSize.base : typography.fontSize.sm,
                   color: colors.error,
                   fontWeight: typography.fontWeight.bold,
                   border: `1px solid ${colors.error}`,
@@ -254,7 +259,7 @@ export default function HeroSection() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: isMobile ? 'center' : 'flex-end',
-                gap: spacing.md,
+                gap: isMobile ? spacing.xs : spacing.md,
                 flex: 1
               }}>
                 <div style={{
@@ -262,17 +267,18 @@ export default function HeroSection() {
                   color: colors.text.muted,
                   fontWeight: typography.fontWeight.medium,
                   textTransform: 'uppercase',
-                  letterSpacing: '0.05em'
+                  letterSpacing: '0.05em',
+                  marginBottom: isMobile ? spacing.xs : 0
                 }}>
                   {EXAMPLE_END_YEAR}-ben
                 </div>
                 <div style={{
-                  fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
+                  fontSize: isMobile ? typography.fontSize['5xl'] : typography.fontSize['6xl'],
                   fontWeight: typography.fontWeight.bold,
                   color: colors.error,
                   fontVariantNumeric: 'tabular-nums',
                   lineHeight: 1.1,
-                  marginBottom: spacing.xs
+                  marginBottom: isMobile ? spacing.xs : spacing.xs
                 }} className="tabular-nums">
                   {formatCurrency(Math.round(finalReal))}
                 </div>
@@ -364,10 +370,10 @@ export default function HeroSection() {
           {/* Trust signals */}
           <div style={{
             display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
+            flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: isMobile ? spacing.md : spacing.xl,
+            gap: isMobile ? spacing.sm : spacing.xl,
             fontSize: typography.fontSize.sm,
             color: colors.text.muted,
             fontWeight: typography.fontWeight.medium,
@@ -380,7 +386,8 @@ export default function HeroSection() {
               padding: `${spacing.xs} ${spacing.md}`,
               backgroundColor: colors.background.paper,
               borderRadius: borderRadius.md,
-              border: `1px solid ${colors.gray[200]}`
+              border: `1px solid ${colors.gray[200]}`,
+              flexShrink: 0
             }}>
               <span style={{ fontSize: '16px', lineHeight: 1 }}>📊</span>
               <span>KSH adatok</span>
@@ -398,7 +405,8 @@ export default function HeroSection() {
               padding: `${spacing.xs} ${spacing.md}`,
               backgroundColor: colors.background.paper,
               borderRadius: borderRadius.md,
-              border: `1px solid ${colors.gray[200]}`
+              border: `1px solid ${colors.gray[200]}`,
+              flexShrink: 0
             }}>
               <span style={{ fontSize: '16px', lineHeight: 1 }}>🔒</span>
               <span>Nincs regisztráció</span>
@@ -416,7 +424,8 @@ export default function HeroSection() {
               padding: `${spacing.xs} ${spacing.md}`,
               backgroundColor: colors.background.paper,
               borderRadius: borderRadius.md,
-              border: `1px solid ${colors.gray[200]}`
+              border: `1px solid ${colors.gray[200]}`,
+              flexShrink: 0
             }}>
               <span style={{ fontSize: '16px', lineHeight: 1 }}>⚡</span>
               <span>30 másodperc</span>
