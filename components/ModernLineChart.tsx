@@ -274,7 +274,7 @@ export default function ModernLineChart({
             dataKey="year"
             stroke={isMobile ? colors.textMobile : colors.text}
             tick={isMobile && mobileTicksArray 
-              ? ({ x, y, payload, index }) => {
+              ? ({ x, y, payload }) => {
                   const value = payload.value as number
                   const years = data.map(d => d.year)
                   const firstYear = years[0]
