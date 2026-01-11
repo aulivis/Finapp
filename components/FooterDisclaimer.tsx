@@ -3,7 +3,10 @@
  * Displays comprehensive disclaimers in footer
  */
 
+'use client'
+
 import React from 'react'
+import Link from 'next/link'
 import { colors, spacing, typography } from '@/lib/design-system'
 
 export default function FooterDisclaimer() {
@@ -21,7 +24,7 @@ export default function FooterDisclaimer() {
       }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
           gap: spacing['2xl'],
           marginBottom: spacing.xl
         }}>
@@ -102,8 +105,27 @@ export default function FooterDisclaimer() {
           <p style={{ margin: `0 0 ${spacing.xs} 0` }}>
             © {new Date().getFullYear()} Contexta. Minden jog fenntartva.
           </p>
-          <p style={{ margin: 0 }}>
+          <p style={{ margin: `0 0 ${spacing.xs} 0` }}>
             A múltbeli adatok nem garantálják a jövőbeli eredményeket.
+          </p>
+          <p style={{ margin: 0 }}>
+            <Link 
+              href="/privacy"
+              style={{
+                color: colors.gray[600],
+                textDecoration: 'none',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = colors.primary
+                e.currentTarget.style.textDecoration = 'underline'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = colors.gray[600]
+                e.currentTarget.style.textDecoration = 'none'
+              }}
+            >
+              Adatkezelési tájékoztató
+            </Link>
           </p>
         </div>
       </div>

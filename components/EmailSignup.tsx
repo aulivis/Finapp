@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
@@ -241,6 +242,35 @@ export default function EmailSignup() {
                 </div>
               )}
             </form>
+
+            {/* Privacy consent text */}
+            <p style={{
+              fontSize: typography.fontSize.sm,
+              color: colors.text.muted,
+              textAlign: 'center',
+              marginTop: spacing.md,
+              marginBottom: 0,
+              lineHeight: typography.lineHeight.relaxed,
+            }}>
+              A feliratkozással elfogadod az{' '}
+              <Link 
+                href="/privacy"
+                style={{
+                  color: colors.primary,
+                  textDecoration: 'none',
+                  fontWeight: typography.fontWeight.medium,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.textDecoration = 'underline'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.textDecoration = 'none'
+                }}
+              >
+                Adatkezelési tájékoztatót
+              </Link>
+              .
+            </p>
 
             {/* Trust signals */}
             <div style={{

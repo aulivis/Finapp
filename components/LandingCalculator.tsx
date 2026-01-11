@@ -450,7 +450,7 @@ export default function LandingCalculator({
                       <ModernLineChart
                         data={calculationData.dataPoints}
                         formatCurrency={formatCurrency}
-                        height={isMobile ? 300 : 400}
+                        height={isMobile ? 350 : 400}
                         isMobile={isMobile}
                       />
                     </ChartErrorBoundary>

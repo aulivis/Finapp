@@ -245,8 +245,8 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            width: '20px',
-                            height: '20px',
+                            width: isMobile ? '24px' : '20px',
+                            height: isMobile ? '24px' : '20px',
                             padding: 0,
                             border: 'none',
                             background: 'transparent',
@@ -259,7 +259,7 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                         >
                           {isMobile ? (
                             <ChevronDown 
-                              size={16} 
+                              size={20} 
                               style={{
                                 transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
                                 transition: prefersReducedMotion ? 'none' : transitions.all
@@ -285,7 +285,7 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                               lineHeight: typography.lineHeight.normal,
                               maxWidth: '280px',
                               width: 'max-content',
-                              zIndex: zIndex.tooltip,
+                              zIndex: 9999,
                               boxShadow: shadows.xl,
                               pointerEvents: 'none',
                               whiteSpace: 'normal'

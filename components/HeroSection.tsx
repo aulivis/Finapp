@@ -146,7 +146,7 @@ export default function HeroSection() {
               flexDirection: isMobile ? 'column' : 'row',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: isMobile ? spacing.lg : spacing['2xl'],
+              gap: isMobile ? spacing.xl : spacing['2xl'],
               flexWrap: 'wrap'
             }}>
               <div style={{

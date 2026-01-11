@@ -3,6 +3,7 @@
 import React from 'react'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
+import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import AnimatedNumber from './AnimatedNumber'
 
 interface StatCardProps {
@@ -23,6 +24,7 @@ export default function StatCard({
   style,
 }: StatCardProps) {
   const prefersReducedMotion = useReducedMotion()
+  const isMobile = useIsMobile(768)
   
   return (
     <div
@@ -59,7 +61,7 @@ export default function StatCard({
         {label}
       </div>
       <div style={{
-        fontSize: typography.fontSize['3xl'],
+        fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['3xl'],
         fontWeight: typography.fontWeight.medium,
         color: colors.text.primary,
         lineHeight: typography.lineHeight.tight

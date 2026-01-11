@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { colors, spacing, componentStyles, focusStyles } from '@/lib/design-system'
+import { useIsMobile } from '@/lib/hooks/useIsMobile'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -26,6 +27,12 @@ export default function Input({
   ...props
 }: InputProps) {
   const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
+  const isMobile = useIsMobile(768)
+  
+  // Calculate padding: larger on mobile for easier typing
+  const basePadding = componentStyles.input.padding.split(' ')
+  const verticalPadding = isMobile ? spacing.lg : basePadding[0] // 16px on mobile, 12px on desktop
+  const horizontalPadding = basePadding[1] // 16px
 
   return (
     <div style={{ marginBottom: spacing.lg }}>
@@ -63,8 +70,9 @@ export default function Input({
           id={inputId}
           style={{
             ...componentStyles.input,
-            paddingLeft: icon ? spacing['3xl'] : componentStyles.input.padding.split(' ')[1],
-            paddingRight: suffix ? spacing['3xl'] : componentStyles.input.padding.split(' ')[1],
+            padding: `${verticalPadding} ${horizontalPadding}`,
+            paddingLeft: icon ? spacing['3xl'] : horizontalPadding,
+            paddingRight: suffix ? spacing['3xl'] : horizontalPadding,
             width: '100%',
             backgroundColor: colors.background.paper,
             color: colors.text.primary,

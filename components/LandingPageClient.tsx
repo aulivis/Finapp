@@ -37,7 +37,6 @@ export default function LandingPageClient() {
         startYear={validStartYear} 
         endYear={validEndYear} 
       />
-      <VisualExplanation />
       <EmailSignup />
     </>
   )
