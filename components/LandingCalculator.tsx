@@ -19,13 +19,17 @@ interface LandingCalculatorProps {
   endYear?: number
   onStartYearChange?: (year: number) => void
   onEndYearChange?: (year: number) => void
+  amount?: number
+  onAmountChange?: (amount: number) => void
 }
 
 export default function LandingCalculator({
   startYear: propStartYear,
   endYear: propEndYear,
   onStartYearChange,
-  onEndYearChange
+  onEndYearChange,
+  amount: propAmount,
+  onAmountChange
 }: LandingCalculatorProps = {}) {
   const isMobile = useIsMobile(768)
   const prefersReducedMotion = useReducedMotion()
@@ -35,13 +39,23 @@ export default function LandingCalculator({
   const [endYearError, setEndYearError] = useState('')
   const sectionRef = useRef<HTMLElement>(null)
   
-  const [amount, setAmount] = useState(DEFAULT_AMOUNT)
+  const [internalAmount, setInternalAmount] = useState(DEFAULT_AMOUNT)
   const [internalStartYear, setInternalStartYear] = useState(DEFAULT_START_YEAR)
   const [internalEndYear, setInternalEndYear] = useState(DEFAULT_END_YEAR)
 
   // Use props if provided, otherwise use internal state
   const startYear = propStartYear ?? internalStartYear
   const endYear = propEndYear ?? internalEndYear
+  const amount = propAmount ?? internalAmount
+  
+  const setAmount = (value: number | ((prev: number) => number)) => {
+    const newAmount = typeof value === 'function' ? value(amount) : value
+    if (onAmountChange) {
+      onAmountChange(newAmount)
+    } else {
+      setInternalAmount(newAmount)
+    }
+  }
 
   const handleStartYearChange = (year: number) => {
     if (onStartYearChange) {

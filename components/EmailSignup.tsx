@@ -143,7 +143,7 @@ export default function EmailSignup() {
             lineHeight: typography.lineHeight.tight,
             letterSpacing: '-0.02em'
           }}>
-            Havonta összefoglaljuk a gazdasági változásokat
+            Havonta összefoglaljuk, mi történik a pénzeddel a gazdaságban
           </h2>
 
           <p style={{
@@ -153,7 +153,7 @@ export default function EmailSignup() {
             lineHeight: typography.lineHeight.relaxed,
             fontWeight: typography.fontWeight.normal
           }}>
-            Értelmezhető, adatvezérelt összefoglaló, nem clickbait hírlevél.
+            Érthető, adatvezérelt összefoglaló arról, hogyan hatnak az infláció, pénzkínálat és piaci változások a nehezen megkeresett pénzedre.
           </p>
 
             <form onSubmit={handleSubmit} style={{ marginBottom: spacing.xl }}>
@@ -196,7 +196,7 @@ export default function EmailSignup() {
                       minWidth: isMobile ? '100%' : '160px'
                     }}
                   >
-                    Feliratkozom
+                    Kérem a havi összefoglalót
                   </Button>
                 </div>
               </div>
@@ -290,20 +290,6 @@ export default function EmailSignup() {
                 alignItems: 'center',
                 gap: spacing.xs
               }}>
-                <span style={{ fontSize: '16px', lineHeight: 1 }}>🔒</span>
-                <span>Nem küldünk spamet</span>
-              </div>
-              <div style={{
-                display: isMobile ? 'none' : 'block',
-                width: '1px',
-                height: '16px',
-                backgroundColor: colors.gray[300]
-              }} />
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: spacing.xs
-              }}>
                 <span style={{ fontSize: '16px', lineHeight: 1 }}>✉️</span>
                 <span>Havi egy email</span>
               </div>
@@ -320,6 +306,20 @@ export default function EmailSignup() {
               }}>
                 <span style={{ fontSize: '16px', lineHeight: 1 }}>🚪</span>
                 <span>Bármikor leiratkozhatsz</span>
+              </div>
+              <div style={{
+                display: isMobile ? 'none' : 'block',
+                width: '1px',
+                height: '16px',
+                backgroundColor: colors.gray[300]
+              }} />
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.xs
+              }}>
+                <span style={{ fontSize: '16px', lineHeight: 1 }}>🔒</span>
+                <span>Nem küldünk spamet</span>
               </div>
             </div>
           </div>

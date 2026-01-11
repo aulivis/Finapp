@@ -4,7 +4,7 @@ import React, { useMemo, useEffect, useRef, useState } from 'react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
-import { UtensilsCrossed, Home, Coins, TrendingUp, Bitcoin, Info, ChevronDown } from 'lucide-react'
+import { Hamburger, Home, Coins, TrendingUp, Bitcoin, Info, ChevronDown } from 'lucide-react'
 import {
   HISTORICAL_PRICES,
   getPriceForYear,
@@ -14,9 +14,10 @@ import {
 interface ContextualComparisonProps {
   startYear: number
   endYear: number
+  userAmount?: number
 }
 
-export default function ContextualComparison({ startYear, endYear }: ContextualComparisonProps) {
+export default function ContextualComparison({ startYear, endYear, userAmount = 1000000 }: ContextualComparisonProps) {
   const isMobile = useIsMobile(768)
   const prefersReducedMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
@@ -62,16 +63,16 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
 
     return [
       {
-        icon: UtensilsCrossed,
+        icon: Hamburger,
         label: 'Big Mac ára',
         change: bigMacChange,
         explanation: 'A Big Mac Index egy gazdasági mutató, amely a hamburger árát használja az infláció mérésére. Ez az összehasonlítás mutatja, hogyan változott a Big Mac ára ugyanabban az időszakban, amely segít megérteni az általános árbeváltozásokat.',
       },
       {
         icon: Home,
-        label: '60 m² belvárosi lakás ára',
+        label: 'Ingatlan értéke',
         change: apartmentChange,
-        explanation: 'Ez az összehasonlítás egy 60 négyzetméteres belvárosi lakás átlagos árának változását mutatja. A lakásárak gyakran más ütemben változnak, mint az általános infláció, és fontos mutatót adnak a reálvagyon változásáról.',
+        explanation: 'Ez az összehasonlítás egy 60 négyzetméteres Budapest belvárosi lakás átlagos árának változását mutatja. A lakásárak gyakran más ütemben változnak, mint az általános infláció, és fontos mutatót adnak a reálvagyon változásáról.',
       },
       {
         icon: Coins,
@@ -98,6 +99,20 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
     if (value === null) return 'N/A'
     const sign = value >= 0 ? '+' : ''
     return `${sign}${value.toFixed(1)}%`
+  }
+
+  const formatCurrency = (value: number): string => {
+    return new Intl.NumberFormat('hu-HU', {
+      style: 'currency',
+      currency: 'HUF',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value)
+  }
+
+  const calculateAssetValue = (percentageChange: number | null): number | null => {
+    if (percentageChange === null) return null
+    return userAmount * (1 + percentageChange / 100)
   }
 
   return (
@@ -133,14 +148,36 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
             Összehasonlítás más eszközökkel
           </h2>
 
-          <p style={{
-            fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
-            color: colors.text.secondary,
-            lineHeight: typography.lineHeight.relaxed,
-            margin: 0
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: spacing.md
           }}>
-            Az alábbi összehasonlítás mutatja, hogyan változtak más eszközök árai ugyanabban az időszakban ({startYear}–{endYear}).
-          </p>
+            <p style={{
+              fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
+              color: colors.text.secondary,
+              lineHeight: typography.lineHeight.relaxed,
+              margin: 0
+            }}>
+              Ugyanabban az időszakban, amikor a pénzed vásárlóereje csökkent, ezeknek az eszközöknek az ára így változott.
+            </p>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: spacing.xs,
+              padding: `${spacing.sm} ${spacing.lg}`,
+              backgroundColor: colors.background.paper,
+              borderRadius: borderRadius.full,
+              fontSize: typography.fontSize.sm,
+              color: colors.text.secondary,
+              fontWeight: typography.fontWeight.semibold,
+              border: `1px solid ${colors.gray[200]}`,
+              boxShadow: shadows.sm
+            }}>
+              {startYear}–{endYear}
+            </div>
+          </div>
         </div>
 
           <div style={{
@@ -198,7 +235,7 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                       marginBottom: spacing.md
                     }}>
                       <div style={{
-                        fontSize: typography.fontSize.sm,
+                        fontSize: typography.fontSize.base,
                         color: colors.text.muted,
                         fontWeight: typography.fontWeight.medium
                       }}>
@@ -292,16 +329,27 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                       </div>
                     </div>
                     <div style={{
-                      fontSize: typography.fontSize['3xl'],
+                      fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['5xl'],
                       fontWeight: typography.fontWeight.bold,
                       color: hasData
                         ? colors.text.primary
                         : colors.text.muted,
                       fontVariantNumeric: 'tabular-nums',
-                      lineHeight: 1.2
+                      lineHeight: 1.2,
+                      marginBottom: spacing.md
                     }} className="tabular-nums">
                       {formatPercentage(item.change)}
                     </div>
+                    {hasData && calculateAssetValue(item.change) !== null && (
+                      <div style={{
+                        fontSize: typography.fontSize.sm,
+                        color: colors.text.secondary,
+                        lineHeight: typography.lineHeight.normal,
+                        marginTop: spacing.xs
+                      }}>
+                        Az általad megadott összeg ma <strong style={{ fontWeight: typography.fontWeight.semibold }}>{formatCurrency(calculateAssetValue(item.change)!)}</strong>-nak felel meg.
+                      </div>
+                    )}
                     {/* Mobile Expanded Explanation */}
                     {isMobile && isExpanded && (
                       <div
@@ -328,21 +376,34 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
 
           {/* Disclaimer */}
           <div style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: spacing.md,
             padding: spacing.xl,
-            backgroundColor: colors.gray[50],
+            backgroundColor: colors.infoLight,
             borderRadius: borderRadius.lg,
-            border: `1px solid ${colors.gray[200]}`,
-            fontSize: typography.fontSize.sm,
-            color: colors.text.muted,
-            lineHeight: typography.lineHeight.relaxed,
+            border: `1px solid ${colors.info}`,
             maxWidth: '800px',
             margin: '0 auto'
           }}>
-            <p style={{ margin: '0' }}>
-              <strong style={{ color: colors.text.secondary }}>Fontos:</strong> Ez az összehasonlítás{' '}
-              <strong>csak történelmi adatokat</strong> mutat be, és <strong>nem minősül pénzügyi tanácsnak vagy ajánlásnak</strong>.
-              A múltbeli teljesítmény nem garantálja a jövőbeli eredményeket.
-            </p>
+            <div style={{
+              flexShrink: 0,
+              marginTop: '2px'
+            }}>
+              <Info size={20} color={colors.info} />
+            </div>
+            <div style={{
+              flex: 1,
+              fontSize: typography.fontSize.sm,
+              color: colors.text.secondary,
+              lineHeight: typography.lineHeight.relaxed
+            }}>
+              <p style={{ margin: '0' }}>
+                Ez az összehasonlítás{' '}
+                <strong>csak történelmi adatokat</strong> mutat be, és <strong>nem minősül pénzügyi tanácsnak vagy ajánlásnak</strong>.
+                A múltbeli teljesítmény nem garantálja a jövőbeli eredményeket.
+              </p>
+            </div>
           </div>
       </div>
     </section>

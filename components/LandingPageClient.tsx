@@ -10,6 +10,7 @@ import { historicalInflation } from '@/lib/data/inflation'
 
 const DEFAULT_START_YEAR = 2015
 const DEFAULT_END_YEAR = 2025
+const DEFAULT_AMOUNT = 1000000
 
 export default function LandingPageClient() {
   // Get available years from historical inflation data
@@ -19,6 +20,7 @@ export default function LandingPageClient() {
 
   const [startYear, setStartYear] = useState(DEFAULT_START_YEAR)
   const [endYear, setEndYear] = useState(DEFAULT_END_YEAR)
+  const [amount, setAmount] = useState(DEFAULT_AMOUNT)
 
   // Validate and clamp years
   const validStartYear = Math.max(minYear, Math.min(startYear, maxYear))
@@ -32,10 +34,13 @@ export default function LandingPageClient() {
         endYear={endYear}
         onStartYearChange={setStartYear}
         onEndYearChange={setEndYear}
+        amount={amount}
+        onAmountChange={setAmount}
       />
       <ContextualComparison 
         startYear={validStartYear} 
-        endYear={validEndYear} 
+        endYear={validEndYear}
+        userAmount={amount}
       />
       <FAQ />
       <EmailSignup />

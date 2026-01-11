@@ -112,7 +112,7 @@ export default function HeroSection() {
             lineHeight: typography.lineHeight.tight,
             letterSpacing: '-0.03em'
           }}>
-            Mi történik a pénzeddel, ha nem csinálsz semmit?
+            Mi történik a pénzeddel, ha évekig nem csinálsz semmit?
           </h1>
 
           {/* Subheading */}
@@ -126,13 +126,13 @@ export default function HeroSection() {
             marginLeft: 'auto',
             marginRight: 'auto'
           }}>
-            Az infláció miatt a pénz értéke idővel csökken — még akkor is, ha a számlán ugyanannyi forintot látsz.
+            A számládon ugyanannyi forint marad, a vásárlóereje viszont csendben és folyamatosan csökken.
           </p>
 
           {/* Impact Stat - Large, prominent with transformation */}
           <div style={{
             marginBottom: spacing['4xl'],
-            padding: isMobile ? spacing['3xl'] : spacing['4xl'],
+            padding: isMobile ? `${spacing.xl} ${spacing['3xl']}` : `${spacing['2xl']} ${spacing['4xl']}`,
             background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.8) 100%)`,
             borderRadius: borderRadius.xl,
             border: `2px solid ${colors.primaryBorder}`,
@@ -196,7 +196,7 @@ export default function HeroSection() {
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em'
                 }}>
-                  {EXAMPLE_START_YEAR} - Önnek van
+                  {EXAMPLE_START_YEAR}-ben a pénzed
                 </div>
                 <div style={{
                   fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
@@ -242,7 +242,8 @@ export default function HeroSection() {
                   fontWeight: typography.fontWeight.bold,
                   border: `1px solid ${colors.error}`,
                   whiteSpace: 'nowrap',
-                  boxShadow: shadows.md
+                  boxShadow: shadows.md,
+                  animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite'
                 }}>
                   –{lossPercentage}%
                 </div>
@@ -263,7 +264,7 @@ export default function HeroSection() {
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em'
                 }}>
-                  {EXAMPLE_END_YEAR} - Csak megér
+                  {EXAMPLE_END_YEAR} - ennyit ér
                 </div>
                 <div style={{
                   fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
@@ -276,7 +277,7 @@ export default function HeroSection() {
                   textDecorationThickness: '3px',
                   textDecorationColor: colors.error
                 }} className="tabular-nums">
-                  {formatCurrency(finalNominal)}
+                  {formatCurrency(582075)}
                 </div>
                 <div style={{
                   fontSize: isMobile ? typography.fontSize['2xl'] : typography.fontSize['3xl'],
@@ -368,7 +369,7 @@ export default function HeroSection() {
                 }
               }}
             >
-              Nézd meg a saját számaidon
+              Számold ki a saját pénzeddel
             </Button>
           </div>
 
@@ -393,8 +394,8 @@ export default function HeroSection() {
               borderRadius: borderRadius.md,
               border: `1px solid ${colors.gray[200]}`
             }}>
-              <span style={{ fontSize: '16px', lineHeight: 1 }}>⚡</span>
-              <span>30 másodperc</span>
+              <span style={{ fontSize: '16px', lineHeight: 1 }}>📊</span>
+              <span>KSH adatok</span>
             </div>
             <div style={{
               display: isMobile ? 'none' : 'block',
@@ -429,8 +430,8 @@ export default function HeroSection() {
               borderRadius: borderRadius.md,
               border: `1px solid ${colors.gray[200]}`
             }}>
-              <span style={{ fontSize: '16px', lineHeight: 1 }}>📊</span>
-              <span>KSH adatok</span>
+              <span style={{ fontSize: '16px', lineHeight: 1 }}>⚡</span>
+              <span>30 másodperc</span>
             </div>
           </div>
         </div>
