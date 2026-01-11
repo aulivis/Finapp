@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import HeroSection from '@/components/HeroSection'
 import LandingCalculator from '@/components/LandingCalculator'
 import ContextualComparison from '@/components/ContextualComparison'
-import VisualExplanation from '@/components/VisualExplanation'
 import EmailSignup from '@/components/EmailSignup'
 import { historicalInflation } from '@/lib/data/inflation'
 
