@@ -194,7 +194,7 @@ export default function LandingCalculator({
       id="calculator-section"
       style={{
         backgroundColor: 'transparent',
-        padding: isMobile ? `${spacing['4xl']} 0` : `${spacing['5xl']} 0`,
+        padding: isMobile ? `${spacing['3xl']} 0` : `${spacing['5xl']} 0`,
         scrollMarginTop: '80px',
         position: 'relative'
       }}
@@ -202,7 +202,7 @@ export default function LandingCalculator({
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`
+        padding: isMobile ? `0 ${spacing.md}` : `0 ${spacing.xl}`
       }}>
         {/* Section Header */}
         <div style={{
@@ -244,7 +244,7 @@ export default function LandingCalculator({
             <div style={{
               backgroundColor: colors.gray[50],
               borderRadius: borderRadius.lg,
-              padding: spacing.xl,
+              padding: isMobile ? spacing.lg : spacing.xl,
               border: `1px solid ${colors.gray[200]}`,
               marginBottom: spacing['2xl']
             }}>
@@ -419,11 +419,16 @@ export default function LandingCalculator({
                   Vásárlóerő alakulása
                 </h3>
                 <div style={{
-                  padding: isMobile ? spacing.lg : spacing.xl,
+                  padding: isMobile ? `${spacing.lg} ${spacing.sm}` : spacing.xl,
                   backgroundColor: colors.gray[50],
-                  borderRadius: borderRadius.lg,
-                  border: `1px solid ${colors.gray[200]}`,
-                  overflow: 'hidden'
+                  borderRadius: isMobile ? 0 : borderRadius.lg,
+                  border: isMobile ? 'none' : `1px solid ${colors.gray[200]}`,
+                  borderTop: isMobile ? `1px solid ${colors.gray[200]}` : undefined,
+                  borderBottom: isMobile ? `1px solid ${colors.gray[200]}` : undefined,
+                  overflow: 'hidden',
+                  marginLeft: isMobile ? `-${spacing.md}` : 0,
+                  marginRight: isMobile ? `-${spacing.md}` : 0,
+                  width: isMobile ? `calc(100% + ${spacing.md} + ${spacing.md})` : 'auto'
                 }}>
                   {calculationData.dataPoints.length > 0 ? (
                     <ChartErrorBoundary
@@ -440,7 +445,7 @@ export default function LandingCalculator({
                       <ModernLineChart
                         data={calculationData.dataPoints}
                         formatCurrency={formatCurrency}
-                        height={isMobile ? 320 : 400}
+                        height={isMobile ? 400 : 400}
                         isMobile={isMobile}
                       />
                     </ChartErrorBoundary>
@@ -452,7 +457,7 @@ export default function LandingCalculator({
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-                gap: spacing.lg,
+                gap: isMobile ? spacing.md : spacing.lg,
                 marginBottom: spacing['3xl']
               }}>
                 <StatCard

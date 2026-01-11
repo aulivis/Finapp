@@ -120,19 +120,19 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
       ref={sectionRef}
       style={{
         backgroundColor: 'transparent',
-        padding: isMobile ? `${spacing['4xl']} 0` : `${spacing['5xl']} 0`,
+        padding: isMobile ? `${spacing['3xl']} 0` : `${spacing['5xl']} 0`,
         position: 'relative'
       }}
     >
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: isMobile ? `0 ${spacing.xl}` : `0 ${spacing.xl}`
+        padding: isMobile ? `0 ${spacing.md}` : `0 ${spacing.xl}`
       }}>
         {/* Section Header */}
         <div style={{
           textAlign: 'center',
-          marginBottom: spacing['4xl'],
+          marginBottom: isMobile ? spacing['3xl'] : spacing['4xl'],
           maxWidth: '700px',
           marginLeft: 'auto',
           marginRight: 'auto'
@@ -184,7 +184,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
           <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: spacing.lg,
+            gap: isMobile ? spacing.md : spacing.lg,
             marginBottom: spacing['3xl'],
             position: 'relative'
           }}>
@@ -264,15 +264,17 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            width: isMobile ? '24px' : '20px',
-                            height: isMobile ? '24px' : '20px',
+                            width: isMobile ? '44px' : '20px',
+                            height: isMobile ? '44px' : '20px',
                             padding: 0,
                             border: 'none',
                             background: 'transparent',
                             cursor: 'pointer',
                             color: colors.text.muted,
                             transition: prefersReducedMotion ? 'none' : transitions.all,
-                            flexShrink: 0
+                            flexShrink: 0,
+                            minWidth: isMobile ? '44px' : '20px',
+                            minHeight: isMobile ? '44px' : '20px'
                           }}
                           aria-label="További információk"
                         >

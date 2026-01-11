@@ -228,7 +228,7 @@ export default function FAQ() {
       id="faq-title"
       style={{
         backgroundColor: 'transparent',
-        padding: isMobile ? `${spacing['4xl']} 0` : `${spacing['5xl']} 0`,
+        padding: isMobile ? `${spacing['3xl']} 0` : `${spacing['5xl']} 0`,
         position: 'relative',
         overflow: 'hidden'
       }}
@@ -236,14 +236,14 @@ export default function FAQ() {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`,
+        padding: isMobile ? `0 ${spacing.md}` : `0 ${spacing.xl}`,
         position: 'relative',
         zIndex: 1
       }}>
         {/* Section Header */}
         <div style={{
           textAlign: 'center',
-          marginBottom: spacing['4xl'],
+          marginBottom: isMobile ? spacing['3xl'] : spacing['4xl'],
           maxWidth: '700px',
           marginLeft: 'auto',
           marginRight: 'auto'
@@ -272,7 +272,7 @@ export default function FAQ() {
               <article
                 key={index}
                 style={{
-                  marginBottom: spacing.md,
+                  marginBottom: isMobile ? spacing.sm : spacing.md,
                   backgroundColor: colors.background.paper,
                   borderRadius: borderRadius.lg,
                   border: `1px solid ${colors.gray[200]}`,
@@ -316,8 +316,10 @@ export default function FAQ() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    width: '32px',
-                    height: '32px',
+                    width: isMobile ? '44px' : '32px',
+                    height: isMobile ? '44px' : '32px',
+                    minWidth: isMobile ? '44px' : '32px',
+                    minHeight: isMobile ? '44px' : '32px',
                     borderRadius: borderRadius.md,
                     backgroundColor: isExpanded ? colors.primaryLight : colors.gray[100],
                     color: isExpanded ? colors.primary : colors.text.muted,

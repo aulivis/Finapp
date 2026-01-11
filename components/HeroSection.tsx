@@ -76,7 +76,7 @@ export default function HeroSection() {
       className="hero-section" 
       style={{
         backgroundColor: 'transparent',
-        padding: isMobile ? `${spacing['2xl']} 0 ${spacing['5xl']} 0` : `${spacing['3xl']} 0 ${spacing['5xl']} 0`,
+        padding: isMobile ? `${spacing.xl} 0 ${spacing['3xl']} 0` : `${spacing['3xl']} 0 ${spacing['5xl']} 0`,
         position: 'relative',
         overflow: 'hidden'
       }}
@@ -85,7 +85,7 @@ export default function HeroSection() {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`,
+        padding: isMobile ? `0 ${spacing.md}` : `0 ${spacing.xl}`,
         position: 'relative',
         zIndex: 1
       }}>
@@ -121,7 +121,7 @@ export default function HeroSection() {
             fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
             lineHeight: typography.lineHeight.relaxed,
             color: colors.text.secondary,
-            margin: `0 0 ${spacing['4xl']} 0`,
+            margin: `0 0 ${isMobile ? spacing['3xl'] : spacing['4xl']} 0`,
             fontWeight: typography.fontWeight.normal,
             maxWidth: '700px',
             marginLeft: 'auto',
@@ -132,8 +132,8 @@ export default function HeroSection() {
 
           {/* Impact Stat - Large, prominent with transformation */}
           <div style={{
-            marginBottom: spacing['4xl'],
-            padding: isMobile ? `${spacing.xl} ${spacing.lg}` : `${spacing['2xl']} ${spacing['4xl']}`,
+            marginBottom: isMobile ? spacing['3xl'] : spacing['4xl'],
+            padding: isMobile ? `${spacing.lg} ${spacing.md}` : `${spacing['2xl']} ${spacing['4xl']}`,
             background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.8) 100%)`,
             borderRadius: borderRadius.xl,
             border: `2px solid ${colors.primaryBorder}`,
@@ -373,11 +373,12 @@ export default function HeroSection() {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: isMobile ? spacing.sm : spacing.xl,
+              gap: isMobile ? spacing.xs : spacing.xl,
               fontSize: typography.fontSize.sm,
               color: colors.text.muted,
               fontWeight: typography.fontWeight.medium,
-              flexWrap: 'wrap'
+              flexWrap: 'wrap',
+              paddingTop: isMobile ? spacing.md : 0
             }}>
               <div style={{
                 display: 'flex',

@@ -51,12 +51,12 @@ export default function ModernLineChart({
 
   // Memoize chart configuration for performance - adjust for mobile
   const chartConfig = useMemo(() => ({
-    animationDuration: prefersReducedMotion ? 0 : 800,
+    animationDuration: prefersReducedMotion ? 0 : (isMobile ? 500 : 800),
     animationEasing: 'ease-out' as const,
     margin: isMobile 
-      ? { top: 8, right: 4, left: 4, bottom: 8 } 
+      ? { top: 12, right: 8, left: 8, bottom: 12 } 
       : { top: 8, right: 8, left: 8, bottom: 8 },
-    chartHeight: isMobile ? Math.max(280, height - 30) : height
+    chartHeight: isMobile ? Math.max(360, height - 30) : height
   }), [prefersReducedMotion, isMobile, height])
 
   // Enhanced tooltip with modern design
@@ -71,14 +71,16 @@ export default function ModernLineChart({
         aria-label={`Év: ${dataPoint.year}${showAge && dataPoint.age ? `, életkor: ${dataPoint.age}` : ''}`}
         style={{
           backgroundColor: '#FFFFFF',
-          padding: isMobile ? '12px' : '16px',
+          padding: isMobile ? '10px' : '16px',
           border: '1px solid #E5E7EB',
           borderRadius: '8px',
           boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
           fontSize: isMobile ? '13px' : '14px',
           lineHeight: '1.5',
           minWidth: isMobile ? '180px' : '200px',
-          maxWidth: isMobile ? '90vw' : 'none'
+          maxWidth: isMobile ? '90vw' : 'none',
+          position: 'relative',
+          zIndex: 1000
         }}
       >
         <div style={{
@@ -173,9 +175,10 @@ export default function ModernLineChart({
     <div style={{ 
       width: '100%', 
       height: `${chartConfig.chartHeight}px`, 
-      minHeight: isMobile ? 280 : 350,
+      minHeight: isMobile ? 360 : 350,
       position: 'relative',
-      touchAction: 'pan-y pinch-zoom'
+      touchAction: 'pan-y pinch-zoom',
+      overflow: 'hidden'
     }}>
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
@@ -198,23 +201,23 @@ export default function ModernLineChart({
           <XAxis
             dataKey="year"
             stroke={isMobile ? colors.textMobile : colors.text}
-            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 11 : 12 }}
+            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 12 : 12 }}
             tickLine={{ stroke: colors.grid }}
             axisLine={{ stroke: colors.grid }}
             aria-label="Évek"
             domain={['dataMin', 'dataMax']}
             type="number"
             scale="linear"
-            tickCount={data.length > 0 ? Math.min(data.length, isMobile ? Math.min(8, Math.max(5, Math.floor(data.length / 2))) : 15) : 5}
+            tickCount={data.length > 0 ? Math.min(data.length, isMobile ? Math.min(6, Math.max(4, Math.floor(data.length / 3))) : 15) : 5}
             interval={isMobile ? 'preserveStartEnd' : 0}
           />
           <YAxis
             stroke={isMobile ? colors.textMobile : colors.text}
-            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 11 : 12 }}
+            tick={{ fill: isMobile ? colors.textMobile : colors.text, fontSize: isMobile ? 12 : 12 }}
             tickLine={{ stroke: colors.grid }}
             axisLine={{ stroke: colors.grid }}
             tickFormatter={(value) => value >= 1000000 ? `${(value / 1000000).toFixed(isMobile ? 0 : 1)}M` : `${(value / 1000).toFixed(0)}K`}
-            width={isMobile ? 40 : 60}
+            width={isMobile ? 55 : 60}
             aria-label="Forint értékek"
           />
           <Tooltip
@@ -229,7 +232,7 @@ export default function ModernLineChart({
             allowEscapeViewBox={{ x: true, y: true }}
           />
           <Legend
-            wrapperStyle={{ paddingTop: isMobile ? '8px' : '16px', paddingBottom: isMobile ? '4px' : '0' }}
+            wrapperStyle={{ paddingTop: isMobile ? '12px' : '16px', paddingBottom: isMobile ? '8px' : '0' }}
             // Only show the two Hungarian labels (Névleges érték, Valódi vásárlóérő) - exclude Area components and use explicit Hungarian names
             content={({ payload }) => {
               // Filter to only include Line components (nominal, real) - excludes Area/purchasingPowerLoss
@@ -253,27 +256,29 @@ export default function ModernLineChart({
                 <div style={{ 
                   display: 'flex', 
                   justifyContent: 'center', 
-                  gap: isMobile ? '12px' : '24px', 
+                  gap: isMobile ? '16px' : '24px', 
                   flexWrap: 'wrap',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  paddingLeft: isMobile ? '8px' : '0',
+                  paddingRight: isMobile ? '8px' : '0'
                 }}>
                   {labels.map((item, index) => (
                     <div key={index} style={{ 
                       display: 'flex', 
                       alignItems: 'center', 
-                      gap: isMobile ? '5px' : '6px',
-                      minHeight: isMobile ? '20px' : 'auto'
+                      gap: isMobile ? '6px' : '6px',
+                      minHeight: isMobile ? '24px' : 'auto'
                     }}>
                       <span style={{ 
-                        width: isMobile ? 12 : 14, 
-                        height: isMobile ? 2.5 : 3, 
+                        width: isMobile ? 14 : 14, 
+                        height: isMobile ? 3 : 3, 
                         backgroundColor: item.color, 
                         borderRadius: 1,
                         flexShrink: 0
                       }} />
                       <span style={{ 
                         color: isMobile ? colors.textMobile : colors.text, 
-                        fontSize: isMobile ? '11px' : '13px', 
+                        fontSize: isMobile ? '12px' : '13px', 
                         fontWeight: '500',
                         lineHeight: 1.2
                       }}>
@@ -318,7 +323,7 @@ export default function ModernLineChart({
             strokeWidth={isMobile ? 2.5 : 3}
             name="Névleges érték"
             dot={{ r: isMobile ? 3 : 5, fill: colors.nominal, strokeWidth: 2, stroke: '#FFFFFF' }}
-            activeDot={{ r: isMobile ? 5 : 7, stroke: colors.nominal, strokeWidth: 2, fill: '#FFFFFF' }}
+            activeDot={{ r: isMobile ? 8 : 7, stroke: colors.nominal, strokeWidth: 2, fill: '#FFFFFF' }}
             isAnimationActive={!prefersReducedMotion}
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}
@@ -331,7 +336,7 @@ export default function ModernLineChart({
             strokeWidth={isMobile ? 2.5 : 3}
             name="Valódi vásárlóérő"
             dot={{ r: isMobile ? 3 : 5, fill: colors.real, strokeWidth: 2, stroke: '#FFFFFF' }}
-            activeDot={{ r: isMobile ? 5 : 7, stroke: colors.real, strokeWidth: 2, fill: '#FFFFFF' }}
+            activeDot={{ r: isMobile ? 8 : 7, stroke: colors.real, strokeWidth: 2, fill: '#FFFFFF' }}
             isAnimationActive={!prefersReducedMotion}
             animationDuration={chartConfig.animationDuration}
             animationEasing={chartConfig.animationEasing}

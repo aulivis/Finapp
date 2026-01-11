@@ -97,7 +97,7 @@ export default function EmailSignup() {
       ref={sectionRef}
       style={{
         backgroundColor: 'transparent',
-        padding: isMobile ? `${spacing['4xl']} 0` : `${spacing['5xl']} 0`,
+        padding: isMobile ? `${spacing['3xl']} 0` : `${spacing['5xl']} 0`,
         position: 'relative',
         overflow: 'hidden'
       }}
@@ -106,7 +106,7 @@ export default function EmailSignup() {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: isMobile ? `0 ${spacing.lg}` : `0 ${spacing.xl}`,
+        padding: isMobile ? `0 ${spacing.md}` : `0 ${spacing.xl}`,
         position: 'relative',
         zIndex: 1
       }}>
@@ -114,7 +114,7 @@ export default function EmailSignup() {
           maxWidth: '800px',
           margin: '0 auto',
           textAlign: 'center',
-          padding: isMobile ? spacing['2xl'] : spacing['3xl'],
+          padding: isMobile ? spacing.xl : spacing['3xl'],
           backgroundColor: colors.background.paper,
           borderRadius: borderRadius.xl,
           border: `1px solid ${colors.primaryBorder}`,

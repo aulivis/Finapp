@@ -14,19 +14,19 @@ export default function FooterDisclaimer() {
     <div style={{
       background: 'linear-gradient(to bottom, #FFFFFF 0%, #F9FAFB 100%)',
       borderTop: `1px solid ${colors.gray[200]}`,
-      padding: `${spacing['2xl']} 0`,
-      marginTop: spacing['4xl']
+      padding: `${spacing.xl} 0`,
+      marginTop: spacing['3xl']
     }}>
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: `0 ${spacing.xl}`
+        padding: `0 ${spacing.md}`
       }}>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-          gap: spacing['2xl'],
-          marginBottom: spacing.xl
+          gap: spacing.lg,
+          marginBottom: spacing.lg
         }}>
           <div>
             <h4 style={{
