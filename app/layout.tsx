@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Inter, Share_Tech } from 'next/font/google'
 import './globals.css'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
@@ -23,8 +24,7 @@ export const metadata: Metadata = {
     default: 'Contexta',
     template: '%s | Contexta',
   },
-  description: 'Pénzügyi tudatossági eszköz',
-  keywords: ['pénzügy', 'számítás', 'infláció', 'nyugdíj', 'magyarország'],
+  description: 'Contexta - Pénzügyi tudatossági eszköz az infláció hatásainak megértéséhez. Számítsd ki a pénzed vásárlóerejének változását történelmi adatokkal.',
   authors: [{ name: 'Contexta' }],
   creator: 'Contexta',
   publisher: 'Contexta',
@@ -43,12 +43,21 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'Contexta',
     title: 'Contexta - Pénzügyi tudatossági eszköz',
-    description: 'Pénzügyi tudatossági eszköz',
+    description: 'Számítsd ki a pénzed vásárlóerejének változását történelmi inflációs adatokkal. Inflációs kalkulátor és összehasonlítások.',
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/mi-tortenik.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Contexta - Pénzügyi tudatossági eszköz',
+      },
+    ],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Contexta - Pénzügyi tudatossági eszköz',
-    description: 'Pénzügyi tudatossági eszköz',
+    description: 'Számítsd ki a pénzed vásárlóerejének változását történelmi inflációs adatokkal. Inflációs kalkulátor és összehasonlítások.',
+    images: [`${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/mi-tortenik.png`],
   },
   robots: {
     index: true,
@@ -63,6 +72,22 @@ export const metadata: Metadata = {
   },
 }
 
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Contexta',
+  description: 'Pénzügyi tudatossági eszköz - Inflációs kalkulátor és vásárlóerő összehasonlítás',
+  url: process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -71,6 +96,11 @@ export default function RootLayout({
   return (
     <html lang="hu" className={`${inter.variable} ${shareTech.variable}`}>
       <body style={{ fontFamily: 'var(--font-inter), Inter, sans-serif', position: 'relative' }}>
+        <Script
+          id="website-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         <ErrorBoundary>
           {children}
         </ErrorBoundary>

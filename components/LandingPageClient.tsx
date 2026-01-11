@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import HeroSection from '@/components/HeroSection'
 import LandingCalculator from '@/components/LandingCalculator'
 import ContextualComparison from '@/components/ContextualComparison'
+import FAQ from '@/components/FAQ'
 import EmailSignup from '@/components/EmailSignup'
 import { historicalInflation } from '@/lib/data/inflation'
 
@@ -36,6 +37,7 @@ export default function LandingPageClient() {
         startYear={validStartYear} 
         endYear={validEndYear} 
       />
+      <FAQ />
       <EmailSignup />
     </>
   )

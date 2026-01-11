@@ -169,28 +169,9 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                     backgroundColor: colors.background.paper,
                     borderRadius: borderRadius.lg,
                     border: `1px solid ${colors.gray[200]}`,
-                    transition: prefersReducedMotion ? 'none' : transitions.all,
                     cursor: 'default',
                     position: 'relative',
                     overflow: 'visible'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!prefersReducedMotion && !isMobile) {
-                      e.currentTarget.style.transform = 'translateY(-4px)'
-                      e.currentTarget.style.boxShadow = shadows.lg
-                      e.currentTarget.style.borderColor = colors.primaryBorder
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!prefersReducedMotion && !isMobile) {
-                      e.currentTarget.style.transform = 'translateY(0)'
-                      e.currentTarget.style.boxShadow = 'none'
-                      e.currentTarget.style.borderColor = colors.gray[200]
-                      // Only clear hover if not hovering over the button
-                      if (hoveredIndex === index) {
-                        setHoveredIndex(null)
-                      }
-                    }
                   }}
                 >
                   <div style={{
@@ -285,7 +266,7 @@ export default function ContextualComparison({ startYear, endYear }: ContextualC
                               lineHeight: typography.lineHeight.normal,
                               maxWidth: '280px',
                               width: 'max-content',
-                              zIndex: 9999,
+                              zIndex: 10000,
                               boxShadow: shadows.xl,
                               pointerEvents: 'none',
                               whiteSpace: 'normal'

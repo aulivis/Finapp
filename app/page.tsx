@@ -8,10 +8,24 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Contexta — Vásárlóerő változása az infláció miatt',
     description: 'Nézd meg, hogyan csökkent a pénz vásárlóereje idővel — egyszerű inflációs kalkulátor és valós összehasonlítások.',
+    type: 'website',
+    locale: 'hu_HU',
+    url: process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu',
+    siteName: 'Contexta',
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/mi-tortenik.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Contexta - Inflációs kalkulátor',
+      },
+    ],
   },
   twitter: {
+    card: 'summary_large_image',
     title: 'Contexta — Vásárlóerő változása az infláció miatt',
     description: 'Nézd meg, hogyan csökkent a pénz vásárlóereje idővel — egyszerű inflációs kalkulátor és valós összehasonlítások.',
+    images: [`${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/mi-tortenik.png`],
   },
 }
 

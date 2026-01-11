@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, shadows, transitions } from '@/lib/design-system'
 import Button from '@/components/ui/Button'
 import ContextaWordmark from '@/components/ContextaWordmark'
+import AnimatedNumber from '@/components/ui/AnimatedNumber'
 
 const EXAMPLE_AMOUNT = 1000000
 const EXAMPLE_START_YEAR = 2015
@@ -16,6 +17,7 @@ export default function HeroSection() {
   const isMobile = useIsMobile(768)
   const prefersReducedMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
+  const [showCalculation, setShowCalculation] = useState(false)
 
   // Add fade-in animation on mount
   useEffect(() => {
@@ -29,6 +31,14 @@ export default function HeroSection() {
       }, 50)
       return () => clearTimeout(timer)
     }
+  }, [prefersReducedMotion])
+
+  // Animate calculation display
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowCalculation(true)
+    }, prefersReducedMotion ? 0 : 300)
+    return () => clearTimeout(timer)
   }, [prefersReducedMotion])
 
   // Calculate historical loss for the example
@@ -66,7 +76,7 @@ export default function HeroSection() {
       className="hero-section" 
       style={{
         backgroundColor: 'transparent',
-        padding: isMobile ? `${spacing['4xl']} 0 ${spacing['5xl']} 0` : `${spacing['5xl']} 0 ${spacing['5xl']} 0`,
+        padding: isMobile ? `${spacing['2xl']} 0 ${spacing['5xl']} 0` : `${spacing['3xl']} 0 ${spacing['5xl']} 0`,
         position: 'relative',
         overflow: 'hidden'
       }}
@@ -81,7 +91,7 @@ export default function HeroSection() {
       }}>
         {/* Wordmark */}
         <div style={{
-          marginBottom: isMobile ? spacing['3xl'] : spacing['5xl'],
+          marginBottom: isMobile ? spacing['2xl'] : spacing['3xl'],
           display: 'flex',
           justifyContent: 'center'
         }}>
@@ -120,16 +130,19 @@ export default function HeroSection() {
             Az infláció miatt a pénz értéke idővel csökken — még akkor is, ha a számlán ugyanannyi forintot látsz.
           </p>
 
-          {/* Impact Stat - Large, prominent */}
+          {/* Impact Stat - Large, prominent with transformation */}
           <div style={{
             marginBottom: spacing['4xl'],
-            padding: isMobile ? spacing['2xl'] : spacing['3xl'],
-            background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.6) 100%)`,
+            padding: isMobile ? spacing['3xl'] : spacing['4xl'],
+            background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.8) 100%)`,
             borderRadius: borderRadius.xl,
-            border: `1px solid ${colors.primaryBorder}`,
+            border: `2px solid ${colors.primaryBorder}`,
             position: 'relative',
             overflow: 'hidden',
-            boxShadow: shadows.md
+            boxShadow: shadows.xl,
+            opacity: showCalculation ? 1 : 0,
+            transform: showCalculation ? 'translateY(0)' : 'translateY(20px)',
+            transition: prefersReducedMotion ? 'none' : `opacity ${transitions.slow}, transform ${transitions.slow}`
           }}>
             {/* Decorative accent */}
             <div style={{
@@ -137,82 +150,187 @@ export default function HeroSection() {
               top: 0,
               left: 0,
               right: 0,
-              height: '3px',
-              background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 100%)`
+              height: '4px',
+              background: `linear-gradient(90deg, ${colors.primary} 0%, ${colors.primaryHover} 50%, ${colors.error} 100%)`
             }} />
             
+            {/* Year badge */}
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: spacing.xs,
+              padding: `${spacing.sm} ${spacing.lg}`,
+              backgroundColor: colors.background.paper,
+              borderRadius: borderRadius.full,
+              fontSize: typography.fontSize.sm,
+              color: colors.text.secondary,
+              fontWeight: typography.fontWeight.semibold,
+              border: `1px solid ${colors.gray[300]}`,
+              marginBottom: spacing['2xl'],
+              boxShadow: shadows.sm
+            }}>
+              <span>📅</span>
+              <span>{EXAMPLE_START_YEAR} → {EXAMPLE_END_YEAR}</span>
+            </div>
+
+            {/* Before/After Transformation */}
             <div style={{
               display: 'flex',
               flexDirection: isMobile ? 'column' : 'row',
               alignItems: 'center',
-              justifyContent: 'center',
-              gap: isMobile ? spacing.xl : spacing['2xl'],
-              flexWrap: 'wrap'
+              justifyContent: 'space-between',
+              gap: isMobile ? spacing['2xl'] : spacing['3xl'],
+              marginBottom: spacing['2xl']
             }}>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: isMobile ? 'center' : 'flex-end',
-                gap: spacing.xs
-              }}>
-                <div style={{
-                  fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['5xl'],
-                  fontWeight: typography.fontWeight.bold,
-                  color: colors.text.primary,
-                  fontVariantNumeric: 'tabular-nums',
-                  lineHeight: 1
-                }} className="tabular-nums">
-                  {formatCurrency(EXAMPLE_AMOUNT)}
-                </div>
-                <div style={{
-                  fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-                  color: colors.text.muted,
-                  fontWeight: typography.fontWeight.normal
-                }}>
-                  vásárlóereje
-                </div>
-              </div>
-              <div style={{
-                fontSize: isMobile ? typography.fontSize.xs : typography.fontSize.sm,
-                color: colors.text.muted,
-                padding: `${spacing.xs} ${spacing.md}`,
-                backgroundColor: colors.background.paper,
-                borderRadius: borderRadius.full,
-                fontWeight: typography.fontWeight.medium,
-                border: `1px solid ${colors.gray[200]}`,
-                whiteSpace: 'nowrap'
-              }}>
-                {EXAMPLE_START_YEAR} → {EXAMPLE_END_YEAR}
-              </div>
+              {/* Before */}
               <div style={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: isMobile ? 'center' : 'flex-start',
-                gap: spacing.xs
+                gap: spacing.md,
+                flex: 1
               }}>
+                <div style={{
+                  fontSize: typography.fontSize.sm,
+                  color: colors.text.muted,
+                  fontWeight: typography.fontWeight.medium,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
+                }}>
+                  {EXAMPLE_START_YEAR} - Önnek van
+                </div>
+                <div style={{
+                  fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.text.primary,
+                  fontVariantNumeric: 'tabular-nums',
+                  lineHeight: 1.1,
+                  marginBottom: spacing.xs
+                }} className="tabular-nums">
+                  {formatCurrency(EXAMPLE_AMOUNT)}
+                </div>
+                <div style={{
+                  fontSize: typography.fontSize.base,
+                  color: colors.text.secondary,
+                  fontWeight: typography.fontWeight.normal
+                }}>
+                  névértéken
+                </div>
+              </div>
+
+              {/* Arrow / Transformation */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: spacing.sm,
+                flexShrink: 0
+              }}>
+                <div style={{
+                  fontSize: isMobile ? '32px' : '48px',
+                  transform: isMobile ? 'rotate(90deg)' : 'none',
+                  transition: prefersReducedMotion ? 'none' : transitions.all,
+                  lineHeight: 1
+                }}>
+                  →
+                </div>
+                <div style={{
+                  padding: `${spacing.sm} ${spacing.lg}`,
+                  backgroundColor: colors.errorLight,
+                  borderRadius: borderRadius.md,
+                  fontSize: typography.fontSize.sm,
+                  color: colors.error,
+                  fontWeight: typography.fontWeight.bold,
+                  border: `1px solid ${colors.error}`,
+                  whiteSpace: 'nowrap',
+                  boxShadow: shadows.md
+                }}>
+                  –{lossPercentage}%
+                </div>
+              </div>
+
+              {/* After */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: isMobile ? 'center' : 'flex-end',
+                gap: spacing.md,
+                flex: 1
+              }}>
+                <div style={{
+                  fontSize: typography.fontSize.sm,
+                  color: colors.text.muted,
+                  fontWeight: typography.fontWeight.medium,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
+                }}>
+                  {EXAMPLE_END_YEAR} - Csak megér
+                </div>
                 <div style={{
                   fontSize: isMobile ? typography.fontSize['4xl'] : typography.fontSize['6xl'],
                   fontWeight: typography.fontWeight.bold,
                   color: colors.error,
                   fontVariantNumeric: 'tabular-nums',
-                  lineHeight: 1
+                  lineHeight: 1.1,
+                  marginBottom: spacing.xs,
+                  textDecoration: 'line-through',
+                  textDecorationThickness: '3px',
+                  textDecorationColor: colors.error
                 }} className="tabular-nums">
-                  –{lossPercentage}%
+                  {formatCurrency(finalNominal)}
                 </div>
                 <div style={{
-                  fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-                  color: colors.text.muted,
+                  fontSize: isMobile ? typography.fontSize['2xl'] : typography.fontSize['3xl'],
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.text.primary,
+                  fontVariantNumeric: 'tabular-nums',
+                  lineHeight: 1.1
+                }} className="tabular-nums">
+                  {formatCurrency(Math.round(finalReal))}
+                </div>
+                <div style={{
+                  fontSize: typography.fontSize.base,
+                  color: colors.text.secondary,
                   fontWeight: typography.fontWeight.normal
                 }}>
-                  veszteség
+                  valós vásárlóerő
                 </div>
               </div>
             </div>
+
+            {/* Loss amount highlight */}
+            <div style={{
+              marginTop: spacing['2xl'],
+              padding: spacing.xl,
+              backgroundColor: colors.errorLight,
+              borderRadius: borderRadius.lg,
+              border: `2px solid ${colors.error}`,
+              textAlign: 'center'
+            }}>
+              <div style={{
+                fontSize: typography.fontSize.sm,
+                color: colors.text.muted,
+                marginBottom: spacing.xs,
+                fontWeight: typography.fontWeight.medium
+              }}>
+                Elveszett vásárlóerő
+              </div>
+              <div style={{
+                fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['5xl'],
+                fontWeight: typography.fontWeight.bold,
+                color: colors.error,
+                fontVariantNumeric: 'tabular-nums',
+                lineHeight: 1
+              }} className="tabular-nums">
+                {formatCurrency(Math.round(loss))}
+              </div>
+            </div>
+
             <div style={{
               marginTop: spacing.xl,
               paddingTop: spacing.xl,
               borderTop: `1px solid ${colors.primaryBorder}`,
-              fontSize: typography.fontSize.sm,
+              fontSize: typography.fontSize.xs,
               color: colors.text.muted,
               fontWeight: typography.fontWeight.normal,
               textAlign: 'center'
