@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { colors, spacing, typography, borderRadius } from '@/lib/design-system'
+import { colors, spacing, typography } from '@/lib/design-system'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
