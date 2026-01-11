@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
-import { colors, spacing, typography, borderRadius, transitions } from '@/lib/design-system'
+import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
 
 interface M2Data {
   currentYear: number

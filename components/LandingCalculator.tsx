@@ -6,7 +6,7 @@ import ModernLineChart from '@/components/ModernLineChart'
 import { ChartErrorBoundary } from '@/components/ChartErrorBoundary'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
-import { colors, spacing, typography, borderRadius, transitions } from '@/lib/design-system'
+import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
 import Input from '@/components/ui/Input'
 import StatCard from '@/components/ui/StatCard'
 
