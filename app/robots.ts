@@ -6,6 +6,12 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
+        // Explicitly allow Facebook's crawler for OG image scraping
+        userAgent: 'facebookexternalhit',
+        allow: '/',
+      },
+      {
+        // Allow other crawlers
         userAgent: '*',
         allow: '/',
         disallow: ['/api/'],

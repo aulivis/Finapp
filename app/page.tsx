@@ -19,6 +19,11 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   const startYearParam = params.startYear
   const endYearParam = params.endYear
 
+  // Debug logging (remove in production if needed)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('generateMetadata called with:', { amountParam, startYearParam, endYearParam })
+  }
+
   // If we have all required params, generate dynamic metadata
   if (amountParam && startYearParam && endYearParam) {
     try {
@@ -62,12 +67,21 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       // Version parameter for cache-busting when we update the image design
       // Increment this (e.g., v2, v3) when you change the OG image design
       // Same parameters will generate same image, but version change forces Facebook to re-fetch
-      const imageVersion = 'v2'
+      // IMPORTANT: When incrementing version, use Facebook Sharing Debugger to clear cache for existing shares
+      const imageVersion = 'v3'
       
       // Use absolute URL for OG image with version for cache-busting
-      const ogImageUrl = `${appUrl}/og?amount=${amount}&startYear=${startYear}&endYear=${endYear}&v=${imageVersion}`
-      const shareUrl = `${appUrl}/?amount=${amount}&startYear=${startYear}&endYear=${endYear}`
+      // Ensure URLs are properly encoded
+      const ogImageUrl = `${appUrl}/og?amount=${encodeURIComponent(amount)}&startYear=${encodeURIComponent(startYear)}&endYear=${encodeURIComponent(endYear)}&v=${imageVersion}`
+      const shareUrl = `${appUrl}/?amount=${encodeURIComponent(amount)}&startYear=${encodeURIComponent(startYear)}&endYear=${encodeURIComponent(endYear)}`
 
+      // Debug: Log the generated metadata URLs
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Generated OG Image URL:', ogImageUrl)
+        console.log('Generated Share URL:', shareUrl)
+      }
+
+      // Return complete metadata that fully overrides layout metadata
       return {
         title: `${dynamicTitle} | Contexta`,
         description: dynamicDescription,
@@ -78,6 +92,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
           locale: 'hu_HU',
           url: shareUrl,
           siteName: 'Contexta',
+          // Explicitly set images array to override layout defaults
           images: [
             {
               url: ogImageUrl,

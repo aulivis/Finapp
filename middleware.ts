@@ -7,12 +7,24 @@ import { NextRequest, NextResponse } from 'next/server'
  */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  const userAgent = request.headers.get('user-agent') || ''
 
-  // Security: Block access to sensitive files
+  // Allow Facebook's crawler and other social media crawlers
+  const isSocialCrawler = 
+    userAgent.includes('facebookexternalhit') ||
+    userAgent.includes('Twitterbot') ||
+    userAgent.includes('LinkedInBot') ||
+    userAgent.includes('WhatsApp') ||
+    userAgent.includes('Slackbot')
+
+  // Security: Block access to sensitive files (but allow social crawlers)
   if (
-    pathname.startsWith('/.env') ||
-    pathname.startsWith('/.git') ||
-    pathname.includes('node_modules')
+    !isSocialCrawler &&
+    (
+      pathname.startsWith('/.env') ||
+      pathname.startsWith('/.git') ||
+      pathname.includes('node_modules')
+    )
   ) {
     return new NextResponse('Not Found', { status: 404 })
   }
