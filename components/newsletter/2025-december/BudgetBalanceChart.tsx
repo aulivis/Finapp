@@ -65,7 +65,7 @@ export default function BudgetBalanceChart({ height = 600 }: BudgetBalanceChartP
       <div style={{
         position: 'relative',
         width: '100%',
-        height: isMobile ? '400px' : '450px',
+        height: isMobile ? '400px' : `${Math.min(height * 0.75, 450)}px`,
         marginBottom: spacing['2xl'],
         display: 'flex',
         alignItems: 'center',
