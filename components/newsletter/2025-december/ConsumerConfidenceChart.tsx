@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useMemo } from 'react'
-import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { colors, typography, spacing, borderRadius } from '@/lib/design-system'
 
@@ -18,7 +17,6 @@ interface ConsumerConfidenceChartProps {
  * - Simple, readable design
  */
 export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfidenceChartProps) {
-  const prefersReducedMotion = useReducedMotion()
   const isMobile = useIsMobile()
 
   // Country names in Hungarian
