@@ -47,7 +47,10 @@ export default function LandingPageClient() {
         endYear={validEndYear}
         userAmount={amount}
       />
-      <M2Section />
+      <M2Section 
+        startYear={validStartYear}
+        endYear={validEndYear}
+      />
       <FAQ />
       <EmailSignup />
     </>

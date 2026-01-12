@@ -4,24 +4,66 @@ import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
-import { HISTORICAL_M2_GROWTH } from '@/lib/data/economic-data'
+import { HISTORICAL_M2_GROWTH, HISTORICAL_INFLATION } from '@/lib/data/economic-data'
+import { TrendingUp, BarChart3, TrendingDown } from 'lucide-react'
 
-export default function M2Section() {
+interface M2SectionProps {
+  startYear?: number
+  endYear?: number
+}
+
+export default function M2Section({ startYear = 2015, endYear = 2025 }: M2SectionProps) {
   const isMobile = useIsMobile(768)
   const prefersReducedMotion = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
   const [showContent, setShowContent] = useState(false)
   const [hoveredChart, setHoveredChart] = useState(false)
 
-  // Filter M2 data for 2015-2025
+  // Filter M2 data based on year range
   const m2Data = useMemo(() => {
     return HISTORICAL_M2_GROWTH
-      .filter(d => d.year >= 2015 && d.year <= 2025)
+      .filter(d => d.year >= startYear && d.year <= endYear)
       .map(d => ({
         year: d.year,
         growth: d.m2Growth
       }))
-  }, [])
+  }, [startYear, endYear])
+
+  // Calculate stats for the selected year range
+  const stats = useMemo(() => {
+    const validM2Data = m2Data.filter(d => d.growth !== null) as Array<{ year: number; growth: number }>
+    
+    if (validM2Data.length === 0) {
+      return {
+        avgM2Growth: null,
+        maxM2Growth: null,
+        maxM2GrowthYear: null,
+        totalInflation: null
+      }
+    }
+
+    // Average M2 growth
+    const avgM2Growth = validM2Data.reduce((sum, d) => sum + d.growth, 0) / validM2Data.length
+
+    // Biggest M2 growth
+    const maxM2Growth = Math.max(...validM2Data.map(d => d.growth))
+    const maxM2GrowthYear = validM2Data.find(d => d.growth === maxM2Growth)?.year || null
+
+    // Total inflation (cumulative) for the range
+    const inflationData = HISTORICAL_INFLATION.filter(d => d.year >= startYear && d.year <= endYear)
+    let cumulativeInflation = 1
+    inflationData.forEach(d => {
+      cumulativeInflation *= (1 + d.inflationRate / 100)
+    })
+    const totalInflation = (cumulativeInflation - 1) * 100 // Convert to percentage
+
+    return {
+      avgM2Growth,
+      maxM2Growth,
+      maxM2GrowthYear,
+      totalInflation
+    }
+  }, [m2Data, startYear, endYear])
 
   // Add fade-in animation on mount
   useEffect(() => {
@@ -215,7 +257,7 @@ export default function M2Section() {
                   fontWeight: typography.fontWeight.medium,
                   textAlign: 'center'
                 }}>
-                  M2 pénzkínálat növekedés (2015-2025)
+                  M2 pénzkínálat növekedés ({startYear}-{endYear})
                 </div>
                 {/* Tooltip */}
                 {hoveredChart && !isMobile && (
@@ -257,6 +299,186 @@ export default function M2Section() {
                     />
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Stat Cards */}
+            {stats.avgM2Growth !== null && (
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+                gap: isMobile ? spacing.lg : spacing.xl,
+                width: '100%',
+                maxWidth: isMobile ? '100%' : '900px',
+                marginTop: spacing['2xl']
+              }}>
+                {/* Average M2 Growth Card */}
+                <div style={{
+                  padding: isMobile ? spacing.xl : spacing['2xl'],
+                  background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.4) 100%)`,
+                  borderRadius: borderRadius.lg,
+                  border: `1px solid ${colors.primaryBorder}`,
+                  boxShadow: shadows.sm,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: spacing.md,
+                  transition: prefersReducedMotion ? 'none' : transitions.all
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: spacing.md
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: isMobile ? '48px' : '56px',
+                      height: isMobile ? '48px' : '56px',
+                      borderRadius: borderRadius.full,
+                      backgroundColor: colors.primary,
+                      color: '#FFFFFF',
+                      flexShrink: 0
+                    }}>
+                      <TrendingUp size={isMobile ? 24 : 28} strokeWidth={2.5} />
+                    </div>
+                    <div style={{
+                      fontSize: typography.fontSize.sm,
+                      color: colors.text.muted,
+                      fontWeight: typography.fontWeight.medium
+                    }}>
+                      Átlagos M2 növekedés
+                    </div>
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
+                    fontWeight: typography.fontWeight.bold,
+                    color: colors.text.primary,
+                    fontVariantNumeric: 'tabular-nums',
+                    lineHeight: 1.2
+                  }} className="tabular-nums">
+                    {stats.avgM2Growth > 0 ? '+' : ''}{stats.avgM2Growth.toFixed(1)}%
+                  </div>
+                  <div style={{
+                    fontSize: typography.fontSize.xs,
+                    color: colors.text.secondary,
+                    lineHeight: typography.lineHeight.normal
+                  }}>
+                    {startYear}-{endYear} időszak átlaga
+                  </div>
+                </div>
+
+                {/* Biggest M2 Growth Card */}
+                <div style={{
+                  padding: isMobile ? spacing.xl : spacing['2xl'],
+                  background: `linear-gradient(135deg, rgba(254, 243, 199, 0.3) 0%, rgba(255, 247, 237, 0.2) 100%)`,
+                  borderRadius: borderRadius.lg,
+                  border: `1px solid ${colors.warningLight}`,
+                  boxShadow: shadows.sm,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: spacing.md,
+                  transition: prefersReducedMotion ? 'none' : transitions.all
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: spacing.md
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: isMobile ? '48px' : '56px',
+                      height: isMobile ? '48px' : '56px',
+                      borderRadius: borderRadius.full,
+                      backgroundColor: colors.warning,
+                      color: '#FFFFFF',
+                      flexShrink: 0
+                    }}>
+                      <BarChart3 size={isMobile ? 24 : 28} strokeWidth={2.5} />
+                    </div>
+                    <div style={{
+                      fontSize: typography.fontSize.sm,
+                      color: colors.text.muted,
+                      fontWeight: typography.fontWeight.medium
+                    }}>
+                      Legnagyobb növekedés
+                    </div>
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
+                    fontWeight: typography.fontWeight.bold,
+                    color: colors.text.primary,
+                    fontVariantNumeric: 'tabular-nums',
+                    lineHeight: 1.2
+                  }} className="tabular-nums">
+                    {stats.maxM2Growth > 0 ? '+' : ''}{stats.maxM2Growth.toFixed(1)}%
+                  </div>
+                  <div style={{
+                    fontSize: typography.fontSize.xs,
+                    color: colors.text.secondary,
+                    lineHeight: typography.lineHeight.normal
+                  }}>
+                    {stats.maxM2GrowthYear ? `${stats.maxM2GrowthYear} évben` : 'N/A'}
+                  </div>
+                </div>
+
+                {/* Total Inflation Card */}
+                <div style={{
+                  padding: isMobile ? spacing.xl : spacing['2xl'],
+                  background: `linear-gradient(135deg, ${colors.errorLight} 0%, rgba(254, 226, 226, 0.4) 100%)`,
+                  borderRadius: borderRadius.lg,
+                  border: `1px solid ${colors.error}`,
+                  boxShadow: shadows.sm,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: spacing.md,
+                  transition: prefersReducedMotion ? 'none' : transitions.all
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: spacing.md
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: isMobile ? '48px' : '56px',
+                      height: isMobile ? '48px' : '56px',
+                      borderRadius: borderRadius.full,
+                      backgroundColor: colors.error,
+                      color: '#FFFFFF',
+                      flexShrink: 0
+                    }}>
+                      <TrendingDown size={isMobile ? 24 : 28} strokeWidth={2.5} />
+                    </div>
+                    <div style={{
+                      fontSize: typography.fontSize.sm,
+                      color: colors.text.muted,
+                      fontWeight: typography.fontWeight.medium
+                    }}>
+                      Összes infláció
+                    </div>
+                  </div>
+                  <div style={{
+                    fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
+                    fontWeight: typography.fontWeight.bold,
+                    color: colors.error,
+                    fontVariantNumeric: 'tabular-nums',
+                    lineHeight: 1.2
+                  }} className="tabular-nums">
+                    {stats.totalInflation !== null ? `+${stats.totalInflation.toFixed(1)}%` : 'N/A'}
+                  </div>
+                  <div style={{
+                    fontSize: typography.fontSize.xs,
+                    color: colors.text.secondary,
+                    lineHeight: typography.lineHeight.normal
+                  }}>
+                    {startYear}-{endYear} kumulatív
+                  </div>
+                </div>
               </div>
             )}
 
