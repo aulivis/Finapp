@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { colors, spacing, typography, borderRadius, shadows, transitions } from '@/lib/design-system'
+import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
 import { isValidEmail } from '@/lib/utils/email'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
