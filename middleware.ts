@@ -15,6 +15,11 @@ export function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-original-url', originalUrl)
   requestHeaders.set('x-original-query', search)
+  
+  // Debug logging for Facebook crawler issues
+  if (userAgent.includes('facebookexternalhit') || userAgent.includes('crawler')) {
+    console.log('[middleware] Facebook crawler detected:', { originalUrl, search, pathname, host: request.headers.get('host') })
+  }
 
   // Note: Domain redirects (non-www to www) are handled in vercel.json
   // This ensures query parameters are preserved during redirects

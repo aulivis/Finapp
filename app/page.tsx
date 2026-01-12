@@ -29,30 +29,51 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       const originalUrl = headersList.get('x-original-url')
       const originalQuery = headersList.get('x-original-query')
       
+      console.log('[generateMetadata] Fallback check:', { originalUrl, originalQuery, hasAmount: !!amountParam, hasStartYear: !!startYearParam, hasEndYear: !!endYearParam })
+      
       if (originalUrl || originalQuery) {
         const queryString = originalQuery || (originalUrl ? new URL(originalUrl).search : '')
+        console.log('[generateMetadata] Extracted query string:', queryString)
         if (queryString) {
           const urlParams = new URLSearchParams(queryString)
-          amountParam = amountParam || urlParams.get('amount') || undefined
-          startYearParam = startYearParam || urlParams.get('startYear') || undefined
-          endYearParam = endYearParam || urlParams.get('endYear') || undefined
+          const fallbackAmount = urlParams.get('amount')
+          const fallbackStartYear = urlParams.get('startYear')
+          const fallbackEndYear = urlParams.get('endYear')
+          
+          console.log('[generateMetadata] Fallback params:', { fallbackAmount, fallbackStartYear, fallbackEndYear })
+          
+          amountParam = amountParam || fallbackAmount || undefined
+          startYearParam = startYearParam || fallbackStartYear || undefined
+          endYearParam = endYearParam || fallbackEndYear || undefined
         }
       }
     } catch (error) {
       // Headers might not be available in all contexts, fall through to use searchParams
-      console.error('Error reading original URL from headers:', error)
+      console.error('[generateMetadata] Error reading original URL from headers:', error)
     }
   }
 
-  // Debug logging (remove in production if needed)
-  if (process.env.NODE_ENV === 'development') {
-    console.log('generateMetadata called with:', { amountParam, startYearParam, endYearParam })
+  // Debug logging - keep in production to diagnose Facebook crawler issues
+  console.log('[generateMetadata] searchParams:', { amountParam, startYearParam, endYearParam })
+  
+  // Try to read from headers as fallback
+  try {
+    const headersList = headers()
+    const originalUrl = headersList.get('x-original-url')
+    const originalQuery = headersList.get('x-original-query')
+    console.log('[generateMetadata] Headers fallback:', { originalUrl, originalQuery })
+  } catch (error) {
+    console.log('[generateMetadata] Headers not available')
   }
 
   // Note: Middleware handles canonical domain redirects (non-www to www) while preserving query parameters
 
   // If we have all required params, generate dynamic metadata
-  if (amountParam && startYearParam && endYearParam) {
+  // Convert to strings and check if they're valid
+  const hasAllParams = amountParam && startYearParam && endYearParam
+  console.log('[generateMetadata] Has all params?', { hasAllParams, amountParam, startYearParam, endYearParam })
+  
+  if (hasAllParams) {
     try {
       const amount = parseFloat(String(amountParam))
       const startYear = parseInt(String(startYearParam))
@@ -155,19 +176,26 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   }
 
   // Default metadata (fallback)
+  // Ensure all URLs are absolute and use www
+  const canonicalBaseUrl = appUrl.startsWith('http') ? appUrl : `https://${appUrl}`
+  const finalBaseUrl = canonicalBaseUrl.replace(/^https?:\/\/(www\.)?/, 'https://www.')
+  
+  console.log('[generateMetadata] Returning default metadata (no query params found)')
+  
   return {
     title: 'Contexta — Vásárlóerő változása az infláció miatt',
     description: 'Nézd meg, hogyan csökkent a pénz vásárlóereje idővel — egyszerű inflációs kalkulátor és valós összehasonlítások.',
+    metadataBase: new URL(finalBaseUrl),
     openGraph: {
       title: 'Contexta — Vásárlóerő változása az infláció miatt',
       description: 'Nézd meg, hogyan csökkent a pénz vásárlóereje idővel — egyszerű inflációs kalkulátor és valós összehasonlítások.',
       type: 'website',
       locale: 'hu_HU',
-      url: appUrl,
+      url: finalBaseUrl,
       siteName: 'Contexta',
       images: [
         {
-          url: `${appUrl}/contexta-social-share.jpg`,
+          url: `${finalBaseUrl}/contexta-social-share.jpg`,
           width: 1200,
           height: 630,
           alt: 'Contexta - Inflációs kalkulátor',
