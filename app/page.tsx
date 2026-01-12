@@ -25,6 +25,8 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     console.log('generateMetadata called with:', { amountParam, startYearParam, endYearParam })
   }
 
+  // Note: Middleware handles canonical domain redirects (non-www to www) while preserving query parameters
+
   // If we have all required params, generate dynamic metadata
   if (amountParam && startYearParam && endYearParam) {
     try {

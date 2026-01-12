@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     description: 'Számítsd ki a pénzed vásárlóerejének változását történelmi inflációs adatokkal. Inflációs kalkulátor és összehasonlítások.',
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/contexta-social-share.jpg`,
+        url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.contexta.hu'}/contexta-social-share.jpg`,
         width: 1200,
         height: 630,
         alt: 'Contexta - Pénzügyi tudatossági eszköz',
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Contexta - Pénzügyi tudatossági eszköz',
     description: 'Számítsd ki a pénzed vásárlóerejének változását történelmi inflációs adatokkal. Inflációs kalkulátor és összehasonlítások.',
-    images: [`${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/contexta-social-share.jpg`],
+    images: [`${process.env.NEXT_PUBLIC_APP_URL || 'https://www.contexta.hu'}/contexta-social-share.jpg`],
   },
   robots: {
     index: true,

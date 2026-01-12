@@ -7,7 +7,19 @@ import { NextRequest, NextResponse } from 'next/server'
  */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  const host = request.headers.get('host') || ''
   const userAgent = request.headers.get('user-agent') || ''
+
+  // Canonical domain redirect: Redirect non-www to www while preserving query parameters
+  // This ensures Facebook and other crawlers can access pages with query params intact
+  if (host && !host.startsWith('www.') && !host.includes('localhost') && !host.includes('127.0.0.1')) {
+    const url = request.nextUrl.clone()
+    url.hostname = `www.${host}`
+    // Query parameters are automatically preserved in the URL object
+    // Use 301 (permanent redirect) for SEO, but 307 (temporary) preserves method and is better for POST requests
+    // For GET requests (which crawlers use), 301 is fine
+    return NextResponse.redirect(url, 301)
+  }
 
   // Allow Facebook's crawler and other social media crawlers
   const isSocialCrawler = 
