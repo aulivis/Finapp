@@ -353,7 +353,7 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
             flexDirection: 'column',
             gap: spacing.sm,
           }}>
-            {rankingData.map((item, index) => (
+            {rankingData.map((item) => (
               <div
                 key={item.position}
                 style={{
