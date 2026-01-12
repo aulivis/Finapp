@@ -201,7 +201,7 @@ export default function LaborMarketChart({ height = 650 }: LaborMarketChartProps
               />
               <Bar
                 dataKey="rate"
-                radius={[0, borderRadius.md, borderRadius.md, 0]}
+                radius={[0, 8, 8, 0]}
                 isAnimationActive={!prefersReducedMotion}
                 animationDuration={prefersReducedMotion ? 0 : 600}
               >

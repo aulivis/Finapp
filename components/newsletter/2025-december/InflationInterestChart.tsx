@@ -368,7 +368,7 @@ export default function InflationInterestChart({ height = 600 }: InflationIntere
             />
             <Bar
               dataKey="cost"
-              radius={[0, borderRadius.md, borderRadius.md, 0]}
+              radius={[0, 8, 8, 0]}
               isAnimationActive={!prefersReducedMotion}
               animationDuration={prefersReducedMotion ? 0 : 600}
             >
