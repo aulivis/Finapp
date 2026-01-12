@@ -2,10 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   
-  // Configure HTML-limited bots (like Facebook's crawler) to receive proper metadata
-  // This ensures Facebook's crawler gets the correct metadata with query parameters
-  htmlLimitedBots: /facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|Slackbot/,
-  
   // Security headers
   async headers() {
     const isProduction = process.env.NODE_ENV === 'production'

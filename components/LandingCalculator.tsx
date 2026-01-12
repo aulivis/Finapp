@@ -555,7 +555,7 @@ export default function LandingCalculator({
                     A(z) <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{formatCurrency(amount)}</strong> vásárlóereje{' '}
                     <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{validStartYear}</strong> és{' '}
                     <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{validEndYear}</strong> között{' '}
-                    <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{formatCurrency(Math.round(calculationData.finalReal))}</strong>-ra csökkent. Ezért fontos, hogy tudd: a pénz nem csak „áll", hanem <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold }}>idővel változik az értéke.</strong>
+                    <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{formatCurrency(Math.round(calculationData.finalReal))}</strong>-ra csökkent. Ezért fontos, hogy tudd: a pénz nem csak „áll&quot;, hanem <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold }}>idővel változik az értéke.</strong>
                   </div>
                 </div>
                 
