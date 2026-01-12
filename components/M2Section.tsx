@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
-import { Coins, TrendingUp, Info } from 'lucide-react'
 import { HISTORICAL_M2_GROWTH } from '@/lib/data/economic-data'
 
 export default function M2Section() {
@@ -56,16 +55,17 @@ export default function M2Section() {
     const validData = m2Data.filter(d => d.growth !== null) as Array<{ year: number; growth: number }>
     if (validData.length === 0) return null
 
-    const width = isMobile ? 200 : 280
-    const height = isMobile ? 60 : 80
-    const padding = 8
+    // Use a base width for calculations, but make it responsive via CSS
+    const baseWidth = 800
+    const height = isMobile ? 140 : 160
+    const padding = 20
 
     const minGrowth = Math.min(...validData.map(d => d.growth))
     const maxGrowth = Math.max(...validData.map(d => d.growth))
     const range = maxGrowth - minGrowth || 1
 
     const points = validData.map((d, index) => {
-      const x = padding + (index / (validData.length - 1)) * (width - padding * 2)
+      const x = padding + (index / (validData.length - 1)) * (baseWidth - padding * 2)
       const y = height - padding - ((d.growth - minGrowth) / range) * (height - padding * 2)
       return { x, y, year: d.year, growth: d.growth }
     })
@@ -75,7 +75,7 @@ export default function M2Section() {
       .join(' ')
 
     return {
-      width,
+      width: baseWidth,
       height,
       pathData,
       points,
@@ -88,9 +88,12 @@ export default function M2Section() {
     <section 
       ref={sectionRef}
       style={{
-        backgroundColor: '#F9FAFB',
+        backgroundColor: 'transparent',
         padding: isMobile ? `${spacing['3xl']} 0` : `${spacing['5xl']} 0`,
-        position: 'relative'
+        position: 'relative',
+        opacity: showContent ? 1 : 0,
+        transform: showContent ? 'translateY(0)' : 'translateY(20px)',
+        transition: prefersReducedMotion ? 'none' : `opacity ${transitions.slow}, transform ${transitions.slow}`
       }}
     >
       <div style={{
@@ -98,17 +101,6 @@ export default function M2Section() {
         margin: '0 auto',
         padding: isMobile ? `0 ${spacing.md}` : `0 ${spacing.xl}`
       }}>
-        {/* Main Card */}
-        <div style={{
-          backgroundColor: colors.background.paper,
-          borderRadius: borderRadius.xl,
-          border: `1px solid ${colors.gray[200]}`,
-          padding: isMobile ? spacing['2xl'] : spacing['3xl'],
-          boxShadow: shadows.md,
-          opacity: showContent ? 1 : 0,
-          transform: showContent ? 'translateY(0)' : 'translateY(20px)',
-          transition: prefersReducedMotion ? 'none' : `opacity ${transitions.slow}, transform ${transitions.slow}`
-        }}>
           {/* Header */}
           <div style={{
             textAlign: 'center',
@@ -139,52 +131,12 @@ export default function M2Section() {
           {/* Visual Content */}
           <div style={{
             display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: isMobile ? spacing['2xl'] : spacing['3xl'],
+            gap: spacing['2xl'],
             marginTop: spacing['2xl']
           }}>
-            {/* Icon Section */}
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: spacing.md,
-              flexShrink: 0
-            }}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: isMobile ? '80px' : '96px',
-                height: isMobile ? '80px' : '96px',
-                borderRadius: borderRadius.full,
-                background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.6) 100%)`,
-                border: `2px solid ${colors.primaryBorder}`,
-                position: 'relative',
-                boxShadow: shadows.md
-              }}>
-                <Coins size={isMobile ? 40 : 48} color={colors.primary} strokeWidth={2} />
-                <div style={{
-                  position: 'absolute',
-                  bottom: '-4px',
-                  right: '-4px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: isMobile ? '32px' : '36px',
-                  height: isMobile ? '32px' : '36px',
-                  borderRadius: borderRadius.full,
-                  backgroundColor: colors.success,
-                  border: `2px solid ${colors.background.paper}`,
-                  boxShadow: shadows.sm
-                }}>
-                  <TrendingUp size={isMobile ? 18 : 20} color="#FFFFFF" strokeWidth={2.5} />
-                </div>
-              </div>
-            </div>
-
             {/* Sparkline Chart */}
             {sparklineData && (
               <div 
@@ -194,34 +146,35 @@ export default function M2Section() {
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: spacing.sm,
-                  flex: 1,
-                  minWidth: 0,
-                  maxWidth: isMobile ? '100%' : '400px'
+                  width: '100%',
+                  maxWidth: isMobile ? '100%' : '800px'
                 }}
                 onMouseEnter={() => setHoveredChart(true)}
                 onMouseLeave={() => setHoveredChart(false)}
               >
                 <div style={{
                   position: 'relative',
-                  width: `${sparklineData.width}px`,
+                  width: '100%',
                   height: `${sparklineData.height}px`,
                   backgroundColor: colors.gray[50],
                   borderRadius: borderRadius.md,
                   border: `1px solid ${colors.gray[200]}`,
-                  padding: spacing.xs,
+                  padding: spacing.md,
                   cursor: 'pointer',
                   transition: prefersReducedMotion ? 'none' : transitions.all
                 }}>
                   <svg
-                    width={sparklineData.width}
+                    width="100%"
                     height={sparklineData.height}
+                    viewBox={`0 0 ${sparklineData.width} ${sparklineData.height}`}
+                    preserveAspectRatio="xMidYMid meet"
                     style={{ overflow: 'visible' }}
                   >
                     {/* Grid lines */}
                     <line
-                      x1={8}
+                      x1={20}
                       y1={sparklineData.height / 2}
-                      x2={sparklineData.width - 8}
+                      x2={sparklineData.width - 20}
                       y2={sparklineData.height / 2}
                       stroke={colors.gray[300]}
                       strokeWidth={1}
@@ -307,94 +260,7 @@ export default function M2Section() {
               </div>
             )}
 
-            {/* Stats Summary */}
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: isMobile ? 'center' : 'flex-start',
-              gap: spacing.md,
-              flexShrink: 0,
-              minWidth: isMobile ? '100%' : '200px'
-            }}>
-              {(() => {
-                const validData = m2Data.filter(d => d.growth !== null) as Array<{ year: number; growth: number }>
-                if (validData.length === 0) return null
-
-                const avgGrowth = validData.reduce((sum, d) => sum + d.growth, 0) / validData.length
-                const maxGrowth = Math.max(...validData.map(d => d.growth))
-                const maxYear = validData.find(d => d.growth === maxGrowth)?.year
-
-                return (
-                  <>
-                    <div style={{
-                      textAlign: isMobile ? 'center' : 'left'
-                    }}>
-                      <div style={{
-                        fontSize: typography.fontSize.xs,
-                        color: colors.text.muted,
-                        marginBottom: spacing.xs
-                      }}>
-                        Átlagos éves növekedés
-                      </div>
-                      <div style={{
-                        fontSize: isMobile ? typography.fontSize['2xl'] : typography.fontSize['3xl'],
-                        fontWeight: typography.fontWeight.bold,
-                        color: colors.text.primary,
-                        fontVariantNumeric: 'tabular-nums'
-                      }} className="tabular-nums">
-                        {avgGrowth > 0 ? '+' : ''}{avgGrowth.toFixed(1)}%
-                      </div>
-                    </div>
-                    {maxYear && (
-                      <div style={{
-                        textAlign: isMobile ? 'center' : 'left'
-                      }}>
-                        <div style={{
-                          fontSize: typography.fontSize.xs,
-                          color: colors.text.muted,
-                          marginBottom: spacing.xs
-                        }}>
-                          Legnagyobb növekedés
-                        </div>
-                        <div style={{
-                          fontSize: isMobile ? typography.fontSize.lg : typography.fontSize.xl,
-                          fontWeight: typography.fontWeight.semibold,
-                          color: colors.error,
-                          fontVariantNumeric: 'tabular-nums'
-                        }} className="tabular-nums">
-                          {maxYear}: {maxGrowth > 0 ? '+' : ''}{maxGrowth.toFixed(1)}%
-                        </div>
-                      </div>
-                    )}
-                  </>
-                )
-              })()}
-            </div>
           </div>
-
-          {/* Mobile Tooltip Info */}
-          {isMobile && (
-            <div style={{
-              marginTop: spacing['2xl'],
-              padding: spacing.md,
-              backgroundColor: colors.infoLight,
-              borderRadius: borderRadius.md,
-              border: `1px solid ${colors.info}`,
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: spacing.md
-            }}>
-              <Info size={20} color={colors.info} style={{ flexShrink: 0, marginTop: '2px' }} />
-              <div style={{
-                fontSize: typography.fontSize.sm,
-                color: colors.text.secondary,
-                lineHeight: typography.lineHeight.relaxed
-              }}>
-                Kumulatív M2 pénzkínálat változás – az infláció mellett kontextust ad
-              </div>
-            </div>
-          )}
-        </div>
       </div>
     </section>
   )
