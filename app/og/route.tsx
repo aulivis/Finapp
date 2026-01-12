@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
       return `${value.toFixed(1)}%`
     }
     
-    return new ImageResponse(
+    const imageResponse = new ImageResponse(
       (
         <div
           style={{
@@ -254,8 +254,14 @@ export async function GET(request: NextRequest) {
     )
     
     // Add cache headers for better performance
-    imageResponse.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
-    return imageResponse
+    const response = new Response(imageResponse.body, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png',
+        'Cache-Control': 'public, max-age=31536000, immutable',
+      },
+    })
+    return response
   } catch (e: any) {
     console.error('OG image generation error:', e.message)
     return new Response(`Failed to generate the image: ${e.message}`, {
