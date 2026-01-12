@@ -9,7 +9,6 @@ import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, transitions, shadows } from '@/lib/design-system'
 import { Info, Wallet, Calendar, TrendingDown } from 'lucide-react'
 import Input from '@/components/ui/Input'
-import StatCard from '@/components/ui/StatCard'
 import SocialShare from '@/components/SocialShare'
 
 const DEFAULT_AMOUNT = 1000000
@@ -460,32 +459,6 @@ export default function LandingCalculator({
                 </div>
               </div>
 
-              {/* StatCards - Detailed numbers */}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-                gap: isMobile ? spacing.md : spacing.lg,
-                marginBottom: spacing['3xl']
-              }}>
-                <StatCard
-                  label="Valódi vásárlóerő"
-                  value={calculationData.finalReal}
-                  formatter={formatCurrency}
-                  style={{
-                    border: `2px solid ${colors.success}`
-                  }}
-                />
-                <StatCard
-                  label="Vásárlóerő veszteség"
-                  value={calculationData.loss}
-                  formatter={(v) => `-${formatCurrency(v)}`}
-                  style={{
-                    border: `2px solid rgba(239, 68, 68, 0.3)`,
-                    backgroundColor: '#FEF7F7'
-                  }}
-                />
-              </div>
-
               {/* Hero Result Message - The Key Insight - Enhanced Focus Card */}
               <div style={{
                 padding: isMobile ? `${spacing['3xl']} ${spacing.lg}` : spacing['4xl'],
@@ -502,21 +475,12 @@ export default function LandingCalculator({
                 animation: prefersReducedMotion ? 'none' : 'pulseShadow 3s ease-in-out infinite'
               }}>
                 <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '4px',
-                  background: `linear-gradient(90deg, rgba(239, 68, 68, 0.3) 0%, rgba(220, 38, 38, 0.3) 50%, rgba(239, 68, 68, 0.3) 100%)`
-                }} />
-                <div style={{
                   marginBottom: spacing.xl
                 }}>
                   <div style={{
-                    fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
-                    color: colors.error,
-                    fontWeight: typography.fontWeight.normal,
-                    letterSpacing: '0.02em',
+                    fontSize: typography.fontSize['2xl'],
+                    color: colors.text.primary,
+                    fontWeight: typography.fontWeight.semibold,
                     marginBottom: spacing.lg
                   }}>
                     Ennyit veszített a pénzed vásárlóerejéből
@@ -631,7 +595,6 @@ export default function LandingCalculator({
           }}>
             <p style={{ margin: '0' }}>
               A <strong>vásárlóerő</strong> azt mutatja meg, hogy egy adott összeggel valójában mennyi terméket és szolgáltatást tudsz megvásárolni.
-              <br /><br />
               Ha az árak emelkednek, miközben a pénzösszeg változatlan marad, a vásárlóerő csökken. Ez a kalkulátor azt szemlélteti, hogy az infláció hogyan befolyásolja a megtakarításod <strong>valós értékét</strong>.
             </p>
           </div>

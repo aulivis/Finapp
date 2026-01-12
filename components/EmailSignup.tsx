@@ -8,6 +8,7 @@ import { colors, spacing, typography, borderRadius, transitions, shadows } from 
 import { isValidEmail } from '@/lib/utils/email'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
+import { Eye } from 'lucide-react'
 
 export default function EmailSignup() {
   const isMobile = useIsMobile(768)
@@ -145,12 +146,55 @@ export default function EmailSignup() {
           <p style={{
             fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
             color: colors.text.secondary,
-            marginBottom: spacing['3xl'],
+            marginBottom: spacing.xl,
             lineHeight: typography.lineHeight.relaxed,
             fontWeight: typography.fontWeight.normal
           }}>
             Érthető, adatvezérelt összefoglaló arról, hogyan hat az infláció, pénzkínálat és piaci változások a nehezen megkeresett pénzedre.
           </p>
+
+          {/* Preview link - Prominent card design */}
+          <div style={{
+            marginBottom: spacing['3xl'],
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <Link
+              href="/hirlevel-2025-december"
+              style={{
+                fontSize: typography.fontSize.base,
+                color: colors.text.primary,
+                textDecoration: 'none',
+                fontWeight: typography.fontWeight.medium,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: spacing.sm,
+                padding: `${spacing.md} ${spacing.xl}`,
+                borderRadius: borderRadius.lg,
+                border: `2px solid ${colors.primaryBorder}`,
+                backgroundColor: colors.primaryLight,
+                transition: 'all 0.2s ease',
+                boxShadow: shadows.sm,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = colors.primary
+                e.currentTarget.style.color = '#FFFFFF'
+                e.currentTarget.style.borderColor = colors.primary
+                e.currentTarget.style.boxShadow = shadows.md
+                e.currentTarget.style.transform = 'translateY(-1px)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = colors.primaryLight
+                e.currentTarget.style.color = colors.text.primary
+                e.currentTarget.style.borderColor = colors.primaryBorder
+                e.currentTarget.style.boxShadow = shadows.sm
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
+            >
+              <Eye size={18} />
+              <span>Előnézet: Nézd meg a hírlevél példáját</span>
+            </Link>
+          </div>
 
             <form onSubmit={handleSubmit} style={{ marginBottom: spacing.xl }}>
               <div style={{
@@ -267,39 +311,6 @@ export default function EmailSignup() {
               </Link>
               .
             </p>
-
-            {/* Preview link */}
-            <div style={{
-              textAlign: 'center',
-              marginBottom: spacing.lg,
-            }}>
-              <Link
-                href="/hirlevel-2025-december"
-                style={{
-                  fontSize: typography.fontSize.sm,
-                  color: colors.primary,
-                  textDecoration: 'none',
-                  fontWeight: typography.fontWeight.medium,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: spacing.xs,
-                  padding: `${spacing.xs} ${spacing.md}`,
-                  borderRadius: borderRadius.md,
-                  transition: transitions.fast,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = colors.primaryLight
-                  e.currentTarget.style.textDecoration = 'underline'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent'
-                  e.currentTarget.style.textDecoration = 'none'
-                }}
-              >
-                <span>👁️</span>
-                <span>Előnézet: Nézd meg a hírlevél példáját</span>
-              </Link>
-            </div>
 
             {/* Trust signals */}
             <div style={{
