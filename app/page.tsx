@@ -113,9 +113,12 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       }
 
       // Return complete metadata that fully overrides layout metadata
+      // IMPORTANT: All URLs must be absolute to override metadataBase correctly
       return {
         title: `${dynamicTitle} | Contexta`,
         description: dynamicDescription,
+        // Override metadataBase to ensure absolute URLs resolve correctly
+        metadataBase: new URL(canonicalBaseUrl),
         // Override canonical URL to include query parameters
         alternates: {
           canonical: shareUrl,
@@ -125,13 +128,13 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
           description: dynamicDescription,
           type: 'website',
           locale: 'hu_HU',
-          // Use absolute URL with query parameters
+          // Use absolute URL with query parameters - must be absolute to override metadataBase
           url: shareUrl,
           siteName: 'Contexta',
-          // Explicitly set images array to override layout defaults
+          // Explicitly set images array to override layout defaults - must be absolute URLs
           images: [
             {
-              url: ogImageUrl,
+              url: ogImageUrl, // Already absolute
               width: 1200,
               height: 630,
               alt: `Vásárlóerő veszteség: ${formatPercentage(lossPercentage)}`,
@@ -142,7 +145,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
           card: 'summary_large_image',
           title: dynamicTitle,
           description: dynamicDescription,
-          images: [ogImageUrl],
+          images: [ogImageUrl], // Already absolute
         },
       }
     } catch (error) {
