@@ -1,12 +1,10 @@
-import { ImageResponse } from '@vercel/og'
+import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 
 // Force dynamic rendering since we use request.url and searchParams
-// Note: This disables static generation, which is expected for dynamic OG images
 export const dynamic = 'force-dynamic'
 
-// Edge runtime is required for @vercel/og ImageResponse
-// Note: Edge runtime disables static generation - this is expected and correct for this route
+// Edge runtime is required for ImageResponse
 export const runtime = 'edge'
 
 // Historical inflation data (inline for edge runtime compatibility)
@@ -101,7 +99,7 @@ export async function GET(request: NextRequest) {
     const formatPercentage = (value: number) => {
       return `${value.toFixed(1)}%`
     }
-    
+
     return new ImageResponse(
       (
         <div
@@ -153,20 +151,17 @@ export async function GET(request: NextRequest) {
             >
               <div
                 style={{
-                  fontFamily: 'system-ui, -apple-system, sans-serif',
                   fontSize: '48px',
                   fontWeight: '400',
                   letterSpacing: '0.05em',
                   color: '#111827',
                   lineHeight: '1.2',
-                  fontFeatureSettings: '"liga" off',
                 }}
               >
                 CONTEXTA
               </div>
               <div
                 style={{
-                  fontFamily: 'system-ui, -apple-system, sans-serif',
                   fontSize: '14px',
                   fontWeight: '400',
                   color: '#6B7280',
@@ -205,7 +200,6 @@ export async function GET(request: NextRequest) {
               >
                 <div
                   style={{
-                    fontFamily: 'system-ui, -apple-system, sans-serif',
                     fontSize: '18px',
                     fontWeight: '700',
                     color: '#EF4444',
@@ -217,12 +211,10 @@ export async function GET(request: NextRequest) {
                 </div>
                 <div
                   style={{
-                    fontFamily: 'system-ui, -apple-system, sans-serif',
                     fontSize: '96px',
                     fontWeight: '700',
                     color: '#EF4444',
                     lineHeight: '1.1',
-                    fontFeatureSettings: '"tnum"',
                   }}
                 >
                   {formatPercentage(lossPercentage)}
@@ -241,7 +233,6 @@ export async function GET(request: NextRequest) {
               >
                 <div
                   style={{
-                    fontFamily: 'system-ui, -apple-system, sans-serif',
                     fontSize: '28px',
                     fontWeight: '600',
                     color: '#111827',
@@ -253,7 +244,6 @@ export async function GET(request: NextRequest) {
                 </div>
                 <div
                   style={{
-                    fontFamily: 'system-ui, -apple-system, sans-serif',
                     fontSize: '20px',
                     fontWeight: '500',
                     color: '#374151',
@@ -264,7 +254,6 @@ export async function GET(request: NextRequest) {
                 </div>
                 <div
                   style={{
-                    fontFamily: 'system-ui, -apple-system, sans-serif',
                     fontSize: '18px',
                     fontWeight: '500',
                     color: '#6B7280',
@@ -294,7 +283,6 @@ export async function GET(request: NextRequest) {
             >
               <div
                 style={{
-                  fontFamily: 'system-ui, -apple-system, sans-serif',
                   fontSize: '16px',
                   fontWeight: '500',
                   color: '#1E40AF',
@@ -330,7 +318,7 @@ export async function GET(request: NextRequest) {
               color: '#000000',
             }}
           >
-            Error generating image
+            Error: {e.message || 'Failed to generate image'}
           </div>
         ),
         {
@@ -340,7 +328,12 @@ export async function GET(request: NextRequest) {
       )
     } catch (error) {
       // Fallback to text response if ImageResponse fails
-      return new Response('Failed to generate image', { status: 500 })
+      return new Response(`Failed to generate image: ${e.message}`, { 
+        status: 500,
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+      })
     }
   }
 }
