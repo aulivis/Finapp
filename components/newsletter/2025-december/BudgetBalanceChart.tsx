@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { colors, typography, spacing, borderRadius } from '@/lib/design-system'
 
@@ -18,7 +17,6 @@ interface BudgetBalanceChartProps {
  * - Infographic style design
  */
 export default function BudgetBalanceChart({ height = 600 }: BudgetBalanceChartProps) {
-  const prefersReducedMotion = useReducedMotion()
   const isMobile = useIsMobile()
 
   const revenueGrowth = 6.3
