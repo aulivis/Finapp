@@ -64,15 +64,28 @@ export default function LandingPageClient() {
   const [endYear, setEndYear] = useState(getInitialEndYear)
   const [amount, setAmount] = useState(getInitialAmount)
 
-  // Update state when URL params change
+  // Update state when URL params change and scroll to calculator
   useEffect(() => {
     const newStartYear = getInitialStartYear()
     const newEndYear = getInitialEndYear()
     const newAmount = getInitialAmount()
     
+    const hasParams = searchParams.get('amount') || searchParams.get('startYear') || searchParams.get('endYear')
+    
     if (newStartYear !== startYear) setStartYear(newStartYear)
     if (newEndYear !== endYear) setEndYear(newEndYear)
     if (newAmount !== amount) setAmount(newAmount)
+    
+    // Scroll to calculator section if URL params are present
+    if (hasParams) {
+      // Small delay to ensure the page has rendered
+      setTimeout(() => {
+        const calculatorSection = document.getElementById('calculator-section')
+        if (calculatorSection) {
+          calculatorSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 

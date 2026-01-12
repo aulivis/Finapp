@@ -2,8 +2,11 @@ import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 
-// Note: Using nodejs runtime because edge runtime may have issues with data imports
-// export const runtime = 'edge'
+// Force dynamic rendering since we use request.url and searchParams
+export const dynamic = 'force-dynamic'
+
+// Use Node.js runtime for better compatibility with data imports
+export const runtime = 'nodejs'
 
 export async function GET(request: NextRequest) {
   try {
@@ -25,6 +28,12 @@ export async function GET(request: NextRequest) {
     
     // Calculate purchasing power loss
     const dataPoints = calculatePurchasingPower(amount, startYear, endYear)
+    
+    // Validate that we have data points
+    if (!dataPoints || dataPoints.length === 0) {
+      throw new Error('No data points calculated - invalid year range')
+    }
+    
     const finalNominal = dataPoints[dataPoints.length - 1]?.nominal || amount
     const finalReal = dataPoints[dataPoints.length - 1]?.real || amount
     const loss = finalNominal - finalReal
