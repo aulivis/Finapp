@@ -5,7 +5,6 @@ import FooterDisclaimer from '@/components/FooterDisclaimer'
 import NewsletterSubscriptionBox from '@/components/NewsletterSubscriptionBox'
 import BackLink from '@/components/BackLink'
 import InflationInterestChart from '@/components/newsletter/2025-december/InflationInterestChart'
-import GDPGrowthChart from '@/components/newsletter/2025-december/GDPGrowthChart'
 import ConsumerConfidenceChart from '@/components/newsletter/2025-december/ConsumerConfidenceChart'
 import LaborMarketChart from '@/components/newsletter/2025-december/LaborMarketChart'
 import BudgetBalanceChart from '@/components/newsletter/2025-december/BudgetBalanceChart'
@@ -97,17 +96,48 @@ export default function NewsletterPage() {
               </p>
             </section>
 
+            {/* Visual separator before first topic */}
+            <div style={{
+              height: '1px',
+              background: `linear-gradient(to right, transparent, ${colors.gray[300]}, transparent)`,
+              marginTop: spacing['3xl'],
+              marginBottom: spacing['3xl'],
+            }} />
+
             {/* 1. Infláció */}
-            <section style={{ marginBottom: spacing['2xl'] }}>
-              <h2 style={{
-                fontSize: typography.fontSize['2xl'],
-                fontWeight: typography.fontWeight.semibold,
-                color: colors.text.primary,
-                marginBottom: spacing.lg,
-                marginTop: spacing['2xl'],
+            <section style={{ marginBottom: spacing['4xl'] }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.md,
+                marginBottom: spacing.xl,
               }}>
-                1. Az infláció: Végre csökken, de mit jelent ez a gyakorlatban?
-              </h2>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  backgroundColor: colors.primaryLight,
+                  border: `2px solid ${colors.primary}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: typography.fontSize.xl,
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.primary,
+                  flexShrink: 0,
+                }}>
+                  1
+                </div>
+                <h2 style={{
+                  fontSize: typography.fontSize['2xl'],
+                  fontWeight: typography.fontWeight.semibold,
+                  color: colors.text.primary,
+                  margin: 0,
+                  flex: 1,
+                }}>
+                  Az infláció: Végre csökken, de mit jelent ez a gyakorlatban?
+                </h2>
+              </div>
               
               <h3 style={{
                 fontSize: typography.fontSize.xl,
@@ -144,40 +174,142 @@ export default function NewsletterPage() {
                 A hiteleknél a helyzet bonyolultabb: a kamatok még mindig 6,5%-on állnak (az MNB alapkamata). Ez azt jelenti, hogy ha új hitelt vennél fel, a költségek magasabbak, mint 2021-ben voltak, de stabilak – nem emelkednek tovább.
               </p>
 
+              {/* Information box about MNB alapkamat */}
+              <div style={{
+                marginTop: spacing.xl,
+                marginBottom: spacing.xl,
+                padding: spacing.xl,
+                backgroundColor: colors.infoLight,
+                borderRadius: borderRadius.lg,
+                borderLeft: `4px solid ${colors.info}`,
+                boxShadow: shadows.sm,
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: spacing.md,
+                }}>
+                  <div style={{
+                    fontSize: '20px',
+                    lineHeight: 1,
+                    color: colors.info,
+                  }}>
+                    ℹ️
+                  </div>
+                  <div>
+                    <strong style={{ color: colors.text.primary, display: 'block', marginBottom: spacing.sm }}>
+                      Mi az MNB alapkamat?
+                    </strong>
+                    <p style={{ 
+                      marginBottom: spacing.sm,
+                      color: colors.text.secondary,
+                      lineHeight: typography.lineHeight.relaxed,
+                    }}>
+                      A Magyar Nemzeti Bank (MNB) alapkamata az a referencia kamatláb, amelyet a jegybank a pénzügyi rendszer stabilitásáért felelős. Ez a kamat meghatározza, hogy milyen áron kölcsönöznek egymásnak a bankok, és közvetve befolyásolja az összes többi kamatot a gazdaságban.
+                    </p>
+                    <p style={{ 
+                      marginBottom: 0,
+                      color: colors.text.secondary,
+                      lineHeight: typography.lineHeight.relaxed,
+                    }}>
+                      <strong style={{ color: colors.text.primary }}>Gyakorlati jelentése:</strong> Ha az alapkamat magas (mint most 6,5%), akkor a bankok is magasabb kamatot számítanak fel a hitelekre, de magasabb kamatot is fizetnek a betétekre. Ha az alapkamat alacsony, olcsóbbak a hitelek, de a megtakarítások is kevesebbet hoznak. A jegybank ezzel a kamattal próbálja szabályozni az inflációt és a gazdasági növekedést.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Chart: Inflation & Interest Rates */}
               <div style={{
                 marginTop: spacing['2xl'],
                 marginBottom: spacing['2xl'],
-                padding: spacing.lg,
+                padding: spacing.xl,
                 backgroundColor: colors.background.paper,
                 borderRadius: borderRadius.lg,
                 border: `1px solid ${colors.gray[200]}`,
+                boxShadow: shadows.sm,
               }}>
                 <InflationInterestChart height={600} />
               </div>
 
-              <p style={{
-                marginBottom: spacing.md,
-                padding: spacing.lg,
+              <div style={{
+                marginTop: spacing.xl,
+                marginBottom: spacing.xl,
+                padding: spacing.xl,
                 backgroundColor: colors.primaryLight,
-                borderRadius: borderRadius.md,
+                borderRadius: borderRadius.lg,
                 borderLeft: `4px solid ${colors.primary}`,
+                boxShadow: shadows.sm,
               }}>
-                <strong>Miért fontos most?</strong> Az év végi inflációs adat meghatározza, hogy a jövő év elején milyen mértékben emelkedhetnek a bérek és nyugdíjak &quot;értéke&quot;.
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: spacing.md,
+                }}>
+                  <div style={{
+                    fontSize: '20px',
+                    lineHeight: 1,
+                    color: colors.primary,
+                  }}>
+                    💡
+                  </div>
+                  <div>
+                    <strong style={{ color: colors.text.primary, display: 'block', marginBottom: spacing.xs }}>
+                      Miért fontos most?
+                    </strong>
+                    <span style={{ color: colors.text.secondary }}>
+                      Az év végi inflációs adat meghatározza, hogy a jövő év elején milyen mértékben emelkedhetnek a bérek és nyugdíjak &quot;értéke&quot;.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
+                A 3,8%-os novemberi inflációs adat azonban csak a felszínt mutatja. A Magyar Nemzeti Bank adatai szerint az úgynevezett maginfláció – ami kiszűri az élelmiszerek és energia árának rövid távú kilengéseit – még mindig 4,1% volt novemberben, jóval magasabb a célzóna felett. Ez azt jelenti, hogy a mindennapi szolgáltatások, a busz- és vonatjegyek, a fodrászat, a mosoda, a banki díjak terén a drágulás még mindig jelentősebb, mint ahogy a fő inflációs szám sugallja. A forint 2025-ös erősödése (közel 5%-kal a euróval szemben) segítette az árcsökkenést, de ez a hatás 2026-ra elapadhat. A kormány árstopjai és egyéb adminisztratív intézkedései önmagukban 1,5-2 százalékponttal csökkentették a hivatalos inflációt – ezek nélkül a kosárban 5-5,5%-os drágulást mérhetnénk. Az élelmiszerek árai különösen volatilisak voltak: a novemberi enyhe csökkenés a kiugróan alacsony élelmiszerár-emelkedésnek köszönhető, ami nem feltétlenül tartható fenn. A lakossági inflációs várakozások továbbra is a 3%-os cél fölött ragadtak (4-5% körül), ami azt jelzi, hogy az emberek még nem hiszik el a tartós árstabilitást – és ez önbeteljesítő jóslat lehet, ha a cégek ennek megfelelően áraznak. A kamatcsökkentés várhatóan csak 2026 második felében indulhat, amikor a maginfláció is tartósan a cél körül stabilizálódik – addig a lakáshitelek, fogyasztási hitelek kamatai magasak maradnak, ami visszafogja a nagyobb kiadásokat, például az autóvásárlást vagy lakásfelújítást.
               </p>
             </section>
 
+            {/* Visual separator */}
+            <div style={{
+              height: '1px',
+              background: `linear-gradient(to right, transparent, ${colors.gray[300]}, transparent)`,
+              marginTop: spacing['4xl'],
+              marginBottom: spacing['4xl'],
+            }} />
+
             {/* 2. Gazdaság növekedés */}
-            <section style={{ marginBottom: spacing['2xl'] }}>
-              <h2 style={{
-                fontSize: typography.fontSize['2xl'],
-                fontWeight: typography.fontWeight.semibold,
-                color: colors.text.primary,
-                marginBottom: spacing.lg,
-                marginTop: spacing['2xl'],
+            <section style={{ marginBottom: spacing['4xl'] }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.md,
+                marginBottom: spacing.xl,
               }}>
-                2. A gazdaság nő – de miért nem érezzük?
-              </h2>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  backgroundColor: colors.primaryLight,
+                  border: `2px solid ${colors.primary}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: typography.fontSize.xl,
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.primary,
+                  flexShrink: 0,
+                }}>
+                  2
+                </div>
+                <h2 style={{
+                  fontSize: typography.fontSize['2xl'],
+                  fontWeight: typography.fontWeight.semibold,
+                  color: colors.text.primary,
+                  margin: 0,
+                  flex: 1,
+                }}>
+                  A gazdaság nő – de miért nem érezzük?
+                </h2>
+              </div>
               
               <h3 style={{
                 fontSize: typography.fontSize.xl,
@@ -223,40 +355,85 @@ export default function NewsletterPage() {
                 <li style={{ marginBottom: spacing.sm }}>A cégek nem építenek új gyárakat, így kevesebb új munkahely jön létre</li>
               </ul>
 
-              {/* Chart: GDP Growth Decomposition */}
               <div style={{
-                marginTop: spacing['2xl'],
-                marginBottom: spacing['2xl'],
-                padding: spacing.lg,
-                backgroundColor: colors.background.paper,
+                marginTop: spacing.xl,
+                marginBottom: spacing.xl,
+                padding: spacing.xl,
+                backgroundColor: colors.primaryLight,
                 borderRadius: borderRadius.lg,
-                border: `1px solid ${colors.gray[200]}`,
+                borderLeft: `4px solid ${colors.primary}`,
+                boxShadow: shadows.sm,
               }}>
-                <GDPGrowthChart height={500} />
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: spacing.md,
+                }}>
+                  <div style={{
+                    fontSize: '20px',
+                    lineHeight: 1,
+                    color: colors.primary,
+                  }}>
+                    💡
+                  </div>
+                  <div>
+                    <strong style={{ color: colors.text.primary, display: 'block', marginBottom: spacing.xs }}>
+                      Miért fontos most?
+                    </strong>
+                    <span style={{ color: colors.text.secondary }}>
+                      Az év végi adatok alapján dől el, hogy 2026-ban mernek-e a cégek újra beruházni, ami közvetlenül a te jövőbeli munkalehetőségeidet is befolyásolja.
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              <p style={{
-                marginBottom: spacing.md,
-                padding: spacing.lg,
-                backgroundColor: colors.primaryLight,
-                borderRadius: borderRadius.md,
-                borderLeft: `4px solid ${colors.primary}`,
-              }}>
-                <strong>Miért fontos most?</strong> Az év végi adatok alapján dől el, hogy 2026-ban mernek-e a cégek újra beruházni, ami közvetlenül a te jövőbeli munkalehetőségeidet is befolyásolja.
+              <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
+                A 0,6%-os növekedés mögött egy év teljes jellemzője bújik meg. A 2025-ös év egészét nézve a gazdaság mindössze 0,4-0,5%-ot bővülhet, ami alig több a stagnálásnál. A legdrámaibb adat a beruházások terén látszik: a bruttó fix tőkealkotás (vagyis az új gépek, épületek, technológia vásárlása) 2025-ben csökkent, ami azt jelenti, hogy a cégek nem fejlesztenek, nem építenek új gyárakat, nem vesznek modern technológiát. Ennek oka a bizonytalan nemzetközi környezet, a német gazdaság gyengülése (amely a magyar export 27%-át adja), és az EU-s források befagyása, amely 2025-ben 2,5%-kal visszavetette a beruházásokat. A külkereskedelem is vérzik: a gépjármű- és akkumulátorexport 8-10%-kal esett vissza, mivel az európai autópiac telítődött, és a kínai verseny erősödik. Az állami kiadások nőttek ugyan, de ezt részben az államadósság finanszírozása emésztette fel – a kamatkiadások 2025-ben meghaladták a GDP 3%-át. Ez a szerkezet azért nem érezhető a mindennapokban, mert a háztartások a reálbéreik növekedését (3-4% éves szinten) rögtön elköltik élelmiszerre, rezsire és szolgáltatásokra, miközben a cégek nem teremtenek új, magasabb hozzáadott értékű munkahelyeket. Így marad a &quot;túlélő üzemmód&quot; – van munka, van fizetés, de nincs előrelépés, nincs növekedési dinamika, amely új lehetőségeket nyithatna.
               </p>
             </section>
 
+            {/* Visual separator */}
+            <div style={{
+              height: '1px',
+              background: `linear-gradient(to right, transparent, ${colors.gray[300]}, transparent)`,
+              marginTop: spacing['4xl'],
+              marginBottom: spacing['4xl'],
+            }} />
+
             {/* 3. Fogyasztói bizalom */}
-            <section style={{ marginBottom: spacing['2xl'] }}>
-              <h2 style={{
-                fontSize: typography.fontSize['2xl'],
-                fontWeight: typography.fontWeight.semibold,
-                color: colors.text.primary,
-                marginBottom: spacing.lg,
-                marginTop: spacing['2xl'],
+            <section style={{ marginBottom: spacing['4xl'] }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.md,
+                marginBottom: spacing.xl,
               }}>
-                3. Fogyasztói bizalom: Miért nem költünk, ha van munkánk?
-              </h2>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  backgroundColor: colors.primaryLight,
+                  border: `2px solid ${colors.primary}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: typography.fontSize.xl,
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.primary,
+                  flexShrink: 0,
+                }}>
+                  3
+                </div>
+                <h2 style={{
+                  fontSize: typography.fontSize['2xl'],
+                  fontWeight: typography.fontWeight.semibold,
+                  color: colors.text.primary,
+                  margin: 0,
+                  flex: 1,
+                }}>
+                  Fogyasztói bizalom: Miért nem költünk, ha van munkánk?
+                </h2>
+              </div>
               
               <h3 style={{
                 fontSize: typography.fontSize.xl,
@@ -306,36 +483,94 @@ export default function NewsletterPage() {
               <div style={{
                 marginTop: spacing['2xl'],
                 marginBottom: spacing['2xl'],
-                padding: spacing.lg,
+                padding: spacing.xl,
                 backgroundColor: colors.background.paper,
                 borderRadius: borderRadius.lg,
                 border: `1px solid ${colors.gray[200]}`,
+                boxShadow: shadows.sm,
               }}>
                 <ConsumerConfidenceChart height={700} />
               </div>
 
-              <p style={{
-                marginBottom: spacing.md,
-                padding: spacing.lg,
+              <div style={{
+                marginTop: spacing.xl,
+                marginBottom: spacing.xl,
+                padding: spacing.xl,
                 backgroundColor: colors.primaryLight,
-                borderRadius: borderRadius.md,
+                borderRadius: borderRadius.lg,
                 borderLeft: `4px solid ${colors.primary}`,
+                boxShadow: shadows.sm,
               }}>
-                <strong>Miért fontos most?</strong> Az év végi bizalmi adatok befolyásolják a karácsonyi vásárlást és a 2026-os év kezdetét. Ha a bizalom továbbra is gyenge, a cégek nem fognak bővülni, mert nem bíznak a keresletben.
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: spacing.md,
+                }}>
+                  <div style={{
+                    fontSize: '20px',
+                    lineHeight: 1,
+                    color: colors.primary,
+                  }}>
+                    💡
+                  </div>
+                  <div>
+                    <strong style={{ color: colors.text.primary, display: 'block', marginBottom: spacing.xs }}>
+                      Miért fontos most?
+                    </strong>
+                    <span style={{ color: colors.text.secondary }}>
+                      Az év végi bizalmi adatok befolyásolják a karácsonyi vásárlást és a 2026-os év kezdetét. Ha a bizalom továbbra is gyenge, a cégek nem fognak bővülni, mert nem bíznak a keresletben.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
+                A -24,3-as bizalmi index nem csupán egy szám, hanem egy évekkel ezelőtt kezdődő trend csúcsa. A magyar fogyasztói bizalom 2022 óta folyamatosan a mélyben jár, és bár 2025 júliusában -28,9 ponton volt a mélypont, a novemberi -24,3 még mindig a lejtőn való toporgást jelzi. Az Ipsos globális felmérése szerint a 30 vizsgált ország közül Magyarországon a második legpesszimistábbak a fogyasztók, és ez a helyzet már évek óta változatlan – 2024-ben is a sereghajtók között voltunk. Az érdekesség, hogy a fogyasztói bizalom és a tényleges fogyasztás között szakadék tátong: 2025-ben a kiskereskedelmi forgalom 3,1%-kal nőtt, ami azt jelzi, hogy az emberek bár félnek, muszáj költeniük az alapvető dolgokra. A bizalmat leginkább a lakhatási költségek (rezsi, lakbér), a gyógyszerárak és az élelmiszerárak alakulása rombolja – ezek azok a kiadások, amelyekre nincs ráhatása a háztartásoknak, így a kontrollérzet hiánya pesszimizmust szül. A bizalmi index ráadásul önbeteljesítő is: ha a vállalkozások azt látják, hogy a fogyasztók nem bíznak a jövőben, elhalasztják a beruházásokat, ami miatt kevesebb új munkahely jön létre, ami tovább rontja a bizalmat. Ez a spirál nehezen törik meg, és 2026 elején a 11%-os minimálbér-emelés sem garantáltan oldja meg – ha az emberek tartanak a munkahelyük elvesztésétől, inkább takarékoskodnak, mintsem elköltik a plusz jövedelmet.
               </p>
             </section>
 
+            {/* Visual separator */}
+            <div style={{
+              height: '1px',
+              background: `linear-gradient(to right, transparent, ${colors.gray[300]}, transparent)`,
+              marginTop: spacing['4xl'],
+              marginBottom: spacing['4xl'],
+            }} />
+
             {/* 4. Munkaerőpiac */}
-            <section style={{ marginBottom: spacing['2xl'] }}>
-              <h2 style={{
-                fontSize: typography.fontSize['2xl'],
-                fontWeight: typography.fontWeight.semibold,
-                color: colors.text.primary,
-                marginBottom: spacing.lg,
-                marginTop: spacing['2xl'],
+            <section style={{ marginBottom: spacing['4xl'] }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.md,
+                marginBottom: spacing.xl,
               }}>
-                4. Munkaerőpiac: Biztonság vagy bizonytalanság?
-              </h2>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  backgroundColor: colors.primaryLight,
+                  border: `2px solid ${colors.primary}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: typography.fontSize.xl,
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.primary,
+                  flexShrink: 0,
+                }}>
+                  4
+                </div>
+                <h2 style={{
+                  fontSize: typography.fontSize['2xl'],
+                  fontWeight: typography.fontWeight.semibold,
+                  color: colors.text.primary,
+                  margin: 0,
+                  flex: 1,
+                }}>
+                  Munkaerőpiac: Biztonság vagy bizonytalanság?
+                </h2>
+              </div>
               
               <h3 style={{
                 fontSize: typography.fontSize.xl,
@@ -385,36 +620,94 @@ export default function NewsletterPage() {
               <div style={{
                 marginTop: spacing['2xl'],
                 marginBottom: spacing['2xl'],
-                padding: spacing.lg,
+                padding: spacing.xl,
                 backgroundColor: colors.background.paper,
                 borderRadius: borderRadius.lg,
                 border: `1px solid ${colors.gray[200]}`,
+                boxShadow: shadows.sm,
               }}>
                 <LaborMarketChart height={650} />
               </div>
 
-              <p style={{
-                marginBottom: spacing.md,
-                padding: spacing.lg,
+              <div style={{
+                marginTop: spacing.xl,
+                marginBottom: spacing.xl,
+                padding: spacing.xl,
                 backgroundColor: colors.primaryLight,
-                borderRadius: borderRadius.md,
+                borderRadius: borderRadius.lg,
                 borderLeft: `4px solid ${colors.primary}`,
+                boxShadow: shadows.sm,
               }}>
-                <strong>Miért fontos most?</strong> Az év végi adatok (munkanélküliség, betöltetlen álláshelyek) meghatározzák, hogy 2026-ban milyen erőtér alakul ki a bértárgyalásoknál.
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: spacing.md,
+                }}>
+                  <div style={{
+                    fontSize: '20px',
+                    lineHeight: 1,
+                    color: colors.primary,
+                  }}>
+                    💡
+                  </div>
+                  <div>
+                    <strong style={{ color: colors.text.primary, display: 'block', marginBottom: spacing.xs }}>
+                      Miért fontos most?
+                    </strong>
+                    <span style={{ color: colors.text.secondary }}>
+                      Az év végi adatok (munkanélküliség, betöltetlen álláshelyek) meghatározzák, hogy 2026-ban milyen erőtér alakul ki a bértárgyalásoknál.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
+                A 4,5%-os munkanélküliségi ráta mögött egy láthatatlan, de érzékelhető strukturális változás bújik meg. A munkaerőpiaci feszesség – vagyis hogy mennyire küzdenek a cégek munkaerőért – 2025-ben folyamatosan enyhült: a betöltetlen álláshelyek száma 15%-kal csökkent 2024-hez képest, ami azt jelenti, hogy a munkaadók nem annyira sürgetően keresnek új embereket. Ez azért van, mert a cégek nem bővülnek, inkább a meglévő létszámot tartják, és ha valaki elmegy, nem mindig pótolják. Az új munkahelyek jelentős része a közfoglalkoztatásban vagy az állami szektorban jön létre, a versenyszféra csendben stagnál. A 2026. január 1-jei minimálbér-emelés 29 200 forintos bruttó növekedést jelent, de a nettó béremelés csak 19 500 forint, mivel a magasabb bér magasabb adó- és járulékterhet is von maga után. Ez a különbség fontos: a munkáltató többletköltsége nagyobb, mint a munkavállaló többletjövedelme. Az MNB adatai szerint a magánszektorbeli új munkaszerződések száma 2025-ben 12%-kal csökkent, miközben a közszféráé nőtt – ez azt jelenti, hogy a versenyszféra bizalma a jövőbeli kereslettel szemben gyenge, nem tervez hosszú távú létszámbővítést. Így a &quot;biztonság&quot; csak annyit jelent, hogy aki dolgozik, az maradhat, de aki munkát keres, annak nehezebb jó minőségű, versenyszféra-beli állást találnia, mint 2022-ben.
               </p>
             </section>
 
+            {/* Visual separator */}
+            <div style={{
+              height: '1px',
+              background: `linear-gradient(to right, transparent, ${colors.gray[300]}, transparent)`,
+              marginTop: spacing['4xl'],
+              marginBottom: spacing['4xl'],
+            }} />
+
             {/* 5. Államháztartás */}
-            <section style={{ marginBottom: spacing['2xl'] }}>
-              <h2 style={{
-                fontSize: typography.fontSize['2xl'],
-                fontWeight: typography.fontWeight.semibold,
-                color: colors.text.primary,
-                marginBottom: spacing.lg,
-                marginTop: spacing['2xl'],
+            <section style={{ marginBottom: spacing['4xl'] }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: spacing.md,
+                marginBottom: spacing.xl,
               }}>
-                5. Az állam költségvetése: Miért fontos ez neked?
-              </h2>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  backgroundColor: colors.primaryLight,
+                  border: `2px solid ${colors.primary}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: typography.fontSize.xl,
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.primary,
+                  flexShrink: 0,
+                }}>
+                  5
+                </div>
+                <h2 style={{
+                  fontSize: typography.fontSize['2xl'],
+                  fontWeight: typography.fontWeight.semibold,
+                  color: colors.text.primary,
+                  margin: 0,
+                  flex: 1,
+                }}>
+                  Az állam költségvetése: Miért fontos ez neked?
+                </h2>
+              </div>
               
               <h3 style={{
                 fontSize: typography.fontSize.xl,
@@ -464,54 +757,182 @@ export default function NewsletterPage() {
               <div style={{
                 marginTop: spacing['2xl'],
                 marginBottom: spacing['2xl'],
-                padding: spacing.lg,
+                padding: spacing.xl,
                 backgroundColor: colors.background.paper,
                 borderRadius: borderRadius.lg,
                 border: `1px solid ${colors.gray[200]}`,
+                boxShadow: shadows.sm,
               }}>
                 <BudgetBalanceChart height={600} />
               </div>
 
-              <p style={{
-                marginBottom: spacing.md,
-                padding: spacing.lg,
+              <div style={{
+                marginTop: spacing.xl,
+                marginBottom: spacing.xl,
+                padding: spacing.xl,
                 backgroundColor: colors.primaryLight,
-                borderRadius: borderRadius.md,
+                borderRadius: borderRadius.lg,
                 borderLeft: `4px solid ${colors.primary}`,
+                boxShadow: shadows.sm,
               }}>
-                <strong>Miért fontos most?</strong> Az év végi költségvetési zárás meghatározza, hogy 2026-ban milyen adók és támogatások várnak ránk.
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: spacing.md,
+                }}>
+                  <div style={{
+                    fontSize: '20px',
+                    lineHeight: 1,
+                    color: colors.primary,
+                  }}>
+                    💡
+                  </div>
+                  <div>
+                    <strong style={{ color: colors.text.primary, display: 'block', marginBottom: spacing.xs }}>
+                      Miért fontos most?
+                    </strong>
+                    <span style={{ color: colors.text.secondary }}>
+                      Az év végi költségvetési zárás meghatározza, hogy 2026-ban milyen adók és támogatások várnak ránk.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
+                A 1,9%-os éves hiánycél azonban csak az egyik oldala a történetnek. Az uniós szabályok szerint a strukturális hiánynak (vagyis az államháztartás egyensúlyának, ha nem számítjuk a gazdasági ciklusból adódó kiadásokat vagy bevételeket) 3% alatt kell maradnia, de a 2025-ös adatok azt mutatják, hogy a magyar államháztartás szezonálisan kiigazítva 3,5-4% közötti strukturális hiánnyal működik. Ez azt jelenti, hogy az állam túlköltekezik, és ezt nem a gazdasági lassulás indokolja, hanem strukturális problémák. Az EU-források kérdése kulcsfontosságú: 2025-ben 2,3%-kal növelte volna a GDP-t, ha a források zavartalanul érkeznek, de a fagyasztás miatt ez az összeg nem érkezett meg, és a kormánynak pótolnia kellett a hiányzó pénzt belső forrásokból, ami növelte az államadósságot. Az államadósság-ráta 2025 végére várhatóan 71-72% körül alakult, ami magasabb a 2024-es 69%-nál, és ez közvetlenül érint mindenkit: minél magasabb az adósság, annál több pénzt kell kamatra fordítani, ami kevesebb marad oktatásra, egészségügyre, infrastruktúrára. A kormány 2026-ra 3% alatti hiánycélt tűzött ki, de ez csak akkor tartható, ha az EU-források felszabadulnak, és a gazdasági növekedés valóban eléri a tervezett 2,4%-ot. Ha ez nem történik meg, akkor vagy a tervezett adócsökkentések (szja-emelés, családi adókedvezmények) csúsznak, vagy újabb kiadáscsökkentések jönnek, amelyek közvetve minden állami szolgáltatást érinthetnek. Az államháztartás tehát nem csak egy könyvelési tételek sorozata, hanem a jövő évi közszolgáltatások minőségének és elérhetőségének alapja.
               </p>
             </section>
 
-            {/* Summary */}
-            <section style={{ marginBottom: spacing['2xl'] }}>
-              <h2 style={{
-                fontSize: typography.fontSize['2xl'],
-                fontWeight: typography.fontWeight.semibold,
-                color: colors.text.primary,
-                marginBottom: spacing.lg,
-                marginTop: spacing['2xl'],
-              }}>
-                Összefoglaló: Mit jelent mindez 2026-ra?
-              </h2>
-              <p style={{ marginBottom: spacing.md }}>
-                A 2025-ös decemberi adatok azt mutatják, hogy a magyar gazdaság egy fordulóponton áll. Az infláció csökkenése adott, a növekedés elindulása azonban még kérdéses. A legnagyobb kihívás a bizalom hiánya: a háztartások és a cégek is óvatosak.
-              </p>
-              <p style={{ marginBottom: spacing.md }}>
-                <strong>Kulcskérdések 2026-ra:</strong>
-              </p>
-              <ul style={{
-                marginBottom: spacing.lg,
-                paddingLeft: spacing['2xl'],
-                listStyleType: 'disc',
-              }}>
-                <li style={{ marginBottom: spacing.sm }}>Tartós lesz-e az inflációs csökkenés?</li>
-                <li style={{ marginBottom: spacing.sm }}>Mernek-e a cégek újra beruházni?</li>
-                <li style={{ marginBottom: spacing.sm }}>Nő-e a bizalom a gazdaságpolitika iránt?</li>
-              </ul>
-              <p style={{ marginBottom: spacing.md }}>
-                Ezekre a kérdésekre a választ a 2026-os év eleji adatok fogják megadni.
-              </p>
+            {/* Visual separator before summary */}
+            <div style={{
+              height: '2px',
+              background: `linear-gradient(to right, transparent, ${colors.primary}40, ${colors.primary}, ${colors.primary}40, transparent)`,
+              marginTop: spacing['5xl'],
+              marginBottom: spacing['3xl'],
+            }} />
+
+            {/* Summary - Distinctly styled */}
+            <section style={{
+              marginBottom: spacing['2xl'],
+              padding: spacing['2xl'],
+              backgroundColor: `linear-gradient(135deg, ${colors.primaryLight} 0%, ${colors.background.paper} 100%)`,
+              background: `linear-gradient(135deg, ${colors.primaryLight} 0%, ${colors.background.paper} 50%, ${colors.gray[50]} 100%)`,
+              borderRadius: borderRadius.xl,
+              border: `2px solid ${colors.primary}20`,
+              boxShadow: shadows.lg,
+              position: 'relative',
+              overflow: 'hidden',
+            }}>
+              {/* Decorative accent */}
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '4px',
+                background: `linear-gradient(to right, ${colors.primary}, ${colors.primaryHover})`,
+              }} />
+              
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: spacing.md,
+                  marginBottom: spacing.xl,
+                }}>
+                  <div style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '50%',
+                    backgroundColor: colors.primary,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: typography.fontSize['2xl'],
+                    fontWeight: typography.fontWeight.bold,
+                    color: '#FFFFFF',
+                    flexShrink: 0,
+                    boxShadow: shadows.md,
+                  }}>
+                    📊
+                  </div>
+                  <h2 style={{
+                    fontSize: typography.fontSize['3xl'],
+                    fontWeight: typography.fontWeight.bold,
+                    color: colors.text.primary,
+                    margin: 0,
+                    flex: 1,
+                  }}>
+                    Összefoglaló: Mit jelent mindez 2026-ra?
+                  </h2>
+                </div>
+                
+                <p style={{
+                  marginBottom: spacing.lg,
+                  fontSize: typography.fontSize.lg,
+                  lineHeight: typography.lineHeight.relaxed,
+                  color: colors.text.secondary,
+                }}>
+                  A 2025-ös decemberi adatok azt mutatják, hogy a magyar gazdaság egy fordulóponton áll. Az infláció csökkenése adott, a növekedés elindulása azonban még kérdéses. A legnagyobb kihívás a bizalom hiánya: a háztartások és a cégek is óvatosak.
+                </p>
+                
+                <div style={{
+                  padding: spacing.xl,
+                  backgroundColor: colors.background.paper,
+                  borderRadius: borderRadius.lg,
+                  border: `1px solid ${colors.gray[200]}`,
+                  marginBottom: spacing.lg,
+                }}>
+                  <p style={{
+                    marginBottom: spacing.md,
+                    fontSize: typography.fontSize.lg,
+                    fontWeight: typography.fontWeight.semibold,
+                    color: colors.text.primary,
+                  }}>
+                    <strong>Kulcskérdések 2026-ra:</strong>
+                  </p>
+                  <ul style={{
+                    marginBottom: 0,
+                    paddingLeft: spacing['2xl'],
+                    listStyleType: 'disc',
+                  }}>
+                    <li style={{
+                      marginBottom: spacing.md,
+                      fontSize: typography.fontSize.base,
+                      lineHeight: typography.lineHeight.relaxed,
+                      color: colors.text.secondary,
+                    }}>
+                      Tartós lesz-e az inflációs csökkenés?
+                    </li>
+                    <li style={{
+                      marginBottom: spacing.md,
+                      fontSize: typography.fontSize.base,
+                      lineHeight: typography.lineHeight.relaxed,
+                      color: colors.text.secondary,
+                    }}>
+                      Mernek-e a cégek újra beruházni?
+                    </li>
+                    <li style={{
+                      marginBottom: 0,
+                      fontSize: typography.fontSize.base,
+                      lineHeight: typography.lineHeight.relaxed,
+                      color: colors.text.secondary,
+                    }}>
+                      Nő-e a bizalom a gazdaságpolitika iránt?
+                    </li>
+                  </ul>
+                </div>
+                
+                <p style={{
+                  marginBottom: 0,
+                  fontSize: typography.fontSize.base,
+                  lineHeight: typography.lineHeight.relaxed,
+                  color: colors.text.secondary,
+                  fontStyle: 'italic',
+                }}>
+                  Ezekre a kérdésekre a választ a 2026-os év eleji adatok fogják megadni.
+                </p>
+              </div>
             </section>
           </div>
         </article>

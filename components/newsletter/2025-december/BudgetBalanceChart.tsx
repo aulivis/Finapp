@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
-import { colors, typography, spacing, borderRadius } from '@/lib/design-system'
+import { colors, typography, spacing, borderRadius, shadows } from '@/lib/design-system'
 
 interface BudgetBalanceChartProps {
   height?: number
@@ -23,9 +23,6 @@ export default function BudgetBalanceChart({ height = 600 }: BudgetBalanceChartP
   const expenditureGrowth = 6.8
   const deficitQ1Q3 = 1.9
   const deficitQ3 = 4.2
-
-  // Calculate scale tilt (expenditure is heavier, so right side is lower)
-  const scaleTilt = 8 // degrees tilt to the right
 
   return (
     <div
@@ -53,326 +50,290 @@ export default function BudgetBalanceChart({ height = 600 }: BudgetBalanceChartP
         fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
         fontWeight: typography.fontWeight.bold,
         color: '#111827', // 4.5:1 contrast
-        marginBottom: spacing.xl,
+        marginBottom: spacing['2xl'],
         textAlign: 'center',
       }}>
-        State Budget: Spending More Than It Earns
+        Államháztartás: Többet költ, mint amennyit keres
       </h3>
 
-      {/* Balance Scale Illustration */}
+      {/* Revenue vs Expenditure Comparison */}
       <div style={{
-        position: 'relative',
-        width: '100%',
-        height: isMobile ? '400px' : `${Math.min(height * 0.75, 450)}px`,
-        marginBottom: spacing['2xl'],
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: spacing.xl,
+        marginBottom: spacing['2xl'],
       }}>
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 600 450"
-          style={{ overflow: 'visible' }}
-        >
-          {/* Scale base/stand */}
-          <g>
-            {/* Base triangle */}
-            <path
-              d="M 280 420 L 320 420 L 300 380 Z"
-              fill={colors.gray[400]}
-              stroke={colors.gray[500]}
-              strokeWidth="2"
-            />
-            {/* Vertical pole */}
-            <line
-              x1="300"
-              y1="380"
-              x2="300"
-              y2="200"
-              stroke={colors.gray[500]}
-              strokeWidth="4"
-              strokeLinecap="round"
-            />
-            {/* Horizontal beam (tilted) */}
-            <g transform={`translate(300, 200) rotate(${scaleTilt})`}>
-              <line
-                x1="-200"
-                y1="0"
-                x2="200"
-                y2="0"
-                stroke={colors.gray[600]}
-                strokeWidth="6"
-                strokeLinecap="round"
-              />
-              {/* Center pivot */}
-              <circle cx="0" cy="0" r="8" fill={colors.gray[600]} />
-            </g>
-          </g>
+        {/* Revenue Card */}
+        <div style={{
+          flex: 1,
+          padding: spacing['2xl'],
+          backgroundColor: colors.infoLight,
+          borderRadius: borderRadius.xl,
+          border: `2px solid ${colors.info}`,
+          boxShadow: shadows.md,
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+          {/* Decorative background pattern */}
+          <div style={{
+            position: 'absolute',
+            top: -20,
+            right: -20,
+            width: '120px',
+            height: '120px',
+            borderRadius: '50%',
+            backgroundColor: colors.info,
+            opacity: 0.1,
+          }} />
+          
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: spacing.md,
+              marginBottom: spacing.lg,
+            }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                backgroundColor: colors.info,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px',
+              }}>
+                💰
+              </div>
+              <div>
+                <div style={{
+                  fontSize: typography.fontSize.sm,
+                  color: colors.text.muted,
+                  marginBottom: spacing.xs,
+                }}>
+                  Bevétel
+                </div>
+                <div style={{
+                  fontSize: typography.fontSize['3xl'],
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.text.primary,
+                }}>
+                  +{revenueGrowth}%
+                </div>
+              </div>
+            </div>
+            
+            <div style={{
+              fontSize: typography.fontSize.sm,
+              color: colors.text.secondary,
+              lineHeight: typography.lineHeight.relaxed,
+            }}>
+              A bevételek növekedése 2024-hez képest
+            </div>
+          </div>
+        </div>
 
-          {/* Left Pan (Revenue) - Higher */}
-          <g transform={`translate(300, 200) rotate(${scaleTilt}) translate(-200, 0)`}>
-            {/* Pan chain/rope */}
-            <line
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="80"
-              stroke={colors.gray[500]}
-              strokeWidth="3"
-            />
-            {/* Pan */}
-            <g transform="translate(0, 80)">
-              <ellipse
-                cx="0"
-                cy="0"
-                rx="90"
-                ry="20"
-                fill={colors.info}
-                stroke={colors.info}
-                strokeWidth="2"
-                opacity="0.9"
-              />
-              <ellipse
-                cx="0"
-                cy="0"
-                rx="85"
-                ry="18"
-                fill="#DBEAFE"
-                stroke={colors.info}
-                strokeWidth="1"
-              />
-              
-              {/* Revenue Icons */}
-              {/* Tax form icon */}
-              <g transform="translate(-50, -5)">
-                <rect x="-8" y="-8" width="16" height="20" rx="2" fill={colors.info} opacity="0.8" />
-                <line x1="-4" y1="-4" x2="4" y2="-4" stroke="#FFFFFF" strokeWidth="1.5" />
-                <line x1="-4" y1="0" x2="2" y2="0" stroke="#FFFFFF" strokeWidth="1.5" />
-                <line x1="-4" y1="4" x2="3" y2="4" stroke="#FFFFFF" strokeWidth="1.5" />
-              </g>
-              
-              {/* VAT symbol */}
-              <g transform="translate(0, -5)">
-                <circle cx="0" cy="0" r="6" fill={colors.info} opacity="0.8" />
-                <text x="0" y="2" textAnchor="middle" fontSize="8" fill="#FFFFFF" fontWeight="bold">ÁFA</text>
-              </g>
-              
-              {/* Corporate tax building */}
-              <g transform="translate(50, -5)">
-                <rect x="-6" y="2" width="12" height="10" fill={colors.info} opacity="0.8" />
-                <polygon points="-6,2 0,-4 6,2" fill={colors.info} opacity="0.8" />
-                <rect x="-3" y="5" width="6" height="7" fill="#FFFFFF" opacity="0.6" />
-              </g>
-              
-              {/* Label */}
-              <text
-                x="0"
-                y="25"
-                textAnchor="middle"
-                fontSize={isMobile ? "12" : "14"}
-                fontWeight="bold"
-                fill={colors.info}
-              >
-                Bevétel
-              </text>
-              <text
-                x="0"
-                y="38"
-                textAnchor="middle"
-                fontSize={isMobile ? "11" : "13"}
-                fontWeight="600"
-                fill={colors.text.primary}
-              >
-                +{revenueGrowth}%
-              </text>
-              {/* Upward arrow */}
-              <g transform="translate(0, 45)">
-                <polygon
-                  points="0,-4 -4,2 4,2"
-                  fill={colors.success}
-                />
-              </g>
-            </g>
-          </g>
+        {/* Expenditure Card */}
+        <div style={{
+          flex: 1,
+          padding: spacing['2xl'],
+          backgroundColor: colors.errorLight,
+          borderRadius: borderRadius.xl,
+          border: `2px solid ${colors.error}`,
+          boxShadow: shadows.md,
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+          {/* Decorative background pattern */}
+          <div style={{
+            position: 'absolute',
+            top: -20,
+            right: -20,
+            width: '120px',
+            height: '120px',
+            borderRadius: '50%',
+            backgroundColor: colors.error,
+            opacity: 0.1,
+          }} />
+          
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: spacing.md,
+              marginBottom: spacing.lg,
+            }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                backgroundColor: colors.error,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px',
+              }}>
+                📊
+              </div>
+              <div>
+                <div style={{
+                  fontSize: typography.fontSize.sm,
+                  color: colors.text.muted,
+                  marginBottom: spacing.xs,
+                }}>
+                  Kiadás
+                </div>
+                <div style={{
+                  fontSize: typography.fontSize['3xl'],
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.text.primary,
+                }}>
+                  +{expenditureGrowth}%
+                </div>
+              </div>
+            </div>
+            
+            <div style={{
+              fontSize: typography.fontSize.sm,
+              color: colors.text.secondary,
+              lineHeight: typography.lineHeight.relaxed,
+            }}>
+              A kiadások növekedése 2024-hez képest
+            </div>
+          </div>
+        </div>
+      </div>
 
-          {/* Right Pan (Expenditure) - Lower (heavier) */}
-          <g transform={`translate(300, 200) rotate(${-scaleTilt}) translate(200, 0)`}>
-            {/* Pan chain/rope */}
-            <line
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="100"
-              stroke={colors.gray[500]}
-              strokeWidth="3"
-            />
-            {/* Pan */}
-            <g transform="translate(0, 100)">
-              <ellipse
-                cx="0"
-                cy="0"
-                rx="100"
-                ry="22"
-                fill={colors.error}
-                stroke={colors.error}
-                strokeWidth="2"
-                opacity="0.9"
-              />
-              <ellipse
-                cx="0"
-                cy="0"
-                rx="95"
-                ry="20"
-                fill="#FEE2E2"
-                stroke={colors.error}
-                strokeWidth="1"
-              />
-              
-              {/* Expenditure Icons */}
-              {/* Hospital */}
-              <g transform="translate(-55, -8)">
-                <rect x="-8" y="0" width="16" height="12" rx="1" fill={colors.error} opacity="0.8" />
-                <line x1="0" y1="0" x2="0" y2="-6" stroke={colors.error} strokeWidth="2" />
-                <circle cx="0" cy="-4" r="2" fill={colors.error} opacity="0.8" />
-              </g>
-              
-              {/* School */}
-              <g transform="translate(-15, -8)">
-                <rect x="-6" y="2" width="12" height="10" fill={colors.error} opacity="0.8" />
-                <polygon points="-6,2 0,-4 6,2" fill={colors.error} opacity="0.8" />
-                <line x1="-3" y1="5" x2="3" y2="5" stroke="#FFFFFF" strokeWidth="1" />
-                <line x1="-3" y1="8" x2="3" y2="8" stroke="#FFFFFF" strokeWidth="1" />
-              </g>
-              
-              {/* Pension */}
-              <g transform="translate(25, -8)">
-                <circle cx="0" cy="0" r="6" fill={colors.error} opacity="0.8" />
-                <text x="0" y="2" textAnchor="middle" fontSize="7" fill="#FFFFFF" fontWeight="bold">Ny</text>
-              </g>
-              
-              {/* Infrastructure */}
-              <g transform="translate(60, -8)">
-                <rect x="-5" y="2" width="10" height="8" fill={colors.error} opacity="0.8" />
-                <line x1="-5" y1="2" x2="0" y2="-3" stroke={colors.error} strokeWidth="1.5" />
-                <line x1="5" y1="2" x2="0" y2="-3" stroke={colors.error} strokeWidth="1.5" />
-                <line x1="-5" y1="10" x2="5" y2="10" stroke={colors.error} strokeWidth="1.5" />
-              </g>
-              
-              {/* Label */}
-              <text
-                x="0"
-                y="28"
-                textAnchor="middle"
-                fontSize={isMobile ? "12" : "14"}
-                fontWeight="bold"
-                fill={colors.error}
-              >
-                Kiadás
-              </text>
-              <text
-                x="0"
-                y="41"
-                textAnchor="middle"
-                fontSize={isMobile ? "11" : "13"}
-                fontWeight="600"
-                fill={colors.text.primary}
-              >
-                +{expenditureGrowth}%
-              </text>
-              {/* Upward arrow */}
-              <g transform="translate(0, 48)">
-                <polygon
-                  points="0,-4 -4,2 4,2"
-                  fill={colors.error}
-                />
-              </g>
-            </g>
-          </g>
-        </svg>
+      {/* Deficit Indicator */}
+      <div style={{
+        marginBottom: spacing['2xl'],
+        padding: spacing.xl,
+        backgroundColor: colors.background.subtle,
+        borderRadius: borderRadius.xl,
+        border: `2px dashed ${colors.error}40`,
+        textAlign: 'center',
+      }}>
+        <div style={{
+          fontSize: typography.fontSize.sm,
+          color: colors.text.muted,
+          marginBottom: spacing.sm,
+        }}>
+          Különbség
+        </div>
+        <div style={{
+          fontSize: typography.fontSize['4xl'],
+          fontWeight: typography.fontWeight.bold,
+          color: colors.error,
+          marginBottom: spacing.xs,
+        }}>
+          +{expenditureGrowth - revenueGrowth}%
+        </div>
+        <div style={{
+          fontSize: typography.fontSize.sm,
+          color: colors.text.secondary,
+        }}>
+          A kiadások {expenditureGrowth - revenueGrowth} százalékponttal gyorsabban nőnek
+        </div>
       </div>
 
       {/* Deficit Data Boxes */}
       <div style={{
-        display: 'flex',
-        flexDirection: isMobile ? 'column' : 'row',
-        gap: spacing.lg,
-        justifyContent: 'center',
-        alignItems: 'stretch',
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        gap: spacing.xl,
+        marginBottom: spacing['2xl'],
       }}>
         {/* Q1-Q3 Deficit Box */}
         <div style={{
-          flex: 1,
-          padding: spacing.xl,
-          backgroundColor: colors.gray[100],
-          borderRadius: borderRadius.lg,
-          border: `2px solid ${colors.gray[300]}`,
-          textAlign: 'center',
-          minHeight: isMobile ? '120px' : '140px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
+          padding: spacing['2xl'],
+          background: `linear-gradient(135deg, ${colors.gray[50]} 0%, ${colors.background.paper} 100%)`,
+          borderRadius: borderRadius.xl,
+          border: `2px solid ${colors.gray[200]}`,
+          boxShadow: shadows.md,
+          position: 'relative',
+          overflow: 'hidden',
         }}>
           <div style={{
-            fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-            fontWeight: typography.fontWeight.semibold,
-            color: '#6B7280', // 4.5:1 contrast
-            marginBottom: spacing.sm,
-          }}>
-            Jan-Sep 2025
-          </div>
-          <div style={{
-            fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
-            fontWeight: typography.fontWeight.bold,
-            color: '#111827', // 4.5:1 contrast
-            marginBottom: spacing.xs,
-          }}>
-            {deficitQ1Q3}%
-          </div>
-          <div style={{
-            fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-            color: '#374151', // 4.5:1 contrast
-            fontWeight: typography.fontWeight.medium,
-          }}>
-            hiány a GDP-hez képest
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '4px',
+            background: `linear-gradient(to right, ${colors.gray[400]}, ${colors.gray[300]})`,
+          }} />
+          
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{
+              fontSize: typography.fontSize.sm,
+              color: colors.text.muted,
+              marginBottom: spacing.sm,
+              fontWeight: typography.fontWeight.medium,
+            }}>
+              Jan-Sep 2025
+            </div>
+            <div style={{
+              fontSize: typography.fontSize['4xl'],
+              fontWeight: typography.fontWeight.bold,
+              color: colors.text.primary,
+              marginBottom: spacing.xs,
+              lineHeight: 1,
+            }}>
+              {deficitQ1Q3}%
+            </div>
+            <div style={{
+              fontSize: typography.fontSize.base,
+              color: colors.text.secondary,
+              fontWeight: typography.fontWeight.medium,
+            }}>
+              hiány a GDP-hez képest
+            </div>
           </div>
         </div>
 
         {/* Q3 Alone Deficit Box */}
         <div style={{
-          flex: 1,
-          padding: spacing.xl,
-          backgroundColor: colors.errorLight,
-          borderRadius: borderRadius.lg,
+          padding: spacing['2xl'],
+          background: `linear-gradient(135deg, ${colors.errorLight} 0%, ${colors.background.paper} 100%)`,
+          borderRadius: borderRadius.xl,
           border: `2px solid ${colors.error}`,
-          textAlign: 'center',
-          minHeight: isMobile ? '120px' : '140px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
+          boxShadow: shadows.lg,
+          position: 'relative',
+          overflow: 'hidden',
         }}>
           <div style={{
-            fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-            fontWeight: typography.fontWeight.semibold,
-            color: '#6B7280', // 4.5:1 contrast
-            marginBottom: spacing.sm,
-          }}>
-            Q3 2025 egyedül
-          </div>
-          <div style={{
-            fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
-            fontWeight: typography.fontWeight.bold,
-            color: '#DC2626', // Darker red for 4.5:1 contrast
-            marginBottom: spacing.xs,
-          }}>
-            {deficitQ3}%
-          </div>
-          <div style={{
-            fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-            color: '#374151', // 4.5:1 contrast
-            fontWeight: typography.fontWeight.medium,
-          }}>
-            hiány a GDP-hez képest
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '4px',
+            background: `linear-gradient(to right, ${colors.error}, ${colors.error}dd)`,
+          }} />
+          
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{
+              fontSize: typography.fontSize.sm,
+              color: colors.text.muted,
+              marginBottom: spacing.sm,
+              fontWeight: typography.fontWeight.medium,
+            }}>
+              Q3 2025 egyedül
+            </div>
+            <div style={{
+              fontSize: typography.fontSize['4xl'],
+              fontWeight: typography.fontWeight.bold,
+              color: colors.error,
+              marginBottom: spacing.xs,
+              lineHeight: 1,
+            }}>
+              {deficitQ3}%
+            </div>
+            <div style={{
+              fontSize: typography.fontSize.base,
+              color: colors.text.secondary,
+              fontWeight: typography.fontWeight.medium,
+            }}>
+              hiány a GDP-hez képest
+            </div>
           </div>
         </div>
       </div>

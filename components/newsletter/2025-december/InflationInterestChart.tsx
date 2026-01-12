@@ -189,7 +189,7 @@ export default function InflationInterestChart({ height = 600 }: InflationIntere
         marginBottom: spacing.xl,
         textAlign: 'center',
       }}>
-        From 25% to 3.8%: The Inflation Slowdown
+        25%-ról 3,8%-ra: Az infláció lassulása
       </h3>
 
       {/* Line Chart - Top 60% */}

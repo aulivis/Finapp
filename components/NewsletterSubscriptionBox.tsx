@@ -130,7 +130,7 @@ export default function NewsletterSubscriptionBox() {
             marginBottom: spacing.md,
             lineHeight: typography.lineHeight.tight,
           }}>
-            Szeretnél többet megtudni?
+            Szeretnél rendszeres pénzügyi kontextust?
           </h3>
           
           <p style={{
@@ -139,9 +139,8 @@ export default function NewsletterSubscriptionBox() {
             lineHeight: typography.lineHeight.relaxed,
             marginBottom: spacing.xl,
           }}>
-            Ilyen hírleveleket küldök havonta, amelyekben összefoglalom a legfontosabb pénzügyi trendeket, 
-            inflációs adatokat és piaci változásokat. Minden hírlevél érthető, adatvezérelt és segít megérteni, 
-            hogyan hatnak ezek a változások a nehezen megkeresett pénzedre.
+            Havonta egy rövid, érthető hírlevelet küldünk, amely összefoglalja a legfontosabb gazdasági és pénzügyi változásokat. 
+            Adatokra épít, nem zajra – és segít megérteni, mi történik a pénzeddel.
           </p>
 
           {/* Subscription Form */}

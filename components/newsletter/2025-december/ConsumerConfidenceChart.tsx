@@ -113,87 +113,8 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
         marginBottom: spacing.xl,
         textAlign: 'center',
       }}>
-        Hungary&apos;s Consumer Mood: 29th out of 30
+        Magyarország fogyasztói hangulata: 29. hely 30-ból
       </h3>
-
-      {/* World Map Visualization (Simplified) */}
-      <div style={{
-        marginBottom: spacing.xl,
-        textAlign: 'center',
-      }}>
-        <div style={{
-          display: 'inline-block',
-          padding: spacing.md,
-          backgroundColor: colors.background.subtle,
-          borderRadius: borderRadius.md,
-        }}>
-          <div style={{
-            fontSize: isMobile ? '10px' : '11px',
-            color: colors.text.muted,
-            marginBottom: spacing.xs,
-            fontWeight: typography.fontWeight.medium,
-          }}>
-            Global Ranking
-          </div>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: spacing.sm,
-            flexWrap: 'wrap',
-          }}>
-            {/* Simplified map representation */}
-            <div style={{
-              width: isMobile ? '200px' : '250px',
-              height: isMobile ? '100px' : '120px',
-              position: 'relative',
-              backgroundColor: colors.background.subtle,
-              borderRadius: borderRadius.md,
-              border: `2px solid ${colors.gray[300]}`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              {/* Simplified country shapes */}
-              <svg width="100%" height="100%" viewBox="0 0 200 100" style={{ opacity: 0.3 }}>
-                {/* Simplified Europe shape */}
-                <path
-                  d="M 30 40 Q 50 30 70 40 Q 90 35 110 40 Q 130 45 150 40 Q 170 35 180 40 L 180 60 Q 170 65 150 60 Q 130 65 110 60 Q 90 65 70 60 Q 50 70 30 60 Z"
-                  fill={colors.gray[300]}
-                  stroke={colors.gray[400]}
-                  strokeWidth="1"
-                />
-              </svg>
-              {/* Hungary highlight */}
-              <div style={{
-                position: 'absolute',
-                left: '45%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '20px',
-                height: '20px',
-                backgroundColor: '#EF4444',
-                borderRadius: '50%',
-                border: '2px solid #FFFFFF',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-              }} />
-              <div style={{
-                position: 'absolute',
-                left: '45%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
-                marginTop: '25px',
-                fontSize: '10px',
-                fontWeight: '600',
-                color: '#EF4444',
-                whiteSpace: 'nowrap',
-              }}>
-                HU
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Main Content: Gauge and Ranking */}
       <div style={{

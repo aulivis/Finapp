@@ -149,7 +149,7 @@ export default function LaborMarketChart({ height = 650 }: LaborMarketChartProps
           marginBottom: spacing.xl,
           textAlign: 'center',
         }}>
-          Unemployment Stays Low, But Minimum Wage Jumps 11%
+          Alacsony marad a munkanélküliség, de a minimálbér 11%-kal emelkedik
         </h3>
 
         {/* Top: Unemployment Rate Chart */}
