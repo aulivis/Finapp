@@ -112,9 +112,6 @@ export default function GDPGrowthChart({ height = 500 }: GDPGrowthChartProps) {
     )
   }
 
-  // Find Q3 2025 index for highlighting
-  const q3Index = gdpData.findIndex(d => d.quarter === 'Q3 2025')
-
   return (
     <div
       role="img"
