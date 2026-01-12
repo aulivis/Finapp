@@ -10,79 +10,54 @@ interface ConsumerConfidenceChartProps {
 }
 
 /**
- * Chart showing Hungary's consumer confidence ranking (29th out of 30)
+ * Simple horizontal bar chart showing Hungary's consumer confidence ranking
  * Features:
- * - Semicircle gauge showing Hungary's score (-24.3)
- * - Bottom 6 countries ranking list
- * - Small world map visualization
- * - Traffic light color scheme (red/yellow/green)
- * - Mobile-optimized vertical layout
+ * - Bottom 6 countries (positions 25-30)
+ * - Hungarian country names
+ * - Clear visualization of Hungary's position (29th out of 30)
+ * - Simple, readable design
  */
-export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfidenceChartProps) {
+export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfidenceChartProps) {
   const prefersReducedMotion = useReducedMotion()
   const isMobile = useIsMobile()
 
+  // Country names in Hungarian
+  const countryNames: Record<string, string> = {
+    'RO': 'Románia',
+    'SK': 'Szlovákia',
+    'HR': 'Horvátország',
+    'BG': 'Bulgária',
+    'HU': 'Magyarország',
+    'TR': 'Törökország',
+  }
+
   // Data: Bottom 6 countries (positions 25-30)
   const rankingData = useMemo(() => [
-    { position: 25, country: 'Romania', score: -15.2, code: 'RO' },
-    { position: 26, country: 'Slovakia', score: -18.5, code: 'SK' },
-    { position: 27, country: 'Croatia', score: -20.1, code: 'HR' },
-    { position: 28, country: 'Bulgaria', score: -22.8, code: 'BG' },
-    { position: 29, country: 'Hungary', score: -24.3, code: 'HU', isHungary: true },
-    { position: 30, country: 'Turkey', score: -34.9, code: 'TR' },
+    { position: 25, country: 'Románia', score: -15.2, code: 'RO' },
+    { position: 26, country: 'Szlovákia', score: -18.5, code: 'SK' },
+    { position: 27, country: 'Horvátország', score: -20.1, code: 'HR' },
+    { position: 28, country: 'Bulgária', score: -22.8, code: 'BG' },
+    { position: 29, country: 'Magyarország', score: -24.3, code: 'HU', isHungary: true },
+    { position: 30, country: 'Törökország', score: -34.9, code: 'TR' },
   ], [])
 
   const hungaryScore = -24.3
   const minScore = -40
-  const maxScore = 80
-  const euAverage = 45
-  const highestScore = 63.4 // Indonesia
+  const maxScore = 0
 
-  // Calculate gauge angle (semicircle: 0° to 180°)
-  // Map score from -40 to 80 to angle from 0° to 180°
-  const calculateAngle = (score: number) => {
-    const normalized = (score - minScore) / (maxScore - minScore)
-    return normalized * 180 // 0° = left (min), 180° = right (max)
-  }
-
-  const hungaryAngle = calculateAngle(hungaryScore)
-
-  // Color zones
-  const colorZones = {
-    red: { min: -40, max: -10, color: '#EF4444' },
-    yellow: { min: -10, max: 20, color: '#F59E0B' },
-    green: { min: 20, max: 80, color: '#10B981' },
+  // Calculate bar width as percentage
+  const calculateBarWidth = (score: number) => {
+    return ((score - minScore) / (maxScore - minScore)) * 100
   }
 
   // Get color for a score
   const getScoreColor = (score: number) => {
-    if (score >= colorZones.green.min) return colorZones.green.color
-    if (score >= colorZones.yellow.min) return colorZones.yellow.color
-    return colorZones.red.color
+    if (score >= -10) return '#F59E0B' // Yellow
+    return '#EF4444' // Red
   }
 
-  // Generate gauge arc path
-  const generateGaugeArc = (startAngle: number, endAngle: number, radius: number, innerRadius: number) => {
-    const startRad = ((startAngle - 90) * Math.PI) / 180
-    const endRad = ((endAngle - 90) * Math.PI) / 180
-    
-    const x1 = 200 + radius * Math.cos(startRad)
-    const y1 = 200 + radius * Math.sin(startRad)
-    const x2 = 200 + radius * Math.cos(endRad)
-    const y2 = 200 + radius * Math.sin(endRad)
-    
-    const x3 = 200 + innerRadius * Math.cos(endRad)
-    const y3 = 200 + innerRadius * Math.sin(endRad)
-    const x4 = 200 + innerRadius * Math.cos(startRad)
-    const y4 = 200 + innerRadius * Math.sin(startRad)
-    
-    const largeArc = endAngle - startAngle > 180 ? 1 : 0
-    
-    return `M ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} L ${x3} ${y3} A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x4} ${y4} Z`
-  }
-
-  const gaugeRadius = isMobile ? 120 : 140
-  const gaugeInnerRadius = isMobile ? 80 : 100
+  const chartHeight = rankingData.length * (isMobile ? 50 : 60)
+  const barMaxWidth = isMobile ? 250 : 350
 
   return (
     <div
@@ -101,254 +76,187 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
       {/* Hidden description for screen readers */}
       <div id="confidence-chart-description" className="sr-only">
         Grafikon Magyarország fogyasztói bizalom rangsoráról. Magyarország a 29. helyen áll 30 ország közül,
-        -24,3 ponttal. Csak Törökország előzi meg minket a lista alján. A grafikon egy félkörös mérőt mutat,
-        amely a pesszimista zónában (-40-től -10-ig piros) mutatja Magyarországot.
+        -24,3 ponttal. Csak Törökország előzi meg minket a lista alján.
       </div>
       
       {/* Title */}
       <h3 style={{
         fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
         fontWeight: typography.fontWeight.bold,
-        color: '#111827', // 4.5:1 contrast
+        color: '#111827',
+        marginBottom: spacing.lg,
+        textAlign: 'center',
+      }}>
+        Magyarország: 29. hely 30-ból
+      </h3>
+
+      {/* Subtitle */}
+      <p style={{
+        fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+        color: colors.text.secondary,
         marginBottom: spacing.xl,
         textAlign: 'center',
       }}>
-        Magyarország fogyasztói hangulata: 29. hely 30-ból
-      </h3>
+        Fogyasztói bizalom: a legrosszabb 6 ország (30-ból)
+      </p>
 
-      {/* Main Content: Gauge and Ranking */}
+      {/* Chart */}
       <div style={{
-        display: 'flex',
-        flexDirection: isMobile ? 'column' : 'row',
-        gap: spacing.xl,
-        alignItems: isMobile ? 'center' : 'flex-start',
+        width: '100%',
+        maxWidth: '600px',
+        margin: '0 auto',
       }}>
-        {/* Left: Semicircle Gauge */}
-        <div style={{
-          flex: isMobile ? '1' : '1',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}>
-            <div style={{
-              fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-              fontWeight: typography.fontWeight.semibold,
-              color: '#111827', // 4.5:1 contrast
-              marginBottom: spacing.md,
-              textAlign: 'center',
-            }}>
-              Magyarország: -24.3 pont
-            </div>
-          
-          <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
-            <svg
-              width="100%"
-              height={isMobile ? '200px' : `${Math.min(height * 0.34, 240)}px`}
-              viewBox="0 0 400 200"
-              style={{ overflow: 'visible' }}
-            >
-              {/* Background arc (full semicircle) */}
-              <path
-                d={generateGaugeArc(0, 180, gaugeRadius, gaugeInnerRadius)}
-                fill={colors.gray[200]}
-                opacity={0.3}
-              />
-              
-              {/* Red zone (-40 to -10) */}
-              <path
-                d={generateGaugeArc(0, 54, gaugeRadius, gaugeInnerRadius)}
-                fill={colorZones.red.color}
-                opacity={0.6}
-              />
-              
-              {/* Yellow zone (-10 to 20) */}
-              <path
-                d={generateGaugeArc(54, 108, gaugeRadius, gaugeInnerRadius)}
-                fill={colorZones.yellow.color}
-                opacity={0.6}
-              />
-              
-              {/* Green zone (20 to 80) */}
-              <path
-                d={generateGaugeArc(108, 180, gaugeRadius, gaugeInnerRadius)}
-                fill={colorZones.green.color}
-                opacity={0.6}
-              />
-              
-              {/* Score markers */}
-              {[-40, -20, 0, 20, 40, 60, 80].map((score, index) => {
-                const angle = calculateAngle(score)
-                const rad = ((angle - 90) * Math.PI) / 180
-                const x = 200 + (gaugeRadius + 15) * Math.cos(rad)
-                const y = 200 + (gaugeRadius + 15) * Math.sin(rad)
-                
-                return (
-                  <g key={index}>
-                    <line
-                      x1={200 + gaugeRadius * Math.cos(rad)}
-                      y1={200 + gaugeRadius * Math.sin(rad)}
-                      x2={200 + (gaugeRadius + 10) * Math.cos(rad)}
-                      y2={200 + (gaugeRadius + 10) * Math.sin(rad)}
-                      stroke={colors.gray[400]}
-                      strokeWidth="1"
-                    />
-                    <text
-                      x={x}
-                      y={y}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      fontSize="11"
-                      fill={colors.text.secondary}
-                      fontWeight="500"
-                    >
-                      {score}
-                    </text>
-                  </g>
-                )
-              })}
-              
-              {/* Hungary pointer */}
-              <g>
+        <svg
+          width="100%"
+          height={chartHeight}
+          viewBox={`0 0 ${barMaxWidth + 120} ${chartHeight}`}
+          style={{ overflow: 'visible' }}
+        >
+          {/* Grid lines */}
+          {[-40, -30, -20, -10, 0].map((score, index) => {
+            const x = (calculateBarWidth(score) / 100) * barMaxWidth
+            return (
+              <g key={index}>
                 <line
-                  x1="200"
-                  y1="200"
-                  x2={200 + gaugeRadius * Math.cos(((hungaryAngle - 90) * Math.PI) / 180)}
-                  y2={200 + gaugeRadius * Math.sin(((hungaryAngle - 90) * Math.PI) / 180)}
-                  stroke={colorZones.red.color}
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <circle
-                  cx={200 + gaugeRadius * Math.cos(((hungaryAngle - 90) * Math.PI) / 180)}
-                  cy={200 + gaugeRadius * Math.sin(((hungaryAngle - 90) * Math.PI) / 180)}
-                  r="6"
-                  fill={colorZones.red.color}
-                  stroke="#FFFFFF"
-                  strokeWidth="2"
+                  x1={x}
+                  y1={0}
+                  x2={x}
+                  y2={chartHeight}
+                  stroke={colors.gray[200]}
+                  strokeWidth="1"
+                  strokeDasharray="4 4"
+                  opacity={0.5}
                 />
               </g>
-              
-              {/* Center dot */}
-              <circle cx="200" cy="200" r="4" fill={colors.gray[600]} />
-            </svg>
-            
-            {/* Reference points */}
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginTop: spacing.md,
-              fontSize: isMobile ? '10px' : '11px',
-              color: colors.text.muted,
-            }}>
-              <div>
-                <span style={{ color: colorZones.red.color, fontWeight: '600' }}>●</span> Pesszimista
-              </div>
-              <div>
-                <span style={{ color: colorZones.yellow.color, fontWeight: '600' }}>●</span> Semleges
-              </div>
-              <div>
-                <span style={{ color: colorZones.green.color, fontWeight: '600' }}>●</span> Optimista
-              </div>
-            </div>
-          </div>
+            )
+          })}
+
+          {/* Bars */}
+          {rankingData.map((item, index) => {
+            const barWidth = calculateBarWidth(item.score)
+            const barHeight = isMobile ? 40 : 50
+            const y = index * (isMobile ? 50 : 60) + 5
+            const x = 0
+            const color = getScoreColor(item.score)
+            const isHungary = item.isHungary || false
+
+            return (
+              <g key={item.position}>
+                {/* Bar background (full width) */}
+                <rect
+                  x={x}
+                  y={y}
+                  width={barMaxWidth}
+                  height={barHeight}
+                  fill={colors.gray[100]}
+                  rx={4}
+                />
+                {/* Bar */}
+                <rect
+                  x={x}
+                  y={y}
+                  width={(barWidth / 100) * barMaxWidth}
+                  height={barHeight}
+                  fill={isHungary ? color : color}
+                  fillOpacity={isHungary ? 1 : 0.7}
+                  rx={4}
+                />
+                {/* Bar border for Hungary */}
+                {isHungary && (
+                  <rect
+                    x={x}
+                    y={y}
+                    width={(barWidth / 100) * barMaxWidth}
+                    height={barHeight}
+                    fill="none"
+                    stroke={color}
+                    strokeWidth="2"
+                    rx={4}
+                  />
+                )}
+                {/* Country name */}
+                <text
+                  x={x + 8}
+                  y={y + barHeight / 2}
+                  dominantBaseline="middle"
+                  fontSize={isMobile ? 13 : 14}
+                  fontWeight={isHungary ? typography.fontWeight.bold : typography.fontWeight.medium}
+                  fill={isHungary ? '#111827' : '#374151'}
+                >
+                  {item.country}
+                </text>
+                {/* Score */}
+                <text
+                  x={(barWidth / 100) * barMaxWidth - 8}
+                  y={y + barHeight / 2}
+                  textAnchor="end"
+                  dominantBaseline="middle"
+                  fontSize={isMobile ? 13 : 14}
+                  fontWeight={typography.fontWeight.bold}
+                  fill={isHungary ? '#111827' : '#374151'}
+                >
+                  {item.score.toFixed(1)}
+                </text>
+                {/* Position badge */}
+                <rect
+                  x={barMaxWidth + 16}
+                  y={y + barHeight / 2 - 12}
+                  width={24}
+                  height={24}
+                  fill={isHungary ? color : colors.gray[400]}
+                  rx={12}
+                />
+                <text
+                  x={barMaxWidth + 28}
+                  y={y + barHeight / 2}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize={isMobile ? 11 : 12}
+                  fontWeight={typography.fontWeight.bold}
+                  fill="#FFFFFF"
+                >
+                  {item.position}
+                </text>
+              </g>
+            )
+          })}
+        </svg>
+
+        {/* X-axis labels */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginTop: spacing.md,
+          paddingLeft: 0,
+          paddingRight: 0,
+          fontSize: isMobile ? '11px' : '12px',
+          color: colors.text.muted,
+          maxWidth: `${barMaxWidth}px`,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }}>
+          <span>-40</span>
+          <span>-30</span>
+          <span>-20</span>
+          <span>-10</span>
+          <span>0</span>
         </div>
 
-        {/* Right: Ranking List */}
+        {/* Legend */}
         <div style={{
-          flex: isMobile ? '1' : '1',
-          width: '100%',
+          marginTop: spacing.lg,
+          padding: spacing.md,
+          backgroundColor: colors.background.subtle,
+          borderRadius: borderRadius.md,
+          fontSize: isMobile ? '12px' : '13px',
+          color: colors.text.secondary,
+          textAlign: 'center',
         }}>
-          <div style={{
-            fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-            fontWeight: typography.fontWeight.semibold,
-            color: '#111827', // 4.5:1 contrast
-            marginBottom: spacing.md,
-            textAlign: 'center',
-          }}>
-            Alulról 6. hely (25-30)
+          <div style={{ marginBottom: spacing.xs }}>
+            <strong>EU átlag:</strong> ~45 pont | <strong>Legmagasabb:</strong> Indonézia 63,4 pont
           </div>
-          
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: spacing.sm,
-          }}>
-            {rankingData.map((item) => (
-              <div
-                key={item.position}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: spacing.md,
-                  padding: spacing.md,
-                  backgroundColor: item.isHungary ? '#FEE2E2' : colors.background.subtle,
-                  borderRadius: borderRadius.md,
-                  border: item.isHungary ? `2px solid ${colorZones.red.color}` : `1px solid ${colors.gray[200]}`,
-                  transition: prefersReducedMotion ? 'none' : 'all 0.2s ease',
-                }}
-              >
-                <div style={{
-                  width: isMobile ? '32px' : '40px',
-                  height: isMobile ? '32px' : '40px',
-                  borderRadius: '50%',
-                  backgroundColor: item.isHungary ? colorZones.red.color : colors.gray[400],
-                  color: '#FFFFFF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: isMobile ? '12px' : '14px',
-                  fontWeight: typography.fontWeight.bold,
-                  flexShrink: 0,
-                }}>
-                  {item.position}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{
-                    fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-                    fontWeight: item.isHungary ? typography.fontWeight.bold : typography.fontWeight.medium,
-                    color: item.isHungary ? '#DC2626' : '#111827', // Darker red and black for 4.5:1 contrast
-                    marginBottom: '2px',
-                  }}>
-                    {item.country}
-                  </div>
-                  <div style={{
-                    fontSize: isMobile ? '11px' : '12px',
-                    color: '#6B7280', // 4.5:1 contrast
-                  }}>
-                    {item.code}
-                  </div>
-                </div>
-                <div style={{
-                  fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-                  fontWeight: typography.fontWeight.bold,
-                  color: getScoreColor(item.score) === colorZones.green.color ? '#059669' : 
-                         getScoreColor(item.score) === colorZones.yellow.color ? '#D97706' : '#DC2626', // Darker colors for contrast
-                  minWidth: isMobile ? '50px' : '60px',
-                  textAlign: 'right',
-                }}>
-                  {item.score > 0 ? '+' : ''}{item.score.toFixed(1)}
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Context info */}
-          <div style={{
-            marginTop: spacing.lg,
-            padding: spacing.md,
-            backgroundColor: colors.background.subtle,
-            borderRadius: borderRadius.md,
-            fontSize: isMobile ? '11px' : '12px',
-            color: colors.text.secondary,
-            lineHeight: 1.6,
-          }}>
-            <div style={{ marginBottom: spacing.xs }}>
-              <strong>EU átlag:</strong> ~{euAverage} pont
-            </div>
-            <div>
-              <strong>Legmagasabb:</strong> Indonézia {highestScore} pont
-            </div>
+          <div style={{ fontSize: isMobile ? '11px' : '12px', color: colors.text.muted }}>
+            Minél alacsonyabb a pontszám, annál pesszimistábbak a fogyasztók
           </div>
         </div>
       </div>
@@ -361,7 +269,7 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
           paddingTop: spacing.md,
           borderTop: `1px solid ${colors.gray[200]}`,
           fontSize: '10px',
-          color: '#6B7280', // 4.5:1 contrast (7.1:1)
+          color: '#6B7280',
           textAlign: 'center',
           lineHeight: 1.4,
         }}

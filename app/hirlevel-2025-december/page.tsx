@@ -46,7 +46,7 @@ export default function NewsletterPage() {
         </div>
 
         {/* Newsletter Content */}
-        <article style={{
+        <article className="newsletter-article-mobile" style={{
           padding: spacing['2xl'],
           backgroundColor: colors.background.paper,
           borderRadius: borderRadius.lg,
@@ -219,7 +219,7 @@ export default function NewsletterPage() {
               </div>
 
               {/* Chart: Inflation & Interest Rates */}
-              <div style={{
+              <div className="newsletter-chart-wrapper-mobile" style={{
                 marginTop: spacing['2xl'],
                 marginBottom: spacing['2xl'],
                 padding: spacing.xl,
@@ -264,7 +264,16 @@ export default function NewsletterPage() {
               </div>
 
               <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
-                A 3,8%-os novemberi inflációs adat azonban csak a felszínt mutatja. A Magyar Nemzeti Bank adatai szerint az úgynevezett maginfláció – ami kiszűri az élelmiszerek és energia árának rövid távú kilengéseit – még mindig 4,1% volt novemberben, jóval magasabb a célzóna felett. Ez azt jelenti, hogy a mindennapi szolgáltatások, a busz- és vonatjegyek, a fodrászat, a mosoda, a banki díjak terén a drágulás még mindig jelentősebb, mint ahogy a fő inflációs szám sugallja. A forint 2025-ös erősödése (közel 5%-kal a euróval szemben) segítette az árcsökkenést, de ez a hatás 2026-ra elapadhat. A kormány árstopjai és egyéb adminisztratív intézkedései önmagukban 1,5-2 százalékponttal csökkentették a hivatalos inflációt – ezek nélkül a kosárban 5-5,5%-os drágulást mérhetnénk. Az élelmiszerek árai különösen volatilisak voltak: a novemberi enyhe csökkenés a kiugróan alacsony élelmiszerár-emelkedésnek köszönhető, ami nem feltétlenül tartható fenn. A lakossági inflációs várakozások továbbra is a 3%-os cél fölött ragadtak (4-5% körül), ami azt jelzi, hogy az emberek még nem hiszik el a tartós árstabilitást – és ez önbeteljesítő jóslat lehet, ha a cégek ennek megfelelően áraznak. A kamatcsökkentés várhatóan csak 2026 második felében indulhat, amikor a maginfláció is tartósan a cél körül stabilizálódik – addig a lakáshitelek, fogyasztási hitelek kamatai magasak maradnak, ami visszafogja a nagyobb kiadásokat, például az autóvásárlást vagy lakásfelújítást.
+                A 3,8%-os novemberi inflációs adat azonban csak a felszínt mutatja. A Magyar Nemzeti Bank adatai szerint az úgynevezett maginfláció – ami kiszűri az élelmiszerek és energia árának rövid távú kilengéseit – még mindig 4,1% volt novemberben, jóval magasabb a célzóna felett. Ez azt jelenti, hogy a mindennapi szolgáltatások, a busz- és vonatjegyek, a fodrászat, a mosoda, a banki díjak terén a drágulás még mindig jelentősebb, mint ahogy a fő inflációs szám sugallja.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                A forint 2025-ös erősödése (közel 5%-kal a euróval szemben) segítette az árcsökkenést, de ez a hatás 2026-ra elapadhat. A kormány árstopjai és egyéb adminisztratív intézkedései önmagukban 1,5-2 százalékponttal csökkentették a hivatalos inflációt – ezek nélkül a kosárban 5-5,5%-os drágulást mérhetnénk.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                Az élelmiszerek árai különösen volatilisak voltak: a novemberi enyhe csökkenés a kiugróan alacsony élelmiszerár-emelkedésnek köszönhető, ami nem feltétlenül tartható fenn. A lakossági inflációs várakozások továbbra is a 3%-os cél fölött ragadtak (4-5% körül), ami azt jelzi, hogy az emberek még nem hiszik el a tartós árstabilitást – és ez önbeteljesítő jóslat lehet, ha a cégek ennek megfelelően áraznak.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                A kamatcsökkentés várhatóan csak 2026 második felében indulhat, amikor a maginfláció is tartósan a cél körül stabilizálódik – addig a lakáshitelek, fogyasztási hitelek kamatai magasak maradnak, ami visszafogja a nagyobb kiadásokat, például az autóvásárlást vagy lakásfelújítást.
               </p>
             </section>
 
@@ -388,7 +397,16 @@ export default function NewsletterPage() {
               </div>
 
               <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
-                A 0,6%-os növekedés mögött egy év teljes jellemzője bújik meg. A 2025-ös év egészét nézve a gazdaság mindössze 0,4-0,5%-ot bővülhet, ami alig több a stagnálásnál. A legdrámaibb adat a beruházások terén látszik: a bruttó fix tőkealkotás (vagyis az új gépek, épületek, technológia vásárlása) 2025-ben csökkent, ami azt jelenti, hogy a cégek nem fejlesztenek, nem építenek új gyárakat, nem vesznek modern technológiát. Ennek oka a bizonytalan nemzetközi környezet, a német gazdaság gyengülése (amely a magyar export 27%-át adja), és az EU-s források befagyása, amely 2025-ben 2,5%-kal visszavetette a beruházásokat. A külkereskedelem is vérzik: a gépjármű- és akkumulátorexport 8-10%-kal esett vissza, mivel az európai autópiac telítődött, és a kínai verseny erősödik. Az állami kiadások nőttek ugyan, de ezt részben az államadósság finanszírozása emésztette fel – a kamatkiadások 2025-ben meghaladták a GDP 3%-át. Ez a szerkezet azért nem érezhető a mindennapokban, mert a háztartások a reálbéreik növekedését (3-4% éves szinten) rögtön elköltik élelmiszerre, rezsire és szolgáltatásokra, miközben a cégek nem teremtenek új, magasabb hozzáadott értékű munkahelyeket. Így marad a &quot;túlélő üzemmód&quot; – van munka, van fizetés, de nincs előrelépés, nincs növekedési dinamika, amely új lehetőségeket nyithatna.
+                A 0,6%-os növekedés mögött egy év teljes jellemzője bújik meg. A 2025-ös év egészét nézve a gazdaság mindössze 0,4-0,5%-ot bővülhet, ami alig több a stagnálásnál. A legdrámaibb adat a beruházások terén látszik: a bruttó fix tőkealkotás (vagyis az új gépek, épületek, technológia vásárlása) 2025-ben csökkent, ami azt jelenti, hogy a cégek nem fejlesztenek, nem építenek új gyárakat, nem vesznek modern technológiát.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                Ennek oka a bizonytalan nemzetközi környezet, a német gazdaság gyengülése (amely a magyar export 27%-át adja), és az EU-s források befagyása, amely 2025-ben 2,5%-kal visszavetette a beruházásokat. A külkereskedelem is vérzik: a gépjármű- és akkumulátorexport 8-10%-kal esett vissza, mivel az európai autópiac telítődött, és a kínai verseny erősödik.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                Az állami kiadások nőttek ugyan, de ezt részben az államadósság finanszírozása emésztette fel – a kamatkiadások 2025-ben meghaladták a GDP 3%-át. Ez a szerkezet azért nem érezhető a mindennapokban, mert a háztartások a reálbéreik növekedését (3-4% éves szinten) rögtön elköltik élelmiszerre, rezsire és szolgáltatásokra, miközben a cégek nem teremtenek új, magasabb hozzáadott értékű munkahelyeket.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                Így marad a &quot;túlélő üzemmód&quot; – van munka, van fizetés, de nincs előrelépés, nincs növekedési dinamika, amely új lehetőségeket nyithatna.
               </p>
             </section>
 
@@ -480,7 +498,7 @@ export default function NewsletterPage() {
               </ul>
 
               {/* Chart: Consumer Confidence Global Ranking */}
-              <div style={{
+              <div className="newsletter-chart-wrapper-mobile" style={{
                 marginTop: spacing['2xl'],
                 marginBottom: spacing['2xl'],
                 padding: spacing.xl,
@@ -525,7 +543,13 @@ export default function NewsletterPage() {
               </div>
 
               <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
-                A -24,3-as bizalmi index nem csupán egy szám, hanem egy évekkel ezelőtt kezdődő trend csúcsa. A magyar fogyasztói bizalom 2022 óta folyamatosan a mélyben jár, és bár 2025 júliusában -28,9 ponton volt a mélypont, a novemberi -24,3 még mindig a lejtőn való toporgást jelzi. Az Ipsos globális felmérése szerint a 30 vizsgált ország közül Magyarországon a második legpesszimistábbak a fogyasztók, és ez a helyzet már évek óta változatlan – 2024-ben is a sereghajtók között voltunk. Az érdekesség, hogy a fogyasztói bizalom és a tényleges fogyasztás között szakadék tátong: 2025-ben a kiskereskedelmi forgalom 3,1%-kal nőtt, ami azt jelzi, hogy az emberek bár félnek, muszáj költeniük az alapvető dolgokra. A bizalmat leginkább a lakhatási költségek (rezsi, lakbér), a gyógyszerárak és az élelmiszerárak alakulása rombolja – ezek azok a kiadások, amelyekre nincs ráhatása a háztartásoknak, így a kontrollérzet hiánya pesszimizmust szül. A bizalmi index ráadásul önbeteljesítő is: ha a vállalkozások azt látják, hogy a fogyasztók nem bíznak a jövőben, elhalasztják a beruházásokat, ami miatt kevesebb új munkahely jön létre, ami tovább rontja a bizalmat. Ez a spirál nehezen törik meg, és 2026 elején a 11%-os minimálbér-emelés sem garantáltan oldja meg – ha az emberek tartanak a munkahelyük elvesztésétől, inkább takarékoskodnak, mintsem elköltik a plusz jövedelmet.
+                A -24,3-as bizalmi index nem csupán egy szám, hanem egy évekkel ezelőtt kezdődő trend csúcsa. A magyar fogyasztói bizalom 2022 óta folyamatosan a mélyben jár, és bár 2025 júliusában -28,9 ponton volt a mélypont, a novemberi -24,3 még mindig a lejtőn való toporgást jelzi. Az Ipsos globális felmérése szerint a 30 vizsgált ország közül Magyarországon a második legpesszimistábbak a fogyasztók, és ez a helyzet már évek óta változatlan – 2024-ben is a sereghajtók között voltunk.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                Az érdekesség, hogy a fogyasztói bizalom és a tényleges fogyasztás között szakadék tátong: 2025-ben a kiskereskedelmi forgalom 3,1%-kal nőtt, ami azt jelzi, hogy az emberek bár félnek, muszáj költeniük az alapvető dolgokra. A bizalmat leginkább a lakhatási költségek (rezsi, lakbér), a gyógyszerárak és az élelmiszerárak alakulása rombolja – ezek azok a kiadások, amelyekre nincs ráhatása a háztartásoknak, így a kontrollérzet hiánya pesszimizmust szül.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                A bizalmi index ráadásul önbeteljesítő is: ha a vállalkozások azt látják, hogy a fogyasztók nem bíznak a jövőben, elhalasztják a beruházásokat, ami miatt kevesebb új munkahely jön létre, ami tovább rontja a bizalmat. Ez a spirál nehezen törik meg, és 2026 elején a 11%-os minimálbér-emelés sem garantáltan oldja meg – ha az emberek tartanak a munkahelyük elvesztésétől, inkább takarékoskodnak, mintsem elköltik a plusz jövedelmet.
               </p>
             </section>
 
@@ -617,7 +641,7 @@ export default function NewsletterPage() {
               </ul>
 
               {/* Chart: Labor Market Paradox */}
-              <div style={{
+              <div className="newsletter-chart-wrapper-mobile" style={{
                 marginTop: spacing['2xl'],
                 marginBottom: spacing['2xl'],
                 padding: spacing.xl,
@@ -662,7 +686,13 @@ export default function NewsletterPage() {
               </div>
 
               <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
-                A 4,5%-os munkanélküliségi ráta mögött egy láthatatlan, de érzékelhető strukturális változás bújik meg. A munkaerőpiaci feszesség – vagyis hogy mennyire küzdenek a cégek munkaerőért – 2025-ben folyamatosan enyhült: a betöltetlen álláshelyek száma 15%-kal csökkent 2024-hez képest, ami azt jelenti, hogy a munkaadók nem annyira sürgetően keresnek új embereket. Ez azért van, mert a cégek nem bővülnek, inkább a meglévő létszámot tartják, és ha valaki elmegy, nem mindig pótolják. Az új munkahelyek jelentős része a közfoglalkoztatásban vagy az állami szektorban jön létre, a versenyszféra csendben stagnál. A 2026. január 1-jei minimálbér-emelés 29 200 forintos bruttó növekedést jelent, de a nettó béremelés csak 19 500 forint, mivel a magasabb bér magasabb adó- és járulékterhet is von maga után. Ez a különbség fontos: a munkáltató többletköltsége nagyobb, mint a munkavállaló többletjövedelme. Az MNB adatai szerint a magánszektorbeli új munkaszerződések száma 2025-ben 12%-kal csökkent, miközben a közszféráé nőtt – ez azt jelenti, hogy a versenyszféra bizalma a jövőbeli kereslettel szemben gyenge, nem tervez hosszú távú létszámbővítést. Így a &quot;biztonság&quot; csak annyit jelent, hogy aki dolgozik, az maradhat, de aki munkát keres, annak nehezebb jó minőségű, versenyszféra-beli állást találnia, mint 2022-ben.
+                A 4,5%-os munkanélküliségi ráta mögött egy láthatatlan, de érzékelhető strukturális változás bújik meg. A munkaerőpiaci feszesség – vagyis hogy mennyire küzdenek a cégek munkaerőért – 2025-ben folyamatosan enyhült: a betöltetlen álláshelyek száma 15%-kal csökkent 2024-hez képest, ami azt jelenti, hogy a munkaadók nem annyira sürgetően keresnek új embereket. Ez azért van, mert a cégek nem bővülnek, inkább a meglévő létszámot tartják, és ha valaki elmegy, nem mindig pótolják.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                Az új munkahelyek jelentős része a közfoglalkoztatásban vagy az állami szektorban jön létre, a versenyszféra csendben stagnál. A 2026. január 1-jei minimálbér-emelés 29 200 forintos bruttó növekedést jelent, de a nettó béremelés csak 19 500 forint, mivel a magasabb bér magasabb adó- és járulékterhet is von maga után. Ez a különbség fontos: a munkáltató többletköltsége nagyobb, mint a munkavállaló többletjövedelme.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                Az MNB adatai szerint a magánszektorbeli új munkaszerződések száma 2025-ben 12%-kal csökkent, miközben a közszféráé nőtt – ez azt jelenti, hogy a versenyszféra bizalma a jövőbeli kereslettel szemben gyenge, nem tervez hosszú távú létszámbővítést. Így a &quot;biztonság&quot; csak annyit jelent, hogy aki dolgozik, az maradhat, de aki munkát keres, annak nehezebb jó minőségű, versenyszféra-beli állást találnia, mint 2022-ben.
               </p>
             </section>
 
@@ -754,7 +784,7 @@ export default function NewsletterPage() {
               </p>
 
               {/* Chart: Budget Balance Scale */}
-              <div style={{
+              <div className="newsletter-chart-wrapper-mobile" style={{
                 marginTop: spacing['2xl'],
                 marginBottom: spacing['2xl'],
                 padding: spacing.xl,
@@ -799,7 +829,16 @@ export default function NewsletterPage() {
               </div>
 
               <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
-                A 1,9%-os éves hiánycél azonban csak az egyik oldala a történetnek. Az uniós szabályok szerint a strukturális hiánynak (vagyis az államháztartás egyensúlyának, ha nem számítjuk a gazdasági ciklusból adódó kiadásokat vagy bevételeket) 3% alatt kell maradnia, de a 2025-ös adatok azt mutatják, hogy a magyar államháztartás szezonálisan kiigazítva 3,5-4% közötti strukturális hiánnyal működik. Ez azt jelenti, hogy az állam túlköltekezik, és ezt nem a gazdasági lassulás indokolja, hanem strukturális problémák. Az EU-források kérdése kulcsfontosságú: 2025-ben 2,3%-kal növelte volna a GDP-t, ha a források zavartalanul érkeznek, de a fagyasztás miatt ez az összeg nem érkezett meg, és a kormánynak pótolnia kellett a hiányzó pénzt belső forrásokból, ami növelte az államadósságot. Az államadósság-ráta 2025 végére várhatóan 71-72% körül alakult, ami magasabb a 2024-es 69%-nál, és ez közvetlenül érint mindenkit: minél magasabb az adósság, annál több pénzt kell kamatra fordítani, ami kevesebb marad oktatásra, egészségügyre, infrastruktúrára. A kormány 2026-ra 3% alatti hiánycélt tűzött ki, de ez csak akkor tartható, ha az EU-források felszabadulnak, és a gazdasági növekedés valóban eléri a tervezett 2,4%-ot. Ha ez nem történik meg, akkor vagy a tervezett adócsökkentések (szja-emelés, családi adókedvezmények) csúsznak, vagy újabb kiadáscsökkentések jönnek, amelyek közvetve minden állami szolgáltatást érinthetnek. Az államháztartás tehát nem csak egy könyvelési tételek sorozata, hanem a jövő évi közszolgáltatások minőségének és elérhetőségének alapja.
+                A 1,9%-os éves hiánycél azonban csak az egyik oldala a történetnek. Az uniós szabályok szerint a strukturális hiánynak (vagyis az államháztartás egyensúlyának, ha nem számítjuk a gazdasági ciklusból adódó kiadásokat vagy bevételeket) 3% alatt kell maradnia, de a 2025-ös adatok azt mutatják, hogy a magyar államháztartás szezonálisan kiigazítva 3,5-4% közötti strukturális hiánnyal működik. Ez azt jelenti, hogy az állam túlköltekezik, és ezt nem a gazdasági lassulás indokolja, hanem strukturális problémák.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                Az EU-források kérdése kulcsfontosságú: 2025-ben 2,3%-kal növelte volna a GDP-t, ha a források zavartalanul érkeznek, de a fagyasztás miatt ez az összeg nem érkezett meg, és a kormánynak pótolnia kellett a hiányzó pénzt belső forrásokból, ami növelte az államadósságot. Az államadósság-ráta 2025 végére várhatóan 71-72% körül alakult, ami magasabb a 2024-es 69%-nál, és ez közvetlenül érint mindenkit: minél magasabb az adósság, annál több pénzt kell kamatra fordítani, ami kevesebb marad oktatásra, egészségügyre, infrastruktúrára.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                A kormány 2026-ra 3% alatti hiánycélt tűzött ki, de ez csak akkor tartható, ha az EU-források felszabadulnak, és a gazdasági növekedés valóban eléri a tervezett 2,4%-ot. Ha ez nem történik meg, akkor vagy a tervezett adócsökkentések (szja-emelés, családi adókedvezmények) csúsznak, vagy újabb kiadáscsökkentések jönnek, amelyek közvetve minden állami szolgáltatást érinthetnek.
+              </p>
+              <p style={{ marginBottom: spacing.md }}>
+                Az államháztartás tehát nem csak egy könyvelési tételek sorozata, hanem a jövő évi közszolgáltatások minőségének és elérhetőségének alapja.
               </p>
             </section>
 
