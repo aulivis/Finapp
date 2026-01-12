@@ -3,7 +3,8 @@ import LandingPageClient from '@/components/LandingPageClient'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'
+// Use www subdomain to match Facebook's redirect chain and avoid redirects
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.contexta.hu'
 
 // Force dynamic rendering to ensure searchParams are available in generateMetadata
 // Note: This disables static generation, which is expected since we need dynamic metadata based on URL params
@@ -85,11 +86,16 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       return {
         title: `${dynamicTitle} | Contexta`,
         description: dynamicDescription,
+        // Override canonical URL to include query parameters
+        alternates: {
+          canonical: shareUrl,
+        },
         openGraph: {
           title: dynamicTitle,
           description: dynamicDescription,
           type: 'website',
           locale: 'hu_HU',
+          // Use absolute URL with query parameters
           url: shareUrl,
           siteName: 'Contexta',
           // Explicitly set images array to override layout defaults
