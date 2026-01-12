@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
-import Link from 'next/link'
 import ContextaWordmark from '@/components/ContextaWordmark'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
 import NewsletterSubscriptionBox from '@/components/NewsletterSubscriptionBox'
+import BackLink from '@/components/BackLink'
 
 export const metadata: Metadata = {
   title: 'Hírlevél 2025. december | Contexta',
@@ -38,27 +38,7 @@ export default function NewsletterPage() {
 
         {/* Back to home link */}
         <div style={{ marginBottom: spacing['2xl'] }}>
-          <Link 
-            href="/"
-            style={{
-              color: colors.primary,
-              textDecoration: 'none',
-              fontSize: typography.fontSize.base,
-              fontWeight: typography.fontWeight.medium,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: spacing.xs,
-              transition: 'color 0.2s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = colors.primaryHover
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = colors.primary
-            }}
-          >
-            ← Vissza a főoldalra
-          </Link>
+          <BackLink />
         </div>
 
         {/* Newsletter Content */}
