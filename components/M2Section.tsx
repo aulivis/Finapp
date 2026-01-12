@@ -36,8 +36,7 @@ export default function M2Section({ startYear = 2015, endYear = 2025 }: M2Sectio
     if (validM2Data.length === 0) {
       return {
         avgM2Growth: null,
-        maxM2Growth: null,
-        maxM2GrowthYear: null,
+        totalM2Growth: null,
         totalInflation: null
       }
     }
@@ -45,9 +44,12 @@ export default function M2Section({ startYear = 2015, endYear = 2025 }: M2Sectio
     // Average M2 growth
     const avgM2Growth = validM2Data.reduce((sum, d) => sum + d.growth, 0) / validM2Data.length
 
-    // Biggest M2 growth
-    const maxM2Growth = Math.max(...validM2Data.map(d => d.growth))
-    const maxM2GrowthYear = validM2Data.find(d => d.growth === maxM2Growth)?.year || null
+    // Total M2 growth (cumulative) for the range
+    let cumulativeM2Growth = 1
+    validM2Data.forEach(d => {
+      cumulativeM2Growth *= (1 + d.growth / 100)
+    })
+    const totalM2Growth = (cumulativeM2Growth - 1) * 100 // Convert to percentage
 
     // Total inflation (cumulative) for the range
     const inflationData = HISTORICAL_INFLATION.filter(d => d.year >= startYear && d.year <= endYear)
@@ -59,8 +61,7 @@ export default function M2Section({ startYear = 2015, endYear = 2025 }: M2Sectio
 
     return {
       avgM2Growth,
-      maxM2Growth,
-      maxM2GrowthYear,
+      totalM2Growth,
       totalInflation
     }
   }, [m2Data, startYear, endYear])
@@ -307,176 +308,329 @@ export default function M2Section({ startYear = 2015, endYear = 2025 }: M2Sectio
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-                gap: isMobile ? spacing.lg : spacing.xl,
+                gap: isMobile ? spacing['3xl'] : spacing.xl,
                 width: '100%',
                 maxWidth: isMobile ? '100%' : '900px',
                 marginTop: spacing['2xl']
               }}>
                 {/* Average M2 Growth Card */}
                 <div style={{
-                  padding: isMobile ? spacing.xl : spacing['2xl'],
+                  padding: isMobile ? `${spacing['2xl']} ${spacing.lg}` : spacing['2xl'],
+                  paddingTop: isMobile ? spacing['2xl'] : spacing['2xl'],
                   background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.4) 100%)`,
+                  backgroundColor: colors.background.paper,
                   borderRadius: borderRadius.lg,
-                  border: `1px solid ${colors.primaryBorder}`,
+                  border: `1px solid ${colors.gray[200]}`,
                   boxShadow: shadows.sm,
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: spacing.md,
+                  alignItems: isMobile ? 'center' : 'flex-start',
+                  textAlign: isMobile ? 'center' : 'left',
+                  position: 'relative',
+                  overflow: 'visible',
                   transition: prefersReducedMotion ? 'none' : transitions.all
                 }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: spacing.md
-                  }}>
+                  {isMobile ? (
                     <div style={{
+                      position: 'absolute',
+                      top: '-32px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      width: isMobile ? '48px' : '56px',
-                      height: isMobile ? '48px' : '56px',
+                      width: '64px',
+                      height: '64px',
                       borderRadius: borderRadius.full,
-                      backgroundColor: colors.primary,
-                      color: '#FFFFFF',
-                      flexShrink: 0
+                      background: `linear-gradient(135deg, ${colors.primaryLight} 0%, rgba(240, 253, 250, 0.6) 100%)`,
+                      color: colors.primary,
+                      flexShrink: 0,
+                      border: `1px solid ${colors.primaryBorder}`,
+                      boxShadow: shadows.md
                     }}>
-                      <TrendingUp size={isMobile ? 24 : 28} strokeWidth={2.5} />
+                      <TrendingUp size={42} strokeWidth={2} />
+                    </div>
+                  ) : (
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: spacing.md,
+                      marginBottom: spacing.md,
+                      width: '100%'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '56px',
+                        height: '56px',
+                        borderRadius: borderRadius.full,
+                        backgroundColor: colors.primary,
+                        color: '#FFFFFF',
+                        flexShrink: 0
+                      }}>
+                        <TrendingUp size={28} strokeWidth={2.5} />
+                      </div>
+                      <div style={{
+                        fontSize: typography.fontSize.sm,
+                        color: colors.text.muted,
+                        fontWeight: typography.fontWeight.medium
+                      }}>
+                        Átlagos M2 növekedés
+                      </div>
+                    </div>
+                  )}
+                  <div style={{ flex: 1, minWidth: 0, width: '100%', position: 'relative' }}>
+                    {isMobile && (
+                      <div style={{
+                        position: 'relative',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: spacing.md
+                      }}>
+                        <div style={{
+                          fontSize: typography.fontSize.lg,
+                          color: colors.text.muted,
+                          fontWeight: typography.fontWeight.medium
+                        }}>
+                          Átlagos M2 növekedés
+                        </div>
+                      </div>
+                    )}
+                    <div style={{
+                      fontSize: typography.fontSize['4xl'],
+                      fontWeight: typography.fontWeight.bold,
+                      color: colors.text.primary,
+                      fontVariantNumeric: 'tabular-nums',
+                      lineHeight: 1.2,
+                      marginBottom: isMobile ? spacing.lg : spacing.md,
+                      textAlign: isMobile ? 'center' : 'left'
+                    }} className="tabular-nums">
+                      {stats.avgM2Growth > 0 ? '+' : ''}{stats.avgM2Growth.toFixed(1)}%
                     </div>
                     <div style={{
-                      fontSize: typography.fontSize.sm,
-                      color: colors.text.muted,
-                      fontWeight: typography.fontWeight.medium
+                      fontSize: typography.fontSize.xs,
+                      color: colors.text.secondary,
+                      lineHeight: typography.lineHeight.normal,
+                      textAlign: isMobile ? 'center' : 'left'
                     }}>
-                      Átlagos M2 növekedés
+                      {startYear}-{endYear} időszak átlaga
                     </div>
-                  </div>
-                  <div style={{
-                    fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
-                    fontWeight: typography.fontWeight.bold,
-                    color: colors.text.primary,
-                    fontVariantNumeric: 'tabular-nums',
-                    lineHeight: 1.2
-                  }} className="tabular-nums">
-                    {stats.avgM2Growth > 0 ? '+' : ''}{stats.avgM2Growth.toFixed(1)}%
-                  </div>
-                  <div style={{
-                    fontSize: typography.fontSize.xs,
-                    color: colors.text.secondary,
-                    lineHeight: typography.lineHeight.normal
-                  }}>
-                    {startYear}-{endYear} időszak átlaga
                   </div>
                 </div>
 
-                {/* Biggest M2 Growth Card */}
+                {/* Total M2 Growth Card */}
                 <div style={{
-                  padding: isMobile ? spacing.xl : spacing['2xl'],
+                  padding: isMobile ? `${spacing['2xl']} ${spacing.lg}` : spacing['2xl'],
+                  paddingTop: isMobile ? spacing['2xl'] : spacing['2xl'],
                   background: `linear-gradient(135deg, rgba(254, 243, 199, 0.3) 0%, rgba(255, 247, 237, 0.2) 100%)`,
+                  backgroundColor: colors.background.paper,
                   borderRadius: borderRadius.lg,
-                  border: `1px solid ${colors.warningLight}`,
+                  border: `1px solid ${colors.gray[200]}`,
                   boxShadow: shadows.sm,
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: spacing.md,
+                  alignItems: isMobile ? 'center' : 'flex-start',
+                  textAlign: isMobile ? 'center' : 'left',
+                  position: 'relative',
+                  overflow: 'visible',
                   transition: prefersReducedMotion ? 'none' : transitions.all
                 }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: spacing.md
-                  }}>
+                  {isMobile ? (
                     <div style={{
+                      position: 'absolute',
+                      top: '-32px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      width: isMobile ? '48px' : '56px',
-                      height: isMobile ? '48px' : '56px',
+                      width: '64px',
+                      height: '64px',
                       borderRadius: borderRadius.full,
-                      backgroundColor: colors.warning,
-                      color: '#FFFFFF',
-                      flexShrink: 0
+                      background: `linear-gradient(135deg, rgba(254, 243, 199, 0.6) 0%, rgba(255, 247, 237, 0.4) 100%)`,
+                      color: colors.warning,
+                      flexShrink: 0,
+                      border: `1px solid ${colors.warningLight}`,
+                      boxShadow: shadows.md
                     }}>
-                      <BarChart3 size={isMobile ? 24 : 28} strokeWidth={2.5} />
+                      <BarChart3 size={42} strokeWidth={2} />
+                    </div>
+                  ) : (
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: spacing.md,
+                      marginBottom: spacing.md,
+                      width: '100%'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '56px',
+                        height: '56px',
+                        borderRadius: borderRadius.full,
+                        backgroundColor: colors.warning,
+                        color: '#FFFFFF',
+                        flexShrink: 0
+                      }}>
+                        <BarChart3 size={28} strokeWidth={2.5} />
+                      </div>
+                      <div style={{
+                        fontSize: typography.fontSize.sm,
+                        color: colors.text.muted,
+                        fontWeight: typography.fontWeight.medium
+                      }}>
+                        Összes M2 növekedés
+                      </div>
+                    </div>
+                  )}
+                  <div style={{ flex: 1, minWidth: 0, width: '100%', position: 'relative' }}>
+                    {isMobile && (
+                      <div style={{
+                        position: 'relative',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: spacing.md
+                      }}>
+                        <div style={{
+                          fontSize: typography.fontSize.lg,
+                          color: colors.text.muted,
+                          fontWeight: typography.fontWeight.medium
+                        }}>
+                          Összes M2 növekedés
+                        </div>
+                      </div>
+                    )}
+                    <div style={{
+                      fontSize: typography.fontSize['4xl'],
+                      fontWeight: typography.fontWeight.bold,
+                      color: colors.text.primary,
+                      fontVariantNumeric: 'tabular-nums',
+                      lineHeight: 1.2,
+                      marginBottom: isMobile ? spacing.lg : spacing.md,
+                      textAlign: isMobile ? 'center' : 'left'
+                    }} className="tabular-nums">
+                      {stats.totalM2Growth !== null && stats.totalM2Growth > 0 ? '+' : ''}{stats.totalM2Growth !== null ? stats.totalM2Growth.toFixed(1) : 'N/A'}%
                     </div>
                     <div style={{
-                      fontSize: typography.fontSize.sm,
-                      color: colors.text.muted,
-                      fontWeight: typography.fontWeight.medium
+                      fontSize: typography.fontSize.xs,
+                      color: colors.text.secondary,
+                      lineHeight: typography.lineHeight.normal,
+                      textAlign: isMobile ? 'center' : 'left'
                     }}>
-                      Legnagyobb növekedés
+                      {startYear}-{endYear} kumulatív
                     </div>
-                  </div>
-                  <div style={{
-                    fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
-                    fontWeight: typography.fontWeight.bold,
-                    color: colors.text.primary,
-                    fontVariantNumeric: 'tabular-nums',
-                    lineHeight: 1.2
-                  }} className="tabular-nums">
-                    {stats.maxM2Growth > 0 ? '+' : ''}{stats.maxM2Growth.toFixed(1)}%
-                  </div>
-                  <div style={{
-                    fontSize: typography.fontSize.xs,
-                    color: colors.text.secondary,
-                    lineHeight: typography.lineHeight.normal
-                  }}>
-                    {stats.maxM2GrowthYear ? `${stats.maxM2GrowthYear} évben` : 'N/A'}
                   </div>
                 </div>
 
                 {/* Total Inflation Card */}
                 <div style={{
-                  padding: isMobile ? spacing.xl : spacing['2xl'],
+                  padding: isMobile ? `${spacing['2xl']} ${spacing.lg}` : spacing['2xl'],
+                  paddingTop: isMobile ? spacing['2xl'] : spacing['2xl'],
                   background: `linear-gradient(135deg, ${colors.errorLight} 0%, rgba(254, 226, 226, 0.4) 100%)`,
+                  backgroundColor: colors.background.paper,
                   borderRadius: borderRadius.lg,
-                  border: `1px solid ${colors.error}`,
+                  border: `1px solid ${colors.gray[200]}`,
                   boxShadow: shadows.sm,
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: spacing.md,
+                  alignItems: isMobile ? 'center' : 'flex-start',
+                  textAlign: isMobile ? 'center' : 'left',
+                  position: 'relative',
+                  overflow: 'visible',
                   transition: prefersReducedMotion ? 'none' : transitions.all
                 }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: spacing.md
-                  }}>
+                  {isMobile ? (
                     <div style={{
+                      position: 'absolute',
+                      top: '-32px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      width: isMobile ? '48px' : '56px',
-                      height: isMobile ? '48px' : '56px',
+                      width: '64px',
+                      height: '64px',
                       borderRadius: borderRadius.full,
-                      backgroundColor: colors.error,
-                      color: '#FFFFFF',
-                      flexShrink: 0
+                      background: `linear-gradient(135deg, ${colors.errorLight} 0%, rgba(254, 226, 226, 0.6) 100%)`,
+                      color: colors.error,
+                      flexShrink: 0,
+                      border: `1px solid ${colors.error}`,
+                      boxShadow: shadows.md
                     }}>
-                      <TrendingDown size={isMobile ? 24 : 28} strokeWidth={2.5} />
+                      <TrendingDown size={42} strokeWidth={2} />
+                    </div>
+                  ) : (
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: spacing.md,
+                      marginBottom: spacing.md,
+                      width: '100%'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '56px',
+                        height: '56px',
+                        borderRadius: borderRadius.full,
+                        backgroundColor: colors.error,
+                        color: '#FFFFFF',
+                        flexShrink: 0
+                      }}>
+                        <TrendingDown size={28} strokeWidth={2.5} />
+                      </div>
+                      <div style={{
+                        fontSize: typography.fontSize.sm,
+                        color: colors.text.muted,
+                        fontWeight: typography.fontWeight.medium
+                      }}>
+                        Összes infláció
+                      </div>
+                    </div>
+                  )}
+                  <div style={{ flex: 1, minWidth: 0, width: '100%', position: 'relative' }}>
+                    {isMobile && (
+                      <div style={{
+                        position: 'relative',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: spacing.md
+                      }}>
+                        <div style={{
+                          fontSize: typography.fontSize.lg,
+                          color: colors.text.muted,
+                          fontWeight: typography.fontWeight.medium
+                        }}>
+                          Összes infláció
+                        </div>
+                      </div>
+                    )}
+                    <div style={{
+                      fontSize: typography.fontSize['4xl'],
+                      fontWeight: typography.fontWeight.bold,
+                      color: colors.error,
+                      fontVariantNumeric: 'tabular-nums',
+                      lineHeight: 1.2,
+                      marginBottom: isMobile ? spacing.lg : spacing.md,
+                      textAlign: isMobile ? 'center' : 'left'
+                    }} className="tabular-nums">
+                      {stats.totalInflation !== null ? `+${stats.totalInflation.toFixed(1)}%` : 'N/A'}
                     </div>
                     <div style={{
-                      fontSize: typography.fontSize.sm,
-                      color: colors.text.muted,
-                      fontWeight: typography.fontWeight.medium
+                      fontSize: typography.fontSize.xs,
+                      color: colors.text.secondary,
+                      lineHeight: typography.lineHeight.normal,
+                      textAlign: isMobile ? 'center' : 'left'
                     }}>
-                      Összes infláció
+                      {startYear}-{endYear} kumulatív
                     </div>
-                  </div>
-                  <div style={{
-                    fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['4xl'],
-                    fontWeight: typography.fontWeight.bold,
-                    color: colors.error,
-                    fontVariantNumeric: 'tabular-nums',
-                    lineHeight: 1.2
-                  }} className="tabular-nums">
-                    {stats.totalInflation !== null ? `+${stats.totalInflation.toFixed(1)}%` : 'N/A'}
-                  </div>
-                  <div style={{
-                    fontSize: typography.fontSize.xs,
-                    color: colors.text.secondary,
-                    lineHeight: typography.lineHeight.normal
-                  }}>
-                    {startYear}-{endYear} kumulatív
                   </div>
                 </div>
               </div>
