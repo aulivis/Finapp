@@ -531,7 +531,7 @@ export default function M2Section({ startYear = 2015, endYear = 2025 }: M2Sectio
                 <div style={{
                   padding: isMobile ? `${spacing['2xl']} ${spacing.lg}` : spacing['2xl'],
                   paddingTop: isMobile ? spacing['2xl'] : spacing['2xl'],
-                  background: `linear-gradient(135deg, ${colors.errorLight} 0%, rgba(254, 226, 226, 0.4) 100%)`,
+                  background: `linear-gradient(135deg, #FEF7F7 0%, rgba(254, 242, 242, 0.4) 100%)`,
                   backgroundColor: colors.background.paper,
                   borderRadius: borderRadius.lg,
                   border: `1px solid ${colors.gray[200]}`,
@@ -556,10 +556,10 @@ export default function M2Section({ startYear = 2015, endYear = 2025 }: M2Sectio
                       width: '64px',
                       height: '64px',
                       borderRadius: borderRadius.full,
-                      background: `linear-gradient(135deg, ${colors.errorLight} 0%, rgba(254, 226, 226, 0.6) 100%)`,
+                      background: `linear-gradient(135deg, #FEF7F7 0%, rgba(254, 242, 242, 0.6) 100%)`,
                       color: colors.error,
                       flexShrink: 0,
-                      border: `1px solid ${colors.error}`,
+                      border: `1px solid rgba(239, 68, 68, 0.3)`,
                       boxShadow: shadows.md
                     }}>
                       <TrendingDown size={42} strokeWidth={2} />

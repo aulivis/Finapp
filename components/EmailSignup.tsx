@@ -245,7 +245,7 @@ export default function EmailSignup() {
               color: colors.text.muted,
               textAlign: 'center',
               marginTop: spacing.md,
-              marginBottom: 0,
+              marginBottom: spacing.md,
               lineHeight: typography.lineHeight.relaxed,
             }}>
               A feliratkozással elfogadod az{' '}
@@ -267,6 +267,39 @@ export default function EmailSignup() {
               </Link>
               .
             </p>
+
+            {/* Preview link */}
+            <div style={{
+              textAlign: 'center',
+              marginBottom: spacing.lg,
+            }}>
+              <Link
+                href="/hirlevel-2025-december"
+                style={{
+                  fontSize: typography.fontSize.sm,
+                  color: colors.primary,
+                  textDecoration: 'none',
+                  fontWeight: typography.fontWeight.medium,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: spacing.xs,
+                  padding: `${spacing.xs} ${spacing.md}`,
+                  borderRadius: borderRadius.md,
+                  transition: transitions.fast,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = colors.primaryLight
+                  e.currentTarget.style.textDecoration = 'underline'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent'
+                  e.currentTarget.style.textDecoration = 'none'
+                }}
+              >
+                <span>👁️</span>
+                <span>Előnézet: Nézd meg a hírlevél példáját</span>
+              </Link>
+            </div>
 
             {/* Trust signals */}
             <div style={{

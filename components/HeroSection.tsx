@@ -276,9 +276,9 @@ export default function HeroSection() {
               marginTop: spacing['2xl'],
               padding: spacing.xl,
               paddingTop: isMobile ? spacing['2xl'] : spacing['2xl'],
-              backgroundColor: colors.errorLight,
+              backgroundColor: '#FEF7F7',
               borderRadius: borderRadius.lg,
-              border: `2px solid ${colors.error}`,
+              border: `2px solid rgba(239, 68, 68, 0.3)`,
               textAlign: 'center',
               position: 'relative'
             }}>
@@ -297,7 +297,7 @@ export default function HeroSection() {
                 fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
                 color: colors.error,
                 fontWeight: typography.fontWeight.bold,
-                border: `2px solid ${colors.error}`,
+                border: `2px solid rgba(239, 68, 68, 0.3)`,
                 whiteSpace: 'nowrap',
                 boxShadow: shadows.md,
                 animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite',

@@ -480,8 +480,8 @@ export default function LandingCalculator({
                   value={calculationData.loss}
                   formatter={(v) => `-${formatCurrency(v)}`}
                   style={{
-                    border: `2px solid ${colors.error}`,
-                    backgroundColor: colors.errorLight
+                    border: `2px solid rgba(239, 68, 68, 0.3)`,
+                    backgroundColor: '#FEF7F7'
                   }}
                 />
               </div>
@@ -489,9 +489,9 @@ export default function LandingCalculator({
               {/* Hero Result Message - The Key Insight - Enhanced Focus Card */}
               <div style={{
                 padding: isMobile ? `${spacing['3xl']} ${spacing.lg}` : spacing['4xl'],
-                background: `linear-gradient(135deg, ${colors.errorLight} 0%, rgba(254, 226, 226, 0.6) 50%, rgba(254, 226, 226, 0.4) 100%)`,
+                background: `linear-gradient(135deg, #FEF7F7 0%, rgba(254, 242, 242, 0.6) 50%, rgba(254, 242, 242, 0.4) 100%)`,
                 borderRadius: borderRadius.xl,
-                border: `3px solid ${colors.error}`,
+                border: `3px solid rgba(239, 68, 68, 0.3)`,
                 textAlign: 'center',
                 position: 'relative',
                 overflow: 'hidden',
@@ -507,7 +507,7 @@ export default function LandingCalculator({
                   left: 0,
                   right: 0,
                   height: '4px',
-                  background: `linear-gradient(90deg, ${colors.error} 0%, #DC2626 50%, ${colors.error} 100%)`
+                  background: `linear-gradient(90deg, rgba(239, 68, 68, 0.3) 0%, rgba(220, 38, 38, 0.3) 50%, rgba(239, 68, 68, 0.3) 100%)`
                 }} />
                 <div style={{
                   marginBottom: spacing.xl
@@ -515,18 +515,18 @@ export default function LandingCalculator({
                   <div style={{
                     fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
                     color: colors.error,
-                    fontWeight: typography.fontWeight.bold,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.08em',
+                    fontWeight: typography.fontWeight.normal,
+                    letterSpacing: '0.02em',
                     marginBottom: spacing.lg
                   }}>
-                    Vásárlóerő veszteség
+                    Ennyit veszített a pénzed vásárlóerejéből
                   </div>
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: spacing.lg,
+                    gap: spacing.md,
+                    flexWrap: 'wrap',
                     fontSize: isMobile ? typography.fontSize['6xl'] : '72px',
                     fontWeight: typography.fontWeight.bold,
                     color: colors.error,
@@ -534,8 +534,15 @@ export default function LandingCalculator({
                     marginBottom: spacing.lg,
                     fontFeatureSettings: '"tnum"',
                   }}>
-                    <TrendingDown size={isMobile ? 40 : 56} strokeWidth={2.5} />
-                    <span>{formatPercentage(calculationData.lossPercentage)}</span>
+                    <span>-{formatCurrency(Math.round(calculationData.loss))}</span>
+                    <span style={{ 
+                      fontSize: isMobile ? typography.fontSize['3xl'] : typography.fontSize['5xl'],
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: spacing.xs
+                    }}>
+                      (<TrendingDown size={isMobile ? 32 : 48} strokeWidth={2.5} /> {formatPercentage(calculationData.lossPercentage)})
+                    </span>
                   </div>
                   <div style={{
                     fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
@@ -545,11 +552,10 @@ export default function LandingCalculator({
                     margin: '0 auto',
                     fontWeight: typography.fontWeight.medium
                   }}>
-                    A <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{formatCurrency(amount)}</strong> vásárlóereje{' '}
-                    <strong style={{ color: colors.error, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>
-                      {formatPercentage(calculationData.lossPercentage)}-kal csökkent
-                    </strong>{' '}
-                    <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.semibold }}>{validStartYear}</strong> és <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.semibold }}>{validEndYear}</strong> között.
+                    A(z) <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{formatCurrency(amount)}</strong> vásárlóereje{' '}
+                    <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{validStartYear}</strong> és{' '}
+                    <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{validEndYear}</strong> között{' '}
+                    <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{formatCurrency(Math.round(calculationData.finalReal))}</strong>-ra csökkent. Ezért fontos, hogy tudd: a pénz nem csak „áll", hanem <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold }}>idővel változik az értéke.</strong>
                   </div>
                 </div>
                 
