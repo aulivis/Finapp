@@ -1,12 +1,27 @@
-import { ImageResponse } from '@vercel/og'
+import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
-import { HISTORICAL_INFLATION } from '@/lib/data/economic-data'
 
 // Force dynamic rendering since we use request.url and searchParams
 export const dynamic = 'force-dynamic'
 
-// Edge runtime is required for @vercel/og ImageResponse
+// Edge runtime is required for ImageResponse
 export const runtime = 'edge'
+
+// Historical inflation data (inline for edge runtime compatibility)
+const HISTORICAL_INFLATION = [
+  { year: 2014, inflationRate: -0.2 },
+  { year: 2015, inflationRate: -0.06 },
+  { year: 2016, inflationRate: 0.39 },
+  { year: 2017, inflationRate: 2.35 },
+  { year: 2018, inflationRate: 2.85 },
+  { year: 2019, inflationRate: 3.34 },
+  { year: 2020, inflationRate: 3.33 },
+  { year: 2021, inflationRate: 5.11 },
+  { year: 2022, inflationRate: 14.61 },
+  { year: 2023, inflationRate: 17.12 },
+  { year: 2024, inflationRate: 3.7 },
+  { year: 2025, inflationRate: 3.8 },
+] as const
 
 export async function GET(request: NextRequest) {
   try {
@@ -301,28 +316,33 @@ export async function GET(request: NextRequest) {
     return imageResponse
   } catch (e: any) {
     console.error('OG image generation error:', e)
-    // Return a simple error image instead of text
-    return new ImageResponse(
-      (
-        <div
-          style={{
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: '#FFFFFF',
-            fontSize: '24px',
-            color: '#000000',
-          }}
-        >
-          Error generating image
-        </div>
-      ),
-      {
-        width: 1200,
-        height: 630,
-      }
-    )
+    // Return a simple error image
+    try {
+      return new ImageResponse(
+        (
+          <div
+            style={{
+              height: '100%',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: '#FFFFFF',
+              fontSize: '24px',
+              color: '#000000',
+            }}
+          >
+            Error generating image
+          </div>
+        ),
+        {
+          width: 1200,
+          height: 630,
+        }
+      )
+    } catch (error) {
+      // Fallback to text response if ImageResponse fails
+      return new Response('Failed to generate image', { status: 500 })
+    }
   }
 }
