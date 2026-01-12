@@ -9,7 +9,6 @@ interface SocialShareProps {
   startYear: number
   endYear: number
   lossPercentage: number
-  loss: number
   formatCurrency: (value: number) => string
   formatPercentage: (value: number) => string
 }
@@ -19,7 +18,6 @@ export default function SocialShare({
   startYear,
   endYear,
   lossPercentage,
-  loss,
   formatCurrency,
   formatPercentage
 }: SocialShareProps) {

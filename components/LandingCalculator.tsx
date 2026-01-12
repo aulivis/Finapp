@@ -559,7 +559,6 @@ export default function LandingCalculator({
                   startYear={validStartYear}
                   endYear={validEndYear}
                   lossPercentage={calculationData.lossPercentage}
-                  loss={calculationData.loss}
                   formatCurrency={formatCurrency}
                   formatPercentage={formatPercentage}
                 />
