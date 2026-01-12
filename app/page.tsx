@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     siteName: 'Contexta',
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/mi-tortenik.png`,
+        url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/contexta-social-share.jpg`,
         width: 1200,
         height: 630,
         alt: 'Contexta - Inflációs kalkulátor',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Contexta — Vásárlóerő változása az infláció miatt',
     description: 'Nézd meg, hogyan csökkent a pénz vásárlóereje idővel — egyszerű inflációs kalkulátor és valós összehasonlítások.',
-    images: [`${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/mi-tortenik.png`],
+    images: [`${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/contexta-social-share.jpg`],
   },
 }
 

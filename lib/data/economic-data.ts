@@ -4,7 +4,7 @@
  * This file contains all hardcoded economic data used throughout the application.
  * Update this file to keep all economic data in sync.
  * 
- * Last updated: 2024
+ * Last updated: 2026.01.12.
  * 
  * Data sources:
  * - Inflation: KSH (Központi Statisztikai Hivatal)
@@ -25,17 +25,17 @@
  */
 export const HISTORICAL_INFLATION: Array<{ year: number; inflationRate: number }> = [
   { year: 2014, inflationRate: -0.2 },
-  { year: 2015, inflationRate: 0.1 },
-  { year: 2016, inflationRate: 0.4 },
-  { year: 2017, inflationRate: 2.4 },
-  { year: 2018, inflationRate: 2.8 },
-  { year: 2019, inflationRate: 3.4 },
-  { year: 2020, inflationRate: 3.3 },
-  { year: 2021, inflationRate: 5.1 },
-  { year: 2022, inflationRate: 14.5 },
-  { year: 2023, inflationRate: 17.6 },
-  { year: 2024, inflationRate: 3.7 }, // Estimated/partial year
-  { year: 2025, inflationRate: 3.7 }, // Estimated - using same as 2024 for projection
+  { year: 2015, inflationRate: -0.06 },
+  { year: 2016, inflationRate: 0.39 },
+  { year: 2017, inflationRate: 2.35 },
+  { year: 2018, inflationRate: 2.85 },
+  { year: 2019, inflationRate: 3.34 },
+  { year: 2020, inflationRate: 3.33 },
+  { year: 2021, inflationRate: 5.11 },
+  { year: 2022, inflationRate: 14.61 },
+  { year: 2023, inflationRate: 17.12 },
+  { year: 2024, inflationRate: 3.7 }, 
+  { year: 2025, inflationRate: 3.8 }, // Estimated 
 ]
 
 /**
@@ -76,17 +76,17 @@ export const HISTORICAL_PRICES = {
    * Big Mac price in HUF
    */
   bigMac: {
-    2015: 850,
-    2016: 870,
-    2017: 890,
-    2018: 920,
-    2019: 950,
-    2020: 980,
-    2021: 1050,
-    2022: 1200,
-    2023: 1450,
-    2024: 1500,
-    2025: 1550, // Estimated
+    2015: 880,
+    2016: 900,
+    2017: 880,
+    2018: 860,
+    2019: 875,
+    2020: 900,
+    2021: 910,
+    2022: 1000,
+    2023: 1375,
+    2024: 1410,
+    2025: 1420,
   },
   
   /**
@@ -100,27 +100,27 @@ export const HISTORICAL_PRICES = {
     2019: 36000000,
     2020: 38000000,
     2021: 42000000,
-    2022: 50000000,
-    2023: 58000000,
-    2024: 62000000,
-    2025: 65000000, // Estimated
+    2022: 53000000,
+    2023: 53000000,
+    2024: 55000000,
+    2025: 72000000,
   },
   
   /**
-   * Gold price per ounce in HUF (approximate)
+   * Gold price per ounce (USD)
    */
   gold: {
-    2015: 125000,
-    2016: 135000,
-    2017: 140000,
-    2018: 145000,
-    2019: 155000,
-    2020: 180000,
-    2021: 195000,
-    2022: 220000,
-    2023: 250000,
-    2024: 260000,
-    2025: 270000, // Estimated
+    2015: 1061,
+    2016: 1152,
+    2017: 1295,
+    2018: 1283,
+    2019: 1542,
+    2020: 1896,
+    2021: 1828,
+    2022: 1812,
+    2023: 2062,
+    2024: 2624,
+    2025: 4570,
   },
   
   /**
@@ -136,25 +136,25 @@ export const HISTORICAL_PRICES = {
     2021: 4766,
     2022: 3839,
     2023: 4769,
-    2024: 5473,
-    2025: 5800, // Estimated
+    2024: 5882,
+    2025: 6606,
   },
   
   /**
    * Bitcoin price in USD
    */
   bitcoin: {
-    2015: 430,
-    2016: 960,
-    2017: 13800,
-    2018: 3800,
-    2019: 7200,
-    2020: 29000,
-    2021: 47000,
-    2022: 16500,
-    2023: 42000,
-    2024: 63000,
-    2025: 75000, // Estimated
+    2015: 431,
+    2016: 964,
+    2017: 14156,
+    2018: 3743,
+    2019: 7194,
+    2020: 29001,
+    2021: 46306,
+    2022: 16548,
+    2023: 42265,
+    2024: 93429,
+    2025: 87509,
   },
 } as const
 
@@ -171,13 +171,16 @@ export const HISTORICAL_PRICES = {
  * Primary source should be the database via API
  */
 export const HISTORICAL_M2_GROWTH: Array<{ year: number; m2Growth: number | null }> = [
-  // Add M2 data here when available
-  // Example format:
-  // { year: 2020, m2Growth: 12.5 },
-  // { year: 2021, m2Growth: 15.2 },
-  // { year: 2022, m2Growth: 18.3 },
-  // { year: 2023, m2Growth: 10.5 },
-  // { year: 2024, m2Growth: null }, // Not yet available
+  { year: 2015, m2Growth: 5.7 },
+  { year: 2016, m2Growth: 6.93 },
+  { year: 2017, m2Growth: 4.9 },
+  { year: 2018, m2Growth: 3.67 },
+  { year: 2019, m2Growth: 6.71 },
+  { year: 2020, m2Growth: 24.66 },
+  { year: 2021, m2Growth: -1.17 },
+  { year: 2022, m2Growth: -2.44 },
+  { year: 2023, m2Growth: 3.49 },
+  { year: 2024, m2Growth: 4.19 }, 
 ]
 
 // ============================================================================

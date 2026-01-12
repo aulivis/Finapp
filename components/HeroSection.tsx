@@ -5,7 +5,7 @@ import { calculatePurchasingPower } from '@/lib/data/inflation'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, shadows, transitions } from '@/lib/design-system'
-import { Calendar, TrendingDown, Coins } from 'lucide-react'
+import { Calendar, TrendingDown, FastForward } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import ContextaWordmark from '@/components/ContextaWordmark'
 
@@ -198,7 +198,7 @@ export default function HeroSection() {
                 </div>
               </div>
 
-              {/* Animated Money Losing Value Icon */}
+              {/* Animated Fast Forward Icon */}
               <div style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -214,32 +214,14 @@ export default function HeroSection() {
                   lineHeight: 1,
                   color: colors.error
                 }}>
-                  <div style={{
-                    position: 'relative',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    <Coins 
-                      size={isMobile ? 32 : 48} 
-                      strokeWidth={2.5}
-                      style={{
-                        animation: prefersReducedMotion ? 'none' : 'moneyFade 2s ease-in-out infinite',
-                        opacity: prefersReducedMotion ? 1 : undefined
-                      }}
-                    />
-                    <TrendingDown 
-                      size={isMobile ? 20 : 28} 
-                      strokeWidth={2.5}
-                      style={{
-                        position: 'absolute',
-                        bottom: '-4px',
-                        right: '-4px',
-                        color: colors.error,
-                        animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite'
-                      }}
-                    />
-                  </div>
+                  <FastForward 
+                    size={isMobile ? 40 : 56} 
+                    strokeWidth={2.5}
+                    style={{
+                      color: colors.error,
+                      animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite'
+                    }}
+                  />
                 </div>
               </div>
 
@@ -302,14 +284,13 @@ export default function HeroSection() {
               {/* Badge at top center - mobile and desktop */}
               <div style={{
                 position: 'absolute',
-                top: '-18px',
-                left: '50%',
-                transform: 'translateX(-50%)',
+                top: isMobile ? '-25px' : '-30px',
+                left: isMobile ? '33%' : '42%',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: spacing.xs,
-                padding: isMobile ? `${spacing.md} ${spacing.xl}` : `${spacing.lg} ${spacing['2xl']}`,
+                padding: isMobile ? '10px 18px' : '12px 20px',
                 backgroundColor: colors.primaryLight,
                 borderRadius: borderRadius.full,
                 fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
