@@ -35,13 +35,6 @@ export default function GDPGrowthChart({ height = 500 }: GDPGrowthChartProps) {
     { quarter: 'Q3 2025', total: 0.6, consumption: 1.8, other: -1.2 }, // -1.2 = -0.7 (investments) + -0.5 (exports)
   ], [])
 
-  // Q3 2025 component breakdown for pie chart
-  const q3Breakdown = useMemo(() => [
-    { name: 'Háztartási fogyasztás', value: 1.8, percentage: 300 }, // 1.8 / 0.6 * 100 = 300%
-    { name: 'Beruházások', value: -0.7, percentage: -116.67 }, // -0.7 / 0.6 * 100 = -116.67%
-    { name: 'Nettó export', value: -0.5, percentage: -83.33 }, // -0.5 / 0.6 * 100 = -83.33%
-  ], [])
-
   // Calculate absolute values for pie chart (showing contribution magnitude)
   const pieChartData = useMemo(() => [
     { name: 'Háztartási fogyasztás', value: 1.8, sign: 'positive' },
