@@ -4,7 +4,7 @@ import React, { useMemo } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, TooltipProps, Cell } from 'recharts'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
-import { colors, typography, spacing, borderRadius } from '@/lib/design-system'
+import { colors, typography, spacing, borderRadius, shadows } from '@/lib/design-system'
 
 interface LaborMarketChartProps {
   height?: number
