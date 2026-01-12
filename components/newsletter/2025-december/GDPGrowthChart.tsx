@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useMemo } from 'react'
-import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, TooltipProps, PieChart, Pie, Cell, Legend } from 'recharts'
+import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, TooltipProps, PieChart, Pie, Cell } from 'recharts'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { colors, typography, spacing, borderRadius } from '@/lib/design-system'
