@@ -163,7 +163,7 @@ export default function LaborMarketChart({ height = 650 }: LaborMarketChartProps
           }}>
             Munkanélküliség (2025, havi adatok)
           </h4>
-          <ResponsiveContainer width="100%" height={isMobile ? 250 : 300}>
+          <ResponsiveContainer width="100%" height={isMobile ? 250 : Math.min(height * 0.46, 300)}>
             <BarChart
               data={unemploymentData}
               layout="vertical"

@@ -223,7 +223,7 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
           <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
             <svg
               width="100%"
-              height={isMobile ? '200px' : '240px'}
+              height={isMobile ? '200px' : `${Math.min(height * 0.34, 240)}px`}
               viewBox="0 0 400 200"
               style={{ overflow: 'visible' }}
             >
