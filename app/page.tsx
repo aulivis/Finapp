@@ -1,37 +1,51 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import LandingPageClient from '@/components/LandingPageClient'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
+import DynamicMetaTags from '@/components/DynamicMetaTags'
 
-export const metadata: Metadata = {
-  title: 'Contexta — Vásárlóerő változása az infláció miatt',
-  description: 'Nézd meg, hogyan csökkent a pénz vásárlóereje idővel — egyszerű inflációs kalkulátor és valós összehasonlítások.',
-  openGraph: {
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'
+
+export async function generateMetadata(): Promise<Metadata> {
+  // Note: In App Router, we can't access searchParams in generateMetadata
+  // The dynamic OG image will be handled via the /og route with query params
+  // Social media platforms will fetch the OG image when they see the URL with params
+  
+  return {
     title: 'Contexta — Vásárlóerő változása az infláció miatt',
     description: 'Nézd meg, hogyan csökkent a pénz vásárlóereje idővel — egyszerű inflációs kalkulátor és valós összehasonlítások.',
-    type: 'website',
-    locale: 'hu_HU',
-    url: process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu',
-    siteName: 'Contexta',
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/contexta-social-share.jpg`,
-        width: 1200,
-        height: 630,
-        alt: 'Contexta - Inflációs kalkulátor',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Contexta — Vásárlóerő változása az infláció miatt',
-    description: 'Nézd meg, hogyan csökkent a pénz vásárlóereje idővel — egyszerű inflációs kalkulátor és valós összehasonlítások.',
-    images: [`${process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'}/contexta-social-share.jpg`],
-  },
+    openGraph: {
+      title: 'Contexta — Vásárlóerő változása az infláció miatt',
+      description: 'Nézd meg, hogyan csökkent a pénz vásárlóereje idővel — egyszerű inflációs kalkulátor és valós összehasonlítások.',
+      type: 'website',
+      locale: 'hu_HU',
+      url: appUrl,
+      siteName: 'Contexta',
+      images: [
+        {
+          url: `${appUrl}/contexta-social-share.jpg`, // Fallback static image
+          width: 1200,
+          height: 630,
+          alt: 'Contexta - Inflációs kalkulátor',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Contexta — Vásárlóerő változása az infláció miatt',
+      description: 'Nézd meg, hogyan csökkent a pénz vásárlóereje idővel — egyszerű inflációs kalkulátor és valós összehasonlítások.',
+      images: [`${appUrl}/contexta-social-share.jpg`], // Fallback static image
+    },
+  }
 }
 
 export default async function Home() {
   return (
-    <main style={{
+    <>
+      <Suspense fallback={null}>
+        <DynamicMetaTags />
+      </Suspense>
+      <main style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #FAFDFC 0%, #FAFBFF 25%, #FFFFFF 50%, #FCFAFF 75%, #FAFAFA 100%)',
       padding: '0',
@@ -81,5 +95,6 @@ export default async function Home() {
       {/* Footer with Disclaimers */}
       <FooterDisclaimer />
     </main>
+    </>
   )
 }

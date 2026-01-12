@@ -24,8 +24,9 @@ export default function SocialShare({
   const [copied, setCopied] = useState(false)
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'
 
-  const shareText = `A ${formatCurrency(amount)} vásárlóereje ${formatPercentage(lossPercentage)}-kal csökkent ${startYear} és ${endYear} között. Nézd meg a saját adataidat is!`
+  const shareText = `A ${formatCurrency(amount)} vásárlóereje ${formatPercentage(lossPercentage)}-kal csökkent ${startYear} és ${endYear} között. Számítsd ki a saját adataidat is! 👉 ${appUrl}`
   const shareUrl = `${appUrl}/?amount=${amount}&startYear=${startYear}&endYear=${endYear}`
+  const ogImageUrl = `${appUrl}/og?amount=${amount}&startYear=${startYear}&endYear=${endYear}`
 
   const handleCopyLink = async () => {
     try {
@@ -53,6 +54,10 @@ export default function SocialShare({
       }
     }
   }
+  
+  const getShareTextWithCTA = () => {
+    return `A ${formatCurrency(amount)} vásárlóereje ${formatPercentage(lossPercentage)}-kal csökkent ${startYear} és ${endYear} között.\n\nSzámítsd ki a saját adataidat is! 👉`
+  }
 
   const shareToFacebook = () => {
     const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
@@ -60,7 +65,8 @@ export default function SocialShare({
   }
 
   const shareToTwitter = () => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`
+    const tweetText = `${getShareTextWithCTA()} ${shareUrl}`
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`
     window.open(url, '_blank', 'width=600,height=400')
   }
 
@@ -95,7 +101,7 @@ export default function SocialShare({
         marginBottom: spacing.xs,
         textAlign: 'center'
       }}>
-        Oszd meg az eredményt
+        Oszd meg az eredményed:
       </div>
       
       <div style={{
@@ -132,10 +138,10 @@ export default function SocialShare({
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = colors.primary
             }}
-            aria-label="Oszd meg"
+            aria-label="Megosztás"
           >
             <Share2 size={18} />
-            <span>Oszd meg</span>
+            <span>Megosztás</span>
           </button>
         )}
 

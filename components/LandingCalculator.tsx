@@ -488,7 +488,7 @@ export default function LandingCalculator({
 
               {/* Hero Result Message - The Key Insight - Enhanced Focus Card */}
               <div style={{
-                padding: isMobile ? spacing['3xl'] : spacing['4xl'],
+                padding: isMobile ? `${spacing['3xl']} ${spacing.lg}` : spacing['4xl'],
                 background: `linear-gradient(135deg, ${colors.errorLight} 0%, rgba(254, 226, 226, 0.6) 50%, rgba(254, 226, 226, 0.4) 100%)`,
                 borderRadius: borderRadius.xl,
                 border: `3px solid ${colors.error}`,
