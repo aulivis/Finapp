@@ -163,7 +163,7 @@ export default function NewsletterPage() {
                 borderRadius: borderRadius.md,
                 borderLeft: `4px solid ${colors.primary}`,
               }}>
-                <strong>Miért fontos most?</strong> Az év végi inflációs adat meghatározza, hogy a jövő év elején milyen mértékben emelkedhetnek a bérek és nyugdíjak "értéke".
+                <strong>Miért fontos most?</strong> Az év végi inflációs adat meghatározza, hogy a jövő év elején milyen mértékben emelkedhetnek a bérek és nyugdíjak &quot;értéke&quot;.
               </p>
             </section>
 
@@ -208,7 +208,7 @@ export default function NewsletterPage() {
                 Hétköznapi hatások:
               </h3>
               <p style={{ marginBottom: spacing.md }}>
-                Ha a GDP "nő", de te ezt nem érzed, annak oka az, hogy a növekedés egyenlőtlenül oszlik meg. A számok azt mutatják, hogy a háztartások fogyasztása tartja fenn a növekedést, de a cégek nem fejlesztenek, az export pedig gyengül.
+                Ha a GDP &quot;nő&quot;, de te ezt nem érzed, annak oka az, hogy a növekedés egyenlőtlenül oszlik meg. A számok azt mutatják, hogy a háztartások fogyasztása tartja fenn a növekedést, de a cégek nem fejlesztenek, az export pedig gyengül.
               </p>
               <p style={{ marginBottom: spacing.md }}>
                 Ez azt jelenti, hogy:
@@ -352,7 +352,7 @@ export default function NewsletterPage() {
                 listStyleType: 'disc',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>Munkanélküliség: 4,5% (történelmileg alacsony)</li>
-                <li style={{ marginBottom: spacing.sm }}>Ugyanakkor a "munkaerőpiaci feszesség" enyhül</li>
+                <li style={{ marginBottom: spacing.sm }}>Ugyanakkor a &quot;munkaerőpiaci feszesség&quot; enyhül</li>
                 <li style={{ marginBottom: spacing.sm }}>január: 11%-os minimálbér-emelés jön</li>
               </ul>
 
@@ -366,7 +366,7 @@ export default function NewsletterPage() {
                 Hétköznapi hatások:
               </h3>
               <p style={{ marginBottom: spacing.md }}>
-                Alacsony munkanélküliség = ha van munkád, valószínűleg meg is tartod. De a "feszesség enyhülése" azt jelenti, hogy a cégek nem küzdenek annyira a munkavállalókért, mint 2022-ben.
+                Alacsony munkanélküliség = ha van munkád, valószínűleg meg is tartod. De a &quot;feszesség enyhülése&quot; azt jelenti, hogy a cégek nem küzdenek annyira a munkavállalókért, mint 2022-ben.
               </p>
               <p style={{ marginBottom: spacing.md }}>
                 A minimálbér-emelés közvetlenül érint, ha ezen a szinten keresel:

@@ -113,7 +113,7 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
         marginBottom: spacing.xl,
         textAlign: 'center',
       }}>
-        Hungary's Consumer Mood: 29th out of 30
+        Hungary&apos;s Consumer Mood: 29th out of 30
       </h3>
 
       {/* World Map Visualization (Simplified) */}

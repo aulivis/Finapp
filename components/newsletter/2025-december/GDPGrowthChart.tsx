@@ -151,7 +151,7 @@ export default function GDPGrowthChart({ height = 500 }: GDPGrowthChartProps) {
         marginBottom: spacing.xl,
         textAlign: 'center',
       }}>
-        Who's Driving Hungary's 0.6% Growth?
+        Who&apos;s Driving Hungary&apos;s 0.6% Growth?
       </h3>
 
       {/* Main Chart Container */}
