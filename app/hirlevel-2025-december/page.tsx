@@ -763,7 +763,7 @@ export default function NewsletterPage() {
                 border: `1px solid ${colors.gray[200]}`,
                 boxShadow: shadows.sm,
               }}>
-                <BudgetBalanceChart height={600} />
+                <BudgetBalanceChart />
               </div>
 
               <div style={{
