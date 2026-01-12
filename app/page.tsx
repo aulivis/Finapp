@@ -104,7 +104,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   }
 }
 
-export default async function Home({ searchParams }: PageProps) {
+export default async function Home() {
   return (
     <main style={{
       minHeight: '100vh',
