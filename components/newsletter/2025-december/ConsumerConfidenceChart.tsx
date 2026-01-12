@@ -19,16 +19,6 @@ interface ConsumerConfidenceChartProps {
 export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfidenceChartProps) {
   const isMobile = useIsMobile()
 
-  // Country names in Hungarian
-  const countryNames: Record<string, string> = {
-    'RO': 'Romรกnia',
-    'SK': 'Szlovรกkia',
-    'HR': 'Horvรกtorszรกg',
-    'BG': 'Bulgรกria',
-    'HU': 'Magyarorszรกg',
-    'TR': 'Tรถrรถkorszรกg',
-  }
-
   // Data: Bottom 6 countries (positions 25-30)
   const rankingData = useMemo(() => [
     { position: 25, country: 'Romรกnia', score: -15.2, code: 'RO' },
@@ -39,7 +29,6 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
     { position: 30, country: 'Tรถrรถkorszรกg', score: -34.9, code: 'TR' },
   ], [])
 
-  const hungaryScore = -24.3
   const minScore = -40
   const maxScore = 0
 
