@@ -26,7 +26,6 @@ export default function SocialShare({
 
   const shareText = `A ${formatCurrency(amount)} vásárlóereje ${formatPercentage(lossPercentage)}-kal csökkent ${startYear} és ${endYear} között. Számítsd ki a saját adataidat is! 👉 ${appUrl}`
   const shareUrl = `${appUrl}/?amount=${amount}&startYear=${startYear}&endYear=${endYear}`
-  const ogImageUrl = `${appUrl}/og?amount=${amount}&startYear=${startYear}&endYear=${endYear}`
 
   const handleCopyLink = async () => {
     try {
