@@ -69,11 +69,13 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   // Note: Middleware handles canonical domain redirects (non-www to www) while preserving query parameters
 
   // If we have all required params, generate dynamic metadata
-  // Convert to strings and check if they're valid
-  const hasAllParams = amountParam && startYearParam && endYearParam
+  // Check if all params are present and non-empty
+  const hasAllParams = !!(amountParam && startYearParam && endYearParam)
   console.log('[generateMetadata] Has all params?', { hasAllParams, amountParam, startYearParam, endYearParam })
   
   if (hasAllParams) {
+    console.log('[generateMetadata] ✓ All params found, generating dynamic metadata')
+    console.log('[generateMetadata] Params:', { amountParam, startYearParam, endYearParam })
     try {
       const amount = parseFloat(String(amountParam))
       const startYear = parseInt(String(startYearParam))
@@ -127,11 +129,10 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       const ogImageUrl = `${canonicalBaseUrl}/og?amount=${encodeURIComponent(amount)}&startYear=${encodeURIComponent(startYear)}&endYear=${encodeURIComponent(endYear)}&v=${imageVersion}`
       const shareUrl = `${canonicalBaseUrl}/?amount=${encodeURIComponent(amount)}&startYear=${encodeURIComponent(startYear)}&endYear=${encodeURIComponent(endYear)}`
 
-      // Debug: Log the generated metadata URLs
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Generated OG Image URL:', ogImageUrl)
-        console.log('Generated Share URL:', shareUrl)
-      }
+      // Debug: Log the generated metadata URLs (always log in production for debugging)
+      console.log('[generateMetadata] Generated OG Image URL:', ogImageUrl)
+      console.log('[generateMetadata] Generated Share URL:', shareUrl)
+      console.log('[generateMetadata] Returning dynamic metadata')
 
       // Return complete metadata that fully overrides layout metadata
       // IMPORTANT: All URLs must be absolute to override metadataBase correctly
@@ -171,7 +172,8 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       }
     } catch (error) {
       // Fall through to default metadata if calculation fails
-      console.error('Error generating dynamic metadata:', error)
+      console.error('[generateMetadata] Error generating dynamic metadata:', error)
+      console.error('[generateMetadata] Error stack:', error instanceof Error ? error.stack : 'No stack trace')
     }
   }
 
