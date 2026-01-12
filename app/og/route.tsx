@@ -1,12 +1,12 @@
 import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
-import { calculatePurchasingPower } from '@/lib/data/inflation'
+import { HISTORICAL_INFLATION } from '@/lib/data/economic-data'
 
 // Force dynamic rendering since we use request.url and searchParams
 export const dynamic = 'force-dynamic'
 
-// Use Node.js runtime for better compatibility with data imports
-export const runtime = 'nodejs'
+// Edge runtime is required for @vercel/og ImageResponse
+export const runtime = 'edge'
 
 export async function GET(request: NextRequest) {
   try {
@@ -26,16 +26,49 @@ export async function GET(request: NextRequest) {
       throw new Error('Invalid parameters')
     }
     
-    // Calculate purchasing power loss
-    const dataPoints = calculatePurchasingPower(amount, startYear, endYear)
+    // Calculate purchasing power loss (inline calculation for edge runtime compatibility)
+    const results: Array<{ year: number; nominal: number; real: number }> = []
+    
+    // Find starting index
+    const startIndex = HISTORICAL_INFLATION.findIndex(d => d.year === startYear)
+    if (startIndex === -1) {
+      throw new Error(`No data available for start year: ${startYear}`)
+    }
+
+    // Add starting point
+    results.push({
+      year: startYear,
+      nominal: Math.round(amount),
+      real: Math.round(amount),
+    })
+
+    // Apply inflation for subsequent years
+    let cumulativeInflation = 1
+    for (let i = startIndex; i < HISTORICAL_INFLATION.length && HISTORICAL_INFLATION[i].year <= endYear; i++) {
+      const { year, inflationRate } = HISTORICAL_INFLATION[i]
+      
+      if (year === startYear) {
+        continue
+      }
+      
+      cumulativeInflation *= (1 + inflationRate / 100)
+      const nominal = amount
+      const real = amount / cumulativeInflation
+      
+      results.push({
+        year,
+        nominal: Math.round(nominal),
+        real: Math.round(real),
+      })
+    }
     
     // Validate that we have data points
-    if (!dataPoints || dataPoints.length === 0) {
+    if (!results || results.length === 0) {
       throw new Error('No data points calculated - invalid year range')
     }
     
-    const finalNominal = dataPoints[dataPoints.length - 1]?.nominal || amount
-    const finalReal = dataPoints[dataPoints.length - 1]?.real || amount
+    const finalNominal = results[results.length - 1]?.nominal || amount
+    const finalReal = results[results.length - 1]?.real || amount
     const loss = finalNominal - finalReal
     const lossPercentage = (loss / finalNominal) * 100
     
@@ -263,15 +296,9 @@ export async function GET(request: NextRequest) {
       }
     )
     
-    // Add cache headers for better performance
-    const response = new Response(imageResponse.body, {
-      status: 200,
-      headers: {
-        'Content-Type': 'image/png',
-        'Cache-Control': 'public, max-age=31536000, immutable',
-      },
-    })
-    return response
+    // Add cache headers - ImageResponse already returns a Response, just add headers
+    imageResponse.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
+    return imageResponse
   } catch (e: any) {
     console.error('OG image generation error:', e)
     // Return a simple error image instead of text
