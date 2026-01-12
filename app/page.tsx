@@ -8,10 +8,6 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'
 // Force dynamic rendering to ensure searchParams are available in generateMetadata
 export const dynamic = 'force-dynamic'
 
-const DEFAULT_AMOUNT = 1000000
-const DEFAULT_START_YEAR = 2015
-const DEFAULT_END_YEAR = 2025
-
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
