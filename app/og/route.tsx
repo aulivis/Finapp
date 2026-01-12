@@ -27,6 +27,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     
+    // Extract parameters (ignore 'v' version parameter used for cache-busting)
     const amountParam = searchParams.get('amount')
     const startYearParam = searchParams.get('startYear')
     const endYearParam = searchParams.get('endYear')
@@ -100,6 +101,7 @@ export async function GET(request: NextRequest) {
       return `${value.toFixed(1)}%`
     }
 
+    // Redesigned image with better spacing and visual hierarchy
     return new ImageResponse(
       (
         <div
@@ -110,24 +112,36 @@ export async function GET(request: NextRequest) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'linear-gradient(135deg, #FAFDFC 0%, #FAFBFF 25%, #FFFFFF 50%, #FCFAFF 75%, #FAFAFA 100%)',
+            background: 'linear-gradient(135deg, #FFFFFF 0%, #FAFDFC 30%, #FFFFFF 100%)',
             position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          {/* Background decorative element */}
+          {/* Subtle background accents */}
           <div
             style={{
               position: 'absolute',
-              top: '-100px',
-              right: '-200px',
-              width: '600px',
-              height: '600px',
-              background: 'radial-gradient(circle, rgba(45, 212, 191, 0.08) 0%, rgba(59, 130, 246, 0.06) 50%, transparent 70%)',
+              top: '-120px',
+              right: '-120px',
+              width: '400px',
+              height: '400px',
+              background: 'radial-gradient(circle, rgba(239, 68, 68, 0.05) 0%, transparent 70%)',
+              borderRadius: '50%',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-80px',
+              left: '-80px',
+              width: '350px',
+              height: '350px',
+              background: 'radial-gradient(circle, rgba(59, 130, 246, 0.04) 0%, transparent 70%)',
               borderRadius: '50%',
             }}
           />
           
-          {/* Main Content Container */}
+          {/* Main Content Container - Optimized for 630px height */}
           <div
             style={{
               display: 'flex',
@@ -135,28 +149,30 @@ export async function GET(request: NextRequest) {
               alignItems: 'center',
               justifyContent: 'center',
               width: '100%',
-              padding: '60px 80px',
-              gap: '40px',
+              padding: '35px 50px',
+              gap: '20px',
+              position: 'relative',
+              zIndex: 1,
             }}
           >
-            {/* Contexta Wordmark */}
+            {/* Contexta Wordmark - Compact */}
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '6px',
-                marginBottom: '20px',
+                gap: '3px',
+                marginBottom: '4px',
               }}
             >
               <div
                 style={{
                   display: 'flex',
-                  fontSize: '48px',
+                  fontSize: '32px',
                   fontWeight: '400',
                   letterSpacing: '0.05em',
                   color: '#111827',
-                  lineHeight: '1.2',
+                  lineHeight: '1.1',
                 }}
               >
                 CONTEXTA
@@ -164,10 +180,10 @@ export async function GET(request: NextRequest) {
               <div
                 style={{
                   display: 'flex',
-                  fontSize: '14px',
+                  fontSize: '10px',
                   fontWeight: '400',
-                  color: '#6B7280',
-                  lineHeight: '1.4',
+                  color: '#9CA3AF',
+                  lineHeight: '1.2',
                   letterSpacing: '0.02em',
                 }}
               >
@@ -175,39 +191,40 @@ export async function GET(request: NextRequest) {
               </div>
             </div>
             
-            {/* Main Result Card */}
+            {/* Main Result Card - Attention-grabbing design */}
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '32px',
-                padding: '48px 60px',
-                background: 'linear-gradient(135deg, #FEE2E2 0%, rgba(254, 226, 226, 0.6) 50%, rgba(254, 226, 226, 0.4) 100%)',
-                borderRadius: '24px',
-                border: '4px solid #EF4444',
-                boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-                maxWidth: '900px',
+                justifyContent: 'center',
+                gap: '16px',
+                padding: '28px 40px',
+                background: 'linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%)',
+                borderRadius: '18px',
+                border: '3px solid #EF4444',
+                boxShadow: '0 12px 24px -4px rgba(239, 68, 68, 0.25), 0 4px 8px -2px rgba(0, 0, 0, 0.1)',
+                maxWidth: '880px',
                 width: '100%',
               }}
             >
-              {/* Loss Percentage - Large Display */}
+              {/* Loss Percentage - Hero element */}
               <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '16px',
+                  gap: '6px',
                 }}
               >
                 <div
                   style={{
                     display: 'flex',
-                    fontSize: '18px',
+                    fontSize: '12px',
                     fontWeight: '700',
-                    color: '#EF4444',
+                    color: '#DC2626',
                     textTransform: 'uppercase',
-                    letterSpacing: '0.08em',
+                    letterSpacing: '0.12em',
                   }}
                 >
                   Vásárlóerő veszteség
@@ -215,34 +232,34 @@ export async function GET(request: NextRequest) {
                 <div
                   style={{
                     display: 'flex',
-                    fontSize: '96px',
+                    fontSize: '72px',
                     fontWeight: '700',
-                    color: '#EF4444',
-                    lineHeight: '1.1',
+                    color: '#DC2626',
+                    lineHeight: '1',
                   }}
                 >
                   {formatPercentage(lossPercentage)}
                 </div>
               </div>
               
-              {/* Amount and Years Info */}
+              {/* Amount and Years - Compact info */}
               <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '12px',
+                  gap: '6px',
                   width: '100%',
                 }}
               >
                 <div
                   style={{
                     display: 'flex',
-                    fontSize: '28px',
+                    fontSize: '22px',
                     fontWeight: '600',
                     color: '#111827',
                     textAlign: 'center',
-                    lineHeight: '1.4',
+                    lineHeight: '1.3',
                   }}
                 >
                   {formatCurrency(amount)}
@@ -250,9 +267,9 @@ export async function GET(request: NextRequest) {
                 <div
                   style={{
                     display: 'flex',
-                    fontSize: '20px',
+                    fontSize: '15px',
                     fontWeight: '500',
-                    color: '#374151',
+                    color: '#4B5563',
                     textAlign: 'center',
                   }}
                 >
@@ -261,11 +278,10 @@ export async function GET(request: NextRequest) {
                 <div
                   style={{
                     display: 'flex',
-                    fontSize: '18px',
+                    fontSize: '14px',
                     fontWeight: '500',
                     color: '#6B7280',
                     textAlign: 'center',
-                    marginTop: '8px',
                   }}
                 >
                   Valódi vásárlóerő: {formatCurrency(finalReal)}
@@ -273,17 +289,16 @@ export async function GET(request: NextRequest) {
               </div>
             </div>
             
-            {/* KSH Info Box */}
+            {/* KSH Info Box - Minimal */}
             <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '12px',
-                padding: '16px 24px',
+                padding: '10px 18px',
                 backgroundColor: '#DBEAFE',
-                borderRadius: '12px',
-                border: '2px solid #3B82F6',
+                borderRadius: '8px',
+                border: '1.5px solid #3B82F6',
                 maxWidth: '800px',
                 width: '100%',
               }}
@@ -291,7 +306,7 @@ export async function GET(request: NextRequest) {
               <div
                 style={{
                   display: 'flex',
-                  fontSize: '16px',
+                  fontSize: '12px',
                   fontWeight: '500',
                   color: '#1E40AF',
                   textAlign: 'center',
@@ -306,6 +321,13 @@ export async function GET(request: NextRequest) {
       {
         width: 1200,
         height: 630,
+        headers: {
+          // Cache for 1 hour, but allow revalidation
+          // This tells Facebook it's okay to cache, but should check for updates
+          'Cache-Control': 'public, max-age=3600, must-revalidate',
+          // Ensure proper content type
+          'Content-Type': 'image/png',
+        },
       }
     )
   } catch (e: any) {

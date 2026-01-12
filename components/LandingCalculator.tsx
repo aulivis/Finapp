@@ -562,6 +562,22 @@ export default function LandingCalculator({
                   formatCurrency={formatCurrency}
                   formatPercentage={formatPercentage}
                 />
+                
+                {/* Secondary text below share buttons */}
+                <div
+                  style={{
+                    marginTop: spacing.lg,
+                    textAlign: 'center',
+                    color: colors.text.muted,
+                    fontSize: typography.fontSize.sm,
+                    lineHeight: typography.lineHeight.normal,
+                    maxWidth: '600px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                  }}
+                >
+                  A megosztásoddal segítesz abban, hogy családtagjaid és ismerőseid tudatosabbak legyenek a pénzügyeikben, felhívva a figyelmet az infláció következményeire.
+                </div>
               </div>
             </>
           )}

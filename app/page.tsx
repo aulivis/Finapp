@@ -59,8 +59,13 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       const dynamicTitle = `A ${formatCurrency(amount)} vásárlóereje ${formatPercentage(lossPercentage)}-kal csökkent ${startYear} és ${endYear} között`
       const dynamicDescription = `Számítsd ki a saját adataidat is! A ${formatCurrency(amount)} valódi vásárlóereje ma ${formatCurrency(finalReal)}.`
       
-      // Use absolute URL for OG image
-      const ogImageUrl = `${appUrl}/og?amount=${amount}&startYear=${startYear}&endYear=${endYear}`
+      // Version parameter for cache-busting when we update the image design
+      // Increment this (e.g., v2, v3) when you change the OG image design
+      // Same parameters will generate same image, but version change forces Facebook to re-fetch
+      const imageVersion = 'v2'
+      
+      // Use absolute URL for OG image with version for cache-busting
+      const ogImageUrl = `${appUrl}/og?amount=${amount}&startYear=${startYear}&endYear=${endYear}&v=${imageVersion}`
       const shareUrl = `${appUrl}/?amount=${amount}&startYear=${startYear}&endYear=${endYear}`
 
       return {
