@@ -12,22 +12,6 @@ Validates that all required environment variables are set.
 npm run validate-env
 ```
 
-### `send-quarterly-email.ts`
-Manually sends quarterly update emails to all users with active access.
-
-**Usage:**
-```bash
-npm run send-quarterly-email
-```
-
-### `generate-quarterly-ai-content.ts`
-Generates AI content for quarterly email updates using OpenAI.
-
-**Usage:**
-```bash
-npm run generate-quarterly-ai-content
-```
-
 ## Macroeconomic Data Updates
 
 Macroeconomic data (including M2 growth rates) should be updated directly in Supabase using SQL:

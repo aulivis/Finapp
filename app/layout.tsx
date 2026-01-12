@@ -5,7 +5,6 @@ import { Inter, Share_Tech } from 'next/font/google'
 import './globals.css'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import BackToTop from '@/components/BackToTop'
-import SkipLink from '@/components/SkipLink'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -102,8 +101,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
-        {/* Skip to main content link for accessibility */}
-        <SkipLink />
         <ErrorBoundary>
           {children}
         </ErrorBoundary>

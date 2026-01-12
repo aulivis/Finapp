@@ -196,8 +196,8 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
           <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: isMobile ? spacing.lg : spacing.lg,
-            marginBottom: spacing['3xl'],
+            gap: isMobile ? spacing['3xl'] : spacing.lg,
+            marginBottom: isMobile ? spacing.xl : spacing['3xl'],
             position: 'relative'
           }}>
             {comparisons.map((item, index) => {

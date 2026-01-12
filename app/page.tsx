@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   return (
-    <main id="main-content" style={{
+    <main style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #FAFDFC 0%, #FAFBFF 25%, #FFFFFF 50%, #FCFAFF 75%, #FAFAFA 100%)',
       padding: '0',

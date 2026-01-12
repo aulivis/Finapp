@@ -12,16 +12,7 @@ interface EnvConfig {
   // App
   NEXT_PUBLIC_APP_URL: string
 
-  // Email (at least one required)
-  POSTMARK_API_KEY?: string
-  POSTMARK_FROM_EMAIL?: string
-  MAILERLITE_API_KEY?: string
-
-  // OpenAI (optional)
-  OPENAI_API_KEY?: string
-  OPENAI_MODEL?: string
-
-  // Cron (optional)
+  // Cron (optional, for future use)
   CRON_SECRET?: string
 }
 
@@ -43,14 +34,6 @@ export function validateEnv(): void {
     if (!process.env[key]) {
       missing.push(key)
     }
-  }
-
-  // At least one email service must be configured
-  const hasEmailService =
-    process.env.POSTMARK_API_KEY || process.env.MAILERLITE_API_KEY
-
-  if (!hasEmailService) {
-    missing.push('POSTMARK_API_KEY or MAILERLITE_API_KEY')
   }
 
   if (missing.length > 0) {

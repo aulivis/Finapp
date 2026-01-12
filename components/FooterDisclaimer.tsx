@@ -12,7 +12,7 @@ import { colors, spacing, typography } from '@/lib/design-system'
 export default function FooterDisclaimer() {
   return (
     <div style={{
-      backgroundColor: '#F3F4F6',
+      backgroundColor: colors.gray[50],
       borderTop: `1px solid ${colors.gray[200]}`,
       padding: `${spacing.xl} 0`,
       marginTop: spacing['3xl']

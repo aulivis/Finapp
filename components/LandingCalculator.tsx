@@ -495,7 +495,7 @@ export default function LandingCalculator({
                 position: 'relative',
                 overflow: 'hidden',
                 boxShadow: shadows.lg,
-                marginBottom: spacing['3xl']
+                marginBottom: isMobile ? spacing.xl : spacing.xl
               }}>
                 <div style={{
                   position: 'absolute',
@@ -593,7 +593,7 @@ export default function LandingCalculator({
             lineHeight: typography.lineHeight.relaxed
           }}>
             <p style={{ margin: '0' }}>
-              Mi az a <strong>vásárlóerő</strong>? A vásárlóerő azt mutatja meg, hogy egy adott összeggel valójában mennyi terméket és szolgáltatást tudsz megvásárolni.
+              A <strong>vásárlóerő</strong> azt mutatja meg, hogy egy adott összeggel valójában mennyi terméket és szolgáltatást tudsz megvásárolni.
               <br /><br />
               Ha az árak emelkednek, miközben a pénzösszeg változatlan marad, a vásárlóerő csökken. Ez a kalkulátor azt szemlélteti, hogy az infláció hogyan befolyásolja a megtakarításod <strong>valós értékét</strong>.
             </p>

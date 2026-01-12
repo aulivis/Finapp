@@ -5,7 +5,7 @@ import { calculatePurchasingPower } from '@/lib/data/inflation'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, spacing, typography, borderRadius, shadows, transitions } from '@/lib/design-system'
-import { ArrowRight, Calendar, TrendingDown } from 'lucide-react'
+import { Calendar, TrendingDown, Coins } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import ContextaWordmark from '@/components/ContextaWordmark'
 
@@ -121,7 +121,7 @@ export default function HeroSection() {
             fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
             lineHeight: typography.lineHeight.relaxed,
             color: colors.text.secondary,
-            margin: `0 0 ${isMobile ? spacing['3xl'] : spacing['4xl']} 0`,
+            margin: `0 0 ${isMobile ? spacing.xl : spacing['4xl']} 0`,
             fontWeight: typography.fontWeight.normal,
             maxWidth: '700px',
             marginLeft: 'auto',
@@ -198,7 +198,7 @@ export default function HeroSection() {
                 </div>
               </div>
 
-              {/* Arrow / Transformation */}
+              {/* Animated Money Losing Value Icon */}
               <div style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -210,30 +210,36 @@ export default function HeroSection() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  transform: isMobile ? 'rotate(90deg)' : 'none',
-                  transition: prefersReducedMotion ? 'none' : transitions.all,
+                  position: 'relative',
                   lineHeight: 1,
-                  color: colors.primary
+                  color: colors.error
                 }}>
-                  <ArrowRight size={isMobile ? 32 : 48} strokeWidth={2.5} />
-                </div>
-                <div style={{
-                  display: isMobile ? 'none' : 'flex',
-                  alignItems: 'center',
-                  gap: spacing.xs,
-                  padding: `${spacing.sm} ${spacing.lg}`,
-                  backgroundColor: colors.errorLight,
-                  borderRadius: borderRadius.full,
-                  fontSize: typography.fontSize.sm,
-                  color: colors.error,
-                  fontWeight: typography.fontWeight.bold,
-                  border: `1px solid ${colors.error}`,
-                  whiteSpace: 'nowrap',
-                  boxShadow: shadows.md,
-                  animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite'
-                }}>
-                  <TrendingDown size={16} />
-                  <span>–{lossPercentage}%</span>
+                  <div style={{
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <Coins 
+                      size={isMobile ? 32 : 48} 
+                      strokeWidth={2.5}
+                      style={{
+                        animation: prefersReducedMotion ? 'none' : 'moneyFade 2s ease-in-out infinite',
+                        opacity: prefersReducedMotion ? 1 : undefined
+                      }}
+                    />
+                    <TrendingDown 
+                      size={isMobile ? 20 : 28} 
+                      strokeWidth={2.5}
+                      style={{
+                        position: 'absolute',
+                        bottom: '-4px',
+                        right: '-4px',
+                        color: colors.error,
+                        animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite'
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -286,39 +292,39 @@ export default function HeroSection() {
             <div style={{
               marginTop: spacing['2xl'],
               padding: spacing.xl,
-              paddingTop: isMobile ? spacing['2xl'] : spacing.xl,
+              paddingTop: isMobile ? spacing['2xl'] : spacing['2xl'],
               backgroundColor: colors.errorLight,
               borderRadius: borderRadius.lg,
               border: `2px solid ${colors.error}`,
               textAlign: 'center',
               position: 'relative'
             }}>
-              {/* Mobile badge at top center */}
-              {isMobile && (
-                <div style={{
-                  position: 'absolute',
-                  top: '-18px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: spacing.xs,
-                  padding: `${spacing.md} ${spacing.xl}`,
-                  backgroundColor: colors.primaryLight,
-                  borderRadius: borderRadius.full,
-                  fontSize: typography.fontSize.base,
-                  color: colors.error,
-                  fontWeight: typography.fontWeight.bold,
-                  border: `2px solid ${colors.error}`,
-                  whiteSpace: 'nowrap',
-                  boxShadow: shadows.md,
-                  animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite',
-                  zIndex: 1
-                }}>
-                  <TrendingDown size={18} />
-                  <span>–{lossPercentage}%</span>
-                </div>
-              )}
+              {/* Badge at top center - mobile and desktop */}
+              <div style={{
+                position: 'absolute',
+                top: '-18px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: spacing.xs,
+                padding: isMobile ? `${spacing.md} ${spacing.xl}` : `${spacing.lg} ${spacing['2xl']}`,
+                backgroundColor: colors.primaryLight,
+                borderRadius: borderRadius.full,
+                fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
+                color: colors.error,
+                fontWeight: typography.fontWeight.bold,
+                border: `2px solid ${colors.error}`,
+                whiteSpace: 'nowrap',
+                boxShadow: shadows.md,
+                animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite',
+                zIndex: 1,
+                minWidth: 'fit-content'
+              }}>
+                <TrendingDown size={isMobile ? 18 : 22} />
+                <span>–{lossPercentage}%</span>
+              </div>
               <div style={{
                 fontSize: typography.fontSize.sm,
                 color: colors.text.muted,

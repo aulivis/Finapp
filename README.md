@@ -6,8 +6,7 @@ Minimális web-alapú pénzügyi tudatossági eszköz.
 
 - **Frontend**: Next.js 14 (App Router) - Vercel-en telepítve
 - **Backend/DB**: Supabase (PostgreSQL)
-- **Email**: Postmark vagy MailerLite
-- **AI**: OpenAI API (csak batch használat)
+- **Email**: 3rd party solution (handled externally)
 
 ## Funkciók és Biztonsági Javítások
 
@@ -64,8 +63,6 @@ Nyisd meg a [http://localhost:3000](http://localhost:3000) címet a böngészőb
 - `npm run lint` - ESLint futtatása
 - `npm run type-check` - TypeScript típusellenőrzés
 - `npm run validate-env` - Környezeti változók validálása
-- `npm run send-quarterly-email` - Negyedéves email küldése (manuálisan)
-- `npm run generate-quarterly-ai-content` - AI tartalom generálása
 
 ## Build
 
@@ -93,17 +90,9 @@ A Vercel deployment előtt állítsd be az alábbi környezeti változókat a Ve
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `NEXT_PUBLIC_APP_URL` (production URL, pl: `https://yourdomain.com`)
-- `POSTMARK_API_KEY` vagy `MAILERLITE_API_KEY`
-- `POSTMARK_FROM_EMAIL` (ha Postmark-ot használsz)
 
 **Opcionális változók:**
-- `OPENAI_API_KEY` (ha AI tartalom generálást használsz)
-- `OPENAI_MODEL` (default: `gpt-4o-mini`)
-- `CRON_SECRET` (cron végpontok védelméhez)
-
-### Cron Jobs
-
-A `vercel.json` fájl tartalmazza a quarterly email cron job konfigurációt, amely negyedévente fut (január 1., április 1., július 1., október 1., 10:00 UTC).
+- `CRON_SECRET` (cron végpontok védelméhez, ha jövőben használni szeretnéd)
 
 ### Deploy
 
@@ -116,13 +105,11 @@ vagy push a main branch-re, ha Vercel GitHub integrációval van beállítva.
 ### Monitoring
 
 - **Health Check**: `GET /api/health` - Alkalmazás állapot ellenőrzése
-- **Cron Jobs**: A `vercel.json` fájlban konfigurálva, automatikusan futnak
 
 ## Best Practices
 
 ### Security
 - Minden API végpont rate limiting-gel védett
-- Cron végpontok Vercel cron header + CRON_SECRET kombinációval védettek
 - Security headers minden kérésre alkalmazva
 - CSP (Content Security Policy) konfigurálva
 

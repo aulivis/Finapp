@@ -8,19 +8,15 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "validate-env": "tsx scripts/validate-env.ts",
-    "send-quarterly-email": "tsx scripts/send-quarterly-email.ts",
-    "generate-quarterly-ai-content": "tsx scripts/generate-quarterly-ai-content.ts"
+    "validate-env": "tsx scripts/validate-env.ts"
   },
   "dependencies": {
-    "@stripe/stripe-js": "^2.4.0",
     "@supabase/supabase-js": "^2.45.4",
     "lucide-react": "^0.562.0",
     "next": "^14.2.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "recharts": "^2.12.7",
-    "stripe": "^17.3.1"
+    "recharts": "^2.12.7"
   },
   "devDependencies": {
     "@types/node": "^20.14.12",
