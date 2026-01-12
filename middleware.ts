@@ -9,8 +9,8 @@ export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl
   const userAgent = request.headers.get('user-agent') || ''
 
-  // Store original URL with query parameters in a header
-  // This allows generateMetadata to access query params even if redirects happen
+  // Store original URL with query parameters
+  // Note: headers() from middleware aren't accessible in generateMetadata, so we use cookies
   const originalUrl = request.url
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-original-url', originalUrl)
@@ -46,7 +46,7 @@ export function middleware(request: NextRequest) {
 
   // Add security headers for API routes
   if (pathname.startsWith('/api/')) {
-    const response = NextResponse.next({
+    const apiResponse = NextResponse.next({
       request: {
         headers: requestHeaders,
       },
@@ -61,23 +61,35 @@ export function middleware(request: NextRequest) {
     ].filter(Boolean)
 
     if (origin && allowedOrigins.includes(origin)) {
-      response.headers.set('Access-Control-Allow-Origin', origin)
-      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+      apiResponse.headers.set('Access-Control-Allow-Origin', origin)
+      apiResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+      apiResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     }
 
     // Prevent caching of API responses
-    response.headers.set('Cache-Control', 'no-store, max-age=0')
+    apiResponse.headers.set('Cache-Control', 'no-store, max-age=0')
 
-    return response
+    return apiResponse
   }
 
-  // Pass original URL headers to the page
-  return NextResponse.next({
+  // Create response and store query params in cookies (headers() from middleware aren't accessible in generateMetadata)
+  const response = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   })
+  
+  if (search) {
+    // Store query params in cookies so generateMetadata can access them
+    response.cookies.set('x-original-query', search, {
+      httpOnly: false, // Allow reading in generateMetadata
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60, // Expire after 60 seconds
+    })
+  }
+
+  return response
 }
 
 export const config = {

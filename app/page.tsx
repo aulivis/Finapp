@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { headers } from 'next/headers'
+import { headers, cookies } from 'next/headers'
 import LandingPageClient from '@/components/LandingPageClient'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
@@ -21,35 +21,32 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   let startYearParam = params.startYear
   let endYearParam = params.endYear
 
-  // Fallback: If query params are missing (due to Vercel redirects), try to read from original URL header
-  // This happens when Vercel's infrastructure redirects strip query parameters before Next.js processes them
+  // Fallback: If query params are missing (due to Vercel redirects), try to read from cookies
+  // Note: headers() from middleware aren't accessible in generateMetadata, so we use cookies
   if (!amountParam || !startYearParam || !endYearParam) {
     try {
-      const headersList = headers()
-      const originalUrl = headersList.get('x-original-url')
-      const originalQuery = headersList.get('x-original-query')
+      const cookieStore = cookies()
+      const originalQuery = cookieStore.get('x-original-query')?.value
       
-      console.log('[generateMetadata] Fallback check:', { originalUrl, originalQuery, hasAmount: !!amountParam, hasStartYear: !!startYearParam, hasEndYear: !!endYearParam })
+      console.log('[generateMetadata] Fallback check (cookies):', { originalQuery, hasAmount: !!amountParam, hasStartYear: !!startYearParam, hasEndYear: !!endYearParam })
       
-      if (originalUrl || originalQuery) {
-        const queryString = originalQuery || (originalUrl ? new URL(originalUrl).search : '')
-        console.log('[generateMetadata] Extracted query string:', queryString)
-        if (queryString) {
-          const urlParams = new URLSearchParams(queryString)
-          const fallbackAmount = urlParams.get('amount')
-          const fallbackStartYear = urlParams.get('startYear')
-          const fallbackEndYear = urlParams.get('endYear')
-          
-          console.log('[generateMetadata] Fallback params:', { fallbackAmount, fallbackStartYear, fallbackEndYear })
-          
-          amountParam = amountParam || fallbackAmount || undefined
-          startYearParam = startYearParam || fallbackStartYear || undefined
-          endYearParam = endYearParam || fallbackEndYear || undefined
-        }
+      if (originalQuery) {
+        const queryString = originalQuery.startsWith('?') ? originalQuery : `?${originalQuery}`
+        console.log('[generateMetadata] Extracted query string from cookie:', queryString)
+        const urlParams = new URLSearchParams(queryString)
+        const fallbackAmount = urlParams.get('amount')
+        const fallbackStartYear = urlParams.get('startYear')
+        const fallbackEndYear = urlParams.get('endYear')
+        
+        console.log('[generateMetadata] Fallback params from cookie:', { fallbackAmount, fallbackStartYear, fallbackEndYear })
+        
+        amountParam = amountParam || fallbackAmount || undefined
+        startYearParam = startYearParam || fallbackStartYear || undefined
+        endYearParam = endYearParam || fallbackEndYear || undefined
       }
     } catch (error) {
-      // Headers might not be available in all contexts, fall through to use searchParams
-      console.error('[generateMetadata] Error reading original URL from headers:', error)
+      // Cookies might not be available in all contexts, fall through to use searchParams
+      console.error('[generateMetadata] Error reading query params from cookies:', error)
     }
   }
 
