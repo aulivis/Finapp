@@ -1,10 +1,12 @@
-import { ImageResponse } from 'next/og'
+import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
 
 // Force dynamic rendering since we use request.url and searchParams
+// Note: This disables static generation, which is expected for dynamic OG images
 export const dynamic = 'force-dynamic'
 
-// Edge runtime is required for ImageResponse
+// Edge runtime is required for @vercel/og ImageResponse
+// Note: Edge runtime disables static generation - this is expected and correct for this route
 export const runtime = 'edge'
 
 // Historical inflation data (inline for edge runtime compatibility)
@@ -100,7 +102,7 @@ export async function GET(request: NextRequest) {
       return `${value.toFixed(1)}%`
     }
     
-    const imageResponse = new ImageResponse(
+    return new ImageResponse(
       (
         <div
           style={{
@@ -310,10 +312,6 @@ export async function GET(request: NextRequest) {
         height: 630,
       }
     )
-    
-    // Add cache headers - ImageResponse already returns a Response, just add headers
-    imageResponse.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
-    return imageResponse
   } catch (e: any) {
     console.error('OG image generation error:', e)
     // Return a simple error image

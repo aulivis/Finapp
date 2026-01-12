@@ -6,6 +6,7 @@ import { calculatePurchasingPower } from '@/lib/data/inflation'
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'
 
 // Force dynamic rendering to ensure searchParams are available in generateMetadata
+// Note: This disables static generation, which is expected since we need dynamic metadata based on URL params
 export const dynamic = 'force-dynamic'
 
 interface PageProps {
