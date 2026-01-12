@@ -7,7 +7,6 @@ import { NextRequest, NextResponse } from 'next/server'
  */
 export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl
-  const host = request.headers.get('host') || ''
   const userAgent = request.headers.get('user-agent') || ''
 
   // Store original URL with query parameters in a header
