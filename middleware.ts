@@ -6,9 +6,16 @@ import { NextRequest, NextResponse } from 'next/server'
  * Used for security, logging, and request modification
  */
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const { pathname, search } = request.nextUrl
   const host = request.headers.get('host') || ''
   const userAgent = request.headers.get('user-agent') || ''
+
+  // Store original URL with query parameters in a header before any redirects
+  // This allows generateMetadata to access query params even if Vercel redirects strip them
+  const originalUrl = request.url
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-original-url', originalUrl)
+  requestHeaders.set('x-original-query', search)
 
   // Canonical domain redirect: Redirect non-www to www while preserving query parameters
   // This ensures Facebook and other crawlers can access pages with query params intact
@@ -18,7 +25,11 @@ export function middleware(request: NextRequest) {
     // Query parameters are automatically preserved in the URL object
     // Use 301 (permanent redirect) for SEO, but 307 (temporary) preserves method and is better for POST requests
     // For GET requests (which crawlers use), 301 is fine
-    return NextResponse.redirect(url, 301)
+    const redirectResponse = NextResponse.redirect(url, 301)
+    // Preserve original URL header in redirect response
+    redirectResponse.headers.set('x-original-url', originalUrl)
+    redirectResponse.headers.set('x-original-query', search)
+    return redirectResponse
   }
 
   // Allow Facebook's crawler and other social media crawlers
@@ -43,7 +54,11 @@ export function middleware(request: NextRequest) {
 
   // Add security headers for API routes
   if (pathname.startsWith('/api/')) {
-    const response = NextResponse.next()
+    const response = NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    })
     
     // Add CORS headers for API routes (if needed)
     // Note: Adjust CORS policy based on your needs
@@ -65,7 +80,12 @@ export function middleware(request: NextRequest) {
     return response
   }
 
-  return NextResponse.next()
+  // Pass original URL headers to the page
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  })
 }
 
 export const config = {

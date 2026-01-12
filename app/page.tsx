@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import LandingPageClient from '@/components/LandingPageClient'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
@@ -16,9 +17,32 @@ interface PageProps {
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const params = await searchParams
-  const amountParam = params.amount
-  const startYearParam = params.startYear
-  const endYearParam = params.endYear
+  let amountParam = params.amount
+  let startYearParam = params.startYear
+  let endYearParam = params.endYear
+
+  // Fallback: If query params are missing (due to Vercel redirects), try to read from original URL header
+  // This happens when Vercel's infrastructure redirects strip query parameters before Next.js processes them
+  if (!amountParam || !startYearParam || !endYearParam) {
+    try {
+      const headersList = headers()
+      const originalUrl = headersList.get('x-original-url')
+      const originalQuery = headersList.get('x-original-query')
+      
+      if (originalUrl || originalQuery) {
+        const queryString = originalQuery || (originalUrl ? new URL(originalUrl).search : '')
+        if (queryString) {
+          const urlParams = new URLSearchParams(queryString)
+          amountParam = amountParam || urlParams.get('amount') || undefined
+          startYearParam = startYearParam || urlParams.get('startYear') || undefined
+          endYearParam = endYearParam || urlParams.get('endYear') || undefined
+        }
+      }
+    } catch (error) {
+      // Headers might not be available in all contexts, fall through to use searchParams
+      console.error('Error reading original URL from headers:', error)
+    }
+  }
 
   // Debug logging (remove in production if needed)
   if (process.env.NODE_ENV === 'development') {
@@ -74,9 +98,13 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       const imageVersion = 'v3'
       
       // Use absolute URL for OG image with version for cache-busting
-      // Ensure URLs are properly encoded
-      const ogImageUrl = `${appUrl}/og?amount=${encodeURIComponent(amount)}&startYear=${encodeURIComponent(startYear)}&endYear=${encodeURIComponent(endYear)}&v=${imageVersion}`
-      const shareUrl = `${appUrl}/?amount=${encodeURIComponent(amount)}&startYear=${encodeURIComponent(startYear)}&endYear=${encodeURIComponent(endYear)}`
+      // Ensure URLs are properly encoded and explicitly use https://www.contexta.hu
+      // This ensures Facebook sees the correct URL even if redirects happen
+      const baseUrl = appUrl.startsWith('http') ? appUrl : `https://${appUrl}`
+      // Ensure we always use www and https
+      const canonicalBaseUrl = baseUrl.replace(/^https?:\/\/(www\.)?/, 'https://www.')
+      const ogImageUrl = `${canonicalBaseUrl}/og?amount=${encodeURIComponent(amount)}&startYear=${encodeURIComponent(startYear)}&endYear=${encodeURIComponent(endYear)}&v=${imageVersion}`
+      const shareUrl = `${canonicalBaseUrl}/?amount=${encodeURIComponent(amount)}&startYear=${encodeURIComponent(startYear)}&endYear=${encodeURIComponent(endYear)}`
 
       // Debug: Log the generated metadata URLs
       if (process.env.NODE_ENV === 'development') {
