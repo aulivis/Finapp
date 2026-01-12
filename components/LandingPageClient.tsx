@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react'
 import HeroSection from '@/components/HeroSection'
 import LandingCalculator from '@/components/LandingCalculator'
 import ContextualComparison from '@/components/ContextualComparison'
+import M2Section from '@/components/M2Section'
 import FAQ from '@/components/FAQ'
 import EmailSignup from '@/components/EmailSignup'
 import { historicalInflation } from '@/lib/data/inflation'
@@ -46,6 +47,7 @@ export default function LandingPageClient() {
         endYear={validEndYear}
         userAmount={amount}
       />
+      <M2Section />
       <FAQ />
       <EmailSignup />
     </>

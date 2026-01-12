@@ -219,7 +219,8 @@ export default function HeroSection() {
                     strokeWidth={2.5}
                     style={{
                       color: colors.error,
-                      animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite'
+                      animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite',
+                      transform: isMobile ? 'rotate(90deg)' : 'none'
                     }}
                   />
                 </div>
