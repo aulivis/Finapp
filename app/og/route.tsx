@@ -8,9 +8,19 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     
-    const amount = parseFloat(searchParams.get('amount') || '1000000')
-    const startYear = parseInt(searchParams.get('startYear') || '2015')
-    const endYear = parseInt(searchParams.get('endYear') || '2025')
+    const amountParam = searchParams.get('amount')
+    const startYearParam = searchParams.get('startYear')
+    const endYearParam = searchParams.get('endYear')
+    
+    // Use defaults if params are missing
+    const amount = amountParam ? parseFloat(amountParam) : 1000000
+    const startYear = startYearParam ? parseInt(startYearParam) : 2015
+    const endYear = endYearParam ? parseInt(endYearParam) : 2025
+    
+    // Validate inputs
+    if (isNaN(amount) || isNaN(startYear) || isNaN(endYear) || amount <= 0) {
+      throw new Error('Invalid parameters')
+    }
     
     // Calculate purchasing power loss
     const dataPoints = calculatePurchasingPower(amount, startYear, endYear)
@@ -242,10 +252,17 @@ export async function GET(request: NextRequest) {
         height: 630,
       }
     )
+    
+    // Add cache headers for better performance
+    imageResponse.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
+    return imageResponse
   } catch (e: any) {
-    console.log(`${e.message}`)
-    return new Response(`Failed to generate the image`, {
+    console.error('OG image generation error:', e.message)
+    return new Response(`Failed to generate the image: ${e.message}`, {
       status: 500,
+      headers: {
+        'Content-Type': 'text/plain',
+      },
     })
   }
 }

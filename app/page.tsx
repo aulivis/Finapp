@@ -5,21 +5,38 @@ import { calculatePurchasingPower } from '@/lib/data/inflation'
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://contexta.hu'
 
+// Force dynamic rendering to ensure searchParams are available in generateMetadata
+export const dynamic = 'force-dynamic'
+
 interface PageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const params = await searchParams
-  const amount = params.amount ? parseFloat(String(params.amount)) : null
-  const startYear = params.startYear ? parseInt(String(params.startYear)) : null
-  const endYear = params.endYear ? parseInt(String(params.endYear)) : null
+  const amountParam = params.amount
+  const startYearParam = params.startYear
+  const endYearParam = params.endYear
 
   // If we have all required params, generate dynamic metadata
-  if (amount && startYear && endYear && amount > 0) {
+  if (amountParam && startYearParam && endYearParam) {
     try {
+      const amount = parseFloat(String(amountParam))
+      const startYear = parseInt(String(startYearParam))
+      const endYear = parseInt(String(endYearParam))
+
+      // Validate inputs
+      if (isNaN(amount) || isNaN(startYear) || isNaN(endYear) || amount <= 0) {
+        throw new Error('Invalid parameters')
+      }
+
       // Calculate purchasing power loss
       const dataPoints = calculatePurchasingPower(amount, startYear, endYear)
+      
+      if (dataPoints.length === 0) {
+        throw new Error('No data points calculated')
+      }
+
       const finalNominal = dataPoints[dataPoints.length - 1]?.nominal || amount
       const finalReal = dataPoints[dataPoints.length - 1]?.real || amount
       const loss = finalNominal - finalReal
@@ -40,6 +57,8 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
 
       const dynamicTitle = `A ${formatCurrency(amount)} vásárlóereje ${formatPercentage(lossPercentage)}-kal csökkent ${startYear} és ${endYear} között`
       const dynamicDescription = `Számítsd ki a saját adataidat is! A ${formatCurrency(amount)} valódi vásárlóereje ma ${formatCurrency(finalReal)}.`
+      
+      // Use absolute URL for OG image
       const ogImageUrl = `${appUrl}/og?amount=${amount}&startYear=${startYear}&endYear=${endYear}`
       const shareUrl = `${appUrl}/?amount=${amount}&startYear=${startYear}&endYear=${endYear}`
 
