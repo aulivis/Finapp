@@ -23,22 +23,22 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
 
   // Country names in Hungarian
   const countryNames: Record<string, string> = {
-    'RO': 'Románia',
-    'SK': 'Szlovákia',
-    'HR': 'Horvátország',
-    'BG': 'Bulgária',
-    'HU': 'Magyarország',
-    'TR': 'Törökország',
+    'RO': 'Romรกnia',
+    'SK': 'Szlovรกkia',
+    'HR': 'Horvรกtorszรกg',
+    'BG': 'Bulgรกria',
+    'HU': 'Magyarorszรกg',
+    'TR': 'Tรถrรถkorszรกg',
   }
 
   // Data: Bottom 6 countries (positions 25-30)
   const rankingData = useMemo(() => [
-    { position: 25, country: 'Románia', score: -15.2, code: 'RO' },
-    { position: 26, country: 'Szlovákia', score: -18.5, code: 'SK' },
-    { position: 27, country: 'Horvátország', score: -20.1, code: 'HR' },
-    { position: 28, country: 'Bulgária', score: -22.8, code: 'BG' },
-    { position: 29, country: 'Magyarország', score: -24.3, code: 'HU', isHungary: true },
-    { position: 30, country: 'Törökország', score: -34.9, code: 'TR' },
+    { position: 25, country: 'Romรกnia', score: -15.2, code: 'RO' },
+    { position: 26, country: 'Szlovรกkia', score: -18.5, code: 'SK' },
+    { position: 27, country: 'Horvรกtorszรกg', score: -20.1, code: 'HR' },
+    { position: 28, country: 'Bulgรกria', score: -22.8, code: 'BG' },
+    { position: 29, country: 'Magyarorszรกg', score: -24.3, code: 'HU', isHungary: true },
+    { position: 30, country: 'Tรถrรถkorszรกg', score: -34.9, code: 'TR' },
   ], [])
 
   const hungaryScore = -24.3
@@ -56,13 +56,14 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
     return '#EF4444' // Red
   }
 
-  const chartHeight = rankingData.length * (isMobile ? 50 : 60)
+  const minChartHeight = rankingData.length * (isMobile ? 50 : 60)
+  const chartHeight = Math.max(height, minChartHeight)
   const barMaxWidth = isMobile ? 250 : 350
 
   return (
     <div
       role="img"
-      aria-label="Magyarország fogyasztói bizalom rangsor grafikon"
+      aria-label="Magyarorszรกg fogyasztรณi bizalom rangsor grafikon"
       aria-describedby="confidence-chart-description confidence-chart-data-source"
       style={{
         width: '100%',
@@ -75,8 +76,8 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
     >
       {/* Hidden description for screen readers */}
       <div id="confidence-chart-description" className="sr-only">
-        Grafikon Magyarország fogyasztói bizalom rangsoráról. Magyarország a 29. helyen áll 30 ország közül,
-        -24,3 ponttal. Csak Törökország előzi meg minket a lista alján.
+        Grafikon Magyarorszรกg fogyasztรณi bizalom rangsorรกrรณl. Magyarorszรกg a 29. helyen รกll 30 orszรกg kรถzรผl,
+        -24,3 ponttal. Csak Tรถrรถkorszรกg elล�zi meg minket a lista aljรกn.
       </div>
       
       {/* Title */}
@@ -87,7 +88,7 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
         marginBottom: spacing.lg,
         textAlign: 'center',
       }}>
-        Magyarország: 29. hely 30-ból
+        Magyarorszรกg: 29. hely 30-bรณl
       </h3>
 
       {/* Subtitle */}
@@ -97,7 +98,7 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
         marginBottom: spacing.xl,
         textAlign: 'center',
       }}>
-        Fogyasztói bizalom: a legrosszabb 6 ország (30-ból)
+        Fogyasztรณi bizalom: a legrosszabb 6 orszรกg (30-bรณl)
       </p>
 
       {/* Chart */}
@@ -253,10 +254,10 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
           textAlign: 'center',
         }}>
           <div style={{ marginBottom: spacing.xs }}>
-            <strong>EU átlag:</strong> ~45 pont | <strong>Legmagasabb:</strong> Indonézia 63,4 pont
+            <strong>EU รกtlag:</strong> ~45 pont | <strong>Legmagasabb:</strong> Indonรฉzia 63,4 pont
           </div>
           <div style={{ fontSize: isMobile ? '11px' : '12px', color: colors.text.muted }}>
-            Minél alacsonyabb a pontszám, annál pesszimistábbak a fogyasztók
+            Minรฉl alacsonyabb a pontszรกm, annรกl pesszimistรกbbak a fogyasztรณk
           </div>
         </div>
       </div>
@@ -274,7 +275,7 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
           lineHeight: 1.4,
         }}
       >
-        Forrás: MNB, KSH, ECB
+        Forrรกs: MNB, KSH, ECB
       </div>
     </div>
   )
