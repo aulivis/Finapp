@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import Image from 'next/image'
 import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
 import { isValidEmail } from '@/lib/utils/email'
 import Input from '@/components/ui/Input'
@@ -89,32 +90,54 @@ export default function NewsletterSubscriptionBox() {
         gap: spacing.xl,
         alignItems: isMobile ? 'center' : 'flex-start',
       }}>
-        {/* Author Image */}
+        {/* Author Image and Signature */}
         <div style={{
           flexShrink: 0,
-          width: isMobile ? '120px' : '140px',
-          height: isMobile ? '120px' : '140px',
-          borderRadius: borderRadius.full,
-          overflow: 'hidden',
-          border: `3px solid ${colors.primaryLight}`,
-          boxShadow: shadows.md,
-          backgroundColor: colors.gray[100],
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
+          gap: spacing.md,
         }}>
-          {/* Placeholder for author image - replace with actual image */}
+          {/* Profile Image */}
           <div style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: colors.primaryLight,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: typography.fontSize['4xl'],
-            color: colors.primary,
+            width: isMobile ? '120px' : '140px',
+            height: isMobile ? '120px' : '140px',
+            borderRadius: borderRadius.full,
+            overflow: 'hidden',
+            border: `3px solid ${colors.primaryLight}`,
+            boxShadow: shadows.md,
+            backgroundColor: colors.gray[100],
+            position: 'relative',
           }}>
-            👤
+            <Image
+              src="/robert.jpg"
+              alt="Robert"
+              fill
+              style={{
+                objectFit: 'cover',
+              }}
+              sizes="(max-width: 768px) 120px, 140px"
+            />
+          </div>
+          
+          {/* Signature */}
+          <div style={{
+            width: isMobile ? '120px' : '140px',
+            height: 'auto',
+            position: 'relative',
+            marginTop: spacing.xs,
+          }}>
+            <Image
+              src="/signature.png"
+              alt="Signature"
+              width={140}
+              height={60}
+              style={{
+                width: '100%',
+                height: 'auto',
+                objectFit: 'contain',
+              }}
+            />
           </div>
         </div>
 

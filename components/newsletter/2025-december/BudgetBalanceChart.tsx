@@ -5,7 +5,6 @@ import { useIsMobile } from '@/lib/hooks/useIsMobile'
 import { colors, typography, spacing, borderRadius, shadows } from '@/lib/design-system'
 
 interface BudgetBalanceChartProps {
-  height?: number
 }
 
 /**
@@ -16,7 +15,7 @@ interface BudgetBalanceChartProps {
  * - Deficit data boxes
  * - Infographic style design
  */
-export default function BudgetBalanceChart({ height = 600 }: BudgetBalanceChartProps) {
+export default function BudgetBalanceChart({}: BudgetBalanceChartProps) {
   const isMobile = useIsMobile()
 
   const revenueGrowth = 6.3
