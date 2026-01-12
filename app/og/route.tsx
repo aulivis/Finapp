@@ -2,7 +2,8 @@ import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
 import { calculatePurchasingPower } from '@/lib/data/inflation'
 
-export const runtime = 'edge'
+// Note: Using nodejs runtime because edge runtime may have issues with data imports
+// export const runtime = 'edge'
 
 export async function GET(request: NextRequest) {
   try {
@@ -263,12 +264,29 @@ export async function GET(request: NextRequest) {
     })
     return response
   } catch (e: any) {
-    console.error('OG image generation error:', e.message)
-    return new Response(`Failed to generate the image: ${e.message}`, {
-      status: 500,
-      headers: {
-        'Content-Type': 'text/plain',
-      },
-    })
+    console.error('OG image generation error:', e)
+    // Return a simple error image instead of text
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: '#FFFFFF',
+            fontSize: '24px',
+            color: '#000000',
+          }}
+        >
+          Error generating image
+        </div>
+      ),
+      {
+        width: 1200,
+        height: 630,
+      }
+    )
   }
 }
