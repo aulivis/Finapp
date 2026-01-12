@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import { Share2, Facebook, Twitter, Linkedin, Link as LinkIcon, Check } from 'lucide-react'
 import { colors, spacing, borderRadius, transitions, shadows } from '@/lib/design-system'
-import Button from '@/components/ui/Button'
 
 interface SocialShareProps {
   amount: number
