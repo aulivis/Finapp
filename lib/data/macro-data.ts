@@ -1,11 +1,16 @@
-import { supabaseAdmin } from '@/lib/supabase/server'
 import { MacroData } from '@/lib/types/database'
-import { DEFAULT_PROJECTED_INFLATION } from './economic-data'
+import {
+  HISTORICAL_INFLATION,
+  HISTORICAL_M2_GROWTH,
+  DEFAULT_PROJECTED_INFLATION,
+} from './economic-data'
 
 const DEFAULT_COUNTRY = 'HU'
+const DEFAULT_SOURCE = 'KSH/MNB'
 
 /**
  * Get all macroeconomic data for a country, sorted by year
+ * Reads from static data files instead of database
  */
 export async function getMacroData(country: string = DEFAULT_COUNTRY): Promise<MacroData[]> {
   // Validate country parameter
@@ -16,18 +21,31 @@ export async function getMacroData(country: string = DEFAULT_COUNTRY): Promise<M
   // Sanitize country (only allow alphanumeric and underscore)
   const sanitizedCountry = country.replace(/[^a-zA-Z0-9_]/g, '').toUpperCase()
 
-  const { data, error } = await supabaseAdmin
-    .from('macro_data')
-    .select('*')
-    .eq('country', sanitizedCountry)
-    .order('year', { ascending: true })
-
-  if (error) {
-    console.error('Error fetching macro data:', error)
+  // Only support HU for now (data is Hungary-specific)
+  if (sanitizedCountry !== 'HU') {
     return []
   }
 
-  return data || []
+  // Combine inflation and M2 data
+  const m2Map = new Map(HISTORICAL_M2_GROWTH.map(d => [d.year, d.m2Growth]))
+
+  const macroData: MacroData[] = HISTORICAL_INFLATION.map(({ year, inflationRate }) => {
+    const m2Growth = m2Map.get(year) ?? null
+    
+    return {
+      id: `macro-${year}`, // Generate a consistent ID
+      country: sanitizedCountry,
+      year,
+      inflation_rate: inflationRate,
+      interest_rate: null, // Not available in static data
+      m2_growth: m2Growth,
+      source: DEFAULT_SOURCE,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    }
+  })
+
+  return macroData.sort((a, b) => a.year - b.year)
 }
 
 /**
@@ -42,20 +60,18 @@ export async function getLatestMacroDataYear(country: string = DEFAULT_COUNTRY):
   // Sanitize country (only allow alphanumeric and underscore)
   const sanitizedCountry = country.replace(/[^a-zA-Z0-9_]/g, '').toUpperCase()
 
-  const { data, error } = await supabaseAdmin
-    .from('macro_data')
-    .select('year')
-    .eq('country', sanitizedCountry)
-    .order('year', { ascending: false })
-    .limit(1)
-    .single()
-
-  if (error || !data) {
+  // Only support HU for now
+  if (sanitizedCountry !== 'HU') {
     return null
   }
 
-  const year = Number(data.year)
-  return isFinite(year) && year > 0 ? year : null
+  if (HISTORICAL_INFLATION.length === 0) {
+    return null
+  }
+
+  // Get the latest year from historical inflation data
+  const latestYear = Math.max(...HISTORICAL_INFLATION.map(d => d.year))
+  return isFinite(latestYear) && latestYear > 0 ? latestYear : null
 }
 
 /**
@@ -78,18 +94,19 @@ export async function getInflationRateForYear(
   // Sanitize country (only allow alphanumeric and underscore)
   const sanitizedCountry = country.replace(/[^a-zA-Z0-9_]/g, '').toUpperCase()
 
-  const { data, error } = await supabaseAdmin
-    .from('macro_data')
-    .select('inflation_rate')
-    .eq('country', sanitizedCountry)
-    .eq('year', Math.floor(year))
-    .single()
-
-  if (error || !data) {
+  // Only support HU for now
+  if (sanitizedCountry !== 'HU') {
     return null
   }
 
-  const rate = Number(data.inflation_rate)
+  const yearInt = Math.floor(year)
+  const dataPoint = HISTORICAL_INFLATION.find(d => d.year === yearInt)
+  
+  if (!dataPoint) {
+    return null
+  }
+
+  const rate = dataPoint.inflationRate
   return isFinite(rate) ? rate : null
 }
 
@@ -103,21 +120,26 @@ export async function getProjectedInflationRate(country: string = DEFAULT_COUNTR
     return DEFAULT_PROJECTED_INFLATION
   }
 
-  // Get last 5 years of data to calculate average
-  const { data, error } = await supabaseAdmin
-    .from('macro_data')
-    .select('inflation_rate')
-    .eq('country', country)
-    .order('year', { ascending: false })
-    .limit(5)
+  // Sanitize country
+  const sanitizedCountry = country.replace(/[^a-zA-Z0-9_]/g, '').toUpperCase()
 
-  if (error || !data || data.length === 0) {
+  // Only support HU for now
+  if (sanitizedCountry !== 'HU') {
+    return DEFAULT_PROJECTED_INFLATION
+  }
+
+  // Get last 5 years of data to calculate average
+  const recentData = [...HISTORICAL_INFLATION]
+    .sort((a, b) => b.year - a.year)
+    .slice(0, 5)
+
+  if (recentData.length === 0) {
     return DEFAULT_PROJECTED_INFLATION
   }
 
   // Calculate average with proper number validation
-  const validRates = data
-    .map(row => Number(row.inflation_rate))
+  const validRates = recentData
+    .map(d => d.inflationRate)
     .filter(rate => !isNaN(rate) && isFinite(rate))
 
   if (validRates.length === 0) {
@@ -147,21 +169,13 @@ export async function getDataSources(country: string = DEFAULT_COUNTRY): Promise
   // Sanitize country (only allow alphanumeric and underscore)
   const sanitizedCountry = country.replace(/[^a-zA-Z0-9_]/g, '').toUpperCase()
 
-  const { data, error } = await supabaseAdmin
-    .from('macro_data')
-    .select('source')
-    .eq('country', sanitizedCountry)
-
-  if (error || !data) {
+  // Only support HU for now
+  if (sanitizedCountry !== 'HU') {
     return []
   }
 
-  // Get unique sources and filter out invalid values
-  const sources = [...new Set(data
-    .map(row => row.source)
-    .filter((source): source is string => typeof source === 'string' && source.length > 0)
-  )]
-  return sources
+  // Return default source
+  return [DEFAULT_SOURCE]
 }
 
 /**
@@ -170,22 +184,22 @@ export async function getDataSources(country: string = DEFAULT_COUNTRY): Promise
 export async function getHistoricalInflationData(
   country: string = DEFAULT_COUNTRY
 ): Promise<Array<{ year: number; inflationRate: number }>> {
-  const data = await getMacroData(country)
-  
-  return data
-    .map(row => {
-      const year = Number(row.year)
-      const inflationRate = Number(row.inflation_rate)
-      
-      // Validate both values are finite numbers
-      if (!isFinite(year) || !isFinite(inflationRate)) {
-        return null
-      }
-      
-      return {
-        year: Math.floor(year),
-        inflationRate,
-      }
-    })
-    .filter((item): item is { year: number; inflationRate: number } => item !== null)
+  // Validate country parameter
+  if (!country || typeof country !== 'string' || country.length === 0) {
+    country = DEFAULT_COUNTRY
+  }
+
+  // Sanitize country
+  const sanitizedCountry = country.replace(/[^a-zA-Z0-9_]/g, '').toUpperCase()
+
+  // Only support HU for now
+  if (sanitizedCountry !== 'HU') {
+    return []
+  }
+
+  // Return historical inflation data directly
+  return HISTORICAL_INFLATION.map(({ year, inflationRate }) => ({
+    year,
+    inflationRate,
+  }))
 }

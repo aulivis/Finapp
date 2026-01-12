@@ -14,10 +14,10 @@ npm run validate-env
 
 ## Macroeconomic Data Updates
 
-Macroeconomic data (including M2 growth rates) should be updated directly in Supabase using SQL:
+Macroeconomic data (including inflation rates and M2 growth rates) should be updated in the static data file:
 
-1. Open Supabase SQL Editor
-2. Run the SQL file: `supabase/update-m2-data.sql`
-3. Or create custom SQL queries to update the `macro_data` table
+1. Open `lib/data/economic-data.ts`
+2. Update the `HISTORICAL_INFLATION` array for inflation data
+3. Update the `HISTORICAL_M2_GROWTH` array for M2 money supply growth data
 
-This approach is simpler and doesn't require environment variable configuration.
+All macroeconomic data is now read from static files instead of the database, making it easier to maintain and version control.

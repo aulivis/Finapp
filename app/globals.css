@@ -130,6 +130,16 @@ a[role="button"]:hover {
   }
 }
 
+/* Pulse animation for focus card shadow */
+@keyframes pulseShadow {
+  0%, 100% {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(239, 68, 68, 0.1);
+  }
+  50% {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 3px rgba(239, 68, 68, 0.15);
+  }
+}
+
 /* Money fade animation for value loss */
 @keyframes moneyFade {
   0%, 100% {

@@ -10,6 +10,7 @@ import { colors, spacing, typography, borderRadius, transitions, shadows } from 
 import { Info, Wallet, Calendar, TrendingDown } from 'lucide-react'
 import Input from '@/components/ui/Input'
 import StatCard from '@/components/ui/StatCard'
+import SocialShare from '@/components/SocialShare'
 
 const DEFAULT_AMOUNT = 1000000
 const DEFAULT_START_YEAR = 2015
@@ -485,36 +486,39 @@ export default function LandingCalculator({
                 />
               </div>
 
-              {/* Hero Result Message - The Key Insight */}
+              {/* Hero Result Message - The Key Insight - Enhanced Focus Card */}
               <div style={{
-                padding: isMobile ? spacing['2xl'] : spacing['3xl'],
-                background: `linear-gradient(135deg, ${colors.errorLight} 0%, rgba(254, 226, 226, 0.5) 100%)`,
+                padding: isMobile ? spacing['3xl'] : spacing['4xl'],
+                background: `linear-gradient(135deg, ${colors.errorLight} 0%, rgba(254, 226, 226, 0.6) 50%, rgba(254, 226, 226, 0.4) 100%)`,
                 borderRadius: borderRadius.xl,
-                border: `2px solid ${colors.error}`,
+                border: `3px solid ${colors.error}`,
                 textAlign: 'center',
                 position: 'relative',
                 overflow: 'hidden',
-                boxShadow: shadows.lg,
-                marginBottom: isMobile ? spacing.xl : spacing.xl
+                boxShadow: `${shadows['2xl']}, 0 0 0 1px rgba(239, 68, 68, 0.1)`,
+                marginBottom: isMobile ? spacing.xl : spacing.xl,
+                transform: 'scale(1.02)',
+                transition: transitions.slow,
+                animation: prefersReducedMotion ? 'none' : 'pulseShadow 3s ease-in-out infinite'
               }}>
                 <div style={{
                   position: 'absolute',
                   top: 0,
                   left: 0,
                   right: 0,
-                  height: '3px',
-                  background: `linear-gradient(90deg, ${colors.error} 0%, #DC2626 100%)`
+                  height: '4px',
+                  background: `linear-gradient(90deg, ${colors.error} 0%, #DC2626 50%, ${colors.error} 100%)`
                 }} />
                 <div style={{
-                  marginBottom: spacing.lg
+                  marginBottom: spacing.xl
                 }}>
                   <div style={{
-                    fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+                    fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
                     color: colors.error,
-                    fontWeight: typography.fontWeight.semibold,
+                    fontWeight: typography.fontWeight.bold,
                     textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                    marginBottom: spacing.md
+                    letterSpacing: '0.08em',
+                    marginBottom: spacing.lg
                   }}>
                     Vásárlóerő veszteség
                   </div>
@@ -522,31 +526,43 @@ export default function LandingCalculator({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: spacing.md,
-                    fontSize: isMobile ? typography.fontSize['5xl'] : typography.fontSize['6xl'],
+                    gap: spacing.lg,
+                    fontSize: isMobile ? typography.fontSize['6xl'] : '72px',
                     fontWeight: typography.fontWeight.bold,
                     color: colors.error,
                     lineHeight: typography.lineHeight.tight,
-                    marginBottom: spacing.md,
+                    marginBottom: spacing.lg,
                     fontFeatureSettings: '"tnum"',
                   }}>
-                    <TrendingDown size={isMobile ? 32 : 40} />
+                    <TrendingDown size={isMobile ? 40 : 56} strokeWidth={2.5} />
                     <span>{formatPercentage(calculationData.lossPercentage)}</span>
                   </div>
                   <div style={{
-                    fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
-                    color: colors.text.secondary,
+                    fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
+                    color: colors.text.primary,
                     lineHeight: typography.lineHeight.relaxed,
-                    maxWidth: '600px',
-                    margin: '0 auto'
+                    maxWidth: '700px',
+                    margin: '0 auto',
+                    fontWeight: typography.fontWeight.medium
                   }}>
-                    A <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.semibold }}>{formatCurrency(amount)}</strong> vásárlóereje{' '}
-                    <strong style={{ color: colors.error, fontWeight: typography.fontWeight.bold }}>
+                    A <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>{formatCurrency(amount)}</strong> vásárlóereje{' '}
+                    <strong style={{ color: colors.error, fontWeight: typography.fontWeight.bold, fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['3xl'] }}>
                       {formatPercentage(calculationData.lossPercentage)}-kal csökkent
                     </strong>{' '}
-                    <strong style={{ color: colors.text.primary }}>{validStartYear}</strong> és <strong style={{ color: colors.text.primary }}>{validEndYear}</strong> között.
+                    <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.semibold }}>{validStartYear}</strong> és <strong style={{ color: colors.text.primary, fontWeight: typography.fontWeight.semibold }}>{validEndYear}</strong> között.
                   </div>
                 </div>
+                
+                {/* Social Share Component */}
+                <SocialShare
+                  amount={amount}
+                  startYear={validStartYear}
+                  endYear={validEndYear}
+                  lossPercentage={calculationData.lossPercentage}
+                  loss={calculationData.loss}
+                  formatCurrency={formatCurrency}
+                  formatPercentage={formatPercentage}
+                />
               </div>
             </>
           )}

@@ -212,15 +212,15 @@ export default function HeroSection() {
                   justifyContent: 'center',
                   position: 'relative',
                   lineHeight: 1,
-                  color: colors.error
+                  color: colors.error,
+                  transform: isMobile ? 'rotate(90deg)' : 'none'
                 }}>
                   <FastForward 
                     size={isMobile ? 40 : 56} 
                     strokeWidth={2.5}
                     style={{
                       color: colors.error,
-                      animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite',
-                      transform: isMobile ? 'rotate(90deg)' : 'none'
+                      animation: prefersReducedMotion ? 'none' : 'pulse 2s ease-in-out infinite'
                     }}
                   />
                 </div>
