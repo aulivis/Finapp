@@ -19,7 +19,6 @@ export default function FontSizeControls({
 }: FontSizeControlsProps) {
   const minSize = 0.8
   const maxSize = 1.5
-  const step = 0.1
 
   const canDecrease = fontSizeMultiplier > minSize
   const canIncrease = fontSizeMultiplier < maxSize
