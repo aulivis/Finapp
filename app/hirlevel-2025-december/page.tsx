@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { colors, spacing, typography, borderRadius, shadows } from '@/lib/design-system'
 import ContextaWordmark from '@/components/ContextaWordmark'
 import FooterDisclaimer from '@/components/FooterDisclaimer'
@@ -8,20 +9,98 @@ import InflationInterestChart from '@/components/newsletter/2025-december/Inflat
 import ConsumerConfidenceChart from '@/components/newsletter/2025-december/ConsumerConfidenceChart'
 import LaborMarketChart from '@/components/newsletter/2025-december/LaborMarketChart'
 import BudgetBalanceChart from '@/components/newsletter/2025-december/BudgetBalanceChart'
-import NewsletterAudioPlayer from '@/components/newsletter/2025-december/NewsletterAudioPlayer'
+import NewsletterContent from '@/components/newsletter/2025-december/NewsletterContent'
+
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.contexta.hu'
+const newsletterUrl = `${appUrl}/hirlevel-2025-december`
+const publishedDate = '2025-12-01'
+const modifiedDate = '2025-12-01'
 
 export const metadata: Metadata = {
   title: 'Az év öt legfontosabb gazdasági kérdése – Decemberi összefoglaló | Contexta',
   description: 'Decemberi gazdasági összefoglaló: infláció, GDP növekedés, fogyasztói bizalom, munkaerőpiac és államháztartás - 2025. december',
+  keywords: ['gazdasági hírlevél', 'infláció', 'GDP', 'fogyasztói bizalom', 'munkaerőpiac', 'államháztartás', 'magyar gazdaság', '2025 december'],
+  authors: [{ name: 'Kovács Róbert', url: newsletterUrl }],
+  creator: 'Contexta',
+  publisher: 'Contexta',
+  metadataBase: new URL(appUrl),
+  alternates: {
+    canonical: '/hirlevel-2025-december',
+  },
+  openGraph: {
+    type: 'article',
+    locale: 'hu_HU',
+    url: newsletterUrl,
+    siteName: 'Contexta',
+    title: 'Az év öt legfontosabb gazdasági kérdése – Decemberi összefoglaló',
+    description: 'Decemberi gazdasági összefoglaló: infláció, GDP növekedés, fogyasztói bizalom, munkaerőpiac és államháztartás - 2025. december',
+    publishedTime: publishedDate,
+    modifiedTime: modifiedDate,
+    authors: ['Kovács Róbert'],
+    images: [
+      {
+        url: `${appUrl}/contexta-social-share.jpg`,
+        width: 1200,
+        height: 630,
+        alt: 'Contexta - Decemberi gazdasági összefoglaló',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Az év öt legfontosabb gazdasági kérdése – Decemberi összefoglaló',
+    description: 'Decemberi gazdasági összefoglaló: infláció, GDP növekedés, fogyasztói bizalom, munkaerőpiac és államháztartás',
+    images: [`${appUrl}/contexta-social-share.jpg`],
+  },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+}
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Az év öt legfontosabb gazdasági kérdése – Decemberi összefoglaló',
+  description: 'Decemberi gazdasági összefoglaló: infláció, GDP növekedés, fogyasztói bizalom, munkaerőpiac és államháztartás - 2025. december',
+  image: `${appUrl}/contexta-social-share.jpg`,
+  datePublished: publishedDate,
+  dateModified: modifiedDate,
+  author: {
+    '@type': 'Person',
+    name: 'Kovács Róbert',
+    jobTitle: 'Alapító',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Contexta',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${appUrl}/favicon.png`,
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': newsletterUrl,
   },
 }
 
 export default function NewsletterPage() {
   return (
-    <main style={{
+    <>
+      <Script
+        id="article-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <main style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #F0FDFA 0%, #FFFFFF 50%, #F9FAFB 100%)',
       padding: `${spacing['4xl']} 0`,
@@ -80,38 +159,9 @@ export default function NewsletterPage() {
             </p>
           </header>
 
-          {/* Audio Player Placeholder */}
-          <NewsletterAudioPlayer />
-
-          {/* Newsletter Content Area */}
-          <div style={{
-            fontSize: typography.fontSize.base,
-            color: colors.text.secondary,
-            lineHeight: typography.lineHeight.relaxed,
-            textAlign: 'justify',
-          }}>
-            {/* Introduction */}
-            <section style={{ marginBottom: spacing['2xl'] }}>
-              <p style={{ marginBottom: spacing.md }}>
-                Decemberben a gazdasági hírek gyakran úgy hangzanak, mintha csak a szakértőknek szólnának – százalékok, szakzsargon, láthatatlan összefüggések. Ez az összefoglaló másként közelít: öt, az adatokból egyértelműen látszó tényt vizsgálunk meg abból a szempontból, hogy mit jelentenek a mindennapi életben.
-              </p>
-              <p style={{ marginBottom: spacing.md }}>
-                Mi történt 2025-ben? Az infláció végre a jegybank célzónájába érkezett, de a gazdaság növekedése továbbra is visszafogott. Több mint három éve gyakorlatilag stagnál a GDP, miközben a fogyasztói bizalom mélyponton van – mégis, a háztartások költése tartja életben a növekedést. A munkaerőpiac paradox helyzetet mutat: alacsony a munkanélküliség, de a cégek nem bővülnek, az államháztartás pedig az év végén hiánnyal zárt.
-              </p>
-              <p style={{ marginBottom: spacing.md }}>
-                Az alábbiakban ezt az öt területet járjuk körül adatokkal, trendekkel – politikai álláspontok és spekulációk nélkül.
-              </p>
-            </section>
-
-            {/* Visual separator before first topic */}
-            <div style={{
-              height: '1px',
-              background: `linear-gradient(to right, transparent, ${colors.gray[300]}, transparent)`,
-              marginTop: spacing['3xl'],
-              marginBottom: spacing['3xl'],
-            }} />
-
-            {/* 1. Infláció */}
+          {/* Newsletter Content with Audio Player and Font Size Controls */}
+          <NewsletterContent />
+        </article>
             <section style={{ marginBottom: spacing['4xl'] }}>
               <div style={{
                 display: 'flex',
@@ -994,13 +1044,6 @@ export default function NewsletterPage() {
                   lineHeight: typography.lineHeight.relaxed,
                   color: colors.text.secondary,
                 }}>
-                  Ezekre a kérdésekre a választ a 2026-os év eleji adatok fogják megadni.
-                </p>
-              </div>
-            </section>
-          </div>
-        </article>
-
         {/* Newsletter Subscription Box */}
         <NewsletterSubscriptionBox />
       </div>
@@ -1008,5 +1051,6 @@ export default function NewsletterPage() {
       {/* Footer - Full width */}
       <FooterDisclaimer />
     </main>
+    </>
   )
 }

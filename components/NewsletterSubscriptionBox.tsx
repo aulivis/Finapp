@@ -96,7 +96,7 @@ export default function NewsletterSubscriptionBox() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: spacing.md,
+          gap: 0,
         }}>
           {/* Profile Image */}
           <div style={{
@@ -125,7 +125,7 @@ export default function NewsletterSubscriptionBox() {
             width: isMobile ? '120px' : '140px',
             height: 'auto',
             position: 'relative',
-            marginTop: spacing.xs,
+            marginTop: 0,
           }}>
             <Image
               src="/signature.png"
@@ -146,7 +146,7 @@ export default function NewsletterSubscriptionBox() {
             fontWeight: typography.fontWeight.semibold,
             color: colors.text.primary,
             textAlign: 'center',
-            marginTop: spacing.xs,
+            marginTop: 0,
           }}>
             Kovács Róbert
           </div>
@@ -156,7 +156,7 @@ export default function NewsletterSubscriptionBox() {
             fontSize: typography.fontSize.sm,
             color: colors.text.muted,
             textAlign: 'center',
-            marginTop: '2px',
+            marginTop: 0,
           }}>
             Alapító
           </div>
