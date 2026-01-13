@@ -222,7 +222,7 @@ export default function InflationInterestChart({ height = 600 }: InflationIntere
           color: colors.text.primary,
           marginBottom: spacing.xs,
         }}>
-          Most már 3,8% - a jegybank célzónájában vagyunk
+          3,8% - a jegybank célzónájában vagyunk
         </div>
         <div style={{
           fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,

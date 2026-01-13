@@ -52,7 +52,7 @@ export default function BudgetBalanceChart({}: BudgetBalanceChartProps) {
         marginBottom: spacing.md,
         textAlign: 'center',
       }}>
-        Államháztartás: Többet költ, mint amennyit keres
+        Államháztartás: több kiadás, mint bevétel
       </h3>
       
 
@@ -271,7 +271,7 @@ export default function BudgetBalanceChart({}: BudgetBalanceChartProps) {
               marginBottom: spacing.sm,
               fontWeight: typography.fontWeight.medium,
             }}>
-              Jan-Sep 2025
+              2025 január-szeptember
             </div>
             <div style={{
               fontSize: typography.fontSize['4xl'],
@@ -318,7 +318,7 @@ export default function BudgetBalanceChart({}: BudgetBalanceChartProps) {
               marginBottom: spacing.sm,
               fontWeight: typography.fontWeight.medium,
             }}>
-              Q3 2025 egyedül
+              2025 július-szeptember
             </div>
             <div style={{
               fontSize: typography.fontSize['4xl'],
@@ -339,26 +339,6 @@ export default function BudgetBalanceChart({}: BudgetBalanceChartProps) {
           </div>
         </div>
       </div>
-
-      {/* Real-world Impact */}
-      <div style={{
-        marginTop: spacing.xl,
-        padding: spacing.lg,
-        backgroundColor: colors.infoLight,
-        borderRadius: borderRadius.md,
-        borderLeft: `4px solid ${colors.info}`,
-        fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-        color: colors.text.secondary,
-        lineHeight: typography.lineHeight.relaxed,
-      }}>
-        <strong style={{ color: colors.text.primary }}>Mit jelent ez neked?</strong>
-        <p style={{ marginTop: spacing.xs, marginBottom: 0 }}>
-          Amikor az állam többet költ, mint amennyi bevétele van, az államadósság nő. 
-          Hosszú távon ez azt jelenti, hogy több pénzt kell fordítani az adósságszolgálatra, 
-          ami kevesebb marad oktatásra, egészségügyre és más közszolgáltatásokra.
-        </p>
-      </div>
-      
 
       {/* Data Source Credit */}
       <div

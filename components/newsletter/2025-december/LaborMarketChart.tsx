@@ -123,24 +123,7 @@ export default function LaborMarketChart({ height = 650 }: LaborMarketChartProps
         2026-ban 296,000 forint bruttó (216,500 forint nettó). Ez 29,200 forint bruttó és 19,500 forint nettó növekedést jelent.
       </div>
       
-      {/* Subtle grid background */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundImage: `
-          linear-gradient(to right, ${colors.gray[200]} 1px, transparent 1px),
-          linear-gradient(to bottom, ${colors.gray[200]} 1px, transparent 1px)
-        `,
-        backgroundSize: '20px 20px',
-        opacity: 0.3,
-        pointerEvents: 'none',
-        zIndex: 0,
-      }} />
-
-      <div style={{ position: 'relative', zIndex: 1 }}>
+      <div>
         {/* Title */}
         <h3 style={{
           fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
@@ -173,7 +156,7 @@ export default function LaborMarketChart({ height = 650 }: LaborMarketChartProps
             fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
             color: colors.text.secondary,
           }}>
-            De 2026-ban {formatCurrency(netIncrease)} nettóval több lesz a minimálbér
+            2026-ban nettó {formatCurrency(netIncrease)}-al emelkedik a minimálbér
           </div>
         </div>
 
@@ -573,9 +556,8 @@ export default function LaborMarketChart({ height = 650 }: LaborMarketChartProps
               color: colors.text.secondary,
               lineHeight: typography.lineHeight.relaxed,
             }}>
-              <strong style={{ color: colors.text.primary }}>Miért más a bruttó és nettó?</strong> A bruttó bérből levonják az adókat és járulékokat. 
-              Ezért a {formatCurrency(grossIncrease)} bruttó növekedésből {formatCurrency(netIncrease)} nettó marad – 
-              ez a különbség megy az adóknak és társadalombiztosítási járulékoknak.
+              <strong style={{ color: colors.text.primary }}>Miért más a bruttó és nettó?</strong> A bruttó bérből levonják az adókat és járulékokat, 
+              ezért a {formatCurrency(grossIncrease)} bruttó növekedésből csak {formatCurrency(netIncrease)} nettó marad.
             </div>
           </div>
         </div>

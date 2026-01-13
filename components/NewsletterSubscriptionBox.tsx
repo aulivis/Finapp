@@ -146,7 +146,7 @@ export default function NewsletterSubscriptionBox() {
             fontWeight: typography.fontWeight.semibold,
             color: colors.text.primary,
             textAlign: 'center',
-            marginTop: spacing.sm,
+            marginTop: spacing.xs,
           }}>
             Kovács Róbert
           </div>
@@ -156,7 +156,7 @@ export default function NewsletterSubscriptionBox() {
             fontSize: typography.fontSize.sm,
             color: colors.text.muted,
             textAlign: 'center',
-            marginTop: spacing.xs,
+            marginTop: '2px',
           }}>
             Alapító
           </div>

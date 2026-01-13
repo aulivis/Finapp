@@ -463,9 +463,6 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
           color: colors.text.secondary,
           lineHeight: typography.lineHeight.relaxed,
         }}>
-          <div style={{ marginBottom: spacing.sm, fontWeight: typography.fontWeight.semibold, color: colors.text.primary }}>
-            Mit jelent ez?
-          </div>
           <div style={{ marginBottom: spacing.xs }}>
             <strong>Pozitív pontszám</strong> = Az emberek optimisták a jövővel kapcsolatban
           </div>
