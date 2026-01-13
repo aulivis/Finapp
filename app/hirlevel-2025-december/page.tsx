@@ -8,6 +8,7 @@ import InflationInterestChart from '@/components/newsletter/2025-december/Inflat
 import ConsumerConfidenceChart from '@/components/newsletter/2025-december/ConsumerConfidenceChart'
 import LaborMarketChart from '@/components/newsletter/2025-december/LaborMarketChart'
 import BudgetBalanceChart from '@/components/newsletter/2025-december/BudgetBalanceChart'
+import NewsletterAudioPlayer from '@/components/newsletter/2025-december/NewsletterAudioPlayer'
 
 export const metadata: Metadata = {
   title: 'Az év öt legfontosabb gazdasági kérdése – Decemberi összefoglaló | Contexta',
@@ -57,13 +58,15 @@ export default function NewsletterPage() {
             marginBottom: spacing['2xl'],
             paddingBottom: spacing.xl,
             borderBottom: `1px solid ${colors.gray[200]}`,
+            textAlign: 'center',
           }}>
-            <h1 style={{
-              fontSize: typography.fontSize['5xl'],
+            <h1 className="newsletter-title" style={{
+              fontSize: typography.fontSize['4xl'],
               fontWeight: typography.fontWeight.bold,
               color: colors.text.primary,
               marginBottom: spacing.md,
               lineHeight: typography.lineHeight.tight,
+              letterSpacing: '-0.03em',
             }}>
               Az év öt legfontosabb gazdasági kérdése – Decemberi összefoglaló
             </h1>
@@ -77,11 +80,15 @@ export default function NewsletterPage() {
             </p>
           </header>
 
+          {/* Audio Player Placeholder */}
+          <NewsletterAudioPlayer />
+
           {/* Newsletter Content Area */}
           <div style={{
             fontSize: typography.fontSize.base,
             color: colors.text.secondary,
             lineHeight: typography.lineHeight.relaxed,
+            textAlign: 'justify',
           }}>
             {/* Introduction */}
             <section style={{ marginBottom: spacing['2xl'] }}>

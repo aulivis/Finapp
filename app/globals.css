@@ -213,4 +213,8 @@ a[role="button"]:hover {
     margin-right: 0 !important;
     width: 100% !important;
   }
+
+  .newsletter-title {
+    font-size: 48px !important;
+  }
 }

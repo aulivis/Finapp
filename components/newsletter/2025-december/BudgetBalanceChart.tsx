@@ -48,19 +48,44 @@ export default function BudgetBalanceChart({}: BudgetBalanceChartProps) {
       <h3 style={{
         fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
         fontWeight: typography.fontWeight.bold,
-        color: '#111827', // 4.5:1 contrast
-        marginBottom: spacing['2xl'],
+        color: '#111827',
+        marginBottom: spacing.md,
         textAlign: 'center',
       }}>
         Államháztartás: Többet költ, mint amennyit keres
       </h3>
+      
+      {/* Key Insight */}
+      <div style={{
+        marginBottom: spacing.xl,
+        padding: spacing.md,
+        backgroundColor: colors.warningLight,
+        borderRadius: borderRadius.md,
+        border: `1px solid ${colors.warning}`,
+        textAlign: 'center',
+      }}>
+        <div style={{
+          fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
+          fontWeight: typography.fontWeight.semibold,
+          color: colors.text.primary,
+          marginBottom: spacing.xs,
+        }}>
+          A kiadások gyorsabban nőnek, mint a bevételek
+        </div>
+        <div style={{
+          fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+          color: colors.text.secondary,
+        }}>
+          Ez azt jelenti, hogy az állam többet költ, mint amennyi bevétele van
+        </div>
+      </div>
 
       {/* Revenue vs Expenditure Comparison */}
       <div style={{
         display: 'flex',
         flexDirection: isMobile ? 'column' : 'row',
         gap: spacing.xl,
-        marginBottom: spacing['2xl'],
+        marginBottom: spacing.xl,
       }}>
         {/* Revenue Card */}
         <div style={{
@@ -203,35 +228,37 @@ export default function BudgetBalanceChart({}: BudgetBalanceChartProps) {
         </div>
       </div>
 
-      {/* Deficit Indicator */}
+      {/* Deficit Indicator - Simplified */}
       <div style={{
-        marginBottom: spacing['2xl'],
-        padding: spacing.xl,
-        backgroundColor: colors.background.subtle,
+        marginBottom: spacing.xl,
+        padding: spacing.lg,
+        backgroundColor: colors.errorLight,
         borderRadius: borderRadius.xl,
-        border: `2px dashed ${colors.error}40`,
+        border: `2px solid ${colors.error}`,
         textAlign: 'center',
       }}>
         <div style={{
           fontSize: typography.fontSize.sm,
           color: colors.text.muted,
           marginBottom: spacing.sm,
+          fontWeight: typography.fontWeight.medium,
         }}>
-          Különbség
+          A kiadások gyorsabban nőnek
         </div>
         <div style={{
-          fontSize: typography.fontSize['4xl'],
+          fontSize: typography.fontSize['3xl'],
           fontWeight: typography.fontWeight.bold,
           color: colors.error,
           marginBottom: spacing.xs,
         }}>
-          +{expenditureGrowth - revenueGrowth}%
+          +{(expenditureGrowth - revenueGrowth).toFixed(1)} százalékpont
         </div>
         <div style={{
           fontSize: typography.fontSize.sm,
           color: colors.text.secondary,
+          lineHeight: typography.lineHeight.relaxed,
         }}>
-          A kiadások {expenditureGrowth - revenueGrowth} százalékponttal gyorsabban nőnek
+          A kiadások {expenditureGrowth - revenueGrowth} százalékponttal gyorsabban nőnek, mint a bevételek
         </div>
       </div>
 
@@ -337,31 +364,41 @@ export default function BudgetBalanceChart({}: BudgetBalanceChartProps) {
         </div>
       </div>
 
-      {/* Context Information */}
+      {/* Real-world Impact */}
       <div style={{
         marginTop: spacing.xl,
         padding: spacing.lg,
+        backgroundColor: colors.infoLight,
+        borderRadius: borderRadius.md,
+        borderLeft: `4px solid ${colors.info}`,
+        fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+        color: colors.text.secondary,
+        lineHeight: typography.lineHeight.relaxed,
+      }}>
+        <strong style={{ color: colors.text.primary }}>Mit jelent ez neked?</strong>
+        <p style={{ marginTop: spacing.xs, marginBottom: 0 }}>
+          Amikor az állam többet költ, mint amennyi bevétele van, az államadósság nő. 
+          Hosszú távon ez azt jelenti, hogy több pénzt kell fordítani az adósságszolgálatra, 
+          ami kevesebb marad oktatásra, egészségügyre és más közszolgáltatásokra.
+        </p>
+      </div>
+      
+      {/* Quick Summary */}
+      <div style={{
+        marginTop: spacing.md,
+        padding: spacing.md,
         backgroundColor: colors.background.subtle,
         borderRadius: borderRadius.md,
-        fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-        color: '#374151', // 4.5:1 contrast
-        lineHeight: 1.6,
+        fontSize: isMobile ? typography.fontSize.xs : typography.fontSize.sm,
+        color: colors.text.muted,
         textAlign: 'center',
+        lineHeight: typography.lineHeight.relaxed,
       }}>
         <div style={{ marginBottom: spacing.xs }}>
-          <strong style={{ color: '#111827' }}>Bevétel növekedés:</strong> +{revenueGrowth}% (2024-hez képest)
+          <strong style={{ color: colors.text.secondary }}>Bevétel növekedés:</strong> +{revenueGrowth}% (2024-hez képest)
         </div>
         <div>
-          <strong style={{ color: '#111827' }}>Kiadás növekedés:</strong> +{expenditureGrowth}% (2024-hez képest)
-        </div>
-        <div style={{
-          marginTop: spacing.sm,
-          paddingTop: spacing.sm,
-          borderTop: `1px solid ${colors.gray[300]}`,
-          fontSize: isMobile ? '11px' : '12px',
-          color: '#6B7280', // 4.5:1 contrast
-        }}>
-          A kiadások gyorsabban nőnek, mint a bevételek, ami a költségvetési hiány növekedéséhez vezet.
+          <strong style={{ color: colors.text.secondary }}>Kiadás növekedés:</strong> +{expenditureGrowth}% (2024-hez képest)
         </div>
       </div>
 

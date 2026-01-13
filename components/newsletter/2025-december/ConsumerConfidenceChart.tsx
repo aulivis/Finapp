@@ -72,11 +72,36 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
         fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
         fontWeight: typography.fontWeight.bold,
         color: '#111827',
-        marginBottom: spacing.lg,
+        marginBottom: spacing.md,
         textAlign: 'center',
       }}>
-        Magyarorszรกg: 29. hely 30-bรณl
+        Magyarorszรกg: 29. hely 30 orszรกg kรถzรผl
       </h3>
+
+      {/* Key Insight */}
+      <div style={{
+        marginBottom: spacing.xl,
+        padding: spacing.md,
+        backgroundColor: colors.errorLight,
+        borderRadius: borderRadius.md,
+        border: `1px solid ${colors.error}`,
+        textAlign: 'center',
+      }}>
+        <div style={{
+          fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
+          fontWeight: typography.fontWeight.semibold,
+          color: colors.text.primary,
+          marginBottom: spacing.xs,
+        }}>
+          -24,3 pont: A fogyasztรณk pesszimistรกk
+        </div>
+        <div style={{
+          fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+          color: colors.text.secondary,
+        }}>
+          Ez azt jelenti, hogy tรถbben fรฉlnek a jรถvลtลl, mint akik optimistรกk
+        </div>
+      </div>
 
       {/* Subtitle */}
       <p style={{
@@ -85,7 +110,7 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
         marginBottom: spacing.xl,
         textAlign: 'center',
       }}>
-        Fogyasztรณi bizalom: a legrosszabb 6 orszรกg (30-bรณl)
+        A legrosszabb 6 orszรกg rangsorolรกsa (30 orszรกg kรถzรผl)
       </p>
 
       {/* Chart */}
@@ -230,7 +255,7 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
           <span>0</span>
         </div>
 
-        {/* Legend */}
+        {/* Explanation Box */}
         <div style={{
           marginTop: spacing.lg,
           padding: spacing.md,
@@ -238,14 +263,42 @@ export default function ConsumerConfidenceChart({ height = 600 }: ConsumerConfid
           borderRadius: borderRadius.md,
           fontSize: isMobile ? '12px' : '13px',
           color: colors.text.secondary,
-          textAlign: 'center',
+          lineHeight: typography.lineHeight.relaxed,
         }}>
+          <div style={{ marginBottom: spacing.sm, fontWeight: typography.fontWeight.semibold, color: colors.text.primary }}>
+            Mit jelent ez?
+          </div>
           <div style={{ marginBottom: spacing.xs }}>
-            <strong>EU รกtlag:</strong> ~45 pont | <strong>Legmagasabb:</strong> Indonรฉzia 63,4 pont
+            <strong>Pozitív pontszám</strong> = Az emberek optimisták a jövővel kapcsolatban
           </div>
-          <div style={{ fontSize: isMobile ? '11px' : '12px', color: colors.text.muted }}>
-            Minรฉl alacsonyabb a pontszรกm, annรกl pesszimistรกbbak a fogyasztรณk
+          <div style={{ marginBottom: spacing.xs }}>
+            <strong>Negatív pontszám</strong> = Az emberek félnek a jövőtől
           </div>
+          <div style={{ 
+            marginTop: spacing.sm, 
+            paddingTop: spacing.sm, 
+            borderTop: `1px solid ${colors.gray[300]}`,
+            fontSize: isMobile ? '11px' : '12px',
+            color: colors.text.muted 
+          }}>
+            EU átlag: ~45 pont | Legmagasabb: Indonézia 63,4 pont
+          </div>
+        </div>
+        
+        {/* Real-world Impact */}
+        <div style={{
+          marginTop: spacing.md,
+          padding: spacing.md,
+          backgroundColor: colors.warningLight,
+          borderRadius: borderRadius.md,
+          borderLeft: `4px solid ${colors.warning}`,
+          fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+          color: colors.text.secondary,
+          lineHeight: typography.lineHeight.relaxed,
+        }}>
+          <strong style={{ color: colors.text.primary }}>Gyakorlati jelentés:</strong> Amikor a fogyasztók pesszimisták, 
+          kevesebbet költenek nagyobb vásárlásokra (lakás, autó, nagyobb beruházások). 
+          Ez visszafoghatja a gazdasági növekedést, mert a cégek is óvatosak lesznek.
         </div>
       </div>
 

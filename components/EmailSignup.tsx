@@ -192,7 +192,7 @@ export default function EmailSignup() {
               }}
             >
               <Eye size={18} />
-              <span>Előnézet: Nézd meg a hírlevél példáját</span>
+              <span>Előnézet: Olvasd el a 2025. decemberi kiadást</span>
             </Link>
           </div>
 

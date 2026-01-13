@@ -66,7 +66,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
         icon: Hamburger,
         label: 'Big Mac ára',
         change: bigMacChange,
-        explanation: 'A Big Mac Index egy gazdasági mutató, amely a hamburger árát használja az infláció mérésére. Ez az összehasonlítás mutatja, hogyan változott a Big Mac ára ugyanabban az időszakban, amely segít megérteni az általános árbeváltozásokat.',
+        explanation: 'A Big Mac Index egy gazdasági mutató, amely a hamburger árát használja az infláció mérésére. Ez az összehasonlítás mutatja, hogyan változott a Big Mac ára ugyanabban az időszakban, amely segít megérteni az árak változását.',
       },
       {
         icon: Home,
@@ -90,7 +90,7 @@ export default function ContextualComparison({ startYear, endYear, userAmount = 
         icon: Bitcoin,
         label: 'Bitcoin ára',
         change: bitcoinChange,
-        explanation: 'A Bitcoin egy digitális kriptovaluta, amely gyakran jelentős árfolyamingadozásokkal jár. Ez az összehasonlítás mutatja, hogyan változott a Bitcoin ára, bár a kriptovaluták rendkívül volatilisek, és nagy kockázattal járnak.',
+        explanation: 'A Bitcoin egy digitális eszköz. Ez az összehasonlítás mutatja, hogyan változott a Bitcoin árfolyama a megadott időszakban. Megjegyzés: a digitális eszközök némelyike nagy kockázattal, gyakran jelentős árfolyamingadozásokkal járhat.',
       },
     ]
   }, [startYear, endYear])

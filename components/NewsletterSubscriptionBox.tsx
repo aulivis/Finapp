@@ -161,6 +161,7 @@ export default function NewsletterSubscriptionBox() {
             color: colors.text.secondary,
             lineHeight: typography.lineHeight.relaxed,
             marginBottom: spacing.xl,
+            textAlign: 'justify',
           }}>
             Havonta egy rövid, érthető hírlevelet küldünk, amely összefoglalja a legfontosabb gazdasági és pénzügyi változásokat. 
             Adatokra épít, nem zajra – és segít megérteni, mi történik a pénzeddel.

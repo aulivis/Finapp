@@ -145,12 +145,37 @@ export default function LaborMarketChart({ height = 650 }: LaborMarketChartProps
         <h3 style={{
           fontSize: isMobile ? typography.fontSize.lg : typography.fontSize['2xl'],
           fontWeight: typography.fontWeight.bold,
-          color: '#111827', // 4.5:1 contrast
-          marginBottom: spacing.xl,
+          color: '#111827',
+          marginBottom: spacing.md,
           textAlign: 'center',
         }}>
           Alacsony marad a munkanélküliség, de a minimálbér 11%-kal emelkedik
         </h3>
+        
+        {/* Key Insight */}
+        <div style={{
+          marginBottom: spacing.xl,
+          padding: spacing.md,
+          backgroundColor: colors.successLight,
+          borderRadius: borderRadius.md,
+          border: `1px solid ${colors.success}`,
+          textAlign: 'center',
+        }}>
+          <div style={{
+            fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
+            fontWeight: typography.fontWeight.semibold,
+            color: colors.text.primary,
+            marginBottom: spacing.xs,
+          }}>
+            4,5% munkanélküliség: Ha van munkád, valószínűleg megmarad
+          </div>
+          <div style={{
+            fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+            color: colors.text.secondary,
+          }}>
+            De 2026-ban {formatCurrency(netIncrease)} nettóval több lesz a minimálbér
+          </div>
+        </div>
 
         {/* Top: Unemployment Rate Chart */}
         <div style={{ marginBottom: spacing['2xl'] }}>
@@ -460,22 +485,97 @@ export default function LaborMarketChart({ height = 650 }: LaborMarketChartProps
             </div>
           </div>
 
-          {/* Summary */}
+          {/* Summary with Clear Explanation */}
           <div style={{
             marginTop: spacing.lg,
             padding: spacing.lg,
             backgroundColor: colors.background.subtle,
             borderRadius: borderRadius.md,
-            textAlign: 'center',
           }}>
             <div style={{
-              fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-              color: '#374151', // 4.5:1 contrast
-              lineHeight: 1.6,
+              fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
+              fontWeight: typography.fontWeight.semibold,
+              color: colors.text.primary,
+              marginBottom: spacing.md,
+              textAlign: 'center',
             }}>
-              <strong style={{ color: '#111827' }}>11%-os emelés:</strong> A minimálbér bruttó értéke{' '}
-              <strong style={{ color: '#059669' }}>{formatCurrency(grossIncrease)}</strong>-tal nő,{' '}
-              ami <strong style={{ color: '#059669' }}>{formatCurrency(netIncrease)}</strong> nettó havi növekedést jelent.
+              11%-os minimálbér-emelés 2026-ban
+            </div>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+              gap: spacing.md,
+              marginBottom: spacing.md,
+            }}>
+              <div style={{
+                padding: spacing.md,
+                backgroundColor: colors.background.paper,
+                borderRadius: borderRadius.md,
+                border: `1px solid ${colors.gray[200]}`,
+              }}>
+                <div style={{
+                  fontSize: typography.fontSize.sm,
+                  color: colors.text.muted,
+                  marginBottom: spacing.xs,
+                }}>
+                  Bruttó növekedés
+                </div>
+                <div style={{
+                  fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['2xl'],
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.text.primary,
+                }}>
+                  +{formatCurrency(grossIncrease)}
+                </div>
+                <div style={{
+                  fontSize: typography.fontSize.xs,
+                  color: colors.text.muted,
+                  marginTop: spacing.xs,
+                }}>
+                  (munkáltatónak ennyivel többe kerül)
+                </div>
+              </div>
+              <div style={{
+                padding: spacing.md,
+                backgroundColor: colors.successLight,
+                borderRadius: borderRadius.md,
+                border: `1px solid ${colors.success}`,
+              }}>
+                <div style={{
+                  fontSize: typography.fontSize.sm,
+                  color: colors.text.muted,
+                  marginBottom: spacing.xs,
+                }}>
+                  Nettó növekedés
+                </div>
+                <div style={{
+                  fontSize: isMobile ? typography.fontSize.xl : typography.fontSize['2xl'],
+                  fontWeight: typography.fontWeight.bold,
+                  color: colors.success,
+                }}>
+                  +{formatCurrency(netIncrease)}
+                </div>
+                <div style={{
+                  fontSize: typography.fontSize.xs,
+                  color: colors.text.muted,
+                  marginTop: spacing.xs,
+                }}>
+                  (ez kerül a zsebedbe havonta)
+                </div>
+              </div>
+            </div>
+            <div style={{
+              padding: spacing.md,
+              backgroundColor: colors.infoLight,
+              borderRadius: borderRadius.md,
+              borderLeft: `4px solid ${colors.info}`,
+              fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
+              color: colors.text.secondary,
+              lineHeight: typography.lineHeight.relaxed,
+            }}>
+              <strong style={{ color: colors.text.primary }}>Miért más a bruttó és nettó?</strong> A bruttó bérből levonják az adókat és járulékokat. 
+              Ezért a {formatCurrency(grossIncrease)} bruttó növekedésből {formatCurrency(netIncrease)} nettó marad – 
+              ez a különbség megy az adóknak és társadalombiztosítási járulékoknak.
             </div>
           </div>
         </div>
