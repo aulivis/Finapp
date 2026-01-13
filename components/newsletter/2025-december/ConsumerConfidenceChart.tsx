@@ -52,10 +52,10 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
     { position: 30, country: 'Törökország', score: -34.9, code: 'TR' },
   ], [])
 
-  // Chart dimensions
+  // Chart dimensions - use height prop
   const chartWidth = isMobile ? 320 : 600
-  const timelineHeight = isMobile ? 200 : 280
-  const rankingHeight = isMobile ? 300 : 360
+  const timelineHeight = isMobile ? 200 : Math.floor(height * 0.4)
+  const rankingHeight = isMobile ? 300 : Math.floor(height * 0.5)
 
   // Calculate positions for timeline
   const timelinePoints = useMemo(() => {
