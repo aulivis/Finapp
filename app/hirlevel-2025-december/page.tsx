@@ -141,6 +141,7 @@ export default function NewsletterPage() {
                   color: colors.text.primary,
                   margin: 0,
                   flex: 1,
+                  textAlign: 'left',
                 }}>
                   Az infláció: Végre csökken, de mit jelent ez a gyakorlatban?
                 </h2>
@@ -152,6 +153,7 @@ export default function NewsletterPage() {
                 color: colors.text.primary,
                 marginTop: spacing.xl,
                 marginBottom: spacing.md,
+                textAlign: 'left',
               }}>
                 Tények (2025. november):
               </h3>
@@ -159,6 +161,7 @@ export default function NewsletterPage() {
                 marginBottom: spacing.lg,
                 paddingLeft: spacing['2xl'],
                 listStyleType: 'disc',
+                textAlign: 'left',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>A fogyasztói árindex 3,8%-ra csökkent</li>
                 <li style={{ marginBottom: spacing.sm }}>Ez a Magyar Nemzeti Bank 3% +/-1%-os célzónájába esik</li>
@@ -171,6 +174,7 @@ export default function NewsletterPage() {
                 color: colors.text.primary,
                 marginTop: spacing.xl,
                 marginBottom: spacing.md,
+                textAlign: 'left',
               }}>
                 Hétköznapi hatások:
               </h3>
@@ -322,6 +326,7 @@ export default function NewsletterPage() {
                   color: colors.text.primary,
                   margin: 0,
                   flex: 1,
+                  textAlign: 'left',
                 }}>
                   A gazdaság nő – de miért nem érezzük?
                 </h2>
@@ -333,6 +338,7 @@ export default function NewsletterPage() {
                 color: colors.text.primary,
                 marginTop: spacing.xl,
                 marginBottom: spacing.md,
+                textAlign: 'left',
               }}>
                 Tények (2025 harmadik negyedév):
               </h3>
@@ -340,6 +346,7 @@ export default function NewsletterPage() {
                 marginBottom: spacing.lg,
                 paddingLeft: spacing['2xl'],
                 listStyleType: 'disc',
+                textAlign: 'left',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>A GDP 0,6%-kal nőtt éves összevetésben</li>
                 <li style={{ marginBottom: spacing.sm }}>Ugyanakkor az év harmadik negyedévében stagnált a növekedés</li>
@@ -352,6 +359,7 @@ export default function NewsletterPage() {
                 color: colors.text.primary,
                 marginTop: spacing.xl,
                 marginBottom: spacing.md,
+                textAlign: 'left',
               }}>
                 Hétköznapi hatások:
               </h3>
@@ -365,6 +373,7 @@ export default function NewsletterPage() {
                 marginBottom: spacing.lg,
                 paddingLeft: spacing['2xl'],
                 listStyleType: 'disc',
+                textAlign: 'left',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>A munkahelyed valószínűleg megmaradt (munkanélküliség 4,5%)</li>
                 <li style={{ marginBottom: spacing.sm }}>De ha váltanál, vagy béremelést szeretnél, nehezebb helyzetben vagy</li>
@@ -455,6 +464,7 @@ export default function NewsletterPage() {
                   color: colors.text.primary,
                   margin: 0,
                   flex: 1,
+                  textAlign: 'left',
                 }}>
                   Fogyasztói bizalom: Miért nem költünk, ha van munkánk?
                 </h2>
@@ -466,6 +476,7 @@ export default function NewsletterPage() {
                 color: colors.text.primary,
                 marginTop: spacing.xl,
                 marginBottom: spacing.md,
+                textAlign: 'left',
               }}>
                 Tények (2025. november):
               </h3>
@@ -473,6 +484,7 @@ export default function NewsletterPage() {
                 marginBottom: spacing.lg,
                 paddingLeft: spacing['2xl'],
                 listStyleType: 'disc',
+                textAlign: 'left',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>A magyar fogyasztói bizalom index -24,3 pont</li>
                 <li style={{ marginBottom: spacing.sm }}>Ez azt jelenti, hogy még mindig pesszimisták a háztartások</li>
@@ -485,6 +497,7 @@ export default function NewsletterPage() {
                 color: colors.text.primary,
                 marginTop: spacing.xl,
                 marginBottom: spacing.md,
+                textAlign: 'left',
               }}>
                 Hétköznapi hatások:
               </h3>
@@ -498,6 +511,7 @@ export default function NewsletterPage() {
                 marginBottom: spacing.lg,
                 paddingLeft: spacing['2xl'],
                 listStyleType: 'disc',
+                textAlign: 'left',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>Az emberek költenek, de óvatosabban</li>
                 <li style={{ marginBottom: spacing.sm }}>Inkább megtakarítanak, ha tehetik</li>
@@ -598,6 +612,7 @@ export default function NewsletterPage() {
                   color: colors.text.primary,
                   margin: 0,
                   flex: 1,
+                  textAlign: 'left',
                 }}>
                   Munkaerőpiac: Biztonság vagy bizonytalanság?
                 </h2>
@@ -609,6 +624,7 @@ export default function NewsletterPage() {
                 color: colors.text.primary,
                 marginTop: spacing.xl,
                 marginBottom: spacing.md,
+                textAlign: 'left',
               }}>
                 Tények (2025. ősz):
               </h3>
@@ -616,6 +632,7 @@ export default function NewsletterPage() {
                 marginBottom: spacing.lg,
                 paddingLeft: spacing['2xl'],
                 listStyleType: 'disc',
+                textAlign: 'left',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>Munkanélküliség: 4,5% (történelmileg alacsony)</li>
                 <li style={{ marginBottom: spacing.sm }}>Ugyanakkor a &quot;munkaerőpiaci feszesség&quot; enyhül</li>
@@ -628,6 +645,7 @@ export default function NewsletterPage() {
                 color: colors.text.primary,
                 marginTop: spacing.xl,
                 marginBottom: spacing.md,
+                textAlign: 'left',
               }}>
                 Hétköznapi hatások:
               </h3>
@@ -641,6 +659,7 @@ export default function NewsletterPage() {
                 marginBottom: spacing.lg,
                 paddingLeft: spacing['2xl'],
                 listStyleType: 'disc',
+                textAlign: 'left',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>Bruttóban több lesz a fizetésed</li>
                 <li style={{ marginBottom: spacing.sm }}>De a nettó béremelést részben elviheti a magas infláció</li>
@@ -741,6 +760,7 @@ export default function NewsletterPage() {
                   color: colors.text.primary,
                   margin: 0,
                   flex: 1,
+                  textAlign: 'left',
                 }}>
                   Az állam költségvetése: Miért fontos ez neked?
                 </h2>
@@ -752,6 +772,7 @@ export default function NewsletterPage() {
                 color: colors.text.primary,
                 marginTop: spacing.xl,
                 marginBottom: spacing.md,
+                textAlign: 'left',
               }}>
                 Tények (2025 első 9 hónapja):
               </h3>
@@ -759,6 +780,7 @@ export default function NewsletterPage() {
                 marginBottom: spacing.lg,
                 paddingLeft: spacing['2xl'],
                 listStyleType: 'disc',
+                textAlign: 'left',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>Az államháztartás hiánya 1,9% a GDP-hez képest (javulás)</li>
                 <li style={{ marginBottom: spacing.sm }}>De a harmadik negyedévben 4,2%-os volt a hiány</li>
@@ -771,6 +793,7 @@ export default function NewsletterPage() {
                 color: colors.text.primary,
                 marginTop: spacing.xl,
                 marginBottom: spacing.md,
+                textAlign: 'left',
               }}>
                 Hétköznapi hatások:
               </h3>
@@ -781,6 +804,7 @@ export default function NewsletterPage() {
                 marginBottom: spacing.lg,
                 paddingLeft: spacing['2xl'],
                 listStyleType: 'disc',
+                textAlign: 'left',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>Növeli az államadósságot</li>
                 <li style={{ marginBottom: spacing.sm }}>Nyomást gyakorolhat a kamatokra</li>
@@ -908,6 +932,7 @@ export default function NewsletterPage() {
                     color: colors.text.primary,
                     margin: 0,
                     flex: 1,
+                    textAlign: 'left',
                   }}>
                     Összefoglaló: Mit jelent mindez 2026-ra?
                   </h2>
@@ -941,6 +966,7 @@ export default function NewsletterPage() {
                     marginBottom: 0,
                     paddingLeft: spacing['2xl'],
                     listStyleType: 'disc',
+                    textAlign: 'left',
                   }}>
                     <li style={{
                       marginBottom: spacing.md,

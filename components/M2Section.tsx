@@ -215,11 +215,6 @@ export default function M2Section({ startYear = 2015, endYear = 2025 }: M2Sectio
                   position: 'relative',
                   width: '100%',
                   height: `${chartData.height}px`,
-                  backgroundColor: colors.background.paper,
-                  borderRadius: borderRadius.lg,
-                  border: `1px solid ${colors.gray[200]}`,
-                  padding: spacing.lg,
-                  boxShadow: shadows.md,
                   transition: prefersReducedMotion ? 'none' : transitions.all
                 }}>
                   <svg
