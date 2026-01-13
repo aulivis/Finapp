@@ -2,7 +2,6 @@
 
 import React, { useMemo } from 'react'
 import { useIsMobile } from '@/lib/hooks/useIsMobile'
-import { useReducedMotion } from '@/lib/hooks/useReducedMotion'
 import { colors, typography, spacing, borderRadius } from '@/lib/design-system'
 
 interface ConsumerConfidenceChartProps {
@@ -20,7 +19,6 @@ interface ConsumerConfidenceChartProps {
  */
 export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfidenceChartProps) {
   const isMobile = useIsMobile()
-  const prefersReducedMotion = useReducedMotion()
 
   // Historical data showing Hungary's consumer confidence trend
   const historicalData = useMemo(() => [
