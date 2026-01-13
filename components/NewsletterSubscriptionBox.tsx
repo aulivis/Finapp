@@ -139,6 +139,27 @@ export default function NewsletterSubscriptionBox() {
               }}
             />
           </div>
+          
+          {/* Name */}
+          <div style={{
+            fontSize: typography.fontSize.base,
+            fontWeight: typography.fontWeight.semibold,
+            color: colors.text.primary,
+            textAlign: 'center',
+            marginTop: spacing.sm,
+          }}>
+            Kovács Róbert
+          </div>
+          
+          {/* Subtext */}
+          <div style={{
+            fontSize: typography.fontSize.sm,
+            color: colors.text.muted,
+            textAlign: 'center',
+            marginTop: spacing.xs,
+          }}>
+            Alapító
+          </div>
         </div>
 
         {/* Content */}

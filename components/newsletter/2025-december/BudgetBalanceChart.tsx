@@ -55,30 +55,6 @@ export default function BudgetBalanceChart({}: BudgetBalanceChartProps) {
         Államháztartás: Többet költ, mint amennyit keres
       </h3>
       
-      {/* Key Insight */}
-      <div style={{
-        marginBottom: spacing.xl,
-        padding: spacing.md,
-        backgroundColor: colors.warningLight,
-        borderRadius: borderRadius.md,
-        border: `1px solid ${colors.warning}`,
-        textAlign: 'center',
-      }}>
-        <div style={{
-          fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
-          fontWeight: typography.fontWeight.semibold,
-          color: colors.text.primary,
-          marginBottom: spacing.xs,
-        }}>
-          A kiadások gyorsabban nőnek, mint a bevételek
-        </div>
-        <div style={{
-          fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-          color: colors.text.secondary,
-        }}>
-          Ez azt jelenti, hogy az állam többet költ, mint amennyi bevétele van
-        </div>
-      </div>
 
       {/* Revenue vs Expenditure Comparison */}
       <div style={{
@@ -383,24 +359,6 @@ export default function BudgetBalanceChart({}: BudgetBalanceChartProps) {
         </p>
       </div>
       
-      {/* Quick Summary */}
-      <div style={{
-        marginTop: spacing.md,
-        padding: spacing.md,
-        backgroundColor: colors.background.subtle,
-        borderRadius: borderRadius.md,
-        fontSize: isMobile ? typography.fontSize.xs : typography.fontSize.sm,
-        color: colors.text.muted,
-        textAlign: 'center',
-        lineHeight: typography.lineHeight.relaxed,
-      }}>
-        <div style={{ marginBottom: spacing.xs }}>
-          <strong style={{ color: colors.text.secondary }}>Bevétel növekedés:</strong> +{revenueGrowth}% (2024-hez képest)
-        </div>
-        <div>
-          <strong style={{ color: colors.text.secondary }}>Kiadás növekedés:</strong> +{expenditureGrowth}% (2024-hez képest)
-        </div>
-      </div>
 
       {/* Data Source Credit */}
       <div

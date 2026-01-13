@@ -179,10 +179,10 @@ export default function NewsletterPage() {
                 Hétköznapi hatások:
               </h3>
               <p style={{ marginBottom: spacing.md }}>
-                A bevásárláskor már nem érzed, hogy minden hónapban 5-10%-kal többet kell fizetned ugyanazért a kosárért. Ha egy átlagos család havi 100 000 forintot költ élelmiszerre, a csökkenő infláció azt jelenti, hogy a költségeik növekedése lelassult – de az árak továbbra sem estek vissza, csak lassabban nőnek.
+                A bevásárláskor már nem érzed, hogy minden hónapban 5-10%-kal többet kell fizetned ugyanazokért a termékekért. A csökkenő infláció azt jelenti, hogy a költségeik növekedése lelassult – de az árak továbbra sem estek vissza, csak lassabban nőnek.
               </p>
               <p style={{ marginBottom: spacing.md }}>
-                A hiteleknél a helyzet bonyolultabb: a kamatok még mindig 6,5%-on állnak (az MNB alapkamata). Ez azt jelenti, hogy ha új hitelt vennél fel, a költségek magasabbak, mint 2021-ben voltak, de stabilak – nem emelkednek tovább.
+                A hiteleknél a helyzet bonyolultabb: a kamatok még mindig 6,5%-on állnak (az MNB alapkamata). Ez azt jelenti, hogy ha új hitelt vennél fel, a költségek magasabbak, mint 2021-ben voltak, de stabilak – nem emelkednek tovább. Ez a piaci hitelekre vonatkozik, a kormány által támogatott hitel teljesen más kategória.
               </p>
 
               {/* Information box about MNB alapkamat */}
@@ -216,14 +216,14 @@ export default function NewsletterPage() {
                       color: colors.text.secondary,
                       lineHeight: typography.lineHeight.relaxed,
                     }}>
-                      A Magyar Nemzeti Bank (MNB) alapkamata az a referencia kamatláb, amelyet a jegybank a pénzügyi rendszer stabilitásáért felelős. Ez a kamat meghatározza, hogy milyen áron kölcsönöznek egymásnak a bankok, és közvetve befolyásolja az összes többi kamatot a gazdaságban.
+                      A Magyar Nemzeti Bank irányadó kamata, amelyen keresztül a jegybank hat a teljes pénzügyi rendszerre. Ez a kamat közvetetten meghatározza, milyen drágán jutnak forráshoz a bankok, és emiatt befolyásolja a hitelek és a megtakarítások kamatszintjét is a gazdaságban.
                     </p>
                     <p style={{ 
                       marginBottom: 0,
                       color: colors.text.secondary,
                       lineHeight: typography.lineHeight.relaxed,
                     }}>
-                      <strong style={{ color: colors.text.primary }}>Gyakorlati jelentése:</strong> Ha az alapkamat magas (mint most 6,5%), akkor a bankok is magasabb kamatot számítanak fel a hitelekre, de magasabb kamatot is fizetnek a betétekre. Ha az alapkamat alacsony, olcsóbbak a hitelek, de a megtakarítások is kevesebbet hoznak. A jegybank ezzel a kamattal próbálja szabályozni az inflációt és a gazdasági növekedést.
+                      Ha az alapkamat magas, a hitelek drágábbak, viszont a banki betétek és állampapírok jellemzően magasabb hozamot kínálnak. Alacsony alapkamat mellett a hitelezés olcsóbbá válik, de a megtakarítások kevesebbet hoznak. A jegybank az alapkamat változtatásával elsősorban az inflációt igyekszik kordában tartani, miközben a gazdasági növekedést is befolyásolja.
                     </p>
                   </div>
                 </div>
@@ -245,7 +245,7 @@ export default function NewsletterPage() {
               <div style={{
                 marginTop: spacing.xl,
                 marginBottom: spacing.xl,
-                padding: spacing.xl,
+                padding: spacing.md,
                 backgroundColor: colors.primaryLight,
                 borderRadius: borderRadius.lg,
                 borderLeft: `4px solid ${colors.primary}`,
@@ -275,7 +275,7 @@ export default function NewsletterPage() {
               </div>
 
               <p style={{ marginBottom: spacing.md, marginTop: spacing.xl }}>
-                A 3,8%-os novemberi inflációs adat azonban csak a felszínt mutatja. A Magyar Nemzeti Bank adatai szerint az úgynevezett maginfláció – ami kiszűri az élelmiszerek és energia árának rövid távú kilengéseit – még mindig 4,1% volt novemberben, jóval magasabb a célzóna felett. Ez azt jelenti, hogy a mindennapi szolgáltatások, a busz- és vonatjegyek, a fodrászat, a mosoda, a banki díjak terén a drágulás még mindig jelentősebb, mint ahogy a fő inflációs szám sugallja.
+                A 3,8%-os novemberi inflációs adat azonban csak a felszínt mutatja. A Magyar Nemzeti Bank adatai szerint az úgynevezett maginfláció – ami kiszűri az élelmiszerek és energia árának rövid távú kilengéseit – még mindig 4,1% volt novemberben, jóval magasan a célzóna felett. Ez azt jelenti, hogy a mindennapi szolgáltatások, a busz- és vonatjegyek, a fodrász, az autószerelő, és a banki díjak terén a drágulás még mindig jelentősebb, mint ahogy a fő inflációs szám sugallja.
               </p>
               <p style={{ marginBottom: spacing.md }}>
                 A forint 2025-ös erősödése (közel 5%-kal a euróval szemben) segítette az árcsökkenést, de ez a hatás 2026-ra elapadhat. A kormány árstopjai és egyéb adminisztratív intézkedései önmagukban 1,5-2 százalékponttal csökkentették a hivatalos inflációt – ezek nélkül a kosárban 5-5,5%-os drágulást mérhetnénk.
@@ -383,7 +383,7 @@ export default function NewsletterPage() {
               <div style={{
                 marginTop: spacing.xl,
                 marginBottom: spacing.xl,
-                padding: spacing.xl,
+                padding: spacing.md,
                 backgroundColor: colors.primaryLight,
                 borderRadius: borderRadius.lg,
                 borderLeft: `4px solid ${colors.primary}`,
@@ -488,7 +488,7 @@ export default function NewsletterPage() {
               }}>
                 <li style={{ marginBottom: spacing.sm }}>A magyar fogyasztói bizalom index -24,3 pont</li>
                 <li style={{ marginBottom: spacing.sm }}>Ez azt jelenti, hogy még mindig pesszimisták a háztartások</li>
-                <li style={{ marginBottom: spacing.sm }}>30 ország közül csak Törökország előz meg minket</li>
+                <li style={{ marginBottom: spacing.sm }}>30 ország közül csak Törökország áll rosszabban nálunk</li>
               </ul>
 
               <h3 style={{
@@ -534,7 +534,7 @@ export default function NewsletterPage() {
               <div style={{
                 marginTop: spacing.xl,
                 marginBottom: spacing.xl,
-                padding: spacing.xl,
+                padding: spacing.md,
                 backgroundColor: colors.primaryLight,
                 borderRadius: borderRadius.lg,
                 borderLeft: `4px solid ${colors.primary}`,
@@ -662,8 +662,8 @@ export default function NewsletterPage() {
                 textAlign: 'left',
               }}>
                 <li style={{ marginBottom: spacing.sm }}>Bruttóban több lesz a fizetésed</li>
-                <li style={{ marginBottom: spacing.sm }}>De a nettó béremelést részben elviheti a magas infláció</li>
-                <li style={{ marginBottom: spacing.sm }}>A cégek költségei nőnek, ami visszafoghatja a további felvételeket</li>
+                <li style={{ marginBottom: spacing.sm }}>De a nettó béremelést részben elviheti az infláció</li>
+                <li style={{ marginBottom: spacing.sm }}>A cégek költségei nőnek, ami visszafoghatja a béremeléseket</li>
               </ul>
 
               {/* Chart: Labor Market Paradox */}
@@ -682,7 +682,7 @@ export default function NewsletterPage() {
               <div style={{
                 marginTop: spacing.xl,
                 marginBottom: spacing.xl,
-                padding: spacing.xl,
+                padding: spacing.md,
                 backgroundColor: colors.primaryLight,
                 borderRadius: borderRadius.lg,
                 borderLeft: `4px solid ${colors.primary}`,
@@ -811,7 +811,7 @@ export default function NewsletterPage() {
                 <li style={{ marginBottom: spacing.sm }}>Korlátozhatja a további kiadásokat</li>
               </ul>
               <p style={{ marginBottom: spacing.md }}>
-                Ha az EU-források felszabadulnak, az pénz érkezik infrastruktúra-fejlesztésekre, ami helyi szinten munkahelyeket teremthet. Ha nem, akkor a kormánynak más forrást kell találnia a tervezett adócsökkentésekre és kiadásokra.
+                Ha az EU-források felszabadulnak, pénz érkezik az infrastruktúra-fejlesztésekre, ami helyi szinten munkahelyeket teremthet. Ha nem, akkor a kormánynak más forrást kell találnia a tervezett adócsökkentésekre és kiadásokra.
               </p>
 
               {/* Chart: Budget Balance Scale */}
@@ -830,7 +830,7 @@ export default function NewsletterPage() {
               <div style={{
                 marginTop: spacing.xl,
                 marginBottom: spacing.xl,
-                padding: spacing.xl,
+                padding: spacing.md,
                 backgroundColor: colors.primaryLight,
                 borderRadius: borderRadius.lg,
                 borderLeft: `4px solid ${colors.primary}`,
@@ -863,7 +863,7 @@ export default function NewsletterPage() {
                 A 1,9%-os éves hiánycél azonban csak az egyik oldala a történetnek. Az uniós szabályok szerint a strukturális hiánynak (vagyis az államháztartás egyensúlyának, ha nem számítjuk a gazdasági ciklusból adódó kiadásokat vagy bevételeket) 3% alatt kell maradnia, de a 2025-ös adatok azt mutatják, hogy a magyar államháztartás szezonálisan kiigazítva 3,5-4% közötti strukturális hiánnyal működik. Ez azt jelenti, hogy az állam túlköltekezik, és ezt nem a gazdasági lassulás indokolja, hanem strukturális problémák.
               </p>
               <p style={{ marginBottom: spacing.md }}>
-                Az EU-források kérdése kulcsfontosságú: 2025-ben 2,3%-kal növelte volna a GDP-t, ha a források zavartalanul érkeznek, de a fagyasztás miatt ez az összeg nem érkezett meg, és a kormánynak pótolnia kellett a hiányzó pénzt belső forrásokból, ami növelte az államadósságot. Az államadósság-ráta 2025 végére várhatóan 71-72% körül alakult, ami magasabb a 2024-es 69%-nál, és ez közvetlenül érint mindenkit: minél magasabb az adósság, annál több pénzt kell kamatra fordítani, ami kevesebb marad oktatásra, egészségügyre, infrastruktúrára.
+                Az EU-források kérdése kulcsfontosságú: 2025-ben 2,3%-kal növelte volna a GDP-t, ha a források zavartalanul érkeznek, de a fagyasztás miatt ez az összeg nem érkezett meg, és a kormánynak pótolnia kellett a hiányzó pénzt belső forrásokból, ami növelte az államadósságot. Az államadósság-ráta 2025 végére várhatóan 71-72% körül alakul, ami magasabb a 2024-es 69%-nál, és ez közvetlenül érint mindenkit: minél magasabb az adósság, annál több pénzt kell kamatra fordítani, így kevesebb marad oktatásra, egészségügyre, infrastruktúrára.
               </p>
               <p style={{ marginBottom: spacing.md }}>
                 A kormány 2026-ra 3% alatti hiánycélt tűzött ki, de ez csak akkor tartható, ha az EU-források felszabadulnak, és a gazdasági növekedés valóban eléri a tervezett 2,4%-ot. Ha ez nem történik meg, akkor vagy a tervezett adócsökkentések (szja-emelés, családi adókedvezmények) csúsznak, vagy újabb kiadáscsökkentések jönnek, amelyek közvetve minden állami szolgáltatást érinthetnek.
@@ -873,13 +873,6 @@ export default function NewsletterPage() {
               </p>
             </section>
 
-            {/* Visual separator before summary */}
-            <div style={{
-              height: '2px',
-              background: `linear-gradient(to right, transparent, ${colors.primary}40, ${colors.primary}, ${colors.primary}40, transparent)`,
-              marginTop: spacing['5xl'],
-              marginBottom: spacing['3xl'],
-            }} />
 
             {/* Summary - Distinctly styled */}
             <section style={{
@@ -944,7 +937,7 @@ export default function NewsletterPage() {
                   lineHeight: typography.lineHeight.relaxed,
                   color: colors.text.secondary,
                 }}>
-                  A 2025-ös decemberi adatok azt mutatják, hogy a magyar gazdaság egy fordulóponton áll. Az infláció csökkenése adott, a növekedés elindulása azonban még kérdéses. A legnagyobb kihívás a bizalom hiánya: a háztartások és a cégek is óvatosak.
+                  A 2025-ös decemberi adatok azt mutatják, hogy a magyar gazdaság fordulóponthoz érkezett. Az infláció csökkenése adott, a növekedés elindulása azonban még kérdéses. A legnagyobb kihívás a bizalom hiánya: a háztartások és a cégek is óvatosak.
                 </p>
                 
                 <div style={{
@@ -957,7 +950,7 @@ export default function NewsletterPage() {
                   <p style={{
                     marginBottom: spacing.md,
                     fontSize: typography.fontSize.lg,
-                    fontWeight: typography.fontWeight.semibold,
+                    fontWeight: typography.fontWeight.normal,
                     color: colors.text.primary,
                   }}>
                     <strong>Kulcskérdések 2026-ra:</strong>
@@ -1000,7 +993,6 @@ export default function NewsletterPage() {
                   fontSize: typography.fontSize.base,
                   lineHeight: typography.lineHeight.relaxed,
                   color: colors.text.secondary,
-                  fontStyle: 'italic',
                 }}>
                   Ezekre a kérdésekre a választ a 2026-os év eleji adatok fogják megadni.
                 </p>

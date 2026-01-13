@@ -373,26 +373,6 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
             preserveAspectRatio="xMidYMid meet"
             style={{ overflow: 'visible' }}
           >
-            {/* Grid lines */}
-            {[-40, -30, -20, -10, 0].map((score) => {
-              const minScore = -40
-              const maxScore = 0
-              const range = maxScore - minScore
-              const x = 60 + ((score - minScore) / range) * (chartWidth - 120)
-              return (
-                <line
-                  key={score}
-                  x1={x}
-                  y1={20}
-                  x2={x}
-                  y2={rankingHeight - 20}
-                  stroke={colors.gray[200]}
-                  strokeWidth="1"
-                  strokeDasharray="3 3"
-                  opacity={0.4}
-                />
-              )
-            })}
 
             {/* Bars */}
             {rankingData.map((item, index) => {
@@ -408,16 +388,16 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
                 <g key={item.position}>
                   {/* Bar background */}
                   <rect
-                    x={60}
+                    x={isMobile ? 40 : 60}
                     y={y}
-                    width={chartWidth - 120}
+                    width={chartWidth - (isMobile ? 80 : 120)}
                     height={barHeight}
                     fill={colors.gray[100]}
                     rx={6}
                   />
                   {/* Bar */}
                   <rect
-                    x={60}
+                    x={isMobile ? 40 : 60}
                     y={y}
                     width={barWidth}
                     height={barHeight}
@@ -428,7 +408,7 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
                   {/* Bar border for Hungary */}
                   {isHungary && (
                     <rect
-                      x={60}
+                      x={isMobile ? 40 : 60}
                       y={y}
                       width={barWidth}
                       height={barHeight}
@@ -440,7 +420,7 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
                   )}
                   {/* Country name */}
                   <text
-                    x={65}
+                    x={isMobile ? 45 : 65}
                     y={y + barHeight / 2}
                     dominantBaseline="middle"
                     fontSize={isMobile ? 13 : 14}
@@ -449,27 +429,15 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
                   >
                     {item.country}
                   </text>
-                  {/* Score */}
-                  <text
-                    x={60 + barWidth - 8}
-                    y={y + barHeight / 2}
-                    textAnchor="end"
-                    dominantBaseline="middle"
-                    fontSize={isMobile ? 13 : 14}
-                    fontWeight={typography.fontWeight.bold}
-                    fill={isHungary ? '#111827' : '#374151'}
-                  >
-                    {item.score.toFixed(1)}
-                  </text>
                   {/* Position badge */}
                   <circle
-                    cx={chartWidth - 35}
+                    cx={chartWidth - (isMobile ? 20 : 35)}
                     cy={y + barHeight / 2}
                     r={isMobile ? 14 : 16}
                     fill={isHungary ? colors.error : colors.gray[400]}
                   />
                   <text
-                    x={chartWidth - 35}
+                    x={chartWidth - (isMobile ? 20 : 35)}
                     y={y + barHeight / 2}
                     textAnchor="middle"
                     dominantBaseline="middle"
@@ -480,26 +448,6 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
                     {item.position}
                   </text>
                 </g>
-              )
-            })}
-
-            {/* X-axis labels */}
-            {[-40, -30, -20, -10, 0].map((score) => {
-              const minScore = -40
-              const maxScore = 0
-              const range = maxScore - minScore
-              const x = 60 + ((score - minScore) / range) * (chartWidth - 120)
-              return (
-                <text
-                  key={`x-label-${score}`}
-                  x={x}
-                  y={rankingHeight - 5}
-                  textAnchor="middle"
-                  fontSize={isMobile ? 10 : 11}
-                  fill={colors.text.muted}
-                >
-                  {score}
-                </text>
               )
             })}
           </svg>
@@ -535,40 +483,6 @@ export default function ConsumerConfidenceChart({ height = 700 }: ConsumerConfid
           </div>
         </div>
         
-        {/* Real-world Impact - Enhanced */}
-        <div style={{
-          marginTop: spacing.md,
-          padding: spacing.lg,
-          background: `linear-gradient(135deg, ${colors.warningLight} 0%, rgba(254, 243, 199, 0.4) 100%)`,
-          borderRadius: borderRadius.lg,
-          borderLeft: `4px solid ${colors.warning}`,
-          fontSize: isMobile ? typography.fontSize.sm : typography.fontSize.base,
-          color: colors.text.secondary,
-          lineHeight: typography.lineHeight.relaxed,
-        }}>
-          <div style={{
-            fontWeight: typography.fontWeight.bold,
-            color: colors.text.primary,
-            marginBottom: spacing.sm,
-            fontSize: isMobile ? typography.fontSize.base : typography.fontSize.lg,
-          }}>
-            💡 Gyakorlati jelentés
-          </div>
-          <div style={{ marginBottom: spacing.xs }}>
-            Amikor a fogyasztók pesszimisták, kevesebbet költenek nagyobb vásárlásokra (lakás, autó, nagyobb beruházások). 
-            Ez visszafoghatja a gazdasági növekedést, mert a cégek is óvatosak lesznek a bővítéssel és új munkahelyek teremtésével.
-          </div>
-          <div style={{
-            marginTop: spacing.sm,
-            paddingTop: spacing.sm,
-            borderTop: `1px solid ${colors.warning}`,
-            fontSize: isMobile ? typography.fontSize.xs : typography.fontSize.sm,
-            fontStyle: 'italic',
-          }}>
-            A bizalom hiánya önbeteljesítő lehet: ha a vállalkozások nem látják a keresletet, nem fejlesztenek, 
-            ami tovább rontja a foglalkoztatási kilátásokat.
-          </div>
-        </div>
       </div>
 
       {/* Data Source Credit */}

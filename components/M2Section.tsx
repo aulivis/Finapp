@@ -183,7 +183,7 @@ export default function M2Section({ startYear = 2015, endYear = 2025 }: M2Sectio
               margin: '0 auto',
               marginBottom: spacing.xl
             }}>
-              A globális pénzkínálat (M2) növekedése azt jelenti, hogy összességében több pénz van a gazdaságban a kormányok által történő pénznyomtatások hatására. Ha ez gyorsabban nő, mint a termékek és szolgáltatások mennyisége, a pénz fokozatosan veszít értékéből.
+              A globális pénzkínálat (M2) növekedése azt jelenti, hogy összességében több pénz van a gazdaságban, elsősorban a központi bankok monetáris politikáján és a bankrendszer hitelezésén keresztül. Ha ez a növekedés gyorsabb, mint a termékek és szolgáltatások mennyiségének bővülése, a pénz vásárlóereje idővel csökken.
             </p>
           </div>
 
@@ -601,7 +601,7 @@ export default function M2Section({ startYear = 2015, endYear = 2025 }: M2Sectio
                       lineHeight: typography.lineHeight.normal,
                       textAlign: isMobile ? 'center' : 'left'
                     }}>
-                      {startYear}-{endYear} kumulatív
+                      {startYear}-{endYear} összesített
                     </div>
                   </div>
                 </div>
@@ -708,7 +708,7 @@ export default function M2Section({ startYear = 2015, endYear = 2025 }: M2Sectio
                       lineHeight: typography.lineHeight.normal,
                       textAlign: isMobile ? 'center' : 'left'
                     }}>
-                      {startYear}-{endYear} kumulatív
+                      {startYear}-{endYear} összesített
                     </div>
                   </div>
                 </div>
